@@ -1,0 +1,26 @@
+.mtm-manager-learn {
+    padding-left : 10px;
+    padding-right : 10px;
+}
+
+@media (max-width: 460px) { 
+    /* .mtm-testum-card-normal{width : 350px;} */
+    .mtm-manager-learn{
+        padding-left : 5px;
+        padding-right : 5px;
+    }
+} 
+
+@media (max-width: 360px) { 
+    .mtm-manager-learn{
+        padding-left : 0px;
+        padding-right : 0px;
+    }
+} 
+
+@media (min-width: 500px) { 
+    .mtm-manager-learn{
+        padding-left : 10px;
+        padding-right : 10px;
+    }
+} 

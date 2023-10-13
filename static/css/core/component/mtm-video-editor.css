@@ -1,0 +1,66 @@
+.mtm-video-editor-container {
+    width: 100%;
+    padding: 4px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+                rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.mtm-video-editor-container > div {
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+/* Button */
+.video-button-area {
+    display: flex;
+    padding: 4px;
+    box-sizing: border-box;
+}
+
+.video-button-area > button {
+    margin-left: 10px;
+}
+
+
+.video-button-area > button {
+    margin-left: 10px;
+}
+
+.video-url-area,
+.video-title-area{
+    margin-top: 8px;
+}   
+
+.video-url-area > div,
+.video-title-area > div{
+    width: 100%;
+    margin: 0;
+}
+
+/* Time */
+.video-time-area {
+    margin-left: auto;
+    display: grid;
+    padding: 4px;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+}
+
+/* Tag */
+.video-tag-area {
+    height: 30px;
+}
+
+.video-tag-input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.video-area{
+    display: flex;
+    justify-content:center;
+    height: 240px;
+    border: 3px solid rgba(0, 123, 255, 255);
+    border-radius: 4px;
+}

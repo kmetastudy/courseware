@@ -1,0 +1,59 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MegaCourse-S</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="{% static 'img/mdb-favicon.ico' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+    <link rel="stylesheet" href="{% static '_dist/bootstrap/v5.2.1/bootstrap-reboot.min.css'%}" />
+    <link rel="stylesheet" href="{% static '_dist/bootstrap/v5.2.1/bootstrap-grid.min.css'%}" />
+    <link rel="stylesheet" href="{% static '_dist/bootstrap/v5.2.1/missing.css'%}" />
+
+    <link rel="stylesheet" href="{% static '_dist/katex@0.12.0/dist/katex.min.css' %}" />
+
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="{% static '_dist/swiper/swiper-bundle.min.css' %}" />
+
+    <!-- <link rel="stylesheet" href="{% static 'plugins/plyr-master/dist/plyr.css' %}"> -->
+    <link rel="stylesheet" href="{% static '_dist/plyr/3.7.2/plyr.css' %}" />
+
+    <!-- <link rel="stylesheet" href="{% static 'css/mtv/mtm-common.css' %}"> -->
+
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+
+    <script src="{% static '_dist/katex@0.12.0/dist/katex.min.js' %}"></script>
+    <script src="{% static '_dist/katex@0.12.0/dist/contrib/auto-render.min.js' %}"></script>
+    <script src="{% static '_dist/katex@0.12.0/dist/contrib/mhchem.min.js' %}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="{% static '_dist/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- Plyr -->
+    <!-- <script type="text/javascript" src="{% static 'plugins/plyr-master/dist/plyr.js' %}"></script>  -->
+    <script type="text/javascript" src="{% static '_dist/plyr/3.7.2/plyr.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '_dist/sweetalert/sweetalert.min.js' %}"></script>
+  </head>
+
+  <body>
+    <div id="body"></div>
+
+    <link rel="stylesheet" href="{% static '_bundle/st/st-bundle-20231012.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/st/st-bundle-20231012.js' %}"></script>
+  </body>
+
+  <script>
+    var csrftoken = "{{csrf_token}}";
+    var context = "{{ context|escapejs }}";
+    window.addEventListener("DOMContentLoaded", function () {
+      console.log("stlibrary: ", stlibrary);
+      stlibrary.st_run(context);
+    });
+  </script>
+</html>

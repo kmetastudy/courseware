@@ -1,0 +1,16 @@
+/* Input 기본 스타일 */
+input[type="text"].mtm-time {
+    font-size: 14px;
+    width: 80px;
+    text-align: center;
+    padding: 5px 10px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+/* Input 포커스 스타일 */
+input[type="text"].mtm-time:focus {
+    border-color: #007BFF; /* 포커스시 테두리 색상 */
+}

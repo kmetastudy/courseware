@@ -1,0 +1,12 @@
+.mtm-progress-bar {
+    height: 4px;
+    width: 100%;
+    border-radius: 2px;
+    background-color: lightgrey;
+}
+
+.mtm-progress-bar .mtm-progress-bar-bar {
+    height: 4px;
+    border-radius: 2px;
+    background-color: var(--theme-color-v2-c0-rgb);
+}

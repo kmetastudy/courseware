@@ -1,0 +1,9 @@
+.cp-edit-area {
+    padding: 8px 32px 8px 32px;
+}
+
+.mtm-edit-video-area {
+    width: 450px;
+    overflow: hidden;
+    padding: 4px;
+}

@@ -1,0 +1,69 @@
+// How TO - Icon Bar
+// https://www.w3schools.com/howto/howto_css_icon_bar.asp
+// require('../../../../css/mtv/core/navi/mtm-icon-menu-bar.css');
+require('../../../../css/mtv/core/navi/mtm-icon-menu-bar-v2.css');
+
+export var mtmIconMenuBar = function(options) {
+    this.id = 'mtm-icon-menu-bar-' + mtmIconMenuBar.id++;
+    this.options = options;
+
+    this.elThis = null;
+
+    this._init();
+}
+
+mtmIconMenuBar.id = 0;
+
+mtmIconMenuBar.prototype._init = function() {
+
+    this.elThis = document.createElement('div');
+    this.elThis.classList.add('mtm-icon-menu-bar');
+
+    if(!this.options)
+        return;
+    if(!this.options.items)
+        return;
+    
+    for(var i=0;i<this.options.items.length;i++)
+    {
+        var el = document.createElement('a');
+        el.setAttribute('href','#none');
+        el.innerHTML = this.options.items[i].icon;
+        el.setAttribute('data-index',i);
+        if(this.options.items[i].active)
+            el.classList.add('active');
+        el.addEventListener('click',this.onClickHandler.bind(this));
+        this.elThis.appendChild(el);
+    }
+
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////// Ajax ///////////////////////////////////////////
+
+////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////// Handler /////////////////////////////////////////
+mtmIconMenuBar.prototype.onClickHandler = function(e) {
+    // console.log('mtmIconMenuBar > onClickHandler : ', e.target.tagName);
+    var el = e.target;
+    if(e.target.tagName == "I")
+        el = e.target.parentElement;
+        // return;
+
+    // console.log('mtmIconMenuBar > onClickHandler : ', e.target);
+    for(var i =0 ;i<this.elThis.children.length;i++)
+        this.elThis.children[i].classList.remove('active');
+    var index = parseInt(el.getAttribute('data-index'));
+    el.classList.add('active');
+    if(this.options && this.options.eventHandler)
+        this.options.eventHandler(index);
+}
+////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// API ///////////////////////////////////////////
+mtmIconMenuBar.prototype.show = function (bShow) {
+    if(bShow)
+        this.elThis.style.display = '';
+    else
+        this.elThis.style.display = 'none';
+}

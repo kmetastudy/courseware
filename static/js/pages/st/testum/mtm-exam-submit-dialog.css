@@ -1,0 +1,177 @@
+/* Styling the modal and backdrop */
+/* :root {
+    --theme-color: #8a9ccc;
+    --theme-color-hover: #afc0ee;
+} */
+  
+.mtm-submit-dialog {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 600px;
+    padding: 0;
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid #dedede;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    animation: scale-in 0.4s ease-out;
+}
+  
+.mtm-submit-dialog::backdrop {
+    background: radial-gradient(
+      circle,
+      rgba(124, 222, 220, 0.5) 0%,
+      rgba(124, 222, 220, 0.7) 100%
+    );
+}
+  
+/* just a friendly warning backdrop */
+  
+.mtm-submit-warning-dialog {
+    /* --theme-color: rgba(245, 191, 66, 1);
+    --theme-color-hover: rgba(227, 175, 54, 1); */
+    max-width: 400px;
+}
+  
+.mtm-submit-warning-dialog::backdrop {
+    background: radial-gradient(
+      circle,
+      rgba(245, 191, 66, 0.5) 0%,
+      rgba(245, 191, 66, 0.7) 100%
+    );
+}
+  
+/* modal is angry backdrop */
+  
+.mtm-submit-danger-dialog {
+    /* --theme-color: rgba(181, 0, 48, 1);
+    --theme-color-hover: rgba(153, 14, 51, 1); */
+    background: rgba(181, 0, 48, 1);   /* var(--theme-color); */
+    color: #fff;
+    max-width: 360px;
+}
+  
+.mtm-submit-danger-dialog .header {
+    /* background: var(--theme-color); */
+    background: rgba(181, 0, 48, 1); 
+}
+  
+.mtm-submit-danger-dialog::backdrop {
+    background: radial-gradient(
+      circle,
+      rgba(181, 0, 48, 0.5) 0%,
+      rgba(181, 0, 48, 0.7) 100%
+    );
+}
+  
+  /* Styling inside of the modal */
+  
+.mtm-submit-dialog .header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 24px;
+    background: #fff;
+    border-bottom: 1px solid var(--theme-color-v2-c1-rgb);
+}
+  
+.mtm-submit-dialog .footer {
+    border-top: 1px solid var(--theme-color-v2-c1-rgb);
+}
+  
+.mtm-submit-dialog > *:not(.mtm-submit-dialog) {
+    padding: 24px;
+}
+  
+.mtm-submit-dialog p:last-of-type {
+    margin-bottom: 0;
+}
+  
+.mtm-submit-confirm-dialog {
+    box-sizing: border-box;
+    width: auto;
+    border: 1px solid var(--theme-color-v2-c1-rgb);
+}
+  
+.mtm-submit-confirm-dialog h2 {
+    padding-bottom: 0;
+}
+  
+.mtm-submit-confirm-dialog footer .mtm-submit-dialogbtn {
+    width: 100%;
+    margin: 5px 0;
+}
+  
+/* bouncy animation because i can */
+@keyframes scale-in {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+      transform: scale(0.9);
+    }
+    100% {
+      transform: scale(1);
+    }
+}
+  
+/* some basic styling (added to the bottom for convenience) */
+
+
+.mtm-submit-dialog-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 50px;
+}
+  
+/* quick and dirty button styling, forgive me ;) */
+.mtm-submit-dialog-btn {
+    display: inline-block;
+    font-family: "Merriweather", sans-serif;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    cursor: pointer;
+}
+  
+.mtm-submit-dialog-btn-primary {
+    padding: 10px 25px;
+    font-size: 1.2rem;
+    letter-spacing: 0;
+    color: #fff;
+    background: var(--theme-color-v2-c1-rgb);
+    border: 2px solid var(--theme-color-v2-c1-rgb);
+    border-radius: 6px;
+    transition: all 0.24s;
+}
+  
+.mtm-submit-dialog-btn-primary:hover,
+.mtm-submit-dialog-btn-primary:active {
+    background-color: var(--theme-color-v2-c3-rgb);
+    border-color: var(--theme-color-v2-c3-rgb);
+}
+  
+.mtm-submit-dialog-btn-primary.outline {
+    color: var(--theme-color-v2-c1-rgb);
+    background: #fff;
+}
+  
+.mtm-submit-dialog-btn-primary.outline:hover,
+.mtm-submit-dialog-btn-primary.outline:active {
+    border-color: var(--theme-color-v2-c3-rgb);
+}
+  
+.mtm-submit-dialog-btn-icon {
+    padding: 0;
+    background: transparent;
+    width: 24px;
+    height: 24px;
+    color: var(--theme-color-v2-c1-rgb);
+}
+  

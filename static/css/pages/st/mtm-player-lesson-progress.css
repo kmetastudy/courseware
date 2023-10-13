@@ -1,0 +1,53 @@
+.mtm-player-lesson-progress-step {  
+    box-sizing: border-box;
+    background-color: #fff;  
+    color: #999;  
+    border-radius: 50%;  
+    height: 30px;  
+    width: 30px;  
+    display: flex;  
+    align-items: center;  
+    justify-content: center;  
+    border: 3px solid #e0e0e0;  
+    transition: 0.4s ease;  
+    z-index: 2;
+}  
+
+.mtm-player-lesson-progress-step.active {  
+    /* border-color: #3498db;   */
+    border-color: var(--theme-color-dark);
+}  
+
+.mtm-player-lesson-progress-bar {
+    height : 30px;
+    width : 60px;
+}
+
+.mtm-player-lesson-progress-bar-0 {  
+    background-color: #e0e0e0 ;
+    position: absolute;  
+    top: 50%;  
+    left: 0;  
+    transform: translateY(-50%);  
+    height: 4px;  
+    width: 100%;  
+    z-index: 0;  
+    transition: 0.4s ease;  
+}  
+
+.mtm-player-lesson-progress-bar-1 {  
+    /* background-color: #3498db ; */
+    background-color: var(--theme-color-dark);
+    position: absolute;  
+    top: 50%;  
+    left: 0;  
+    transform: translateY(-50%);  
+    height: 4px;  
+    width: 0%;  
+    z-index: 1;  
+    transition: 0.4s ease;  
+}  
+
+.mtm-player-lesson-progress .swiper-container {
+    background-color: var(--theme-color-deeplight);
+}

@@ -1,0 +1,117 @@
+.mtm-input-toggle {
+    position: relative;
+    display: inline-block;
+    /* width: 60px;
+    height: 34px; */
+}
+
+.mtm-input-toggle.small {
+    width: 30px;
+    height: 16px;
+}
+
+.mtm-input-toggle.medium {
+    width: 52px;
+    height: 22px;
+}
+
+.mtm-input-toggle.big {
+    width: 60px;
+    height: 34px;
+}
+
+.mtm-input-toggle input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+.mtm-input-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+  
+.mtm-input-toggle-slider:before {
+    position: absolute;
+    content: "";
+    /* height: 26px;
+    width: 26px; */
+    /* left: 4px;
+    bottom: 4px; */
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.mtm-input-toggle-slider.small:before {
+    height: 12px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+}
+
+.mtm-input-toggle-slider.medium:before {
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 2px;
+}
+
+.mtm-input-toggle-slider.big:before {
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+}
+
+input:checked + .mtm-input-toggle-slider {
+    /* background-color: #2196F3; */
+    background-color: var(--theme-color-v2-c1-rgb);
+}
+  
+input:focus + .mtm-input-toggle-slider {
+    /* box-shadow: 0 0 1px #2196F3; */
+    box-shadow: 0 0 1px var(--theme-color-v2-c1-rgb);
+}
+  
+input:checked + .mtm-input-toggle-slider.small:before {
+    -webkit-transform: translateX(14px);
+    -ms-transform: translateX(14px);
+    transform: translateX(14px);
+}
+
+input:checked + .mtm-input-toggle-slider.medium:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+input:checked + .mtm-input-toggle-slider.big:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+  /* Rounded sliders */
+.mtm-input-toggle-slider.small.round {
+    border-radius: 16px;
+}
+
+.mtm-input-toggle-slider.medium.round {
+    border-radius: 18px;
+}
+
+.mtm-input-toggle-slider.big.round {
+    border-radius: 34px;
+}
+
+.mtm-input-toggle-slider.round:before {
+    border-radius: 50%;
+}

@@ -1,0 +1,27 @@
+.mtm-button {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    line-height: 1.5;
+    color: #fff;
+    border: 1px solid transparent;
+    background-color: #007bff;
+    border-color: #007bff;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none; /* prevent drag text */
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 5px;
+    width: fit-content;
+}
+
+.mtm-button:disabled,
+.mtm-button[disabled] {
+    background-color: transparent;
+    color: #007bff;
+}

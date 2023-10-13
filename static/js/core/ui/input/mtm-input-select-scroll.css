@@ -1,0 +1,111 @@
+.mtm-input-select-scroll {
+    /* padding: 10px 10px; */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.mtm-input-select-scroll.disabled {
+    opacity: 0.5;
+    cursor:default;
+}
+
+.mtm-input-select-scroll .box {
+    display: inline-block;
+    position: relative;
+    width:100%;
+}
+
+.mtm-input-select-scroll .box .select {
+    position: relative;
+    background: var(--theme-color-v2-c1-rgb);
+    box-sizing: border-box;
+    padding: 4px 16px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.mtm-input-select-scroll .box .select:after {
+    /* content: '▼';
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+    position: absolute;
+    top: 0;
+    right: 10px; */
+    box-sizing: border-box;
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+}
+
+.mtm-input-select-scroll.on .box .select:after {
+    /* content: '▲'; */
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+}
+
+.mtm-input-select-scroll .box .list {
+    display: none;
+    overflow-y: auto;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    z-index: 10;
+    border: 1px solid rgba(var(--theme-color-v2-c1),0.8);
+    box-sizing: border-box;
+    padding: 0px 0;
+    width: 100%;
+    max-height: 200px;
+    
+    background-color: var(--theme-color-v2-c1-rgb);
+    color: white;
+
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 36%), 0 2px 10px 0 rgb(0 0 0 / 32%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 36%), 0 2px 10px 0 rgb(0 0 0 / 32%);
+    border-radius: 5px;
+}
+.mtm-input-select-scroll .box .list::-webkit-scrollbar {
+    width: 10px;
+    height: 0;
+}
+
+.mtm-input-select-scroll .box .list::-webkit-scrollbar-button:start:decrement,
+.mtm-input-select-scroll .box .list::-webkit-scrollbar-button:end:increment {
+    display: block;
+    height: 0;
+}
+.mtm-input-select-scroll .box .list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, .05);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.mtm-input-select-scroll .box .list::-webkit-scrollbar-thumb {
+    height: 50px;
+    width: 50px;
+    background: rgba(0, 0, 0, .2);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.mtm-input-select-scroll .box .list>li {
+    box-sizing: border-box;
+    padding: 0 10px;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    cursor: pointer;
+}
+
+.mtm-input-select-scroll .box .list>li.selected{
+    background-color: rgba(var(--theme-color-v2-c2),0.9);
+}
+
+.mtm-input-select-scroll .box .list>li:hover {
+    background-color: rgba(var(--theme-color-v2-c2),0.5);
+}

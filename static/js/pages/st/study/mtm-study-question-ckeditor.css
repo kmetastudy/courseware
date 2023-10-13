@@ -1,0 +1,44 @@
+
+figure.graphic{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.graphic-style-align-left,
+.graphic-style-align-right {
+    clear: none;
+}
+
+.graphic-style-align-left {
+    float:left;
+}
+
+.graphic-style-align-right {
+    float:right;
+}
+
+.graphic-style-align-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.graphic-style-block-align-right {
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.graphic-style-block-align-left {
+    margin-left: 0;
+    margin-right: auto;
+}
+
+.btn-icon {
+    padding : 0rem 0.7rem
+}
+
+figure.graphic img {
+    max-width:100%;
+    display: block;
+    margin: 0 auto;
+}
+

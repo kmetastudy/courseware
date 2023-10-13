@@ -1,0 +1,210 @@
+:root {
+    --theme-color-main : #f39c12;
+    --theme-color-light : #f3ae3f;
+    --theme-color-deeplight : #f4c272;
+    --theme-color-dark : #b3730d;
+    --theme-color-deepdark: #784e09;    
+
+    
+    --theme-color-v2-c1-rgb : rgb(64,66,88);
+    --theme-color-v2-c1 :   64,66,88;
+    --theme-color-v2-c2-rgb :   rgb(107,114,142);
+    --theme-color-v2-c2 : 107,114,142;
+    --theme-color-v2-c3-rgb :   rgb(48,180,189);
+    --theme-color-v2-c3 : 48,180,189;
+    --theme-color-v2-c4-rgb :   rgb(189,190,190);
+    --theme-color-v2-c4 : 189,190,190;
+
+    --theme-color-v2-black: 0,0,0;
+    --theme-color-v2-white: 255,255,255;
+    --theme-color-v2-gray: 189,190,190;
+    --theme-color-v2-black-rgb: rgb(0,0,0);
+    --theme-color-v2-white-rgb: rgb(255,255,255);
+    --theme-color-v2-gray-rgb: rgb(189,190,190);
+    
+
+}
+
+:root.purple {
+    --theme-color-main : #8e44ad;
+    --theme-color-light : #ca61f7;
+    --theme-color-deeplight : #db93fa;
+    --theme-color-dark : #5d2b72;
+    --theme-color-deepdark : #3b0453;
+}
+
+:root.deepblue {
+    --theme-color-main : #2980b9;
+    --theme-color-light : #329fe8;
+    --theme-color-deeplight : #66b4e9;
+    --theme-color-dark : #206492;
+    --theme-color-deepdark : #042f4c;
+    
+}
+
+:root.orange {
+    --theme-color-main : #f39c12;
+    --theme-color-light : #f3ae3f;
+    --theme-color-deeplight : #f4c272;
+    --theme-color-dark : #b3730d;
+    --theme-color-deepdark: #784e09;
+}
+
+:root.green {
+    --theme-color-main : #27ae60;
+    --theme-color-light : #3af889;
+    --theme-color-deeplight : #6df5a6;
+    --theme-color-dark : #1b703e;
+    --theme-color-deepdark : #01481f;
+    
+}
+
+:root.red {
+    --theme-color-main : #ea2027;
+    --theme-color-light : #ec4c52;
+    --theme-color-deeplight : #ee7b7e;
+    --theme-color-dark : #a6181d;
+    --theme-color-deepdark : #7a0307;
+    
+}
+
+:root.pink {
+    --theme-color-main : #e84393;
+    --theme-color-light : #e96faa;
+    --theme-color-deeplight : #e795bd;
+    --theme-color-dark : #ad336e;
+    --theme-color-deepdark : #680535;
+    
+}
+
+:root.deepred {
+    --theme-color-main : #ff4757;
+    --theme-color-light : #f77580;
+    --theme-color-deeplight : #f799a1;
+    --theme-color-dark : #b83540;
+    --theme-color-deepdark : #6c050d;
+    
+}
+
+:root.yellow {
+    --theme-color-main : #ffc312;
+    --theme-color-light : #ffd864;
+    --theme-color-deeplight : #fbe08d;
+    --theme-color-dark : #b68c0c;
+    --theme-color-deepdark : #7c5f05;
+    
+}
+
+:root.skyblue {
+    --theme-color-main : #17c0eb;
+    --theme-color-light : #5ad0ee;
+    --theme-color-deeplight : #9ae1f3;
+    --theme-color-dark : #0e7f9b;
+    --theme-color-deepdark : #046279;
+    
+}
+
+/* version2 theme1 : navy & black */
+:root.v2theme1 {
+    --theme-color-v2-c0-rgb : rgb(32, 33, 44);
+    --theme-color-v2-c0 :   32,33,44;
+    --theme-color-v2-c1-rgb : rgb(64,66,88);
+    --theme-color-v2-c1 :   64,66,88;
+    --theme-color-v2-c2-rgb :   rgb(107,114,142);
+    --theme-color-v2-c2 : 107,114,142;
+    --theme-color-v2-c3-rgb :   rgb(48,180,189);
+    --theme-color-v2-c3 : 48,180,189;
+    --theme-color-v2-c4-rgb :   rgb(189,190,190);
+    --theme-color-v2-c4 : 189,190,190;
+}
+
+/* version2 theme2 : baby pink & purple */
+:root.v2theme2 {
+    --theme-color-v2-c0-rgb :   rgb(31,24,40);
+    --theme-color-v2-c0 : 31,24,40;
+    --theme-color-v2-c1-rgb :   rgb(62,48,81);
+    --theme-color-v2-c1 : 62,48,81;
+    --theme-color-v2-c2-rgb :   rgb(252,209,208);
+    --theme-color-v2-c2 : 252,209,208;
+    --theme-color-v2-c3-rgb :   rgb(111,77,158);
+    --theme-color-v2-c3 : 111,77,158;
+    --theme-color-v2-c4-rgb :   rgb(189,190,190);
+    --theme-color-v2-c4 : 189,190,190;
+}
+
+/* version2 theme3 : aqua & orange */
+:root.v2theme3 {
+    --theme-color-v2-c0-rgb : rgb(64,103,106);
+    --theme-color-v2-c0 : 64,103,106;
+    --theme-color-v2-c1-rgb : rgb(128,206,212);
+    --theme-color-v2-c1 : 128,206,212;
+    --theme-color-v2-c2-rgb : rgb(178,230,236);
+    --theme-color-v2-c2 : 178,230,236;
+    --theme-color-v2-c3-rgb : rgb(219,173,59);
+    --theme-color-v2-c3 : 219,173,59;
+    --theme-color-v2-c4-rgb : rgb(189,190,190);
+    --theme-color-v2-c4 : 189,190,190;
+}
+
+/* version2 theme4 : green & orange */
+:root.v2theme4 {
+    --theme-color-v2-c0-rgb : rgb(63,91,63);
+    --theme-color-v2-c0 : 63,91,63;
+    --theme-color-v2-c1-rgb : rgb(127,183,126);
+    --theme-color-v2-c1 : 127,183,126;
+    --theme-color-v2-c2-rgb : rgb(177,215,180);
+    --theme-color-v2-c2 : 177,215,180;
+    --theme-color-v2-c3-rgb : rgb(254,192,144);
+    --theme-color-v2-c3 : 254,192,144;
+    --theme-color-v2-c4-rgb : rgb(189,190,190);
+    --theme-color-v2-c4 : 189,190,190;
+}
+
+/* version2 theme5 : lavendar & jade green */
+:root.v2theme5 {
+    --theme-color-v2-c0-rgb : rgb(97, 78, 169);
+    --theme-color-v2-c0 : 143, 114, 248;
+    --theme-color-v2-c1-rgb : rgb(172,154,238);
+    --theme-color-v2-c1 : 172,154,238;
+    --theme-color-v2-c2-rgb : rgb(214,200,236);
+    --theme-color-v2-c2 : 214,200,236;
+    --theme-color-v2-c3-rgb : rgb(117,210,175);
+    --theme-color-v2-c3 : 117,210,175;
+    --theme-color-v2-c4-rgb : rgb(189,190,190);
+    --theme-color-v2-c4 : 189,190,190;
+}
+
+/* version2 theme6 : black & pink */
+:root.v2theme6 {
+    --theme-color-v2-c0-rgb : rgb(14,14,13);
+    --theme-color-v2-c0 : 14,14,13;
+
+    --theme-color-v2-c1-rgb : rgb(28,28,27);
+    --theme-color-v2-c1 : 28,28,27;
+    --theme-color-v2-c2-rgb : rgb(251,183,205);
+    --theme-color-v2-c2 : 251,183,205;
+    --theme-color-v2-c3-rgb : rgb(206,74,126);
+    --theme-color-v2-c3 : 206,74,126;
+    --theme-color-v2-c4-rgb : rgb(189,190,190);
+    --theme-color-v2-c4 : 189,190,190;
+}
+
+/* version2 theme7 : dark green & yellow */
+:root.v2theme7 {
+    --theme-color-v2-c1-rgb : rgb(24,59,44);
+    --theme-color-v2-c1 : 24,59,44;
+
+    --theme-color-v2-c1-rgb : rgb(49,119,88);
+    --theme-color-v2-c1 : 49,119,88;
+    --theme-color-v2-c2-rgb : rgb(245,204,118);
+    --theme-color-v2-c2 : 245,204,118;
+    --theme-color-v2-c3-rgb : rgb(54,99,122);
+    --theme-color-v2-c3 : 54,99,122;
+    --theme-color-v2-c4-rgb : rgb(189,190,190);
+    --theme-color-v2-c4 : 189,190,190;
+}
+
+ul, li {
+    list-style-type: none;
+    list-style: none;
+}

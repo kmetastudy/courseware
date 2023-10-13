@@ -1,0 +1,141 @@
+/* 이것은 bootstrap 4 에 존재 */
+.border-left {
+    /* border-left: 1px solid #dee2e6 !important; */
+    border-left: 1px dashed var(--theme-color-v2-c1-rgb) !important;
+}
+
+.border-right {
+    /* border-right: 1px solid #dee2e6 !important; */
+    border-right: 1px dashed var(--theme-color-v2-c1-rgb) !important;
+}
+
+.mr-1 {
+    margin-right: 0.25rem!important;
+}
+
+.mr-0 {
+    margin-right: 0.0rem!important;
+}
+
+.ml-0 {
+    margin-left: 0.0rem!important;
+}
+
+.ml-1 {
+    margin-left: 0.25rem!important;
+}
+
+.p-1 {
+    padding: 0.25rem!important;
+}
+
+.pr-2, .px-2 {
+    padding-right: 0.5rem!important;
+}
+
+.mr-5, .mx-5 {
+    margin-right: 3rem!important;
+}
+
+.pt-1, .py-1 {
+    padding-top: 0.25rem!important;
+}
+
+.ml-2, .mx-2 {
+    margin-left: 0.5rem!important;
+}
+
+.pl-1, .px-1 {
+    padding-left: 0.25rem!important;
+}
+
+.pl-2, .px-2 {
+    padding-left: 0.5rem!important;
+}
+
+.pl-3, .px-3 {
+    padding-left: 1rem!important;
+}
+
+.pr-1, .px-1 {
+    padding-right: 0.25rem!important;
+}
+.pb-0, .py-0 {
+    padding-bottom: 0!important;
+}
+.pt-0, .py-0 {
+    padding-top: 0!important;
+}
+.mb-0, .my-0 {
+    margin-bottom: 0!important;
+}
+.mt-0, .my-0 {
+    margin-top: 0!important;
+}
+
+.close {
+    float : right;
+    line-height: 1.0;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+}
+
+/* .close {
+    float: right;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .5;
+} */
+
+/* How to increase space between dotted border dots */
+/* https://stackoverflow.com/questions/6250394/how-to-increase-space-between-dotted-border-dots */
+
+.border-left-position {
+    background-image: linear-gradient(to bottom, var(--theme-color-v2-c1-rgb) 50%, rgba(255, 255, 255, 0) 50%);
+    background-position: left;
+    background-size: 0.5px 20px;
+    background-repeat: repeat-y;
+    top : -10px;
+}
+
+.border-right-position {
+    /* border-right: 1px solid #dee2e6 !important; */
+    background-image: linear-gradient(to bottom, var(--theme-color-v2-c1-rgb) 50%, rgba(255, 255, 255, 0) 50%);
+    background-position: right;
+    background-size: 0.5px 20px;
+    background-repeat: repeat-y;
+    top : -10px;
+}
+
+.card-header:first-child {
+    border-radius: calc(0.25rem - 1px) calc(0.25rem - 1px) 0 0;
+}
+
+.card {
+    font-weight: 400;
+    border: 0;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    /* border: 1px solid rgba(0,0,0,.125); */
+    border-radius: 0.25rem;
+}

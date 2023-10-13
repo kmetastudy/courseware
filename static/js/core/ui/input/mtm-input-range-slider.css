@@ -1,0 +1,137 @@
+.cl-mtm-range-slider-bubble {
+    /* --element-height: 24px;
+    --track-height: 3px;
+    --thumb-size: 16px; */
+  
+    position: relative;
+    display: flex;
+    align-items: center;
+    /* height: var(--element-height); */
+    height : 24px;
+    width: 100%;
+    min-width: 130px;
+    margin: 2px;
+    overflow: visible;
+    cursor: pointer;
+  
+    /* Without this prop capture pointer events will not work on touch devices */
+    touch-action: none;
+    /* color: var(--theme-color-main); */
+}
+  
+.cl-mtm-range-slider-bubble:focus {
+    outline: 0;
+}
+  
+.cl-mtm-range-slider-bubble[disabled] {
+    filter: grayscale(1);
+    opacity: 0.8;
+}
+  
+  /* Track */
+.cl-mtm-range-slider-bubble::before {
+    content: "";
+    display: block;
+    width: 100%;
+    /* height: var(--track-height); */
+    height:3px;
+    /* border-radius: calc(var(--track-height) / 2); */
+    border-radius: 1.5px;
+    /* background: linear-gradient(#6221ea, #6221ea) 0/ var(--value-percent, 0%) 100% no-repeat #c6afe5; */
+    background: linear-gradient( var(--theme-color-v2-c1-rgb), var(--theme-color-v2-c1-rgb)) 0/ 0% 100% no-repeat var(--theme-color-v2-c2-rgb);
+}
+  
+.cl-mtm-range-slider-bubble:focus .thumb {
+    /* box-shadow: 0 0 0 0.3em rgba(98, 33, 234, .2); */
+    box-shadow: 0 0 0 0.3em var(--theme-color-v2-c0-rgb);
+}
+  
+.cl-mtm-range-slider-bubble.touch-active .thumb-wrapper .thumb {
+    box-shadow: none;
+    transform: scale(1.5);
+}
+
+.cl-mtm-range-slider-bubble .thumb {
+    background: var(--theme-color-v2-c1-rgb);
+    border-radius: 50%;
+    /* width: var(--thumb-size);
+    height: var(--thumb-size); */
+    width : 16px;
+    height : 16px;
+    position: absolute;
+    /* bottom: calc(var(--element-height) / 2 - var(--thumb-size) / 2); */
+    bottom : 4px;
+    /* left: var(--value-percent, 0%); */
+    left:0%;
+    /* margin-left: calc(var(--thumb-size) / 2 * -1); */
+    margin-left : -8px;
+    transition: transform 200ms ease;
+    will-change: transform;
+    pointer-events: none;
+}
+  
+.cl-mtm-range-slider-bubble .thumb-wrapper {
+    position: absolute;
+    /* left: calc(var(--thumb-size) / 2);
+    right: calc(var(--thumb-size) / 2); */
+    left : 8px;
+    right : 8px;
+    bottom: 0;
+    height: 0;
+    overflow: visible;
+}
+
+.cl-mtm-range-slider-bubble.touch-active .thumb-wrapper .value-display {
+    /* color : var(--theme-color-v2-c0-rgb); */
+    opacity: 1;
+    transform: scale(1);
+  }
+
+/* Set Fill Color of SVG Background-image */
+/* https://pqina.nl/blog/set-svg-background-image-fill-color/ */
+.cl-mtm-range-slider-bubble .value-display {
+
+    /* background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="62" fill="none"><path fill="currentColor" d="M27.3 27.3C25 29.6 17 35.8 17 43v3c0 3 2.5 5 3.2 5.8a6 6 0 1 1-8.5 0C12.6 51 15 49 15 46v-3c0-7.2-8-13.4-10.3-15.7A16 16 0 0 1 16 0a16 16 0 0 1 11.3 27.3z"/><circle cx="16" cy="56" r="1" fill="%235D509E"/></svg>') top center no-repeat; */
+    background-color: var(--theme-color-v2-c0-rgb);
+    --svg: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="62" fill="none"><path fill="currentColor" d="M27.3 27.3C25 29.6 17 35.8 17 43v3c0 3 2.5 5 3.2 5.8a6 6 0 1 1-8.5 0C12.6 51 15 49 15 46v-3c0-7.2-8-13.4-10.3-15.7A16 16 0 0 1 16 0a16 16 0 0 1 11.3 27.3z"/><circle cx="16" cy="56" r="1" fill="currentColor"/></svg>') top center no-repeat;
+    /* Chrome, still requires prefix in 2022 */
+    -webkit-mask: var(--svg);
+
+    /* Firefox and Safari */
+    mask: var(--svg);
+
+    position: absolute;
+    box-sizing: border-box;
+    /* left: var(--value-percent, 0%); */
+    left : 0%;
+    /* bottom: calc(var(--element-height) / 2 - var(--thumb-size) / 2); */
+    z-index:10;
+    bottom: 4px; 
+    width: 32px;
+    height: 62px;
+    text-align: center;
+    padding: 8px 3px 0;
+    margin: 0 0 0 -16px;
+    /* filter: drop-shadow(0 1px 3px rgba(0,0,0,0.3)); */
+    filter: drop-shadow(0 1px 3px var(--theme-color-v2-c0-rgb));
+    transform-origin: 50% 90%;
+    opacity: 0.0001;
+    transform: scale(.2);
+    color: #fff;
+    font: inherit;
+    /* font-size: calc(100% - var(--value-width, 3) / 5 * .2em); */
+    font-size : 0.8em;
+    text-overflow: clip;
+    /* text-shadow: 0 -.5px 0 rgba(0,0,0,0.4); */
+    text-shadow: 0 -.5px 0 var(--theme-color-v2-c0-rgb);
+    transition: all 200ms ease;
+    transition-property: opacity, transform;
+    will-change: transform;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+.cl-mtm-range-silder-output {
+    font-weight: 600;
+    margin-bottom: 30px;
+}

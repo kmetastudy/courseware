@@ -1,0 +1,29 @@
+span.video-time {
+    display: inline-block;
+    border: 1px solid var(--theme-color-v2-c1-rgb);
+    border-radius: 3px;
+    font-size:0.8rem;
+}
+
+input.video-time {
+    border : 0 none transparent;
+    margin: 0;
+    padding : 0;
+    max-width: 1rem;
+}
+
+input.video-time:focus {
+    outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input.video-time::-webkit-outer-spin-button,
+input.video-time::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input.video-time[type=number] {
+  -moz-appearance: textfield;
+}

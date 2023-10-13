@@ -1,0 +1,121 @@
+
+.class-mtv-study-progress-container {
+    text-align: center;  
+}
+
+.class-mtv-study-progress {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.class-mtv-study-progress-1 {  
+    display: flex;  
+    justify-content: space-between;  
+    position: relative;  
+    margin-bottom: 30px;  
+    max-width: 100%;  
+    width: 350px;  
+}  
+.class-mtv-study-progress-1::before {  
+    content: '';  
+    background-color: transparent;
+    position: absolute;  
+    top: 50%;  
+    left: 0;  
+    transform: translateY(-50%);  
+    height: 4px;  
+    width: 100%;  
+    z-index: -1;  
+}  
+
+.class-mtv-study-progress-bar {
+    position: absolute;
+    background: lightseagreen;
+    height: 5px;
+    width: 0%;
+    top: 50%;
+    left: 0;
+}
+
+.class-mtv-study-progress-bar-0 {  
+    background-color: #e0e0e0 ;
+    position: absolute;  
+    top: 50%;  
+    left: 0;  
+    transform: translateY(-50%);  
+    height: 4px;  
+    width: 100%;  
+    z-index: 0;  
+    transition: 0.4s ease;  
+}  
+
+.class-mtv-study-progress-bar-1 {  
+    background-color: #3498db ;
+    position: absolute;  
+    top: 50%;  
+    left: 0;  
+    transform: translateY(-50%);  
+    height: 4px;  
+    width: 0%;  
+    z-index: 1;  
+    transition: 0.4s ease;  
+}  
+
+.class-mtv-study-step-1 {  
+    box-sizing: border-box;
+    background-color: #fff;  
+    color: #999;  
+    border-radius: 50%;  
+    height: 30px;  
+    width: 30px;  
+    display: flex;  
+    align-items: center;  
+    justify-content: center;  
+    border: 3px solid #e0e0e0;  
+    transition: 0.4s ease;  
+    z-index: 2;
+}  
+
+.class-mtv-study-step-1.active {  
+border-color: #3498db;  
+}  
+
+.class-mtv-study-progress-number {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.class-mtv-study-progress-number::before {
+    content: "";
+    background-color: lightgray;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 5px;
+    width: 100%;
+    z-index: -1;
+}
+
+.class-mtv-study-progress-number .class-mtv-study-step {
+    box-sizing: border-box;
+    border: 3px solid lightgray;
+    border-radius: 100%;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    background-color: #fff;
+    font-family: sans-serif;
+    font-size: 14px;  
+    position: relative;
+    z-index: 1;
+}
+
+.class-mtv-study-progress-number .class-mtv-study-step.active {
+    border-color: lightseagreen;
+    background-color: lightseagreen;
+    color: #fff;
+}

@@ -1,0 +1,30 @@
+.mtm-icon-menu-bar {
+    display: flex;
+    width: 100%;
+    /* background-color: #555; */
+    background-color: white;
+    overflow: auto;
+    font-size: 30px;
+}
+  
+.mtm-icon-menu-bar a {
+    /* float: left; */
+    /* width: 20%; */
+    flex: 1 1 0px;
+    text-align: center;
+    /* padding: 12px 0; */
+    transition: all 0.3s ease;
+    /* color: white; */
+    color: var(--theme-color-v2-c1-rgb);
+    /* font-size: 14px; */
+}
+  
+.mtm-icon-menu-bar a:hover {
+    /* background-color: #000; */
+    background-color: var(--theme-color-v2-c2-rgb);
+}
+  
+.mtm-icon-menu-bar .active {
+    /* background-color: #04AA6D; */
+    background-color: var(--theme-color-v2-c3-rgb);
+}

@@ -1,0 +1,205 @@
+.mtm-input-select-scroll-menu .wrapper{
+    border-radius: 5px;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 30%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 30%);
+}
+
+.mtm-input-select-scroll-menu.disabled {
+    opacity: 0.5;
+    cursor:default;
+}
+
+.mtm-input-select-scroll-menu .mtm-input-select-scroll-menu-select{
+    padding: 0;
+    /* border-radius: 5px; */
+    /* text not selected or high light */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.mtm-input-select-scroll-menu  .mtm-input-select-scroll-menu-select{
+    /* padding: 3px 10px;  */
+    /* Some padding */
+    flex-grow: 1;
+    border: none;
+    /* border: 1px solid var(--theme-color-dark); */
+    border: 1px solid rgba(var(--theme-color-v2-c1,0.9));
+    box-sizing: border-box; 
+    background-color: var(--theme-color-v2-c1-rgb);
+}
+
+.mtm-input-select-scroll-menu-select {
+    /* margin: 20px; */
+    border-radius: 5px 0px 0px 5px; /* First button Corner */
+    padding: 10px 10px;
+    /* border-radius: 5px; */
+    /* text not selected or high light */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.mtm-input-select-scroll-menu-select .box {
+    display: inline-block;
+    position: relative;
+    width:100%;
+    /* width: 150px; */
+}
+
+.mtm-input-select-scroll-menu-select .box .select {
+    position: relative;
+    /* border: 2px solid #ccc; */
+    /* padding: 4px 16px; */
+    /* background: rgb(244,175,35); */
+    /* background: var(--theme-color-main); */
+    background: var(--theme-color-v2-c1-rgb);
+    box-sizing: border-box;
+    /* padding: 0 10px; */
+    padding: 3px 16px;
+    border-radius: 5px;
+    /* height: 40px; */
+    /* line-height: 35px; */
+    /* font-size: 16px; */
+    /* background-color: #fff; */
+    color: #fff;
+    cursor: pointer;
+}
+
+.mtm-input-select-scroll-menu.disabled .mtm-input-select-scroll-menu-select .box .select {
+    cursor: default;
+}
+
+.mtm-input-select-scroll-menu-select .box .select:after {
+    /* content: '▼';
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+    position: absolute;
+    top: 0;
+    right: 10px; */
+    box-sizing: border-box;
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+}
+
+.mtm-input-select-scroll-menu-select.on .box .select:after {
+    /* content: '▲'; */
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+}
+
+.mtm-input-select-scroll-menu-select .box .list {
+    display: none;
+    overflow-y: auto;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    z-index: 10;
+    /* border: 2px solid #ccc; */
+    /* border: 1px solid rgb(184, 124, 4); */
+    /* border: 1px solid var(--theme-color-light); */
+    border: 1px solid rgba(var(--theme-color-v2-c1),0.8);
+    box-sizing: border-box;
+    padding: 0px 0;
+    width: 100%;
+    max-height: 200px;
+    /* background-color: #fff; */
+    /* background-color: rgb(244,175,35); */
+    /* background-color: var(--theme-color-main); */
+    background-color: var(--theme-color-v2-c1-rgb);
+    color: white;
+
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 36%), 0 2px 10px 0 rgb(0 0 0 / 32%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 36%), 0 2px 10px 0 rgb(0 0 0 / 32%);
+    border-radius: 5px;
+}
+
+.mtm-input-select-scroll-menu-select .box .list::-webkit-scrollbar {
+    width: 10px;
+    height: 0;
+}
+
+.mtm-input-select-scroll-menu-select .box .list::-webkit-scrollbar-button:start:decrement,
+.mtm-input-select-scroll-menu-select .box .list::-webkit-scrollbar-button:end:increment {
+    display: block;
+    height: 0;
+}
+.mtm-input-select-scroll-menu-select .box .list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, .05);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.mtm-input-select-scroll-menu-select .box .list::-webkit-scrollbar-thumb {
+    height: 50px;
+    width: 50px;
+    background: rgba(0, 0, 0, .2);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.mtm-input-select-scroll-menu-select .box .list>li {
+    box-sizing: border-box;
+    padding: 0 10px;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    cursor: pointer;
+}
+
+.mtm-input-select-scroll-menu-select .box .list>li.selected{
+    background-color: rgba(var(--theme-color-v2-c2),0.9);
+}
+
+.mtm-input-select-scroll-menu-select .box .list>li:hover {
+    /* background-color: #ccc; */
+    /* background-color: rgb(244, 165, 5); */
+    /* background-color: var(--theme-color-light); */
+    background-color: rgba(var(--theme-color-v2-c2),0.5);
+}
+
+.mtm-input-select-scroll-menu .mtm-input-select-scroll-menu-button{
+    border-radius: 0px 5px 5px 0px; /* Last button Corner */
+    padding: 2px 10px; /* Some padding */
+    /* width:10%; */
+    /* border: none; */
+    /* border: 1px solid #555; */
+    border: 1px solid rgba(80,80,80,0.8);
+    
+    /* background-color: blue; */
+    /* background-color: rgb(244,175,35);; */
+    /* background-color: var(--theme-color-main); */
+    background-color: var(--theme-color-v2-c1-rgb);
+    box-sizing: border-box;
+    /* min-width: 20px;
+    max-width: 40px; */
+    position: relative;
+    color: white;
+}
+
+.mtm-input-select-scroll-menu-button:disabled {
+    color : #555;
+    border: 1px solid rgba(80,80,80,0.8);
+    border-radius: 0px 5px 5px 0px; /* Last button Corner */
+    padding: 2px 10px; /* Some padding */
+    box-sizing: border-box;
+    opacity: .65;
+    cursor: default;
+}
+
+.mtm-input-select-scroll-menu-button:hover:not(:disabled) {
+    color: #FFF;
+    background: rgba(var(--theme-color-v2-c1),0.8);
+    /* border: 2px solid var(--theme-color-v2-c1-rgb); */
+}
+
+.mtm-input-select-scroll-menu-button:active:not(:disabled) {
+    color: #FFF;
+    background: rgba(var(--theme-color-v2-c1),0.5);
+    /* border: 2px solid var(--theme-color-v2-c1-rgb); */
+}

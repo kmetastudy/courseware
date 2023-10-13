@@ -1,0 +1,35 @@
+.mtm-tabulator-table{
+    padding: 10px 10px;
+    
+}
+.mtm-tabulator.tabulator {
+    /* padding: 10px 10px; */
+    /* background-color: #ccc !important; */
+    /* background-color: rgb(239, 219, 180) !important; */
+    background-color: var(--theme-color-deeplight) !important;
+
+}
+
+.mtm-tabulator.tabulator .tabulator-header {
+    border-bottom: 1px solid transparent !important;
+    /* background-color: rgb(243,174,34) !important; */
+    background-color: var(--theme-color-main);
+    color: #fff;
+} 
+
+.mtm-tabulator.tabulator .tabulator-header .tabulator-col{
+    /* background-color:  rgb(243,174,34) !important; */
+    background-color: var(--theme-color-main);
+}
+
+.mtm-tabulator.tabulator .tabulator-row.tabulator-selectable:hover {
+    /* background-color: rgb(120, 226, 252) !important; */
+    /* background-color: rgb(240, 207, 139) !important; */
+    background-color: var(--theme-color-light);
+    /* background-color: rgb(240, 221, 139) !important; */
+    
+}
+
+.mtm-tabulator-table .mtm-tabulator i.title {
+    color : var(--theme-color-main);
+}

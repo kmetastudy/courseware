@@ -1,0 +1,61 @@
+.mtm-box {
+    border: 2px dashed rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    min-width: 480px;
+    display: none;
+}
+
+.mtm-box.activate {
+    display: block;
+}
+
+.mtm-box.selected {
+    border: 3px solid rgb(0, 123, 225);
+}
+
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.box-title {
+    margin: auto;
+}
+
+.mtm-box-button-container {
+    display: flex;
+    gap: 3px;
+}
+
+.simplebar-scrollbar::before {
+    content: '';
+    background-color: #0078D4;
+    border-radius: 3px;
+}
+
+.box-body {
+    display: flex;
+    flex-wrap: nowrap;
+    opacity: 1;
+    min-height: 250px;
+    transition: opacity 3s ease, max-height 3s ease;
+}
+
+.box-body.hide{
+    opacity: 0;
+    max-height: 0;
+}
+
+.box-body>div {
+    flex:0 0 auto;
+}
+
+@media (max-width: 760px) {
+    .mtm-box {
+        flex-direction: column;
+        justify-content: center;
+    }
+}

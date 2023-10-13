@@ -1,0 +1,139 @@
+/* Ref */
+/* How to set font in different case */
+/* https://feel5ny.github.io/2019/09/08/CSS_02/ */
+/* https://en.wikipedia.org/wiki/List_of_Unicode_characters#Basic_Latin */
+
+/* How to know these are applied?(Use FireFox) */ 
+/* https://stackoverflow.com/questions/47217030/how-can-i-determine-which-font-file-is-being-used-not-just-the-font-family */
+/* Default(Korean) */
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 100;
+  src: url(../../fonts/NotoSansKR-Thin.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 300;
+  src: url(../../fonts/NotoSansKR-Light.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../../fonts/NotoSansKR-Regular.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  src: url(../../fonts/NotoSansKR-Medium.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  src: url(../../fonts/NotoSansKR-Bold.otf) format('opentype');
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 900;
+  src: url(../../fonts/NotoSansKR-Black.otf) format('opentype');
+}
+
+/* English, Num, Special characters*/
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  src: url(../../fonts/OpenSans-VariableFont_wdth\,wght.ttf) format('opentype');
+  unicode-range: U+0020-007E;
+}
+
+@font-face {
+  font-family: 'Noto Sans KR';
+  font-style: italic;
+  src: url(../../fonts/OpenSans-Italic-VariableFont_wdth\,wght.ttf) format('opentype');
+  unicode-range: U+0020-007E;
+}
+
+/* Theme */
+:root {
+  /* Folder */
+  --color-primary: #F7FBFC;
+  --color-header: #A0DDEC;
+  --color-button: #F7FBFC;
+  --color-selected: #A0DDEC;
+  --color-text-primary: #769FCD;
+  --color-text-selected: #ffff;
+
+
+  --default-fg-color: #242424; /* primary text and icons */
+  --default-fg-1-color: #424242; /* secondary text and icons */
+  --default-fg-2-color: #616161; /* tertiary text and icons */
+  --default-fg-disabled-color: #c7c7c7; /* disabled text and icons */
+  --default-border-color: #d1d1d1; /* border-colors */
+  --default-bg-1-color: #f5f5f5; /* backgrounds on grey canvas */
+  --default-bg-color: #FFFFFF; /* chat canvas and input backgrounds on white canvas */
+}
+
+.simplebar-content-wrapper {
+  scrollbar-width: auto;
+  -ms-overflow-style: auto;
+}
+
+.simplebar-placeholder {
+  width: auto!important;
+}
+
+.simplebar-content-wrapper::-webkit-scrollbar,
+.simplebar-hide-scrollbar::-webkit-scrollbar {
+  display: initial;
+  width: initial;
+  height: initial;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  
+}
+
+body {
+  font-family: 'Noto Sans Kr';
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.cp-wrapper {
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.cp-application-body {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 40em) {
+  .cp-application-body {
+      flex-direction: column;
+  }
+
+  .cp-display-area,
+  .cp-edit-area {
+      flex: 1 1 auto;
+  }
+}

@@ -1,0 +1,60 @@
+st.js
+body
+    + clNavbar(mtmNaviBar)
+    + clLearnManager(mtmManagerLearn)
+        + elLeftPanel
+            + clLeftTab(mtmTab)
+                + clStudyContainer(mtmStudyContainer)
+                + clStatContaner(mtmStatContainer) -> 현재 안 붙임
+        + elRightPanel
+            + clRightTab(mtmTab)
+                + clStudyBuilder(mtmStudyBuilder)
+                + clStatBuilder(mtmStatBuilder)
+
+mtmStudyContainer
+    + clCourseSelector(mtmInputSelectScroll)
+    + clWeekSelector(mtmInputSelectCourseWeek)
+    + clContentTabs(mtmTabs)
+    + clListTableCourseContent(mtmListTableCourseContent)
+        + clPrgoress(mtmCircularProgress)
+
+mtmStudyBuilder
+    + clPlayerTestum(mtmPlayerTestum)
+    + clPlayerLesson(mtmPlayerLesson)
+
+    mtmStudyContainer -> onClickCourseContentHandler(브랜치클릭) -> mtoEvents(OnChangeCourseContent)
+    -> mtmStudyBuilder -> urlGetContentInfo(오른쪽에 testum/lesson생성)
+
+
+mtmPlayerTestum
+    // 테스텀 상태 - PlayerTestumStatus (추상)
+    + clTestumTitle(mtmPlayerTestumTitle)
+    + clPlayerTestumProgress(mtmPlayerTestumProgress)
+    
+    + clTestumSubmitAction(mtmPlayerTestumSubmitAction) - 역할 없음
+
+    // 테스텀 학습 - PlayerTestumStudy (추상)
+    + clTestumIndicator(mtmPlayerTestumIndicator)
+    + clPlayerTestumViewer(mtmPlayerTestumViewer)
+        + clElapseTimer(mtmElapseTimer)
+
+    // 테스텀 결과 - PlayerTestumResult (추상)
+    + clTestumResultAction(mtmPlayerTestumResultAction)
+    + clTestumResultTable(mtmPlayerTestumResultTable)
+
+mtmPlayerLesson
+    // 레슨 상태 - PlayerLessonStatus (추상)
+    + clPlayerLessonTitle(mtmPlayerLessonTitle)
+    + clPlayerLessonProgress(mtmPlayerLessonProgress)
+    
+    // 레슨 정보 - PlayerLessonInfo (추상)
+    + clMessagePopUp(mtmStudyMessagePopup)
+
+    // 레슨 결과 - PlayerLesonResult (추상)
+    + clLessonSubmitAction(mtmStudySubmitAction)
+    + clLessonResultTable(mtmPlayerLessonResultTable)
+
+    // 레슨 학습 - PlayerLessonStudy (추상)
+    + clPlayerLessonQuestion(mtmPlayerLessonQuestion)
+    + clPlayerLessonContent(mtmPlayerVideoContent) - lazy 생성
+        + mtmPlyr

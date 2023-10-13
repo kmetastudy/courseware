@@ -1,0 +1,73 @@
+.mtm-input-color-switcher {
+    z-index: 1000;
+    background: transparent;
+    position:relative;
+}
+
+.mtm-input-color-switcher .dropdown {
+    display: none;
+    box-sizing: border-box;
+    background-color: rgb(240, 240, 240);
+    width : 200px;
+    padding: 10px;
+    border-radius: 5px;
+    top : 40px;
+    position: absolute;
+}
+
+.mtm-input-color-switcher.active .dropdown {
+    
+    left : -180px;
+    display: inline-block;
+    
+}
+
+.mtm-input-color-switcher h3{
+    /* display: none; */
+    color: var(--theme-color-main);
+    font-size: 15px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #3333;
+    padding: 5px 0;
+    text-align: center;
+}
+
+.mtm-input-color-switcher.active h3{
+    /* position:absolute;  */
+    display: block;    
+}
+
+.mtm-input-color-switcher .mtm-input-color-btn {
+    
+    color : var(--theme-color-v2-c1-rgb);
+    /* color : white; */
+    margin: auto;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+@keyframes rotate {
+    100%{
+        transform: rotate(360deg);
+    }
+}
+.mtm-input-color-switcher .theme-buttons-container{
+    /* display: none; */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* .mtm-input-color-switcher.active .theme-buttons-container{
+    display: flex;
+} */
+
+.mtm-input-color-switcher .theme-buttons-container .theme-buttons{
+    display: block;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    margin: 5px;
+    cursor: pointer;
+}
+

@@ -1,0 +1,415 @@
+.mtm-input-button {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.mtm-input-button.disabled, .mtm-input-button:disabled {
+    color : #555;
+    border: 1px solid #555;
+    opacity: .65;
+    cursor: default;
+}
+
+.mtm-input-button.mtm-btn-sm {
+    padding: 3px 5px;
+    line-height : 0.8;
+    font-size : 10px;
+    font-weight: 600;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-radius: 2px;
+}
+
+.mtm-input-button.mtm-btn-md {
+    padding: 5px 5px;
+    line-height : 1.2;
+    font-size : 14px;
+    font-weight: 600;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-radius: 5px;
+}
+
+.mtm-input-button {
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 20px;
+}
+  /* Boostrap Buttons Styling */
+  
+.mtm-input-button-default {
+    font-family: Raleway-SemiBold;
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 15px;
+    /* color: rgba(108, 88, 179, 0.75);
+    border: 2px solid rgba(108, 89, 179, 0.75); */
+    color: var(--theme-color-v2-c0-rgb);
+    border: 2px solid var(--theme-color-v2-c0-rgb);
+    
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+  
+.mtm-input-button-default:hover {
+    color: #FFF;
+    /* background: rgba(108, 88, 179, 0.75);
+    border: 2px solid rgba(108, 89, 179, 0.75); */
+    background: var(--theme-color-v2-c0-rgb);
+    border: 2px solid var(--theme-color-v2-c0-rgb);
+}
+  
+.mtm-input-button-primary {
+    font-family: Raleway-SemiBold;
+    font-size: 13px;
+    color: rgba(58, 133, 191, 0.75);
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 2px solid rgba(58, 133, 191, 0.75);
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+
+  
+.mtm-input-button-primary:hover {
+    color: #FFF;
+    background: rgba(58, 133, 191, 0.75);
+    border: 2px solid rgba(58, 133, 191, 0.75);
+}
+  
+.mtm-input-button-success {
+    font-family: Raleway-SemiBold;
+    font-size: 13px;
+    color: rgba(103, 192, 103, 0.75);
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 2px solid rgba(103, 192, 103, 0.75);
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+  
+.mtm-input-button-success:hover {
+    color: #FFF;
+    background: rgb(103, 192, 103, 0.75);
+    border: 2px solid rgb(103, 192, 103, 0.75);
+}
+  
+.mtm-input-button-info {
+    font-family: Raleway-SemiBold;
+    font-size: 13px;
+    color: rgba(91, 192, 222, 0.75);
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 2px solid rgba(91, 192, 222, 0.75);
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+  
+.mtm-input-button-info:hover {
+    color: #FFF;
+    background: rgba(91, 192, 222, 0.75);
+    border: 2px solid rgba(91, 192, 222, 0.75);
+}
+  
+.mtm-input-button-warning {
+    font-family: Raleway-SemiBold;
+    font-size: 13px;
+    color: rgba(240, 173, 78, 0.75);
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 2px solid rgba(240, 173, 78, 0.75);
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+  
+.mtm-input-button-warning:hover {
+    color: #FFF;
+    background: rgb(240, 173, 78, 0.75);
+    border: 2px solid rgba(240, 173, 78, 0.75);
+}
+
+.mtm-input-button-warning-hover {
+    color: #FFF;
+    background: rgb(240, 173, 78, 0.75);
+    border: 2px solid rgba(240, 173, 78, 0.75);
+}
+
+  
+.mtm-input-button-danger {
+    font-family: Raleway-SemiBold;
+    font-size: 13px;
+    color: rgba(217, 83, 78, 0.75);
+    letter-spacing: 1px;
+    line-height: 15px;
+    border: 2px solid rgba(217, 83, 78, 0.75);
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+  
+.mtm-input-button-danger:hover {
+    color: #FFF;
+    background: rgba(217, 83, 78, 0.75);
+    border: 2px solid rgba(217, 83, 78, 0.75);
+}
+
+.mtm-input-button-orange {
+    font-family: Raleway-SemiBold;
+    /* font-size: 13px; */
+    color: rgba(244, 142, 34);
+    letter-spacing: 1px;
+    /* line-height: 15px; */
+    border: 1px solid  rgba(244, 142, 34);
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+  
+.mtm-input-button-orange:hover:not(:disabled) {
+    color: #FFF;
+    background: rgba(244, 142, 34);
+    border: 1px solid rgba(244, 142, 34);
+    
+}
+
+.mtm-input-button-orange:hover {
+    color: #FFF;
+    background: rgba(244, 142, 34);
+    border: 2px solid rgba(244, 142, 34);
+}
+
+.mtm-input-button-fixed{
+    -webkit-box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
+    box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
+    border: transparent;
+    outline: 0px;
+    user-select: none;
+}
+
+/* .mtm-input-button-fixed:focus{
+    outline: 0px;
+} */
+
+/* transparent */
+.mtm-input-button-transparent {
+    font-family: Raleway-SemiBold;
+    /* font-size: 13px; */
+    color: #fff;
+    letter-spacing: 1px;
+    /* line-height: 15px; */
+    border: 1px solid #fff;
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+  
+.mtm-input-button-transparent:hover:not(:disabled) {
+    color: #FFF;
+    font-weight: 900;
+    transform:translatey(-1px);
+}
+
+.mtm-input-button-transparent:active:not(:disabled) {
+    color: #FFF;
+    transform:translatey(1px);
+}
+
+
+.mtm-input-button-theme {
+    font-family: Raleway-SemiBold;
+    /* color: var(--theme-color-main); */
+    color: var(--theme-color-v2-c1-rgb); 
+    letter-spacing: 1px;
+    border: 1px solid var(--theme-color-v2-c1-rgb);
+
+    /* border-radius: 40px; */
+    background: white;
+    transition: all 0.3s ease 0s;
+}
+
+.mtm-input-button-black {
+    font-family: Raleway-SemiBold;
+    color: #000;
+    letter-spacing: 1px;
+    border: 1px solid #000;
+
+    /* border-radius: 40px; */
+    /* background: transparent; */
+    transition: all 0.3s ease 0s;
+}
+
+.mtm-input-button-theme-dark {
+    font-family: Raleway-SemiBold;
+    color: var(--theme-color-dark);
+    letter-spacing: 1px;
+    border: 1px solid var(--theme-color-dark);
+
+    /* border-radius: 40px; */
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+
+.mtm-input-button-theme-deepdark {
+    font-family: Raleway-SemiBold;
+    color: var(--theme-color-deepdark);
+    letter-spacing: 1px;
+    border: 1px solid var(--theme-color-deepdark);
+
+    /* border-radius: 40px; */
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+
+.mtm-input-button-hover-theme {
+    color: #FFF;
+    background: var(--theme-color-v2-c0-rgb);
+    border: 2px solid var(--theme-color-v2-c0-rgb);
+}
+
+.mtm-input-button-black:active:not(:disabled) {
+    /* color: #FFF; */
+    background-color: white;
+    color: #000;
+    transform:translatey(1px);
+    /* scale: 0.9; */
+    outline: 0px;
+}
+
+.mtm-input-button-theme:active:not(:disabled) {
+    /* color: #FFF; */
+    background-color: white;
+    /* color: var(--theme-color-main); */
+    color: var(--theme-color-v2-c1-rgb);
+    transform:translatey(1px);
+    /* scale: 0.9; */
+    outline: 0px;
+}
+
+.mtm-input-button-theme-dark:active:not(:disabled) {
+    /* color: #FFF; */
+    background-color: white;
+    color: var(--theme-color-dark);
+    transform:translatey(1px);
+    /* scale: 0.9; */
+    outline: 0px;
+}
+
+.mtm-input-button-theme-deepdark:active:not(:disabled) {
+    /* color: #FFF; */
+    background-color: white;
+    color: var(--theme-color-deepdark);
+    transform:translatey(1px);
+    /* scale: 0.9; */
+    outline: 0px;
+}
+
+.mtm-input-button-black:hover:not(:disabled) {
+    color: #FFF;
+    background: #000;
+    border: 1px solid #000;   
+}
+
+.mtm-input-button-theme:hover:not(:disabled) {
+    color: #FFF;
+    /* background: var(--theme-color-main);
+    border: 1px solid var(--theme-color-main);    */
+    background: var(--theme-color-v2-c1-rgb);
+    border: 1px solid var(--theme-color-v2-c1-rgb);   
+}
+
+.mtm-input-button-theme-dark:hover:not(:disabled) {
+    color: #FFF;
+    background: var(--theme-color-dark);
+    border: 1px solid var(--theme-color-dark);   
+}
+
+.mtm-input-button-theme-deepdark:hover:not(:disabled) {
+    color: #FFF;
+    background: var(--theme-color-deepdark);
+    border: 1px solid var(--theme-color-deepdark);   
+}
+
+
+.mtm-input-button-c1 {
+    font-family: Raleway-SemiBold;
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 15px;
+    color: var(--theme-color-v2-c1-rgb);
+    border: 2px solid var(--theme-color-v2-c1-rgb);
+    
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+  
+.mtm-input-button-c1:hover {
+    color: #FFF;
+    background: var(--theme-color-v2-c1-rgb);
+    border: 2px solid var(--theme-color-v2-c1-rgb);
+}
+
+
+.mtm-input-button-c2 {
+    font-family: Raleway-SemiBold;
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 15px;
+    color: var(--theme-color-v2-c2-rgb);
+    border: 2px solid var(--theme-color-v2-c2-rgb);
+    
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+  
+.mtm-input-button-c2:hover {
+    color: #FFF;
+    background: var(--theme-color-v2-c2-rgb);
+    border: 2px solid var(--theme-color-v2-c2-rgb);
+}
+
+.mtm-input-button-c3 {
+    font-family: Raleway-SemiBold;
+    font-size: 13px;
+    letter-spacing: 1px;
+    line-height: 15px;
+    color: var(--theme-color-v2-c3-rgb);
+    border: 2px solid var(--theme-color-v2-c3-rgb);
+    
+    border-radius: 40px;
+    background: transparent;
+    transition: all 0.3s ease 0s;
+}
+  
+.mtm-input-button-c3:hover {
+    color: #FFF;
+    background: var(--theme-color-v2-c3-rgb);
+    border: 2px solid var(--theme-color-v2-c3-rgb);
+}
+.btn.btn-sm {
+    padding: 0.25rem 0.8rem;
+    font-size: .64rem;
+}

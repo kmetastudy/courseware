@@ -1,0 +1,19 @@
+/* set Plyr size */
+/* https://stackoverflow.com/questions/47184146/resize-video-proportionally-to-its-container */
+.mtm-plyr {
+    height: 100%;
+    width: 100%;
+}
+
+.plyr {
+    height: 100%;
+    width :100%;
+}
+
+.plyr__video-wrapper {
+    height: 100%;
+}
+.plyr__video-wrapper iframe {
+    width: 100%;
+    height: 100%;
+}

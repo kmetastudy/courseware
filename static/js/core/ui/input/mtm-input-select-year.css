@@ -1,0 +1,237 @@
+/* How to fill 100% of remaining width */
+/* https://stackoverflow.com/questions/8252518/how-to-fill-100-of-remaining-width */
+
+.mtm-input-select-year .wrapper {
+    /* padding: 10px 10px;
+    display: flex; */
+    /* display: flex; */
+    border-radius: 7px;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 30%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 30%);
+    box-sizing: content-box;
+    border : 2px solid var(--theme-color-v2-c0-rgb);
+}
+
+.mtm-input-select-year button {
+    background-color: transparent; /* background */
+    border: 1px solid var(--theme-color-v2-c1-rgb);
+    color: black;
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+}
+
+.mtm-input-select-year  button:focus 
+{
+    outline:0;
+}
+
+  /* Clear floats (clearfix hack) */
+.mtm-input-select-year:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+  
+/* button:first-child */
+.mtm-input-select-year .mtm-input-select-year-left  {
+    border-radius: 5px 0px 0px 5px; /* First button Corner */
+    width:10%;
+    padding: 5px 10px; /* Some padding */
+    border: none;
+    background-color: var(--theme-color-v2-c1-rgb);
+    box-sizing: border-box;
+    min-width : 20px;
+    max-width : 40px;
+    position: relative;
+    border-right: 2px solid var(--theme-color-v2-c0-rgb);
+}
+
+.mtm-input-select-year-left:after  {
+    box-sizing: border-box;
+    left: 50%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+
+    border-color: rgba(136, 183, 213, 0);
+    border-right-color: white;
+    border-width: 6px;
+    margin-left : -9px;
+    margin-top: -6px;
+}
+
+/* button:last-child */
+.mtm-input-select-year  .mtm-input-select-year-right{
+    border-radius: 0px 5px 5px 0px; /* Last button Corner */
+    padding: 5px 10px; /* Some padding */
+    width:10%;
+    border: none;
+    background-color: var(--theme-color-v2-c1-rgb);
+    box-sizing: border-box;
+    min-width: 20px;
+    max-width: 40px;
+    position: relative;
+    border-left: 2px solid var(--theme-color-v2-c0-rgb);
+}
+
+.mtm-input-select-year-right:after{
+    
+    box-sizing: border-box;
+    left: 50%;
+    top: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+
+    border-color: rgba(136, 183, 213, 0);
+    /* border-color: rgba( var(--theme-color-v2-black), 0.2); */
+    border-left-color: white;
+    border-width: 6px;
+    margin-left : -3px;
+    margin-top: -6px;
+}
+
+.mtm-input-select-year  .mtm-input-select-year-center{
+    padding: 3px 10px; 
+    /* Some padding */
+    flex-grow: 1;
+    border: none;
+    border: 1px solid var(--theme-color-v2-c1-rgb);
+    box-sizing: border-box; 
+}
+  
+/* Add a background color on hover */
+.mtm-input-select-year button:hover {
+    /* color: lightskyblue; */
+    /* background-color: rgb(244, 165, 5); */
+    background-color: rgba(var(--theme-color-v2-c1),0.8);
+    color: white;
+}
+
+.mtm-input-select-year .mtm-input-select-scroll-year{
+    padding: 0;
+    /* border-radius: 5px; */
+    /* text not selected or high light */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.mtm-input-select-year  .mtm-input-select-scroll-year{
+    /* padding: 3px 10px;  */
+    /* Some padding */
+    flex-grow: 1;
+    border: none;
+    /* border: 1px solid rgba(var(--theme-color-v2-c1),0.8); */
+    /* border: 1px solid rgba(var(--theme-color-v2-black),0.2); */
+    box-sizing: border-box; 
+    background-color: var(--theme-color-v2-c1-rgb);
+}
+
+.mtm-input-select-scroll-year {
+    /* margin: 20px; */
+    padding: 10px 10px;
+    /* border-radius: 5px; */
+    /* text not selected or high light */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.mtm-input-select-scroll-year .box {
+    display: inline-block;
+    position: relative;
+    width:100%;
+    /* width: 150px; */
+}
+
+.mtm-input-select-scroll-year .box .select {
+    position: relative;
+    background: var(--theme-color-v2-c1-rgb);
+    box-sizing: border-box;
+    padding: 3px 16px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.mtm-input-select-scroll-year .box .select:after {
+    
+    box-sizing: border-box;
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+}
+
+.mtm-input-select-scroll-year.on .box .select:after {
+    /* content: '▲'; */
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+}
+
+.mtm-input-select-scroll-year .box .list {
+    display: none;
+    overflow-y: auto;
+    position: absolute;
+    top: 35px;
+    left: 0;
+    z-index: 10;
+    
+    border: 1px solid rgba(var(--theme-color-v2-c1),0.8);
+    box-sizing: border-box;
+    padding: 0px 0;
+    width: 100%;
+    max-height: 200px;
+    
+    background-color: var(--theme-color-v2-c1-rgb);
+    color: white;
+
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 36%), 0 2px 10px 0 rgb(0 0 0 / 32%);
+    border-radius: 5px;
+}
+.mtm-input-select-scroll-year .box .list::-webkit-scrollbar {
+    width: 10px;
+    height: 0;
+}
+
+.mtm-input-select-scroll-year .box .list::-webkit-scrollbar-button:start:decrement,
+.mtm-input-select-scroll-year .box .list::-webkit-scrollbar-button:end:increment {
+    display: block;
+    height: 0;
+}
+.mtm-input-select-scroll-year .box .list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, .05);
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.mtm-input-select-scroll-year .box .list::-webkit-scrollbar-thumb {
+    height: 50px;
+    width: 50px;
+    background: rgba(0, 0, 0, .2);
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.mtm-input-select-scroll-year .box .list>li {
+    box-sizing: border-box;
+    padding: 0 10px;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    cursor: pointer;
+}
+.mtm-input-select-scroll-year .box .list>li:hover {
+    
+    background-color: rgba(var(--theme-color-v2-c2),0.5);
+}

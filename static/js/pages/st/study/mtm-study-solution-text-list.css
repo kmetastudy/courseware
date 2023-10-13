@@ -1,0 +1,83 @@
+/* .cl-solution-text-wrapper {
+    height: auto;
+    transition : height 0.5 ease;
+} */
+
+
+.cl-solution-text-header-divider {
+    background-color: rgba(170, 170, 170, 0.3);
+    margin-top: 0;
+    width: 100%;
+    margin-top : 10px;
+    margin-bottom: 4px;
+    height: 2px;
+}
+
+.cl-solution-text-item-divider {
+    background-color: rgba(170, 170, 170, 0.3);
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 4px;
+    margin-right: 4px;
+    height: 1px;
+}
+
+.cl-solution-list-header {
+    /* background-color: rgb(199, 251, 177); */
+    background-color:  var(--theme-color-v2-c0-rgb);
+    color:  var(--theme-color-v2-c0-rgb);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cl-solution-list-header:hover {
+    /* background-color: rgb(241, 251, 172); */
+    background-color:  var(--theme-color-v2-c1-rgb);
+}
+
+.cl-solution-list-btn {
+    border:2px solid white;
+    color:white;
+}
+
+
+.cl-solution-text-list-btn {
+    border:2px solid white;
+    color:white;
+}
+
+.cl-solution-text-header {
+    /* background-color: rgb(199, 251, 177); */
+    background-color: var(--theme-color-v2-c0-rgb);
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cl-solution-text-header:hover {
+    /* background-color: rgb(241, 251, 172); */
+    background-color: var(--theme-color-v2-c0-rgb);
+}
+
+/* 스크롤바 숨기기 */
+.cl-solution-text-content{
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+/* 스크롤바 숨기기 */
+.cl-solution-text-content::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
+
+.cl-solution-text-wrapper.hidden .cl-solution-text-content {
+    max-height: 0;
+    background-color: rgba(var(--theme-color-v2-c2),0.1);
+    transition: max-height .5s ease;
+}
+    
+.cl-solution-text-wrapper.open .cl-solution-text-content{
+    max-height: 100vh;
+    background-color: rgba(var(--theme-color-v2-c2),0.1);
+    transition: max-height 1.5s ease;
+}

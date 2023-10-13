@@ -1,0 +1,43 @@
+
+
+.mtm-question-card {
+    width: 460px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.43),
+                0px 0px 2px rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    margin: 4px;
+}
+
+.mtm-question-card.selected{
+    border: 2px solid rgb(0, 123, 225);
+}
+
+.question-card-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid black;
+    min-height: 25px;
+}
+
+.question-card-header > button {
+    cursor: pointer;
+    padding: 0.25rem 0.8rem;
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+
+.card-wrapper {
+    height: 240px;
+}
+
+.question-card-body {
+    /* height: 230px; */
+    width: 100%;
+    padding: 5px;
+    /* overflow: none auto; */
+}

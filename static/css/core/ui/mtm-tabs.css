@@ -1,0 +1,88 @@
+.mtm-tabs-tab {
+    color: var(--theme-color-v2-black-rgb);
+    border-left: 2px solid var(--theme-color-v2-gray-rgb);
+    border-top: 2px solid var(--theme-color-v2-gray-rgb);
+    border-right: 2px solid var(--theme-color-v2-gray-rgb);
+    border-radius: 5px 5px 0px 0px;
+    
+    position: relative;
+    display: inline-block;
+    padding: 5px 10px 5px 10px;
+    border-bottom: 0;
+    cursor: pointer;
+    margin-left : 2px;
+    margin-right : 2px;
+    
+    /* text not selected or high light */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+
+}
+
+
+.mtm-tabs-tab.active {
+    border-left: 2px solid var(--theme-color-v2-c2-rgb);
+    border-top: 2px solid var(--theme-color-v2-c2-rgb);
+    border-right: 2px solid var(--theme-color-v2-c2-rgb);
+    border-bottom: 2px solid var(--theme-color-v2-white-rgb);
+    border-radius: 5px 5px 0px 0px;
+    /* background-color: transparent; */
+    background-color : var(--theme-color-v2-white-rgb);
+    
+    /* border-bottom: 2px solid var(--theme-color-v2-white-rgb); */
+    margin-bottom: -2px;
+    
+}
+
+.mtm-tabs-tab.label {
+    border-left: 0px solid var(--theme-color-v2-c2-rgb);
+    border-top: 0px solid var(--theme-color-v2-c2-rgb);
+    border-right: 0px solid var(--theme-color-v2-c2-rgb);
+    border-bottom: 2px solid var(--theme-color-v2-c2-rgb);
+    
+    border-radius: 5px 5px 0px 0px; 
+    background-color : var(--theme-color-v2-c2-rgb);
+    padding : 4px 4px 0 4px;
+}
+
+.mtm-tabs-tab.label img {
+    height : 30px;
+}
+
+.mtm-tabs-tab.label:hover{
+    background-color : var(--theme-color-v2-c2-rgb);
+}
+
+.mtm-tabs-tab:hover{
+    background: var(--theme-color-v2-white-rgb);
+    color: var(--theme-color-v2-black-rgb);
+}
+
+.mtm-tabs-tab-left {
+    float : left;
+}
+
+.mtm-tabs-tab-right {
+    float : right;
+}
+
+.mtm-tabs-tab-center {
+    float : none;
+}
+
+.mtm-tabs-tab-div {
+    display: block;
+    font-weight: bold;
+}
+
+.mtm-tabs-tab-div-center {
+    display:flex;
+    justify-content: center;
+}
+
+.mtm-tabs-panel-div {
+    clear:both;
+    
+    border-top: 2px solid var(--theme-color-v2-c2-rgb);
+}

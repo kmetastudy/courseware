@@ -1,0 +1,198 @@
+.cl-solution-video-list
+{
+    display: flex;
+    flex-direction: column;
+    /* 이것은 정체가 무엇? cl-yt-solution-video-list 에는 없음*/
+    align-items: flex-start;    
+}
+
+.cl-yt-solution-video-list
+{
+    display: flex;
+    flex-direction: column;
+}
+
+.cl-yt-solution-video-item-wrapper
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap : nowrap;
+    width: 100%;
+    /* margin-top:10px; */
+    /* margin-bottom:10px; */
+    cursor: pointer;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.cl-yt-solution-video-item-wrapper:nth-child(2n)
+{
+    /* background-color: rgb(198, 249, 249); */
+    background-color: rgba(var(--theme-color-v2-c2),0.5);
+}
+.cl-yt-solution-video-item-wrapper:nth-child(2n+1)
+{
+    /* background-color: rgb(233, 242, 242); */
+    background-color: rgba(var(--theme-color-v2-c1),0.5);
+}
+
+.cl-yt-solution-video-item-wrapper:nth-child(2n+1):hover
+{
+    /* background-color: rgb(242, 249, 198); */
+    background-color: rgba(var(--theme-color-v2-c0),0.5);
+}
+
+.cl-yt-solution-video-item-wrapper:nth-child(2n):hover
+{
+    /* background-color: rgb(242, 249, 198); */
+    background-color: rgba(var(--theme-color-v2-c0),0.5);
+}
+
+.cl-solution-video-item-wrapper
+{
+    margin-top: 15px;
+    text-decoration: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 10px;
+    margin-top:10px;
+    margin-bottom:10px;
+    cursor: pointer;
+}
+
+.cl-yt-solution-video-item-wrapper .thumb-nail
+{
+    align-self:center;
+    width:50%;
+    flex:1;
+    position: relative;
+    padding-left : 10px;
+    padding-right: 10px;
+    box-sizing: border-box;
+
+}
+
+.cl-yt-solution-video-item-wrapper .thumb-nail .img-wrapper img
+{
+    
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+}
+
+.cl-solution-video-item-wrapper .thumb-nail
+{
+    height: 100px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.cl-yt-solution-video-item-wrapper .details
+{
+    width: 50%;
+    flex:1;
+    padding-right: 10px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+.cl-solution-video-item-wrapper .details
+{
+    box-sizing: border-box;
+}
+
+.cl-yt-solution-video-item-wrapper .details .title
+{
+    font-weight: 500;
+    font-size : 1.0rem;
+    /* display: block; */
+    
+    line-height: 1.2em;
+    height: 2.4em;
+    display: -webkit-box;
+   -webkit-line-clamp: 2; /* number of lines to show */
+           line-clamp: 2; 
+   -webkit-box-orient: vertical;
+
+    text-overflow: ellipsis;
+    white-space: normal;
+    overflow: hidden;
+    margin-bottom: 10px;
+} 
+
+.cl-solution-video-item-wrapper .details .title
+{
+    /* color: white; */
+    font-size: 14px;
+    font-weight: 500;
+} 
+
+.cl-yt-solution-video-item-wrapper .details .author
+{
+    font-size : 0.8rem;
+    display: block;
+    
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+}
+
+.cl-solution-video-item-wrapper .details .author
+{
+    color: rgb(170, 170, 170);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.cl-yt-solution-video-item-wrapper .details .info
+{
+    /* font-family: "Roboto","Arial",sans-serif; */
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    font-weight: 400;
+    max-height: 3.6rem;
+    overflow: hidden;
+    display: block;
+    -webkit-line-clamp: 2;
+    display: flex;
+}
+
+.cl-solution-video-item-wrapper .details .info
+{
+    color: rgb(170, 170, 170);
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.cl-yt-solution-video-item-wrapper .details .info span:not(:last-of-type):after {
+    content: "•";
+    margin: 0 4px;
+}
+
+.cl-solution-video-item-wrapper .details .info span:not(:last-of-type):after {
+    content: "•";
+    margin: 0 4px;
+}
+
+.cl-yt-solution-video-header-divider {
+    background-color: rgba(170, 170, 170, 0.3);
+    margin-top: 0;
+    width: 100%;
+    /* margin-top : 10px; */
+    margin-bottom: 4px;
+    height: 2px;
+}
+
+.cl-yt-solution-video-item-divider {
+    background-color: rgba(170, 170, 170, 0.3);
+    margin-top: 0;
+    width: 90%;
+    /* margin-top : 10px; */
+    height: 1px;
+}

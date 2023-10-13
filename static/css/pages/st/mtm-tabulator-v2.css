@@ -1,0 +1,30 @@
+.mtm-tabulator-table{
+    /* padding: 10px 10px; */
+    
+}
+.mtm-tabulator.tabulator {
+    background-color: rgba(var(--theme-color-v2-c1),0.7) !important;
+}
+
+.mtm-tabulator.tabulator .tabulator-header {
+    border-bottom: 1px solid transparent !important;
+    background-color: var(--theme-color-v2-c1-rgb);
+    color: #fff;
+} 
+
+.mtm-tabulator.tabulator .tabulator-header .tabulator-col{
+    background-color: var(--theme-color-v2-c1-rgb);
+}
+
+.mtm-tabulator.tabulator .tabulator-row.tabulator-selectable:hover {
+    background-color: rgba(var(--theme-color-v2-c1),0.8);
+    
+}
+
+.mtm-tabulator-table .mtm-tabulator i.title {
+    color : var(--theme-color-v2-c1-rgb);
+}
+
+.tabulator-placeholder-contents {
+    color : white !important;
+}

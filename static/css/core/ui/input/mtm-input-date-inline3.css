@@ -1,0 +1,85 @@
+.mtm-input-date-inline3 {
+    /* display:flex; */
+    /* padding: 10px; */
+    margin-left: 2px;
+    margin-right: 2px;
+    /* width : 110px; */
+    width:80px;
+    /* text-align: center; */
+}
+
+.mtm-input-date-inline3.date {
+    width:80px;
+}
+
+.mtm-input-date-inline3.date-time {
+    width:110px;
+}
+
+.mtm-input-date-inline3.time {
+    width:40px;
+}
+
+.mtm-input-date-inline3 label {
+    display: inline-block;
+    /* color: dodgerblue; */
+    color : var(--theme-color-v2-c1-rgb);
+    vertical-align: middle;
+    background-color: white;
+    /* border: 1px solid dodgerblue; */
+    border: 1px solid var(--theme-color-v2-c1-rgb);
+    border-radius: 10px 0px 0px 10px; /* First button Corner */
+    
+    margin:0;
+    /* width:20%; */
+    box-sizing: border-box;
+}
+
+.mtm-input-date-inline3 .mtm-input-date-input{
+    /* display: inline-block; */
+    /* flex:1; */
+    /* height: 35px; */
+    /* font-size:18px;  */
+    font-size:12px;
+    padding: 0px 2px;
+    vertical-align: middle;
+    background-color: white;
+    border: 1px solid var(--theme-color-v2-c1-rgb);
+    box-sizing: border-box;
+    border-radius: 20px; /* First button Corner */
+    outline: 0px;
+    text-align: center;
+    color: var(--theme-color-v2-c1-rgb);
+}
+
+.mtm-input-date-inline3 input {
+    border: none;
+    box-sizing: border-box;
+    outline: 0;
+    /* padding: .75rem; */
+    position: relative;
+    width: 100%;
+}
+
+/* ::-webkit-calendar-picker-indicator {
+    color: rgb(78, 165, 252);
+} */
+
+.mtm-input-date-inline3 input.mtm-input-date-input[type="date"]{
+    
+    fill:#1e90ff;
+    background-size: 0px 0px;
+}
+
+.mtm-input-date-inline3 input.mtm-input-date-input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    /* color: transparent; */
+    cursor: pointer;
+    /* height: auto; */
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}

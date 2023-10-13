@@ -1,0 +1,39 @@
+.mtm-dash-board-card {
+    font-weight: 400;
+    border: 0;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 5px;
+}
+
+.mtm-dash-board-header {
+    border-radius : 5px 5px 0 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    background-color: rgba(var(--theme-color-v2-c0),0.5);
+    /* color : white; */
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.mtm-dash-board-header.shrink {
+    border-bottom: 0px solid rgba(0,0,0,.125);
+    border-radius : 5px 5px 5px 5px;
+}
+
+.mtm-dash-board-header.disabled {
+    border-bottom: 0px solid rgba(0,0,0,.125);
+    border-radius : 5px 5px 5px 5px;
+    background-color: rgba(var(--theme-color-v2-c0),0.125);
+}
