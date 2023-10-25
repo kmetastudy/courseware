@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MegaCourse-S</title>
     <!-- MDB icon -->
+    <!-- axios(currently for test) -->
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
     <link rel="icon" href="{% static 'img/mdb-favicon.ico' %}" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
     <link rel="stylesheet" href="{% static '_dist/bootstrap/v5.2.1/bootstrap-reboot.min.css'%}" />
@@ -38,7 +41,10 @@
     <!-- Plyr -->
     <!-- <script type="text/javascript" src="{% static 'plugins/plyr-master/dist/plyr.js' %}"></script>  -->
     <script type="text/javascript" src="{% static '_dist/plyr/3.7.2/plyr.min.js' %}"></script>
+    {% comment %}
     <script type="text/javascript" src="{% static '_dist/sweetalert/sweetalert.min.js' %}"></script>
+    {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
   <body>
@@ -51,6 +57,10 @@
   <script>
     var csrftoken = "{{csrf_token}}";
     var context = "{{ context|escapejs }}";
+    const defaultAxiosConfig = {
+      headers: { "X-CSRFTOKEN": "{{csrf_token}}" },
+    };
+    axios.defaults.headers = defaultAxiosConfig.headers;
     window.addEventListener("DOMContentLoaded", function () {
       console.log("stlibrary: ", stlibrary);
       stlibrary.st_run(context);
