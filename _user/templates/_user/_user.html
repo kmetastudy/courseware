@@ -1,0 +1,33 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MegaCourse-S</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="{% static 'img/mdb-favicon.ico' %}" type="image/x-icon" />
+    <!-- axios(currently for test) -->
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <div id="body"></div>
+
+    <link rel="stylesheet" href="{% static '_bundle/user/user-bundle.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/user/user-bundle.js' %}"></script>
+  </body>
+
+  <script>
+    var csrftoken = "{{csrf_token}}";
+    var context = "{{ context|escapejs }}";
+    const defaultAxiosConfig = {
+      headers: { "X-CSRFTOKEN": "{{csrf_token}}" },
+    };
+    axios.defaults.headers = defaultAxiosConfig.headers;
+    window.addEventListener("DOMContentLoaded", function () {
+      console.log("userlibrary: ", userlibrary);
+      userlibrary.user_run(context);
+    });
+  </script>
+</html>
