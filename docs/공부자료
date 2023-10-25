@@ -1,0 +1,63 @@
+### 공부자료
+
+
+## JavaScript
+
+### 동영상 
+
+
+* 자바스크립트
+* > https://www.youtube.com/watch?v=W6NZfCO5SIk
+
+
+* JS ES6 (optional)
+* > https://www.youtube.com/watch?v=NCwa_xi0Uuc
+
+* JS OOP
+* > https://www.youtube.com/watch?v=PFmuCDHHpwk
+
+
+* JS OOP (부사장님이 추천)
+* > https://www.youtube.com/watch?v=HkFlM73G-hk&list=PLoYCgNOIyGABs-wDaaxChu82q_xQgUb4f
+
+### papers
+
+* 자바스크립트 딥다이브
+* > https://poiemaweb.com/
+
+* 모던 자바스크립트 (optional)
+* > https://poiemaweb.com/
+
+* 점프 투 장고
+* > https://wikidocs.net/book/4223
+
+* 장고 docs
+* > https://docs.djangoproject.com/en/4.1/intro/tutorial01/
+
+* 장고 ORM
+* > https://django-orm-cookbook-ko.readthedocs.io/en/latest/query.html
+
+
+
+## Django(Python)
+
+### 동영상 
+* 파이썬(mosh)
+* > https://www.youtube.com/watch?v=kqtD5dpn9C8&t=1187s
+
+* Django Tutorial (optional)
+* > https://www.youtube.com/watch?v=rHux0gMZ3Eg&t=1696s
+
+
+### papers
+* 점프 투 장고
+* > https://wikidocs.net/book/4223
+
+* 장고 docs
+* > https://docs.djangoproject.com/en/4.1/intro/tutorial01/
+
+* 장고 ORM
+* > https://django-orm-cookbook-ko.readthedocs.io/en/latest/query.html
+
+* 장고 모델에서 기본키(PK) 를 uuid 로 하는 방법
+https://django-orm-cookbook-ko.readthedocs.io/en/latest/uuid.html

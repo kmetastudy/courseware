@@ -1,0 +1,69 @@
+st.js
+
+전체적으로 `mtoEvents` 라는 pubsub 함수를 사용해서, 관리.
+on: subscribe, off: unsubscribe, emit: publish
+다시 보니 `mtvEvents`도 있네. 둘 다 pubsub같은데 뭐가 다른거지..?
+아니면 events를 관리하기 쉽게 나눈거일 수도 있을거같다.
+
+body
+    + clNavbar(mtmNaviBar)
+    + clLearnManager(mtmLearnManager)
+        + elLeftPanel
+            + clLeftTab(mtmTab)
+                + clStudyContainer(mtmStudyContainer)
+                + clStatContaner(mtmStatContainer)
+        + elRightPanel
+            + clRightTab(mtmTab)
+                + clStudyBuilder(mtmStudyBuilder)
+                + clStatBuilder(mtmStatBuilder)
+
+mtmStudyContainer
+    + clCourseSelector(mtmInputSelectScroll) : 코스 선택
+    + clWeekSelector(mtmInputSelectCourseWeek) : 기간 선택->기간에 맞는 코스 가져옴(체험판에는 안쓰는듯..?)
+    + clContentTabs(mtmTabs)
+    + clListTableCourseContent(mtmListTableCourseContent) 코스들, tabulator library 사용
+        + clPrgoress(mtmCircularProgress) 코스들의 progress정보 (circular)
+
+    student info -> get assigned course -> courseSelector.setList, courseSelector.setTitle
+
+
+mtmStatContainer
+
+mtmStudyBuilder
+    + mtoEvents (_initEvents)
+    + clPlayerTestum(mtmPlayerTestum)
+    + clPlayerLesson(mtmPlayerLesson)
+
+mtmPlayerTestum
+    + clTestumTitle(mtmPlayerTestumTitle)
+        Title
+        RenderLatex
+    + clPlayerTestumProgress(mtmPlayerTestumProgress)
+        위에 줄
+        swiper 사용
+        용도 모르겠음(클릭해도 반응X)
+    + clTestumSubmitAction(mtmPlayerTestumSubmitAction) - 역할 없음
+    + clTestumIndicator(mtmPlayerTestumIndicator)
+        아래줄
+        swiper 사용
+        문제 번호
+        clickIndicatorHandler -> setQuestionIndex(mtm-player-testum-viewr)
+    + clPlayerTestumViewer(mtmPlayerTestumViewer)
+        + clElapseTimer(mtmElapseTimer)
+    + clTestumResultAction(mtmPlayerTestumResultAction)
+        결과 보여주기 전 action?
+    + clTestumResultTable(mtmPlayerTestumResultTable)
+        결과 보여주기
+
+mtmPlayerLesson
+    + clPlayerLessonTitle(mtmPlayerLessonTitle)
+    + clPlayerLessonProgress(mtmPlayerLessonProgress)
+    
+    + clMessagePopUp(mtmStudyMessagePopup)
+
+    + clLessonSubmitAction(mtmStudySubmitAction)
+    + clLessonResultTable(mtmPlayerLessonResultTable)
+
+    + clPlayerLessonQuestion(mtmPlayerLessonQuestion)
+    + clPlayerLessonContent(mtmPlayerLessonContent) - lazy 생성
+        + mtmPlyr
