@@ -31,48 +31,6 @@ var config = {
   // ]
 };
 
-var configML = Object.assign({}, config, {
-  name: "configML",
-
-  entry: {
-    ml: path.resolve(__dirname, "_ml/static/js/ml.js"),
-  },
-  output: {
-    path: path.resolve(__dirname, "static/_bundle/ml"),
-    library: "mllibrary",
-    filename: "ml-bundle-20230807.js",
-    libraryTarget: "var",
-    clean: true,
-    // assetModuleFilename: '[name][ext]',
-  },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: "ml-bundle-20230807.css",
-    }),
-  ],
-});
-
-var configMN = Object.assign({}, config, {
-  name: "configMN",
-
-  entry: {
-    mn: path.resolve(__dirname, "_mn/static/js/mn.js"),
-  },
-  output: {
-    path: path.resolve(__dirname, "static/_bundle/mn"),
-    library: "mnlibrary",
-    filename: "mn-bundle-20230807.js",
-    libraryTarget: "var",
-    clean: true,
-    // assetModuleFilename: '[name][ext]',
-  },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: "mn-bundle-20230807.css",
-    }),
-  ],
-});
-
 var configCP = Object.assign({}, config, {
   name: "configCP",
 
@@ -92,27 +50,6 @@ var configCP = Object.assign({}, config, {
     new MiniCssExtractPlugin({
       // filename: "cp-bundle-20230807.css",
       filename: `cp-bundle-20231012.css`,
-    }),
-  ],
-});
-
-var configTC = Object.assign({}, config, {
-  name: "configTC",
-
-  entry: {
-    tc: path.resolve(__dirname, "_tc/static/js/tc.js"),
-  },
-  output: {
-    path: path.resolve(__dirname, "static/_bundle/tc"),
-    library: "tclibrary",
-    filename: "tc-bundle-20230807.js",
-    libraryTarget: "var",
-    clean: true,
-    // assetModuleFilename: '[name][ext]',
-  },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: "tc-bundle-20230807.css",
     }),
   ],
 });
@@ -138,10 +75,32 @@ var configST = Object.assign({}, config, {
   ],
 });
 
+// bundle for test(dev)
+var configUser = Object.assign({}, config, {
+  name: "configUser",
+
+  entry: {
+    st: path.resolve(__dirname, "_user/static/js/user.js"),
+  },
+  output: {
+    path: path.resolve(__dirname, "static/_bundle/user"),
+    library: "userlibrary",
+    filename: "user-bundle.js",
+    libraryTarget: "var",
+    clean: true,
+    // assetModuleFilename: '[name][ext]',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "user-bundle.css",
+    }),
+  ],
+});
+
 // Return Array of Configurations
 // module.exports = [configML, configMN, configCP, configTC, configST ];
 // module.exports = [configML, configMN, configCP , configTC, configST];
-module.exports = [configCP, configST];
+module.exports = [configCP, configST, configUser];
 
 function getCurrentDate() {
   const today = new Date();
