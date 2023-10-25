@@ -1,4 +1,4 @@
-export class ApiCp {
+export class API {
   /**
    *
    * @param {*} endpoint model's name (course_book, testum_unit, ...)
@@ -58,23 +58,6 @@ export class ApiCp {
   remove(id) {
     const result = axios.delete(`${this.baseURL}${id}/`);
     return result;
-  }
-
-  // TODO
-  // 원래 이렇게 하면 안되는데..
-  // 일단 급하니 이렇게 하고, 나중에 수정하자.
-  getJsonField(courseId, param) {
-    const url = `${this.baseURL}${courseId}/get_json_field/`;
-    return axios
-      .get(url, {
-        params: param,
-      })
-      .then((res) => {
-        if (res.data) {
-          return res.data;
-        }
-      })
-      .catch((err) => console.error(err));
   }
 
   // #setCondition(conditions) {

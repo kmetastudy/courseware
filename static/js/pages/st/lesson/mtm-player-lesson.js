@@ -894,7 +894,7 @@ mtmPlayerLesson.prototype.setPlayOptions = function (options) {
 
 mtmPlayerLesson.prototype.startLesson = function () {
   this.player.bSolutionPlay = false;
-
+  console.log(this.player.lesson_unit_new);
   if (this.player.lesson_unit_new.length == 0) return;
 
   // 가장 최근에 한 작업

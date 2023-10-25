@@ -58,6 +58,7 @@ export var mtmPlayerTestum = function (options) {
   this.content_type = mtoContentFormat.TESTUM;
   this.course_type = mtoContentFormat.COURSE_NORMAL;
 
+  this.modeStudent = true;
   this.bShowResult = false;
 
   this.resultList = [];
@@ -566,6 +567,7 @@ mtmPlayerTestum.prototype._playTestumContent = function (pData) {
     this.player.testum_content_new,
   );
   // 2,1,5,3,3
+  // 일단 이걸 주석해보자.
   this._beforePlayTestumContentNew(pData);
 
   this.player.questionCard = [];
@@ -918,10 +920,6 @@ mtmPlayerTestum.prototype.setPlayOptions = function (options) {
   // prepare Data
   this._prepareData();
 
-  // for test
-  // eData.twin = true;
-  // eData.twin_num = 2;
-
   // prepare Title
   this._prepareTitle();
 
@@ -945,6 +943,8 @@ mtmPlayerTestum.prototype.show = function (bShow) {
   else this.elThis.style.display = "none";
 };
 
+// 테스트를 처음 진행? -> 우리가 아는 테스트창
+// 테스트 본 적 있음? -> 결과창
 mtmPlayerTestum.prototype.startTestum = function () {
   console.log("mtmPlayerTestum > startTestum");
   // 가장 최근에 한 작업
@@ -957,8 +957,6 @@ mtmPlayerTestum.prototype.startTestum = function () {
     var aData = { index: 0, bAll: true, value: "" };
     this._playTestumContent(aData);
   } else {
-    // console.log('mtmPlayerTestum > _decideProcessStatus : ', this.player.finalProcessIndex );
-
     // Testum Player 는 감춘다.
     this.clTestumIndicator.show(false);
     if (this.options.modeStudent)

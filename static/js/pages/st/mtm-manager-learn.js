@@ -5,6 +5,8 @@ import { mtmStudyBuilder } from "./study/mtm-study-builder.js";
 import { mtmStatContainer } from "./stat/mtm-stat-container.js";
 import { mtmStatBuilder } from "./stat/mtm-stat-builder.js";
 
+import { StudyCourseContainer } from "./study/study-course-container.js";
+
 require("./mtm-manager-learn.css");
 
 // Todo. Jstar
@@ -17,6 +19,7 @@ require("./mtm-manager-learn.css");
  * @param {object} options - options for constructor
  */
 export var mtmManagerLearn = function (options) {
+  console.log("mtmManagerLearn > options: ", options);
   this.id = "id-mtm-manager-learn-" + mtmManagerLearn.id++;
   this.options = options;
   this.elThis = null;
@@ -31,6 +34,13 @@ mtmManagerLearn.prototype._initEvents = function () {
 };
 
 mtmManagerLearn.prototype._init = function () {
+  this._create();
+  this._initEvents();
+  this.panelNum = 2;
+  this._arrangePanelLayout();
+};
+
+mtmManagerLearn.prototype._create = function () {
   this.elThis = document.createElement("div");
   this.elThis.classList.add("container-fluid", "pt-2", "mtm-manager-learn");
 
@@ -61,7 +71,8 @@ mtmManagerLearn.prototype._init = function () {
 
   this.elLeftPanel.appendChild(this.clLeftTab.elThis);
 
-  this.clStudyContainer = new mtmStudyContainer(this.options);
+  // this.clStudyContainer = new mtmStudyContainer(this.options);
+  this.clStudyContainer = new StudyCourseContainer(this.options);
   this.clLeftTab.appendPanel(0, this.clStudyContainer.elThis);
 
   // 이것 현재 안 붙임
@@ -91,10 +102,6 @@ mtmManagerLearn.prototype._init = function () {
 
   this.rightActiveIndex = 0;
   this.clRightTab.showPanel(this.rightActiveIndex);
-
-  this._initEvents();
-  this.panelNum = 2;
-  this._arrangePanelLayout();
 };
 
 mtmManagerLearn.prototype._arrangePanelLayout = function () {

@@ -1,9 +1,149 @@
+/* TODO */
+/* css 적용하기 */
+
+
+.mtu-menu {
+  box-sizing: border-box;
+  margin: 0;
+  margin-bottom: 0px;
+  padding: 0;
+  color: rgba(0,0,0,.88);
+  font-size: 14px;
+  line-height: 0;
+  list-style: none;
+  font-family: -apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,noto sans,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol,noto color emoji;
+  margin-bottom: 0;
+  padding-inline-start: 0;
+  outline: none;
+  transition: width .3s cubic-bezier(.2,0,0,1) 0s;
+}
+
+.mtu-menu::before {
+  display: table;
+  content: "";
+}
+
+.mtu-menu::after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+
+.mtu-menu-light {
+  color: rgba(0, 0, 0, 0.88);
+  background: #fff;
+}
+
 .mtu-menu-root {
-  border-inline-end: 1px solid (5, 5, 5, 0.6);
+  border-inline-end: 1px solid rgba(5, 5, 5, 0.06);
   box-shadow: none;
 }
 
-.mtu-
+
+.mtu-menu-hidden {
+  display: none
+}
+
+.mtu-menu-submenu{
+  transition: border-color 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),padding 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  border-radius: 8px;
+}
+
+.mtu-menu-item {
+  display: flex;
+  align-items: center;
+  transition: border-color 0.3s,background 0.3s,padding 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 8px;
+  cursor: pointer;
+  height: 40px;
+  line-height: 40px;
+  list-style-position: inside;
+  list-style-type: disc;
+  margin-block: 4px;
+  padding-inline: 4px;
+  position: relative;
+  white-space: nowrap;
+  width: calc(100% - 8px);
+}
+
+.mtu-menu-selected {
+  color: rgba(22, 119, 255);
+  background-color: #e6f4ff;
+}
+
+.mtu-menu-submenu-title {
+  display: flex;
+  align-items: center;
+  transition: border-color 0.3s,background 0.3s,padding 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  height: 40px;
+  line-height: 40px;
+  list-style-position: inside;
+  list-style-type: disc;
+  padding-inline: 4px;
+  margin-block: 4px;
+  width: calc(100% - 8px);
+
+  position: relative;
+  margin: 0;
+  white-space: nowrap;
+  cursor: pointer;
+
+}
+
+.mtu-menu-submenu-title.mtu-menu-item-selected {
+  color: rgba(22, 119, 255);
+}
+
+.mtu-menu-submenu-title:active {
+  background-color: #e6f4ff;
+}
+
+.mtu-menu-submenu-title:after {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  border-inline-end: 0 solid #1677ff;
+  transform: scaleY(.0001);
+  opacity: 0;
+  transition: transform .2s cubic-bezier(.215,.61,.355,1),opacity .2s cubic-bezier(.215,.61,.355,1);
+  content: "";
+}
+
+.mtu-menu-submenu-title:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+  color: rgba(0, 0, 0, 0.088);
+}
+
+.mtu-menu-title-content {
+  flex: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color .3s;
+
+}
+
+
+
+.mtu-menu-sub {
+  background-color: rgba(0, 0, 0, 0.02);
+  transition: background 0.3s cubic-bezier(0.645, 0.045, 0.355, 1),padding 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.mtu-menu-sub.mtu-menu-hidden {
+  display: none;
+}
+
+.mtu-menu-light {
+  color: rgba(0, 0, 0, 0.88);
+  background: #ffffff;
+}
 
 .mtu-menu-divider {
   overflow: hidden;

@@ -45,7 +45,7 @@ mtmNaviBar.prototype._setLogo = function () {
     }
   } else {
     if (this.elLogo) {
-      this.elLogo.innerHTML = "MEGA-COURSE";
+      this.elLogo.textContent = this.options.logo;
     }
   }
 };
@@ -76,7 +76,7 @@ mtmNaviBar.prototype._init = function () {
     this.elLogo = document.createElement("a");
     this.elLogo.classList.add("navbar-logo");
     this.elLogo.setAttribute("href", "/");
-    this.elLogo.innerHTML = this.options.logo;
+    this.elLogo.textContent = this.options.logo;
     this.elNavContainerDiv.appendChild(this.elLogo);
   }
 

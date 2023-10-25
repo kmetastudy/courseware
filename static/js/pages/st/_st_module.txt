@@ -1,60 +1,76 @@
 st.js
+
+전체적으로 `mtoEvents` 라는 pubsub 함수를 사용해서, 관리.
+on: subscribe, off: unsubscribe, emit: publish
+다시 보니 `mtvEvents`도 있네. 둘 다 pubsub같은데 뭐가 다른거지..?
+아니면 events를 관리하기 쉽게 나눈거일 수도 있을거같다.
+
 body
     + clNavbar(mtmNaviBar)
-    + clLearnManager(mtmManagerLearn)
+    + clLearnManager(mtmLearnManager)
         + elLeftPanel
             + clLeftTab(mtmTab)
                 + clStudyContainer(mtmStudyContainer)
-                + clStatContaner(mtmStatContainer) -> 현재 안 붙임
+                + clStatContaner(mtmStatContainer)
         + elRightPanel
             + clRightTab(mtmTab)
                 + clStudyBuilder(mtmStudyBuilder)
                 + clStatBuilder(mtmStatBuilder)
 
 mtmStudyContainer
-    + clCourseSelector(mtmInputSelectScroll)
-    + clWeekSelector(mtmInputSelectCourseWeek)
+    + clCourseSelector(mtmInputSelectScroll) : 코스 선택
+    + clWeekSelector(mtmInputSelectCourseWeek) : 기간 선택->기간에 맞는 코스 가져옴(체험판에는 안쓰는듯..?)
     + clContentTabs(mtmTabs)
-    + clListTableCourseContent(mtmListTableCourseContent)
-        + clPrgoress(mtmCircularProgress)
+    + clListTableCourseContent(mtmListTableCourseContent) 코스들, tabulator library 사용
+        + clPrgoress(mtmCircularProgress) 코스들의 progress정보 (circular)
+
+    student info -> get assigned course -> courseSelector.setList, courseSelector.setTitle
+
+
+mtmStatContainer
 
 mtmStudyBuilder
+    + mtoEvents (_initEvents)
     + clPlayerTestum(mtmPlayerTestum)
     + clPlayerLesson(mtmPlayerLesson)
 
-    mtmStudyContainer -> onClickCourseContentHandler(브랜치클릭) -> mtoEvents(OnChangeCourseContent)
-    -> mtmStudyBuilder -> urlGetContentInfo(오른쪽에 testum/lesson생성)
-
-
 mtmPlayerTestum
-    // 테스텀 상태 - PlayerTestumStatus (추상)
     + clTestumTitle(mtmPlayerTestumTitle)
+        Title
+        RenderLatex
     + clPlayerTestumProgress(mtmPlayerTestumProgress)
-    
+        위에 줄
+        swiper 사용
+        용도 모르겠음(클릭해도 반응X)
     + clTestumSubmitAction(mtmPlayerTestumSubmitAction) - 역할 없음
-
-    // 테스텀 학습 - PlayerTestumStudy (추상)
     + clTestumIndicator(mtmPlayerTestumIndicator)
+        아래줄
+        swiper 사용
+        문제 번호
+        clickIndicatorHandler -> setQuestionIndex(mtm-player-testum-viewr)
     + clPlayerTestumViewer(mtmPlayerTestumViewer)
         + clElapseTimer(mtmElapseTimer)
-
-    // 테스텀 결과 - PlayerTestumResult (추상)
     + clTestumResultAction(mtmPlayerTestumResultAction)
+        결과 보여주기 전 action?
     + clTestumResultTable(mtmPlayerTestumResultTable)
+        결과 보여주기
+
+    우측 하단의 채점버튼을 누르면 끝.
 
 mtmPlayerLesson
-    // 레슨 상태 - PlayerLessonStatus (추상)
     + clPlayerLessonTitle(mtmPlayerLessonTitle)
     + clPlayerLessonProgress(mtmPlayerLessonProgress)
     
-    // 레슨 정보 - PlayerLessonInfo (추상)
     + clMessagePopUp(mtmStudyMessagePopup)
 
-    // 레슨 결과 - PlayerLesonResult (추상)
     + clLessonSubmitAction(mtmStudySubmitAction)
     + clLessonResultTable(mtmPlayerLessonResultTable)
 
-    // 레슨 학습 - PlayerLessonStudy (추상)
     + clPlayerLessonQuestion(mtmPlayerLessonQuestion)
-    + clPlayerLessonContent(mtmPlayerVideoContent) - lazy 생성
+    + clPlayerLessonContent(mtmPlayerLessonContent) - lazy 생성
         + mtmPlyr
+
+    lesson의 경우 indicator이 없다.
+    문제의 경우, 카드의 제출 버튼을 눌러야 넘어간다.
+    답이 틀린 경우, 한번은 오답을 해야된다. 그래도 답이 틀리면, 계속 오답을 하거나, 다음 하기를 통해 다음으로 넘어갈 수 있다.
+

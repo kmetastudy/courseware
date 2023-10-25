@@ -29,21 +29,38 @@ export const mtuMenu = function (option = {}) {
 };
 
 mtuMenu.prototype._init = function () {
-  this.render();
+  if (this.options.items) {
+    this.render(this.options.items);
+  }
 };
 
-mtuMenu.prototype.render = function () {
-  if (!this.options.items) {
-    console.error("No items");
+mtuMenu.prototype.getRootElement = function () {
+  return this.elThis;
+};
+///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////// HANDLER ////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+mtuMenu.prototype.handleSubMenuClick = function (menuSub, event) {
+  // show child
+  event.stopPropagation();
+  console.log(menuSub, event.target);
+  if (menuSub) {
+    menuSub.classList.toggle("mtu-menu-hidden");
   }
-
+};
+///////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////// API //////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+mtuMenu.prototype.render = function (items) {
   this.elThis = document.createElement("ul");
+  this.elThis.classList.add("mtu-menu");
   this.elThis.classList.add("mtu-menu-root");
+  this.elThis.setAttribute("role", "menu");
 
-  const items = this.option.items;
   const itemSize = items.length;
   const depth = 0;
 
+  this.items = items;
   for (let index = 0; index < itemSize; index++) {
     this.elThis.appendChild(this.createItem(items[index], index, depth));
   }
@@ -93,31 +110,77 @@ mtuMenu.prototype.createItem = function (item, index, depth) {
 };
 
 mtuMenu.prototype.createDefault = function (item, index, depth) {
+  this.elThis.classList.add("mtu-menu-inline");
+
   const subMenu = document.createElement("li");
-  subMenu.classList.add("mtu-submenu");
+
+  subMenu.classList.add("mtu-menu-inline");
   subMenu.setAttribute("role", "none");
+
+  // 0 0
+  // 1 48 24*2
+  // 2 72 24*3
+  // 3 96 24*4
+
+  item.element = subMenu;
 
   if (item.key) {
     subMenu.setAttribute("id", item.key);
   }
 
-  if (!item.icon && !item.children) {
-    subMenu.appendChild(this.createTitle(item.title));
+  if (typeof item.onClick === "function") {
+    subMenu.addEventListener("click", function (event) {
+      event.stopPropagation();
+      item.onClick(item);
+    });
+  }
+
+  if (item.children && item.children.length > 0) {
+    subMenu.classList.add("mtu-submenu");
+
+    const titleContainer = document.createElement("div");
+    titleContainer.classList.add("mtu-menu-submenu-title");
+    titleContainer.setAttribute("aria-haspopup", "true");
+    titleContainer.setAttribute("style", `padding-left: ${this.setIndent(depth)}px`);
+    titleContainer.setAttribute("role", "menuitem");
+    subMenu.appendChild(titleContainer);
+
+    if (item.icon) {
+      titleContainer.appendChild(this.createIcon(item.icon));
+    }
+
+    titleContainer.appendChild(this.createTitle(item.title));
+
+    const menuSub = document.createElement("ul");
+    menuSub.classList.add("mtu-menu");
+    menuSub.classList.add("mtu-menu-sub");
+    menuSub.classList.add("mtu-menu-hidden");
+    menuSub.setAttribute("role", "menu");
+
+    subMenu.appendChild(menuSub);
+    subMenu.addEventListener("click", this.handleSubMenuClick.bind(this, menuSub));
+
+    const childrenSisze = item.children.length;
+    const nextDepth = depth + 1;
+    for (var i = 0; i < childrenSisze; i++) {
+      menuSub.appendChild(this.createItem(item.children[i], i, nextDepth));
+    }
     return subMenu;
   }
-
-  const container = this.createContainer("menuitem");
-
+  // if no children -> menu-item
+  subMenu.classList.add("mtu-menu-item");
+  subMenu.setAttribute("style", `padding-left: ${this.setIndent(depth)}px`);
   if (item.icon) {
-    container.appendChild(this.createIcon(item.icon));
+    subMenu.appendChild(this.createIcon(item.icon));
   }
 
-  const childrenSize = item?.children.length;
-  if (item.children && childrenSize > 0) {
-    container.appendChild(this.createChildren());
-  }
+  subMenu.appendChild(this.createTitle(item.title));
 
   return subMenu;
+};
+
+mtuMenu.prototype.setIndent = function (depth) {
+  return 24 * (depth + 1);
 };
 
 mtuMenu.prototype.createContainer = function (role) {
@@ -134,6 +197,14 @@ mtuMenu.prototype.createTitle = function (titleContent) {
   return title;
 };
 
+mtuMenu.prototype.createIcon = function (icon) {
+  //
+  return;
+};
+////////////////////
+////////////////////
+// TODO;
+// 아래는 다양한 기능 추가
 mtuMenu.prototype.createGroup = function (item, index) {
   const subMenu = document.createElement("li");
   subMenu.classList.add("mtu-submenu");
@@ -141,7 +212,6 @@ mtuMenu.prototype.createGroup = function (item, index) {
   const group = document.createElement("div");
   group.setAttribute("role", "presentation");
 };
-
 /**
  * separator
  * https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/separator_role
