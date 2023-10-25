@@ -17,6 +17,9 @@ router.register(r'question_atom', QuestionAtomViewSet)
 router.register(r'video_atom', VideoAtomViewSet)
 router.register(r'question_solution_text', QuestionSolutionTextViewSet)
 router.register(r'question_solution_video', QuestionSolutionVideoViewSet)
+router.register(r'course', CourseViewSet)
+router.register(r'element', ElementViewSet)
+
 
 urlpatterns = [
     path('', v.index, name='cp'),

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views import View
 from django.db import models
 from django.http import JsonResponse, HttpResponse, HttpResponseBadRequest
@@ -19,8 +19,9 @@ from _cp.models import (mCourseBook,
                         mTestumUnit,
                         mQuestionSolutionText,
                         mQuestionSolutionVideo,
-                        mCategory,
-                        mCategoryMapper)
+                        # new
+                        mCourse,
+                        mElement)
 
 from typing import Type, Dict, Any
 import logging
@@ -28,28 +29,26 @@ import logging
 # rest api
 from rest_framework import generics
 from rest_framework import viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework import status
 from rest_framework.pagination import LimitOffsetPagination
 from .serializer import (QuestionBookSerializer,
-                         QuestionBookDetailSerializer,
                          QuestionBookBranchSerializer,
                          QuestionAtomSerializer,
-                         SolutionTextSerializer,
                          VideoAtomSerializer,
                          CourseBookSerializer,
-                         CourseBookDetailSerializer,
                          CourseBookBranchSerializer,
-                         CategorySerializer,
-                         CategoryMapperSerializer,
                          TestumSerializer,
                          TestumUnitSerializer,
                          LessonSerializer,
                          LessonUnitSerializer,
                          QuestionSolutionTextSerializer,
                          QuestionSolutionVideoSerializer,
+                         # New
+                         CourseSerializer,
+                         ElementSerializer,
                          )
 
 # django-filter(23.3)
@@ -133,12 +132,41 @@ class QuestionSolutionTextViewSet(viewsets.ModelViewSet):
 class QuestionSolutionVideoViewSet(viewsets.ModelViewSet):
     queryset = mQuestionSolutionVideo.objects.all()
     serializer_class = QuestionSolutionVideoSerializer
+
+
+class CourseViewSet(viewsets.ModelViewSet):
+    queryset = mCourse.objects.all()
+    serializer_class = CourseSerializer
+
+    @action(detail=True, methods=['get'])
+    def get_json_field(self, request, pk=None):
+        obj = self.get_object()
+        json_field = obj.json_data
+        print("course id: ", obj.id)
+        # Convert the JSON-like string to a Python dictionary
+        json_dict = json.loads(json_field)
+
+        # Extract 'lists', 'contents', or 'kl' based on the query parameter
+        field_type = request.query_params.get('field_type')
+        if field_type in ['lists', 'contents', 'kl']:
+            data = json_dict.get(field_type)
+        else:
+            data = {'error': 'Invalid field_type parameter'}
+
+        return Response(data)
+
+
+class ElementViewSet(viewsets.ModelViewSet):
+    queryset = mElement.objects.all()
+    serializer_class = ElementSerializer
+
+
 # Complicate Logic
 
 
 def get_full_course(request):
     data_validator = DataValidator()
-    result = []
+    # result = []
 
     book_id = data_validator.convert_to_uuid(request.POST.get("id"))
     book_query = mCourseBook.objects.filter(id=book_id)
@@ -146,14 +174,14 @@ def get_full_course(request):
         return JsonResponse({"message": "No matched data"})
 
     book_data = list(book_query.values())[0]
-    result.append(book_data)
-
-    print(book_data)
-
-    if book_data["branch_ids"] == None:
-        return JsonResponse({"message": "No branch"})
-
     book_data["children"] = []
+    # result.append(book_data)
+
+    print(book_data['title'])
+
+    if book_data["branch_ids"] == None or book_data["branch_ids"] == "":
+        return JsonResponse({"message": "No chapter", "result": book_data})
+
     chapter_ids = book_data["branch_ids"].split(",")
 
     for chapter_id in chapter_ids:
@@ -161,10 +189,10 @@ def get_full_course(request):
         if chapter_query.count() == 0:
             continue
         chapter_data = list(chapter_query.values())[0]
-        result.append(chapter_data)
+        # result.append(chapter_data)
         book_data["children"].append(chapter_data)
 
-        if chapter_data["branch_ids"] == None:
+        if chapter_data["branch_ids"] == None or chapter_data["branch_ids"] == "":
             continue
 
         branch_ids = chapter_data["branch_ids"].split(",")
@@ -174,7 +202,7 @@ def get_full_course(request):
             if branch_query.count() == 0:
                 continue
             branch_data = list(branch_query.values())[0]
-            result.append(branch_data)
+            # result.append(branch_data)
             chapter_data["children"].append(branch_data)
 
     # return JsonResponse({"result": result})

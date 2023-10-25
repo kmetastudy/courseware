@@ -8,12 +8,6 @@ class QuestionBookSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class QuestionBookDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = mQuestionBookDetail
-        fields = '__all__'
-
-
 class QuestionBookBranchSerializer(serializers.ModelSerializer):
     class Meta:
         model = mQuestionBookBranch
@@ -23,30 +17,6 @@ class QuestionBookBranchSerializer(serializers.ModelSerializer):
 class QuestionAtomSerializer(serializers.ModelSerializer):
     class Meta:
         model = mQuestionAtom
-        fields = '__all__'
-
-
-class QuestionDetailSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = mQuestionDetail
-        fields = '__all__'
-
-
-class QuestionRelation(serializers.ModelSerializer):
-    class Meta:
-        model = mQuestionRelation
-        fields = '__all__'
-
-
-class QuestionProtoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = mQuestionProto
-        fields = '__all__'
-
-
-class SolutionTextSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = mSolutionText
         fields = '__all__'
 
 
@@ -62,9 +32,9 @@ class CourseBookSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CourseBookDetailSerializer(serializers.ModelSerializer):
+class CourseBookBranchSerializer(serializers.ModelSerializer):
     class Meta:
-        model = mCourseBookDetail
+        model = mCourseBookBranch
         fields = '__all__'
 
 
@@ -80,12 +50,6 @@ class CategoryMapperSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CourseBookBranchSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = mCourseBookBranch
-        fields = '__all__'
-
-
 class TestumSerializer(serializers.ModelSerializer):
     class Meta:
         model = mTestum
@@ -95,12 +59,6 @@ class TestumSerializer(serializers.ModelSerializer):
 class TestumUnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = mTestumUnit
-        fields = '__all__'
-
-
-class TestumPartSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = mTestumPart
         fields = '__all__'
 
 
@@ -116,12 +74,6 @@ class LessonUnitSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class LessonPartSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = mLessonPart
-        fields = '__all__'
-
-
 class QuestionSolutionTextSerializer(serializers.ModelSerializer):
     class Meta:
         model = mQuestionSolutionText
@@ -131,4 +83,16 @@ class QuestionSolutionTextSerializer(serializers.ModelSerializer):
 class QuestionSolutionVideoSerializer(serializers.ModelSerializer):
     class Meta:
         model = mQuestionSolutionVideo
+        fields = '__all__'
+
+
+class CourseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = mCourse
+        fields = '__all__'
+
+
+class ElementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = mElement
         fields = '__all__'
