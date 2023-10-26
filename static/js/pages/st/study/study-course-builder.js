@@ -93,11 +93,19 @@ StudyCourseBuilder.prototype.onExamStartHandler = function (eData) {
   // 여기에
 };
 
+/**
+ *
+ * @param {Object} params
+ * @param {string} params.course_id - id of course book
+ * @param {string} params.title - title of branch
+ * @param {string} params.content_id - id of branch(lesson/testum), format:  'aa-aa-bb'
+ * @param {number} params.content_type - type of branch(lesson/testum), testum: 11, lesson: 12, exam: 13
+ */
 StudyCourseBuilder.prototype.onChangeCourseContentHandler = async function ({
   course_id,
-  title,
   content_id,
   content_type,
+  title,
 }) {
   // this.options.student_id = eData.student_id;
   // this.options.class_id = eData.class_id;
@@ -142,21 +150,16 @@ StudyCourseBuilder.prototype.onChangeCourseContentHandler = async function ({
     //   this._studyLesson();
     // }
 
-    // TEST;
-    console.log("test sweet alert");
-    console.log(this.elThis);
-    Swal.fire({
-      html: this.elThis,
-      showCloseButton: true,
-      // showCancelButton: false,
-      // focusConfirm: false,
-      showConfirmButton: false,
-      // allowOutsideClick: () => {
-      //   const popup = Swal.getPopup();
-      //   return false;
-      // },
-      allowOutsideClick: false,
-    });
+    // Swal.fire({
+    //   html: this.elThis,
+    //   showCloseButton: true,
+    //   showConfirmButton: false,
+    //   // allowOutsideClick: () => {
+    //   //   const popup = Swal.getPopup();
+    //   //   return false;
+    //   // },
+    //   allowOutsideClick: false,
+    // });
   } catch (err) {
     console.error(err);
   }
