@@ -1,6 +1,7 @@
 import jwt
 import datetime
 from decouple import config
+from django.views import View
 
 from .constants import *
 
@@ -99,6 +100,53 @@ def jwt_required_fake(func):
     return wrapper
 
 
+def jwt_required_fake(func):
+    @wraps(func)
+    def wrapper(request, *args, **kwargs):
+        access_token = request.POST.get('access_token')
+
+        if not access_token:
+            refresh_token = request.COOKIES.get('refresh_token', None)
+
+            if not refresh_token:
+                return JsonResponse({'error': 'Authentication required'}, status=401)
+
+            payload, err = decode_token(
+                refresh_token, config("JWT_KEY"), ['HS256'])
+
+            if err:
+                return JsonResponse({'error': err}, status=401)
+
+            new_payload = {'user_id': payload['user_id']}
+            new_access_token = issue_new_token(
+                new_payload, config("JWT_KEY"), 'HS256')
+
+            response = func(request, *args, **kwargs)
+            response.content = JsonResponse(
+                {'access_token': new_access_token}).content
+            return response
+
+        payload, err = decode_token(access_token, config("JWT_KEY"), ['HS256'])
+
+        if err:
+            return JsonResponse({'error': err}, status=401)
+
+        return func(request, *args, **kwargs)
+
+    return wrapper
+
+
+def jwt_user(func):
+    @wraps(func)
+    def wrapper(request, *args, **kwargs):
+        nextUrl = request.GET.get('next')
+        #
+
+        return func(request, *args, **kwargs)
+
+    return wrapper
+
+
 def make_context(request):
     context = {
         'demo': request.demo,
@@ -120,3 +168,40 @@ def make_fake_context(request):
         # ''
     }
     return context
+
+
+def make_user_context(request):
+    context = {
+        'userLogin': False,
+        'returnUrl': request.next,
+    }
+    return context
+
+
+class JWTGenerator:
+    ACCESS_EXP = datetime.timedelta(weeks=2)
+    REFRESH_EXP = datetime.timedelta(hours=1)
+    JWT_KEY = config("JWT_KEY")
+    ALGORITHM = 'HS256'
+
+    def _generate_expiration(self, token_type):
+        if token_type == 'access':
+            return datetime.datetime.utcnow() + self.ACCESS_EXP
+        elif token_type == 'refresh':
+            return datetime.datetime.utcnow() + self.REFRESH_EXP
+        raise ValueError("Invalid token type provided.")
+
+    def _generate_payload(self, token_type, **data):
+        expiration_time = self._generate_expiration(token_type)
+        payload = {'exp': expiration_time}
+        if token_type == 'access':
+            payload.update(data)
+        return payload
+
+    def generate_token(self, token_type, **data):
+        if token_type not in ["access", "refresh"]:
+            raise ValueError("Invalid token type provided.")
+
+        payload = self._generate_payload(token_type, **data)
+        token = jwt.encode(payload, self.JWT_KEY, self.ALGORITHM)
+        return token

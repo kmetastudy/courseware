@@ -1,5 +1,5 @@
 from _cp.constants import *
-from _cp.models import mCourse, mElement
+from _cp.models import mCourseN, mElementN
 
 import uuid
 import json
@@ -22,12 +22,18 @@ def get_lesson_info(request):
     content_list = []
     units = []
 
+    empty_content_info = {
+        'content_list': [],
+        'units': [],
+    }
+
     # units = json.loads(request.POST.get('units'))
     course_id = request.POST.get('course_id')
     content_id = request.POST.get('content_id')
-    courses = mCourse.objects.filter(id=uuid.UUID(course_id), invalid=False)
+    courses = mCourseN.objects.filter(id=uuid.UUID(course_id), invalid=False)
     if len(courses) != 1:
-        return content_list
+        return empty_content_info
+
     # print('_v2tc_get_lessoninfo : ', units)
     course_info = json.loads(courses[0].json_data)
     contents = course_info['contents']
@@ -40,9 +46,10 @@ def get_lesson_info(request):
             bFindIdx = True
             break
         content_idx += 1
+
     # print('_v2tc_get_lessoninfo 1: ', content_idx)
     if bFindIdx == False:
-        return content_list
+        return empty_content_info
 
     units = contents[content_idx]['units']
 
@@ -53,7 +60,7 @@ def get_lesson_info(request):
             content_id = unit['ids'][index]
             index += 1
             if type == 'v':
-                elements = mElement.objects.filter(
+                elements = mElementN.objects.filter(
                     id=uuid.UUID(content_id),
                     type=2,
                     # invalid = False
@@ -73,7 +80,7 @@ def get_lesson_info(request):
                     pass
                 pass
             elif type == 'q':
-                elements = mElement.objects.filter(
+                elements = mElementN.objects.filter(
                     id=uuid.UUID(content_id),
                     type=1,
                     # invalid = False
@@ -85,7 +92,7 @@ def get_lesson_info(request):
                     # solution text
                     if len(info["sol_text"]) > 0:
                         for solution_id in info["sol_text"]:
-                            solutions = mElement.objects.filter(
+                            solutions = mElementN.objects.filter(
                                 id=uuid.UUID(solution_id),
                                 type=CP_TYPE_EL_SOL_T,
                                 invalid=False
@@ -98,7 +105,7 @@ def get_lesson_info(request):
                     # solution video
                     if len(info["sol_video"]) > 0:
                         for solution_id in info["sol_video"]:
-                            solutions = mElement.objects.filter(
+                            solutions = mElementN.objects.filter(
                                 id=uuid.UUID(solution_id),
                                 type=CP_TYPE_EL_SOL_V,
                                 invalid=False
@@ -142,7 +149,7 @@ def get_testum_info(request):
     # units = json.loads(request.POST.get('units'))
     course_id = request.POST.get('course_id')
     content_id = request.POST.get('content_id')
-    courses = mCourse.objects.filter(id=uuid.UUID(course_id), invalid=False)
+    courses = mCourseN.objects.filter(id=uuid.UUID(course_id), invalid=False)
     if len(courses) != 1:
         return content_list
 
@@ -179,7 +186,7 @@ def get_testum_info(request):
             #     'time' : videoAtom.time,
             # }
             if type == 'v':
-                elements = mElement.objects.filter(
+                elements = mElementN.objects.filter(
                     id=uuid.UUID(content_id),
                     type=2, invalid=False
                 )
@@ -198,7 +205,7 @@ def get_testum_info(request):
                     pass
                 pass
             elif type == 'q':
-                elements = mElement.objects.filter(
+                elements = mElementN.objects.filter(
                     id=uuid.UUID(content_id),
                     type=1, invalid=False
                 )

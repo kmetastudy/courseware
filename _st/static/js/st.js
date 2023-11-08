@@ -9,6 +9,7 @@ import { mtmNaviBar } from "../../../static/js/core/ui/navi/mtm-navi-bar.js";
 
 function mtfLearnManagerOnReady(context) {
   const parsedContext = JSON.parse(context);
+  console.log(parsedContext);
 
   //NaviBar
   const naviOptions = {
@@ -33,7 +34,32 @@ function mtfLearnManagerOnReady(context) {
 
 mtoEvents.on("OnReady", mtfLearnManagerOnReady);
 
-export function st_run(context) {
+export function st_run(context, csrf_token) {
+  // console.log("context: ", context);
+  console.log("token: ", csrf_token);
+  console.log(Cookies.get());
+  const token = getCookie("csrftoken");
+  const defaultAxiosConfig = {
+    headers: { "X-CSRFTOKEN": token },
+  };
+  axios.defaults.headers = defaultAxiosConfig.headers;
   console.log("Mega Student runs ....");
   mtoEvents.emit("OnReady", context);
+}
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  console.log("token : ", cookieValue);
+  return cookieValue;
 }

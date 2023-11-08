@@ -8,19 +8,19 @@ make_context0
 jwtlogin_st_decorator
 make_context
 
-## windows.location.href
+## window.location.href
 
 ST 의 몇 코드에 다음 사항이 있다.
 
 ```js
 ///
 error: function() {
-  windows.location.href = "/";
+  window.location.href = "/";
 }
 
 해당 코드는, 특정 주소로 이동시키는 코드이다.
 jwt 등에서 에러가 나오면, 기본 주소(localhost:8000)으로 이동시킨다.
-현재는 jwt를 사용하지 않으니, 일단은 해당 코드 `windows.location.href = "/"`는 모두 주석처리하자.
+현재는 jwt를 사용하지 않으니, 일단은 해당 코드 `window.location.href = "/"`는 모두 주석처리하자.
 배포 시, 혹은 jwt를 사용하게 된다면, 해당 주석을 제거한다.
 ```
 

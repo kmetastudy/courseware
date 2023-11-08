@@ -1,0 +1,9 @@
+.mtu-form {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  line-height: 1.57;
+  list-style: none;
+}

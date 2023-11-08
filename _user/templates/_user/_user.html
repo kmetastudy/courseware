@@ -24,6 +24,11 @@
     const defaultAxiosConfig = {
       headers: { "X-CSRFTOKEN": "{{csrf_token}}" },
     };
+    {% comment %} axios.defaults.xsrfCookieName = "csrftoken";
+    axios.defaults.xsrfHeaderName = "X-CSRFToken";
+    axios.defaults.headers.common["X-CSRFToken"] = csrftoken; {% endcomment %}
+    {% comment %} axios.defaults.headers.common['X-CSRFToken'] = getCookie("csrftoken"); {% endcomment %}
+
     axios.defaults.headers = defaultAxiosConfig.headers;
     window.addEventListener("DOMContentLoaded", function () {
       console.log("userlibrary: ", userlibrary);

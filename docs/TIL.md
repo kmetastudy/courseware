@@ -494,3 +494,267 @@ https://tecoble.techcourse.co.kr/post/2020-09-01-loop-async/
 
 `tabindex="-1"`의 경우, 연속으로 tab을 누를 때 접근이 안되지만, javascript나 마우스 클릭 등으로는 포커스가 가능하다.
 https://developer.mozilla.org/ko/docs/Web/HTML/Global_attributes/tabindex
+
+# 장고의 CSRFTOKEN은 노출되어도 괜찮을까?
+
+장고에서 `CSRFToken`값을 가져오는 방식은 다음과 같다.
+
+### 방법1. template engine & global variable
+
+```html
+<script>
+  var csrftoken = "{{csrf_token}}";
+</script>
+```
+
+이 경우, console창에 csrftoken을 입력하면 해당 값을 얻을 수 있다.
+
+### 방법2. template engine
+
+```html
+<script>
+  window.addEventListener("DOMContentLoaded", function () {
+    stlibrary.st_run("{{csrf_token}}");
+  });
+</script>
+```
+
+전역변수로 노출되지는 않는다. 하지만, 개발자도구에서 요소를 보면, 마찬가지로 값이 그대로 노출된다.
+
+### 방법3. COOKIE
+
+노출되지 않게 하려면, 다음과 같이 cookie에서 받아올 수도 있다.
+
+> 단, 이 때는 장고의 설정에 `CSRF_USE_SESSIONS`와 `CSRF_COOKIE_HTTPONLY`가 모두 False여야된다.
+>
+> 다만 이것은 장고의 default 값이므로, 특별히 변경하지 않은 경우 아래의 코드가 작동한다.
+
+```js
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  console.log("token : ", cookieValue);
+  return cookieValue;
+}
+
+const csrf_token = getCookie("csrftoken");
+```
+
+## 문제점 및 결론
+
+COOKIE에서 가져온다는 것은, 단순히 개발자도구에 같은 코드를 작성해도, 사용자는 해당 값을 가져올 수 있다는 것이다.
+
+결론적으로, 방법1이나 2를 채용하기로 했다. 그 이유는 다음과 같다.
+
+### 1. 노출돼도 크게 문제가 없다.
+
+CSRF TOKEN은, 단순히 client와 서버가 일시적으로 사용하는 값이고, 또 사용자의 세션에 연결돼있으며 만료시간도 있다.
+
+또, CSRF TOKEN은 사용자의 쿠키나 세션 정보 없이 해당 토큰을 악용할 수 없다.
+
+자세한 내용은 공식문서를 참고하자.
+
+### 2. BREACH attacks 방지
+
+template에서 불러온 csrf token(방법1, 방법2)의 값과, cookie에서 불러온 csrf token(방법3)의 값을 출력해보면, 다른것을 알 수 있다.
+
+이것은 template의 경우 `masked token`형식이며, cookie에는 표준적인 `unmasked token`형식이 저장돼있기 떄문이다. 즉 엄연히 다른 값이다.
+
+물론 장고의 `CsrfViewMiddleware`은 두 값 모두 수용하기에 어떤 것을 사용해도 작동한다.
+
+다만, BREACH 공격을 막기 위해서는, masked token을 사용하라고 권장하고 있다.
+
+### 참고
+
+https://docs.djangoproject.com/en/4.2/howto/csrf/#
+
+https://www.reddit.com/r/django/comments/y2fxc6/why_django_keeps_csrf_token_in_cookies/
+
+https://stackoverflow.com/questions/23349883/how-to-pass-csrf-token-to-javascript-file-in-django
+
+## CharField vs TextField
+
+Charfield
+
+- type: varchar
+- 최대 길이를 명시하고 사용한다. 최적화와 저장 공간에 더 효율적
+
+TextField
+
+- type: text
+- 최대 길이가 DB schema에 의해 지정되지 않는다.
+
+View가 Field를 어떻게 다룰것인지가 중요하다.
+generic edit view에서 `TextField`는 다중 행 크기 조정 가능한 입력으로 렌더링된다.
+`CharField`는 단일 라인 입력으로 렌더링된다.
+
+https://stackoverflow.com/questions/7354588/whats-the-difference-between-charfield-and-textfield-in-django
+
+## Element pretend
+
+자식 element를 부모 element에 붙이는 경우, `appendChild`를 사용한다. 이 때, 자식 element는 부모요소의 자식들 중, 가장 마지막 자식이 된다.
+
+만약, 새로운 자식 element를, 부모요소의 **첫 번째** 자식으로 집어넣고 싶으면 어떻게 하면 될까?
+
+#### 1. Element.insertBefore
+
+> `insertBefore(newNode, referenceNode)`
+
+`insertBefore`은 자식 요소를, 원하는 위치에 집어넣을 수 있다는 장점이 있다.
+이 경우 첫 번째로 집어넣기에, referenceNode를 `firstChild`로 둔다.
+
+```js
+let parent;
+let newChild;
+
+parent.insertBefore(newChild, parent.firstChild);
+```
+
+#### 2. prepend
+
+```js
+prepend(param1);
+prepend(param1, param2);
+prepend(param1, param2, /* ..., */ paramN);
+```
+
+`Element.prepend()`는, `Node` 객체나 `String`객체를, `Element`의 첫 번째 자식으로 집어넣는다.
+
+```js
+let parent;
+let newChild;
+
+parent.prepend(newChild);
+```
+
+prepend의 특징은 다음과 같다.
+
+> append도 마찬가지다. appendChild와 비교하면 된다.
+
+1. 여러개의 value나, 혹은 spred operator `...`를 전달할 수 있다.
+2. `String` 값 또한 삽입 가능하다. 이 때, 이것은 text Element로 처리된다
+
+```js
+parent.prepend(newChild, "foo"); // [newChild, "foo", child1, child2]
+
+const list = ["bar", newChild];
+parent.append(...list, "fizz"); // [child1, child2, "bar", newChild, "fizz"]
+```
+
+**주의**
+
+1. undefined나 null등, `Node`객체가 아닌 요소들은 모두 "string"으로 간주되는거같다. 이를 유의하자.
+2. text를 여러개 삽입하고 `parent.textContent`를 보면 text들이 합쳐진 모습이다. 그런데, `childNodes`에는 각 text들이 들어간다(1개가 아니라)
+
+```js
+const parent = document.createElement("div");
+document.body.appendChild(parent);
+
+let child1, child2, child3, child4;
+
+child1 = document.createElement("span");
+
+child2 = "child2";
+
+child3 = document.createElement("span");
+
+child4 = "child4";
+
+parent.append(child1, child2, child3, child4);
+
+console.log(parent); //<div></div><span></span>child2<span></span>child4</div>
+console.log(parent.textContent.length); // 12
+console.log(parent.childNodes); // [span, #text, span, #text]
+```
+
+**Ref**
+
+1. [Read More](https://stackoverflow.com/questions/5173545/using-javascripts-insertbefore-to-insert-item-as-last-child/45656649#45656649) - `child.before` and `child.after`
+2. [Read More](https://stackoverflow.com/questions/843680/how-to-replace-dom-element-in-place-using-javascript/40444300#40444300) - `child.replaceWith`
+
+[Mozilla Documentation](https://developer.mozilla.org/en-US/docs/Web/API/Element/prepend)
+
+[Can I Use](https://caniuse.com/dom-manip-convenience)
+
+## TODO
+
+비구조 할당
+map vs forEach?
+
+## 파이썬 update
+
+파이썬은 dictionary를 update할 수 있다.
+
+```python
+info = {
+  'name': 'user',
+  'gender': 'female',
+  'age': 20,
+}
+
+new_info = {
+  'age': 24,
+  'hobby': 'piano',
+  'height': 170,
+  'hasCar': True
+}
+
+info.update(new_info)
+
+```
+
+## migration 삭제하기
+
+장고의 migration 파일과, database의 django_migrations 데이터 모두 삭제해야된다.
+원하는 app의 이름이 `myapp`라고 하자.
+
+1. 일단 대기중인 migration이 있는 경우, 적용
+
+```shell
+python manage.py makemigrations
+```
+
+다음 메시지가 나온다면, 다음 단계로 넘어가자.
+
+```shell
+No changes detected
+```
+
+2. 원하는 앱에서 마이그레이션 기록 삭제
+   먼저, migration 기록을 확인
+
+```shell
+python manage.py showmigrations
+```
+
+그 후, 원하는 기록 삭제
+`myapp`의 app 기록을 삭제한다고 하면 다음과 같이 한다.
+
+```zsh
+python manage.py migrate --fake myapp zero
+```
+
+3. 마이그레이션 파일 삭제.
+   `myapp`의 migration 폴더를 열고, `__init__.py`파일을 제외한 모든 파일 삭제
+
+4. 첫 마이그레이션을 생성.
+
+```bash
+python manage.py makemigrations
+```
+
+database가 이미 존재하기 때문에, 첫 마이그래이션을 migrate하는 대신, fake migrate
+
+```bash
+python manage.py migrate --fake _myapp
+```

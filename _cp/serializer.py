@@ -38,16 +38,16 @@ class CourseBookBranchSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = mCategory
-        fields = '__all__'
+# class CategorySerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = mCategory
+#         fields = '__all__'
 
 
-class CategoryMapperSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = mCategoryMapper
-        fields = '__all__'
+# class CategoryMapperSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = mCategoryMapper
+#         fields = '__all__'
 
 
 class TestumSerializer(serializers.ModelSerializer):
@@ -88,11 +88,11 @@ class QuestionSolutionVideoSerializer(serializers.ModelSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
-        model = mCourse
+        model = mCourseN
         fields = '__all__'
 
 
 class ElementSerializer(serializers.ModelSerializer):
     class Meta:
-        model = mElement
+        model = mElementN
         fields = '__all__'

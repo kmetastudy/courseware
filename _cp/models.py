@@ -1,9 +1,19 @@
+from .nmodels import *
 import uuid
 from django.db import models
 import django.utils.timezone
 
 # Create your models here.
 # Question Related Model
+# 문제 의식 - 어떤 특정 문제가 여러 Question Book 에 Branch 에 속해 있으려면
+# mQuestionAtom -> parent_id, branch_ids 로 만족하나?
+# 오히려 Book Branch 에 type 을 1 로 하고 , branch_ids 에 mQuestionAtom.id 를
+# 담는 것이 좀 더 합리적이지 않나?
+
+# Question 과 Course Book 의 출판연도 (category_year) 는 의미가 있나?
+# 부분 수정이 되거나 이를 copy and paste 할때 기존의 공통 요소와 다른 요소를
+# 어떻게 보관해야 하는가?
+# 일단 category_year 없이 진행해 보자.
 
 
 class mQuestionBook(models.Model):
@@ -16,7 +26,7 @@ class mQuestionBook(models.Model):
     author_id = models.UUIDField(null=True, blank=True)
     academy_id = models.UUIDField(null=True, blank=True)
 
-    # question == 0, course == 1
+    # question == 0, kl == 1
     type = models.IntegerField(default=0)
     code = models.TextField(null=True, blank=True)
     depth = models.IntegerField(default=0)
@@ -30,7 +40,7 @@ class mQuestionBook(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title if self.title else ''
+        return self.title
 
 
 class mQuestionBookDetail(models.Model):
@@ -55,7 +65,7 @@ class mQuestionBookDetail(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title if self.title else ''
+        return self.title
 
 
 class mQuestionBookBranch(models.Model):
@@ -82,7 +92,10 @@ class mQuestionBookBranch(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title if self.title else ''
+        return self.title
+
+# 문제의 속성을 파악하는데, KL Mapping 이 되었냐? 혹은... 문제집에 속해 있냐? 파악
+# parend_ids ???
 
 
 class mQuestionAtom(models.Model):
@@ -99,9 +112,9 @@ class mQuestionAtom(models.Model):
     # 선다형 보기 uuids
     choice_text_ids = models.TextField(null=True, blank=True)
 
-    # 해설 uuids (현재는 이 field 대신 solution_text 사용, 추후 변경 가능?)
+    # 해설 uuids
     solution_text_ids = models.TextField(null=True, blank=True)
-    # 영상 해설 uuids (현재는 이 field 대신 solution_video 사용, 추후 변경 가능?)
+    # 영상 해설 uuids
     solution_video_ids = models.TextField(null=True, blank=True)
 
     # for compatible issue
@@ -132,7 +145,24 @@ class mQuestionAtom(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return str(self.id) if self.id else ''
+        return self.id
+
+# ////////////////////////////////////////////////////////////////////////////
+# 문제 본문 qb == Question Body
+
+
+class mQuestionBodyAtom(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # 본문 자체
+    content = models.TextField(null=True, blank=True)
+    # 유효 한가? 지웠나?
+    invalid = models.BooleanField(default=False)
+
+    tag = models.TextField(default='')
+
+    created_date = models.DateTimeField(default=django.utils.timezone.now)
+    updated_date = models.DateTimeField(auto_now=True)
+    pass
 
 
 class mQuestionDetail(models.Model):
@@ -157,7 +187,7 @@ class mQuestionDetail(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title if self.title else ''
+        return self.title
 
 
 class mQuestionRelation(models.Model):
@@ -218,6 +248,7 @@ class mVideoAtom(models.Model):
     q_id = models.UUIDField(null=True, blank=True)
 
     # channelType
+    # 0 == simulation data
     # 1 == youtbe
     # 2 == vimeo
     code = models.IntegerField(default=0)
@@ -241,7 +272,7 @@ class mVideoAtom(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title if self.title else ''
+        return self.title
 
 # Course Related Model
 # CourseBook = [CourseBookBranch,...] =
@@ -257,11 +288,12 @@ class mCourseBook(models.Model):
     author_id = models.UUIDField(null=True, blank=True)
     academy_id = models.UUIDField(null=True, blank=True)
 
-    # question == 0, course == 1
+    # course == 0, course kl == 1
     type = models.IntegerField(default=0)
     code = models.TextField(null=True, blank=True)
     depth = models.IntegerField(default=0)
     content_num = models.IntegerField(default=0)
+    # --------------- detail -------------------------------
 
     # 유효 한가? 지웠나?
     invalid = models.BooleanField(default=False)
@@ -270,7 +302,7 @@ class mCourseBook(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title if self.title else ''
+        return self.title
 
 
 class mCourseBookDetail(models.Model):
@@ -290,56 +322,7 @@ class mCourseBookDetail(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title if self.title else ''
-
-
-class mCategory(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-    name = models.TextField(null=True, blank=True)
-
-    created_date = models.DateTimeField(default=django.utils.timezone.now)
-    updated_date = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.name if self.name else ""
-
-
-class mCategoryMapper(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-    category_id = models.UUIDField(null=True, blank=True)
-    course_id = models.UUIDField(null=True, blank=True)
-
-    created_date = models.DateTimeField(default=django.utils.timezone.now)
-    updated_date = models.DateTimeField(auto_now=True)
-
-
-class mMapper(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    type = models.IntegerField(default=0)
-    # type = 0 (Content KL Mapping)
-    sub_type = models.IntegerField(default=0)
-    # type = 0
-    # subtype   : 0 (= Question ),
-    #           : 1 (= Video) ,
-
-    index = models.IntegerField(default=0)
-    # order in list
-
-    #
-    id_book = models.UUIDField(null=True, blank=True)
-    # complex sturcture
-    id_myself = models.UUIDField(null=True, blank=True)
-    id_root_complex = models.UUIDField(null=True, blank=True)
-    id_leaf_complex = models.UUIDField(null=True, blank=True)
-
-    invalid = models.BooleanField(default=False)
-    date_created = models.DateTimeField(default=django.utils.timezone.now)
-    date_updated = models.DateTimeField(auto_now=True)
-
-    version = models.IntegerField(default=0)
-    pass
+        return self.title
 
 
 class mCourseBookBranch(models.Model):
@@ -356,6 +339,8 @@ class mCourseBookBranch(models.Model):
     type = models.IntegerField(default=0)
     level = models.IntegerField(default=0)
     code = models.TextField(null=True, blank=True)
+    # Todo. Jstar : 여기서 Testum Content 를 tweak 하자
+    # Testum 의 content_num = 1 이면 Testum -> Exam 이 된다.
     content_num = models.IntegerField(default=0)
     # 수정 불가능 ?
     fixed = models.BooleanField(default=True)
@@ -368,7 +353,7 @@ class mCourseBookBranch(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title if self.title else ''
+        return self.title
 
 # Testum
 
@@ -404,7 +389,7 @@ class mTestum(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title if self.title else ''
+        return self.title
 
 
 class mTestumUnit(models.Model):
@@ -429,7 +414,7 @@ class mTestumUnit(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title if self.title else ''
+        return self.title
 
 
 class mTestumPart(models.Model):
@@ -479,7 +464,7 @@ class mLesson(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title if self.title else ''
+        return self.title
 
 
 class mLessonUnit(models.Model):
@@ -504,7 +489,7 @@ class mLessonUnit(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title if self.title else ''
+        return self.title
 
 
 class mLessonPart(models.Model):
@@ -531,6 +516,9 @@ class mLessonPart(models.Model):
 class mQuestionSolutionText(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     q_id = models.UUIDField(null=True, blank=True)
+    # 순서
+    # order = models.IntegerField(default=0)
+
     content = models.TextField(default='')
     author_id = models.UUIDField(null=True, blank=True)
 
@@ -545,6 +533,8 @@ class mQuestionSolutionVideo(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.TextField(default='')
     q_id = models.UUIDField(null=True, blank=True)
+    # 순서 Todo. Fix 새로 추가 2022.12.17
+    # order = models.IntegerField(default=0)
     # v_id = models.UUIDField(null=True, blank=True)
     # v_id = models.UUIDField(null=True, blank=True)
     url = models.TextField(default='')
@@ -557,7 +547,47 @@ class mQuestionSolutionVideo(models.Model):
     created_date = models.DateTimeField(default=django.utils.timezone.now)
     updated_date = models.DateTimeField(auto_now=True)
 
-# nxmodels.py 의 mBookNXX 동일하게 만듬
+# /////////////////////////////////////////////////////////////////////////////
+# //////////////////////////////// KL Mapper //////////////////////////////////
+# question_id -> kl_root_id
+#  1 : N
+# 문제의 속성을 파악하는데, KL Mapping 이 되었냐? 혹은... 문제집에 속해 있냐? 파악
+# parend_ids ???
+
+
+class mQuestionKLMapper(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # 문제 uuid
+    question_id = models.UUIDField(null=True, blank=True)
+
+    # 소속 kl root id
+    belong_kl_root_id = models.UUIDField(null=True, blank=True)
+    # 소속 kl 말단 id
+    belong_kl_leaf_id = models.UUIDField(null=True, blank=True)
+
+    invalid = models.BooleanField(default=False)
+    created_date = models.DateTimeField(default=django.utils.timezone.now)
+    updated_date = models.DateTimeField(auto_now=True)
+    pass
+
+# video_id -> kl_root_id
+#  1 : N
+
+
+class mVideoKLMapper(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    # 영상 uuid
+    video_id = models.UUIDField(null=True, blank=True)
+
+    # 소속 kl root id
+    belong_kl_root_id = models.UUIDField(null=True, blank=True)
+    # 소속 kl 말단 id
+    belong_kl_leaf_id = models.UUIDField(null=True, blank=True)
+
+    invalid = models.BooleanField(default=False)
+    created_date = models.DateTimeField(default=django.utils.timezone.now)
+    updated_date = models.DateTimeField(auto_now=True)
+    pass
 
 
 class mCourse(models.Model):
@@ -643,94 +673,4 @@ class mCourse(models.Model):
     date_updated = models.DateTimeField(auto_now=True)
 
     version = models.IntegerField(default=0)
-
-    class Meta:
-        db_table = '__cp_mCourseN'
-    pass
-
-
-# Element == Item
-# nxmodels.py 의 mElementNXX 와 동일
-class mElement(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    type = models.IntegerField(default=0)
-    # type : 0 (= Question), 1 (= Video) , 3 (= Body ), 4 (= Picture) , 5 (= Sound)
-    sub_type = models.IntegerField(default=0)
-    # Question Type :
-    # Video Type :
-    index = models.IntegerField(default=0)
-    # order in list
-
-    year = models.IntegerField(default=0)
-
-    json_data = models.TextField(null=True, blank=True)
-    # content_question* :
-    # {
-    # body : [uuid],
-    # main : "main text",
-    # choices : ["choice text",...],
-    # answers : ["answer text",...],
-    # solution_text : [uuid,...],
-    # solution_video:[uuid,...],
-    # ref : [
-    #       { id_course: , id_leaf : },
-    #       { id_course: , id_leaf : },
-    #       ],
-    # kl : [
-    #       { id_kl: , id_leaf : },
-    #       { id_kl: , id_leaf : },
-    #       ],
-    # }
-
-    # content_video* :
-    # {
-    # title : "title text",
-    # type : "youtube", or ...
-    # url : "url text",
-    # times : ["time text",...],
-    # thumb : "thumb text",
-    # question : "uuid"
-    # ref : [
-    #       { id_course: , id_leaf : },
-    #       { id_course: , id_leaf : },
-    #       ],
-    # kl : [
-    #       { id_kl: , id_leaf : },
-    #       { id_kl: , id_leaf : },
-    #       ],
-    # }
-
-    likes = models.IntegerField(default=0)
-
-    # licese issue
-    id_publisher = models.UUIDField(null=True, blank=True)
-    # id_publisher = id_institute
-    id_author = models.UUIDField(null=True, blank=True)
-    # id_author = id_member
-    id_langauge = models.UUIDField(null=True, blank=True)
-
-    tag = models.TextField(null=True, blank=True)
-    sub_tag = models.TextField(null=True, blank=True)
-    # sub_tag_question* :
-    # {
-    # style : sc = style choice , ss = style short answr , sl = style long answer,
-    # level : l0 = easy , l1 = normal , l2 = hard , l3 = very hard,
-    # body : be = body exist , bn = body not exist ,
-    # solution_text : tse  = text solution exist , tsn = text solution not exist,
-    # solution_video : vse = video solution exist , vsn = video solution not exist,
-    # }
-    # sub_tag_video* :
-    # {
-    #   video type : yt = youtube , vm = vimeo ,
-    #
-    # }
-    invalid = models.BooleanField(default=False)
-    date_created = models.DateTimeField(default=django.utils.timezone.now)
-    date_updated = models.DateTimeField(auto_now=True)
-
-    version = models.IntegerField(default=0)
-
-    class Meta:
-        db_table = '__cp_mElementN'
-
     pass

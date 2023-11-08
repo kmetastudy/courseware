@@ -98,15 +98,5 @@ var configUser = Object.assign({}, config, {
 });
 
 // Return Array of Configurations
-// module.exports = [configML, configMN, configCP, configTC, configST ];
-// module.exports = [configML, configMN, configCP , configTC, configST];
 module.exports = [configCP, configST, configUser];
-
-function getCurrentDate() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = (today.getMonth() + 1).toString().padStart(2, "0"); // Month is 0-based, so we add 1
-  const day = today.getDate().toString().padStart(2, "0");
-
-  return `${year}${month}${day}`;
-}
+// module.exports = [configST, configUser];

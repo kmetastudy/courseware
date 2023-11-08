@@ -9,20 +9,23 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from django.views import View
 
-from .utils import jwt_required
+from .utils import jwt_required, make_fake_context, jwt_required_fake, make_user_context
+from .decorators import last_visited
+from .utils import JWTGenerator
 from .models import mUser
 from .constants import *
 
 # Create your views here.
 
 
-@jwt_required
+# @jwt_required_fake
+@last_visited
 def index(request):
-    return render(request, "_user/_user.html")
-
-
-def index_test(request):
-    return render(request, "_user/test.html")
+    fake_context = make_fake_context(request)
+    # fake_context['returnUrl'] = request.next
+    fake_context['returnUrl'] = request.GET.get("next")
+    context_dumped = {'context': json.dumps(fake_context)}
+    return render(request, "_user/_user.html", context_dumped)
 
 # 로그인 화면
 
@@ -47,95 +50,79 @@ def login(request):
 
 
 class LoginView(View):
-    def __init__(self, **kwargs: Any) -> None:
-
-        super().__init__(**kwargs)
-        self.type_map = {
-            0: 'initial',
-            1: 'success',
-            2: 'invalid username',
-            3: 'invalid password',
-        }
-        self.type = 0
+    token_generator = JWTGenerator()
 
     @staticmethod
-    def issue_access_token(payload):
-        return jwt.encode(payload, 'your_secret', algorithm='HS256')
-
-    @staticmethod
-    def issue_refresh_token(payload):
-        return jwt.encode(payload, 'your_refresh_secret', algorithm='HS256')
-
-    @staticmethod
-    def check_user_existence(username):
+    def check_user_existence(email):
         user = mUser
         try:
-            return user.objects.get(username=username)
+            return user.objects.get(email=email)
         except user.DoesNotExist:
             return None
 
-    @staticmethod
-    def generate_exp(token_type):
-        if token_type == 'access':
-            return datetime.datetime.utcnow() + datetime.timedelta(weeks=2)
-        elif token_type == 'refresh':
-            return datetime.datetime.utcnow() + datetime.timedelta(hours=1)
-        else:
-            raise Exception("invalid token type")
-
-    def create_payload(self, query, token_type):
-        payload = {
-            "exp": self.generate_exp(token_type)
-        }
-        if token_type == "access":
-            payload["id"] = query.username,
-            payload["type"] = query.type,
-            payload["full_name"] = query.full_name,
-        return payload
-
     def post(self, request):
-        username = request.POST.get('username')
+        result = {
+            "success": False
+        }
+
+        email = request.POST.get('email')
         password = request.POST.get('password')
 
-        error_message = ""
-        error_type = 0  # error type말고 합쳐서 type?
-        print("id: ", username, "pw: ", password)
-        user = self.check_user_existence(username)
+        user = self.check_user_existence(email)
 
         if user == None:
-            error_message = "Invalid username"
+            return JsonResponse({'message': 'Invalid email', 'result': result})
+        if check_password(password, user.password) == False:
+            return JsonResponse({'message': 'Invalid email', 'result': result})
 
-        if user and check_password(password, user.password):
-            access_token = self.issue_access_token(
-                self.create_payload(user, 'access'))
-            refresh_token = self.issue_refresh_token(
-                self.create_payload(user, 'refresh'))
+        next_url = request.session.get('next', '/')
+        result['next_url'] = next_url
+        result['success'] = True
+        refresh_token = self.token_generator.generate_token(
+            'refresh', id=user.id
+        )
 
-            response = JsonResponse({'access_token': access_token})
-            response.set_cookie('refresh_token', refresh_token, httponly=True)
-            return response
-
-        else:
-            error_message = "Invalid Password"
-            print(error_message)
-            return JsonResponse({'message': f'{error_message}', 'error': 'Invalid Credentials'}, status=401)
+        response = JsonResponse(
+            {'message': 'login success', 'result': result})
+        response.set_cookie('refresh_token', refresh_token,
+                            httponly=True, samesite='Strict')
+        return response
 
 
 class SignUpView(View):
+    token_generator = JWTGenerator()
+
+    def user_exists(self, email, otherfield=None):
+        return mUser.objects.ƒilter(email == email).exists()
+
     def post(self, request):
-        # username = request.POST.get("username")
-        # password = request.POST.get("password")
-        # print(f'username: {username} password: {password}')
-        # if username is None or password is None:
-        #     return JsonResponse({"message": "아이디와 비밀번호는 필수입니다."})
-        # if mUser.objects.filter(username=username).exists():
-        #     return JsonResponse({"message": "이미 사용중인 아이디입니다"})
+        result = {"success": False}
 
-        # # 일단 간단히, id랑 pw만 저장한다 해볼까?
-        # mUser.objects.create(
-        #     username=username, password=make_password(password))
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        nickname = request.POST.get('nickname')
 
-        # # 추후에 바로 토큰을 발행해줄 수도 있다.
-        # # user = mUser.objects.filter(username=username)[0]
+        if email is None or password is None or nickname is None:
+            return JsonResponse({"message": "값이 빠졌습니다.", "result": result})
 
-        return redirect('_user:login-page')
+        if mUser.objects.filter(email=email).exists() == True:
+            return JsonResponse({"message": "이미 사용중인 아이디입니다", "result": result})
+
+        user = mUser.objects.create(
+            email=email,
+            password=make_password(password),
+            nickname=nickname
+        )
+
+        next_url = request.session.get('next', '/')
+        result['next_url'] = next_url
+        result['success'] = True
+        refresh_token = self.token_generator.generate_token(
+            'refresh', id=user.id
+        )
+
+        response = JsonResponse(
+            {'message': 'login success', 'result': result})
+        response.set_cookie('refresh_token', refresh_token,
+                            httponly=True, samesite='Strict')
+        return response

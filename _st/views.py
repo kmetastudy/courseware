@@ -12,7 +12,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 
 
 from _st.models import mTestumResult, mLessonResult, mTestumProgress, mLessonProgress
-from _cp.models import mCourse, mElement
+# from _cp.models import mCourse, mElement
 
 from _cp.views import CourseViewSet, ElementViewSet
 from _user.utils import make_fake_context, jwt_required
@@ -80,3 +80,6 @@ def get_content(request):
 #         'properties': 'content.properties'
 #     }],
 # }
+
+
+# def

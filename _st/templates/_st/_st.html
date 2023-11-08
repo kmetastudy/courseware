@@ -45,6 +45,10 @@
     <script type="text/javascript" src="{% static '_dist/sweetalert/sweetalert.min.js' %}"></script>
     {% endcomment %}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- TEST JS COOKIE -->
+    <!-- 1.5kb, 35ms밖에 안되니, javascript에서 cookie를 다루고 싶으면 사용해도 괜찮을거같다. -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
   </head>
 
   <body>
@@ -56,14 +60,14 @@
 
   <script>
     var csrftoken = "{{csrf_token}}";
-    var context = "{{ context|escapejs }}";
-    const defaultAxiosConfig = {
+    {% comment %} var context = "{{ context|escapejs }}"; {% endcomment %}
+    {% comment %} const defaultAxiosConfig = {
       headers: { "X-CSRFTOKEN": "{{csrf_token}}" },
     };
-    axios.defaults.headers = defaultAxiosConfig.headers;
+    axios.defaults.headers = defaultAxiosConfig.headers; {% endcomment %}
     window.addEventListener("DOMContentLoaded", function () {
       console.log("stlibrary: ", stlibrary);
-      stlibrary.st_run(context);
+      stlibrary.st_run("{{ context|escapejs }}");
     });
   </script>
 </html>

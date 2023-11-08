@@ -26,4 +26,9 @@ urlpatterns = [
     path('api/', include(router.urls)),
 
     path('get-full-course/', v.get_full_course, name='get_full_course'),
+    path('transform-course-all/', v.transform_course_all,
+         name='transform_course_all'),
+    # path('transform-course-all-test/', v.transform_course_all_test,
+    #      name='transform_course_all_test')
+    path('migrate-element/', v.migrate_element, name='migrate_element'),
 ]

@@ -55,8 +55,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -120,15 +120,23 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'ko-kr'
+# LANGUAGE_CODE = 'ko-kr'
 
-TIME_ZONE = 'Asia/Seoul'
+# TIME_ZONE = 'Asia/Seoul'
+
+# USE_I18N = True
+
+# USE_L10N = True
+
+# USE_TZ = False
+
+LANGUAGE_CODE = 'en-us'
+
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
-
-USE_TZ = False
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -146,12 +154,41 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    "http://megaclass.co.kr",
-]
+CORS_ORIGIN_ALLOW_ALL = True
 
-# REST_FRAMEWORK = {
-#     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-#     "PAGE_SIZE": 4,
-# }
+# CORS_ALLOW_CREDENTIALS = True
+
+# CSRF_COOKIE_NAME = 'XSRF-TOKEN'
+
+# CSRF_HEADER_NAME = 'X-XSRF-TOKEN'
+
+# CSRF_TRUSTED_ORIGINS = (
+#     'http://localhost:8000',
+#     'http://127.0.0.1:8000',
+# )
+
+# CORS_ORIGIN_WHITELIST = (
+#     'http://localhost:8000',
+#     'http://127.0.0.1:8000',
+# )
+
+# CORS_ALLOW_HEADERS = (
+#     'access-control-allow-credentials',
+#     'access-control-allow-origin',
+#     'access-control-request-method',
+#     'access-control-request-headers',
+#     'accept',
+#     'accept-encoding',
+#     'accept-language',
+#     'authorization',
+#     'connection',
+#     'content-type',
+#     'dnt',
+#     'credentials',
+#     'host',
+#     'origin',
+#     'user-agent',
+#     'X-CSRFToken',
+#     'csrftoken',
+#     'x-requested-with',
+# )

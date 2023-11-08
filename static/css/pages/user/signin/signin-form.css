@@ -1,0 +1,85 @@
+.mtu-signin-form {
+  width: 100%;
+  height: 100%;
+  padding: 30px 32px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* label */
+.mtu-signin-form .mtu-form-label {
+  width: 100%;
+  margin-bottom: 8px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.mtu-signin-form .mtu-form-label a {
+  color: #3376f6;
+  float: right;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.mtu-signin-form .mtu-form-label:not(:first-child) {
+  margin-top: 36px;
+}
+
+/* button */
+.mtu-signin-form .mtu-btn {
+  margin-top: 44px;
+  font-size: 20px;
+  font-weight: 700px;
+  width: 100%;
+  height: 44px;
+}
+
+/* Social Login */
+.social-login {
+  width: 100%;
+  justify-content: center;
+  margin-top: 56px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.social-login-title {
+  margin-bottom: 24px;
+}
+
+.social-login-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.social-login-button-wrapper {
+  width: 50px;
+  /* height: 50px; */
+  border-radius: 8px;
+}
+
+.social-login-button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  width: 50px;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+/* .social-login-img {
+  width: 50px;
+  border-radius: 8px;
+} */
+
+.social-login-button-name {
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 12px;
+  line-height: 17px;
+  text-align: center;
+}

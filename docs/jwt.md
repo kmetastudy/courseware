@@ -68,3 +68,20 @@ https://stackoverflow.com/questions/70303752/why-not-store-jwt-access-token-in-m
 ## LocalStorage vs Cookies: All You Need To Know About Storing JWT Tokens Securely in The Front-End
 
 https://dev.to/cotter/localstorage-vs-cookies-all-you-need-to-know-about-storing-jwt-tokens-securely-in-the-front-end-15id
+
+## How to generate a new secret key?
+
+https://stackoverflow.com/questions/4664724/distributing-django-projects-with-unique-secret-keys
+
+## jwt access token in-memory
+
+https://stackoverflow.com/questions/65545590/jwt-access-token-in-memory
+
+## 그래서, jwt는 어떻게 저장할까?
+
+axios는 다음과 같이 저장
+
+```js
+// 서버에서 access_token을 전달받음
+axios.defaults.headers = { Authorization: `Bearer ${access_token}` };
+```

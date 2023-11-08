@@ -1,0 +1,25 @@
+.mtuicon {
+  display:inline-flex;
+  align-items:center;
+  color:inherit;
+  font-style:normal;
+  line-height:0;
+  text-align:center;
+  text-transform:none;
+  vertical-align:-.125em;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale
+}
+
+.mtuicon > * {
+  line-height: 1;
+}
+
+.mtuicon::before {
+  display: none;
+}
+
+.mtuicon svg {
+  display: inline-block;
+}

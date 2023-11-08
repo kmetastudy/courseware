@@ -74,7 +74,7 @@ https://github.com/ryanmcdermott/clean-code-javascript
 
 [Clean Code JavaScript]: This guide includes some naming convention advice alongside many other coding practices inspired by Robert C. Martin's book "Clean Code."
 
-[Clean Code JavaScript](https://github.com/ryanmcdermott/clean-code-javascript)
+[Clean Code JavaScript](https://github.com/qkraudghgh/clean-code-javascript-ko)
 JavaScript Naming Conventions: This article goes into detail about naming variables, functions, and more, providing specific examples.
 
 [JavaScript Naming Conventions](https://www.robinwieruch.de/javascript-naming-conventions/)

@@ -20,6 +20,8 @@ from _cp.models import (mCourseBook,
                         mQuestionSolutionText,
                         mQuestionSolutionVideo,
                         # new
+                        mCourseN,
+                        mElementN,
                         mCourse,
                         mElement)
 
@@ -135,7 +137,7 @@ class QuestionSolutionVideoViewSet(viewsets.ModelViewSet):
 
 
 class CourseViewSet(viewsets.ModelViewSet):
-    queryset = mCourse.objects.all()
+    queryset = mCourseN.objects.all()
     serializer_class = CourseSerializer
 
     @action(detail=True, methods=['get'])
@@ -157,7 +159,7 @@ class CourseViewSet(viewsets.ModelViewSet):
 
 
 class ElementViewSet(viewsets.ModelViewSet):
-    queryset = mElement.objects.all()
+    queryset = mElementN.objects.all()
     serializer_class = ElementSerializer
 
 
@@ -210,6 +212,121 @@ def get_full_course(request):
     # 데이터를 ID 기준으로 매핑하여 쉽게 찾을 수 있게 합니다.
 
 # TOOLS
+
+
+def compose_new_contents(prev_json_data):
+    try:
+        # for content in prev_json_data["contents"]:
+        new_contents = []
+        for i in range(len(prev_json_data["contents"])):
+            content = prev_json_data['contents'][i]
+            lists = prev_json_data['lists'][i]
+
+            new_content = lists.copy()
+            new_content.pop('units', None)
+            # units 키가 있는지 확인하고, 그 안의 데이터를 합칩니다.
+            if "units" in content and content["units"]:
+                combined_ids = []
+                combined_types = []
+                for unit in content["units"]:
+                    combined_ids.extend(unit["ids"])
+                    combined_types.extend(unit["types"])
+
+                new_content['elements'] = {
+                    "ids": combined_ids, "types": combined_types}
+
+            else:
+                # 'units' 키가 없거나 비어있는 경우, 빈 'elements'를 추가합니다.
+                new_content['elements'] = {"ids": [], "types": []}
+
+            new_contents.append(new_content)
+        return new_contents
+    except:
+        return []
+
+
+def compose_new_kls(prev_json_data):
+    new_kls = []
+    try:
+        for content in prev_json_data["kls"]:
+            # units 키가 있는지 확인하고, 그 안의 데이터를 합칩니다.
+            if "units" in content and content["units"]:
+                combined_ids = []
+                combined_types = []
+                for unit in content["units"]:
+                    combined_ids.extend(unit["kl"])
+                    combined_types.extend(unit["types"])
+
+                new_kls.append(
+                    {"elements": {"kl": combined_ids, "types": combined_types}})
+            else:
+                # 'units' 키가 없거나 비어있는 경우, 빈 'elements'를 추가합니다.
+                new_kls.append({"elements": {}})
+
+        return new_kls
+    except:
+        return []
+
+
+def transform_course(course_id):
+    query = mCourseN.objects.filter(id=course_id)
+    if not query.exists():
+        return json.dumps({}, ensure_ascii=False)
+
+    course = query[0]
+    prev_json_data = json.loads(course.json_data)
+
+    next_json_data = {}
+    next_json_data['contents'] = compose_new_contents(prev_json_data)
+    next_json_data['kls'] = compose_new_kls(prev_json_data)
+    return json.dumps(next_json_data, ensure_ascii=False)
+
+# type=2인 애들만
+
+
+def transform_course_all(request):
+    ids_list = mCourseN.objects.filter(type=2).values_list('id', flat=True)
+    ids = list(ids_list)
+
+    for id in ids:
+        course = mCourse.objects.filter(id=id)
+        if course.exists():
+            continue
+
+        values = list(mCourseN.objects.filter(id=id).values())[0]
+        json_new = transform_course(id)
+
+        values['json_data'] = json_new
+        mCourse.objects.create(**values)
+    return JsonResponse({'result': {}, 'message': "transform complete"}, status=200)
+
+
+def transform_course_all_test(request):
+    ids_list = mCourseN.objects.filter(type=2).values_list('id', flat=True)
+    ids = list(ids_list)
+
+    id = ids[0]
+    values = list(mCourseN.objects.filter(id=id).values())[0]
+    json_new = transform_course(id)
+
+    values['json_data'] = json_new
+    mCourse.objects.create(**values)
+    return JsonResponse({'result': values}, status=200)
+
+
+def migrate_element(request):
+    values = list(mElementN.objects.all().values())
+    size = len(values)
+    cnt = 0
+    for value in values:
+        id = value['id']
+        if mElement.objects.filter(id=id).exists():
+            continue
+
+        mElement.objects.create(**value)
+        cnt += 1
+
+    return JsonResponse({'result': {}, 'message': f"mElement created, {cnt}/{size}"}, status=201)
 
 
 class DataValidator:
