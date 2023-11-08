@@ -18,8 +18,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('cp/', include('_cp.urls')),
-    path('st/', include('_st.urls')),
+    path('', include('_main.urls')),
     path('user/', include('_user.urls')),
+    path('cp/', include('_cp.urls')),
+    path('cm/', include('_cm.urls')),
+    path('st/', include('_st.urls')),
     path("__debug__/", include("debug_toolbar.urls")),
 ]

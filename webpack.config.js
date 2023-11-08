@@ -93,5 +93,47 @@ var configUser = Object.assign({}, config, {
   ],
 });
 
+var configCM = Object.assign({}, config, {
+  name: "configCM",
+
+  entry: {
+    st: path.resolve(__dirname, "_cm/static/js/cm.js"),
+  },
+  output: {
+    path: path.resolve(__dirname, "static/_bundle/cm"),
+    library: "cmlibrary",
+    filename: "cm-bundle.js",
+    libraryTarget: "var",
+    clean: true,
+    // assetModuleFilename: '[name][ext]',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "cm-bundle.css",
+    }),
+  ],
+});
+
+var configMain = Object.assign({}, config, {
+  name: "configMain",
+
+  entry: {
+    st: path.resolve(__dirname, "_main/static/js/main.js"),
+  },
+  output: {
+    path: path.resolve(__dirname, "static/_bundle/main"),
+    library: "mainlibrary",
+    filename: "main-bundle.js",
+    libraryTarget: "var",
+    clean: true,
+    // assetModuleFilename: '[name][ext]',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "main-bundle.css",
+    }),
+  ],
+});
+
 // Return Array of Configurations
-module.exports = [configCP, configST, configUser];
+module.exports = [configMain, configUser, configCP, configCM, configST];
