@@ -1,9 +1,26 @@
 from .nmodels import *
 from django.db import models
 import uuid
-import django.utils.timezone
+from django.utils import timezone
 
 # Create your models here.
+
+
+class mUserCourse(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    user_id = models.UUIDField(default=uuid.uuid4, null=True, blank=True)
+    course_id = models.UUIDField(default=uuid.uuid4, null=True, blank=True)
+
+    course_title = models.TextField(null=True, blank=True)
+    expiration_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.course_title if self.course_title else "mUserCourse"
+
+    def is_valid(self):
+        if self.expiration_date:
+            return self.expiration_date >= timezone.now().date()
 
 
 class mStudyResult(models.Model):
