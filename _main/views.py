@@ -39,10 +39,11 @@ def getSubject(request, school, subject):
 
     print(courses)
 
-    context = {'school': school,
+    main_context = {'school': school,
                'schoolKor': schoolOption[school],
                'subject': subject,
-               'subject_list': json.dumps(subjectOption[school])}
+               'subject_list': subjectOption[school]}
+    context = {'context':json.dumps(main_context)}
     print(context)
     return render(request, "_main/_main.html", context)
 
