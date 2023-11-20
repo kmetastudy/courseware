@@ -33,10 +33,10 @@ export class SignInManager {
     }
   }
 
-  async handleSocialLogin(name) {
+  async handleSocialLogin(socialName) {
     try {
-      console.log("name");
-      const res = await this.urlSocialLogin(name);
+      console.log(socialName);
+      const res = await this.urlSocialLogin(socialName);
       console.log(res);
     } catch (err) {
       // console.log(err);
@@ -61,12 +61,15 @@ export class SignInManager {
   }
 
   // get authcode from auth server
-  urlSocialLogin(name) {
-    const url = `../user/signin/${name}/`;
+  urlSocialLogin(socialName) {
+    const url = `../user/signin/${socialName}/`;
     return axios.get(url).then((res) => {
+      console.log("res");
       if (res.data && res.data.url) {
         window.location.href = res.data.url;
         // this.urlGetSocialInfo(res.data.url);
+      } else {
+        console.log("social fail");
       }
     });
   }

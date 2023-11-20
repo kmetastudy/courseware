@@ -10,6 +10,7 @@ const mCourseType1 = {
 };
 
 // course
+// 23_L1_중3-1
 const mCourseType2 = {
   lists: [
     { level: 1, type: 0, title: "1.제곱근의 뜻과 성질", id: "35ba6e58-b915-4fdc-ba5e-b851fbb870d5", units: [] },
@@ -37,12 +38,14 @@ const mCourseType2 = {
     },
   ],
   contents: [
-    { units: [] },
+    { units: [] }, // chapter/branch(lesson/testum)
     {
       units: [
+        // index로 find.. unit_id값이 있는게 더 빠를거같긴 한데..
         {
           // element's ids
           ids: [
+            // element's ids
             "4eba284d-a58f-4e1d-aaf7-5ee45ad7dbbd",
             "50072e21-6f85-49a7-b095-141348b02b65",
             "077f3303-d484-4377-99ee-5fe61aa16a20",

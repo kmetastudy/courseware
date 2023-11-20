@@ -368,3 +368,236 @@ const studyResult = {
     },
   ],
 };
+
+// 기존에 study-course-builder에서, getcontentinfo를 하면 나오는 결과.
+const prevContent = {
+  content_list: [
+    [
+      {
+        video: 1,
+        id: "4eba284d-a58f-4e1d-aaf7-5ee45ad7dbbd",
+        title: "제곱근의 뜻",
+        url: "3rc-GxA9Ppo",
+        time: "00:00:00-00:05:14",
+        json_data:
+          '{"title": "제곱근의 뜻", "type": 1, "url": "3rc-GxA9Ppo", "time": "00:00:00-00:05:14", "ref_cbook": [], "ref_question": [], "ref_kl": []}',
+      },
+      {
+        video: 0,
+        id: "50072e21-6f85-49a7-b095-141348b02b65",
+        content:
+          '<p><span class="math-tex">\\(x\\)</span>가 5의 제곱근일 때, 관계식을 옳게 나타낸 것은?</p><p>&nbsp;</p><p>①<span class="math-tex">\\(x=5\\)</span>&nbsp; &nbsp; &nbsp; ②&nbsp;<span class="math-tex">\\(x^ {2} =\\sqrt {5}\\)</span>&nbsp; &nbsp; &nbsp; ③<span class="math-tex">\\(x=\\sqrt {5}\\)</span></p><p>④<span class="math-tex">\\(x^ {2} = 5\\)</span>&nbsp; &nbsp; ⑤<span class="math-tex">\\(\\sqrt {x} = 5^ {2}\\)</span></p><p>&nbsp;</p>',
+        style: 1,
+        level: 2,
+        answer: "4",
+        tag: null,
+        sol_text: [],
+        sol_video: [
+          {
+            time: "00:05:23-00:05:57",
+            title: "제곱근의뜻",
+            url: "3rc-GxA9Ppo",
+          },
+        ],
+        json_data:
+          '{"body": null, "id_body": null, "level": 2, "style": 1, "answer": "4", "tag": null, "main": "<p><span class=\\"math-tex\\">\\\\(x\\\\)</span>가 5의 제곱근일 때, 관계식을 옳게 나타낸 것은?</p><p>&nbsp;</p><p>①<span class=\\"math-tex\\">\\\\(x=5\\\\)</span>&nbsp; &nbsp; &nbsp; ②&nbsp;<span class=\\"math-tex\\">\\\\(x^ {2} =\\\\sqrt {5}\\\\)</span>&nbsp; &nbsp; &nbsp; ③<span class=\\"math-tex\\">\\\\(x=\\\\sqrt {5}\\\\)</span></p><p>④<span class=\\"math-tex\\">\\\\(x^ {2} = 5\\\\)</span>&nbsp; &nbsp; ⑤<span class=\\"math-tex\\">\\\\(\\\\sqrt {x} = 5^ {2}\\\\)</span></p><p>&nbsp;</p>", "sol_text": [], "sol_video": ["b72fdd75-3e5d-40ab-b247-aacd1fbccb13"], "ref_cbook": [], "ref_qbook": [], "ref_kl": []}',
+      },
+      {
+        video: 0,
+        id: "077f3303-d484-4377-99ee-5fe61aa16a20",
+        content:
+          '<p><span class="math-tex">\\(x\\)</span>가 11의 제곱근일 때, 관계식을 옳게 나타낸 것은?</p><p>&nbsp;</p><p>①&nbsp;<span class="math-tex">\\(\\sqrt {x} = 11^ {2}\\)</span>&nbsp; &nbsp; &nbsp; ②&nbsp;<span class="math-tex">\\(x=\\sqrt {11}\\)</span>&nbsp; &nbsp; &nbsp; ③&nbsp;<span class="math-tex">\\(x=11\\)</span></p><p>④&nbsp;<span class="math-tex">\\(x^ {2} =\\sqrt {11}\\)</span>&nbsp; &nbsp; &nbsp; ⑤&nbsp;<span class="math-tex">\\(x^ {2} = 11\\)</span></p><p>&nbsp;</p>',
+        style: 1,
+        level: 2,
+        answer: "5",
+        tag: null,
+        sol_text: [],
+        sol_video: [
+          {
+            time: "00:05:57-00:06:33",
+            title: "제곱근의뜻",
+            url: "3rc-GxA9Ppo",
+          },
+        ],
+        json_data:
+          '{"body": null, "id_body": null, "level": 2, "style": 1, "answer": "5", "tag": null, "main": "<p><span class=\\"math-tex\\">\\\\(x\\\\)</span>가 11의 제곱근일 때, 관계식을 옳게 나타낸 것은?</p><p>&nbsp;</p><p>①&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt {x} = 11^ {2}\\\\)</span>&nbsp; &nbsp; &nbsp; ②&nbsp;<span class=\\"math-tex\\">\\\\(x=\\\\sqrt {11}\\\\)</span>&nbsp; &nbsp; &nbsp; ③&nbsp;<span class=\\"math-tex\\">\\\\(x=11\\\\)</span></p><p>④&nbsp;<span class=\\"math-tex\\">\\\\(x^ {2} =\\\\sqrt {11}\\\\)</span>&nbsp; &nbsp; &nbsp; ⑤&nbsp;<span class=\\"math-tex\\">\\\\(x^ {2} = 11\\\\)</span></p><p>&nbsp;</p>", "sol_text": [], "sol_video": ["62c6e8e1-031f-461f-9d54-795ac19351c5"], "ref_cbook": [], "ref_qbook": [], "ref_kl": []}',
+      },
+    ],
+    [
+      {
+        video: 1,
+        id: "137c104e-514a-4043-a399-bb7b33422f35",
+        title: "제곱근의 이해",
+        url: "79BXOJOKVuM",
+        time: "00:00:00-00:08:16",
+        json_data:
+          '{"title": "제곱근의 이해", "type": 1, "url": "79BXOJOKVuM", "time": "00:00:00-00:08:16", "ref_cbook": [], "ref_question": [], "ref_kl": []}',
+      },
+      {
+        video: 0,
+        id: "38df59cf-2e85-4f9e-a35b-5b9dcf25dd9f",
+        content:
+          '<p>다음 중 옳은 것은?</p><p>①&nbsp;<span class="math-tex">\\(\\sqrt {49}\\)</span>의 제곱근은&nbsp;<span class="math-tex">\\(±\\sqrt {7}\\)</span>&nbsp;이다.</p><p>②&nbsp;<span class="math-tex">\\(4\\)</span>의 음의 제곱근은&nbsp;<span class="math-tex">\\(-4\\)</span>이다.</p><p>③&nbsp;<span class="math-tex">\\(16\\)</span>의 제곱근은&nbsp;<span class="math-tex">\\(4\\)</span>이다.</p><p>④ 음수&nbsp;<span class="math-tex">\\(-5\\)</span>의 제곱근은&nbsp;<span class="math-tex">\\(±\\sqrt {-5}\\)</span>&nbsp;이다.</p><p>⑤&nbsp;<span class="math-tex">\\(0\\)</span>의 제곱근은 없다.</p><p>&nbsp;</p>',
+        style: 1,
+        level: 2,
+        answer: "1",
+        tag: null,
+        sol_text: [],
+        sol_video: [
+          {
+            time: "00:08:22-00:10:33",
+            title: "제곱근의이해",
+            url: "79BXOJOKVuM",
+          },
+        ],
+        json_data:
+          '{"body": null, "id_body": null, "level": 2, "style": 1, "answer": "1", "tag": null, "main": "<p>다음 중 옳은 것은?</p><p>①&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt {49}\\\\)</span>의 제곱근은&nbsp;<span class=\\"math-tex\\">\\\\(±\\\\sqrt {7}\\\\)</span>&nbsp;이다.</p><p>②&nbsp;<span class=\\"math-tex\\">\\\\(4\\\\)</span>의 음의 제곱근은&nbsp;<span class=\\"math-tex\\">\\\\(-4\\\\)</span>이다.</p><p>③&nbsp;<span class=\\"math-tex\\">\\\\(16\\\\)</span>의 제곱근은&nbsp;<span class=\\"math-tex\\">\\\\(4\\\\)</span>이다.</p><p>④ 음수&nbsp;<span class=\\"math-tex\\">\\\\(-5\\\\)</span>의 제곱근은&nbsp;<span class=\\"math-tex\\">\\\\(±\\\\sqrt {-5}\\\\)</span>&nbsp;이다.</p><p>⑤&nbsp;<span class=\\"math-tex\\">\\\\(0\\\\)</span>의 제곱근은 없다.</p><p>&nbsp;</p>", "sol_text": [], "sol_video": ["c34a95c0-934c-4e96-bf8e-f30f35c2eb68"], "ref_cbook": [], "ref_qbook": [], "ref_kl": []}',
+      },
+      {
+        video: 0,
+        id: "db294d1d-d6e8-4bc4-82ca-f5e62848297c",
+        content:
+          '<p>다음 중 옳지 않은 것은?</p><p>① 양수의 제곱근은&nbsp;<span class="math-tex">\\(2\\)</span>개가 있다.</p><p>②&nbsp;<span class="math-tex">\\(0\\)</span>의 제곱근은 한 개뿐이다.</p><p>③&nbsp;<span class="math-tex">\\(\\sqrt {(-16)^ {2} }\\)</span>&nbsp;의 값은&nbsp;<span class="math-tex">\\(16\\)</span>이다.</p><p>④&nbsp;<span class="math-tex">\\(\\sqrt {(-16)^ {2} }\\)</span>&nbsp;의 제곱근은&nbsp;<span class="math-tex">\\(\\pm 4\\)</span>이다.</p><p>⑤&nbsp;<span class="math-tex">\\(-\\sqrt {5}\\)</span>은&nbsp;<span class="math-tex">\\(-5\\)</span>의 음의 제곱근이다.</p><p>&nbsp;</p>',
+        style: 1,
+        level: 2,
+        answer: "5",
+        tag: null,
+        sol_text: [],
+        sol_video: [
+          {
+            time: "00:10:33-00:12:48",
+            title: "제곱근의이해",
+            url: "79BXOJOKVuM",
+          },
+        ],
+        json_data:
+          '{"body": null, "id_body": null, "level": 2, "style": 1, "answer": "5", "tag": null, "main": "<p>다음 중 옳지 않은 것은?</p><p>① 양수의 제곱근은&nbsp;<span class=\\"math-tex\\">\\\\(2\\\\)</span>개가 있다.</p><p>②&nbsp;<span class=\\"math-tex\\">\\\\(0\\\\)</span>의 제곱근은 한 개뿐이다.</p><p>③&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt {(-16)^ {2} }\\\\)</span>&nbsp;의 값은&nbsp;<span class=\\"math-tex\\">\\\\(16\\\\)</span>이다.</p><p>④&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt {(-16)^ {2} }\\\\)</span>&nbsp;의 제곱근은&nbsp;<span class=\\"math-tex\\">\\\\(\\\\pm 4\\\\)</span>이다.</p><p>⑤&nbsp;<span class=\\"math-tex\\">\\\\(-\\\\sqrt {5}\\\\)</span>은&nbsp;<span class=\\"math-tex\\">\\\\(-5\\\\)</span>의 음의 제곱근이다.</p><p>&nbsp;</p>", "sol_text": [], "sol_video": ["c83af6d1-f21d-43d4-9c8e-fc7b6d4e8a52"], "ref_cbook": [], "ref_qbook": [], "ref_kl": []}',
+      },
+    ],
+    [
+      {
+        video: 1,
+        id: "4e330222-74b3-4405-b7fd-225712eec49c",
+        title: "제곱근 구하기",
+        url: "StQMqJc3yrA",
+        time: "00:00:00-00:04:10",
+        json_data:
+          '{"title": "제곱근 구하기", "type": 1, "url": "StQMqJc3yrA", "time": "00:00:00-00:04:10", "ref_cbook": [], "ref_question": [], "ref_kl": []}',
+      },
+      {
+        video: 0,
+        id: "32e95b87-c59f-4bea-b77a-5a701ab1de02",
+        content:
+          '<p>제곱근&nbsp;<span class="math-tex">\\(\\sqrt { 16}\\)</span>을&nbsp;<span class="math-tex">\\(A\\)</span>,&nbsp;<span class="math-tex">\\(5^ {2}\\)</span>의 음의 제곱근을&nbsp;<span class="math-tex">\\(B\\)</span>라 할 때,</p><p><span class="math-tex">\\(A+B\\)</span>의 값은?</p><p>①&nbsp;<span class="math-tex">\\(-23\\)</span>&nbsp;   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ②&nbsp;<span class="math-tex">\\(-21\\)</span>&nbsp;   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;③&nbsp;<span class="math-tex">\\(-19\\)</span></p><p>④&nbsp;<span class="math-tex">\\(-3\\)</span>&nbsp;   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ⑤&nbsp;<span class="math-tex">\\(-1\\)</span></p><p>&nbsp;</p>',
+        style: 1,
+        level: 2,
+        answer: "4",
+        tag: null,
+        sol_text: [],
+        sol_video: [],
+        json_data:
+          '{"body": null, "id_body": null, "level": 2, "style": 1, "answer": "4", "tag": null, "main": "<p>제곱근&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt { 16}\\\\)</span>을&nbsp;<span class=\\"math-tex\\">\\\\(A\\\\)</span>,&nbsp;<span class=\\"math-tex\\">\\\\(5^ {2}\\\\)</span>의 음의 제곱근을&nbsp;<span class=\\"math-tex\\">\\\\(B\\\\)</span>라 할 때,</p><p><span class=\\"math-tex\\">\\\\(A+B\\\\)</span>의 값은?</p><p>①&nbsp;<span class=\\"math-tex\\">\\\\(-23\\\\)</span>&nbsp;   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ②&nbsp;<span class=\\"math-tex\\">\\\\(-21\\\\)</span>&nbsp;   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;③&nbsp;<span class=\\"math-tex\\">\\\\(-19\\\\)</span></p><p>④&nbsp;<span class=\\"math-tex\\">\\\\(-3\\\\)</span>&nbsp;   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ⑤&nbsp;<span class=\\"math-tex\\">\\\\(-1\\\\)</span></p><p>&nbsp;</p>", "sol_text": [], "sol_video": [], "ref_cbook": [], "ref_qbook": [], "ref_kl": []}',
+      },
+      {
+        video: 0,
+        id: "3bcbbc25-5172-4431-ac00-7bf144213c30",
+        content:
+          '<p><span class="math-tex">\\(\\sqrt {81}\\)</span>의 음의 제곱근을&nbsp;<span class="math-tex">\\(A\\)</span>,&nbsp;<span class="math-tex">\\((-5)^ {2}\\)</span>의 양의 제곱근을</p><p><span class="math-tex">\\(B\\)</span>라 할 때,&nbsp;<span class="math-tex">\\(A+B\\)</span>의 값은?</p><p>①&nbsp;<span class="math-tex">\\(-3\\)</span>    ②&nbsp;<span class="math-tex">\\(-2\\)</span>    ③&nbsp;<span class="math-tex">\\(-1\\)</span></p><p>④&nbsp;<span class="math-tex">\\(2\\)</span>    &nbsp;  ⑤&nbsp;<span class="math-tex">\\(3\\)</span></p><p>&nbsp;</p>',
+        style: 1,
+        level: 2,
+        answer: "4",
+        tag: null,
+        sol_text: [],
+        sol_video: [],
+        json_data:
+          '{"body": null, "id_body": null, "level": 2, "style": 1, "answer": "4", "tag": null, "main": "<p><span class=\\"math-tex\\">\\\\(\\\\sqrt {81}\\\\)</span>의 음의 제곱근을&nbsp;<span class=\\"math-tex\\">\\\\(A\\\\)</span>,&nbsp;<span class=\\"math-tex\\">\\\\((-5)^ {2}\\\\)</span>의 양의 제곱근을</p><p><span class=\\"math-tex\\">\\\\(B\\\\)</span>라 할 때,&nbsp;<span class=\\"math-tex\\">\\\\(A+B\\\\)</span>의 값은?</p><p>①&nbsp;<span class=\\"math-tex\\">\\\\(-3\\\\)</span>    ②&nbsp;<span class=\\"math-tex\\">\\\\(-2\\\\)</span>    ③&nbsp;<span class=\\"math-tex\\">\\\\(-1\\\\)</span></p><p>④&nbsp;<span class=\\"math-tex\\">\\\\(2\\\\)</span>    &nbsp;  ⑤&nbsp;<span class=\\"math-tex\\">\\\\(3\\\\)</span></p><p>&nbsp;</p>", "sol_text": [], "sol_video": [], "ref_cbook": [], "ref_qbook": [], "ref_kl": []}',
+      },
+    ],
+    [
+      {
+        video: 1,
+        id: "57b70e8b-25c9-4c17-ab1e-f20f68938f87",
+        title: "제곱근을 이용하여 정사각형의 한 변의 길이 구하기",
+        url: "XVQQlwPb3ns",
+        time: "00:00:00-00:03:39",
+        json_data:
+          '{"title": "제곱근을 이용하여 정사각형의 한 변의 길이 구하기", "type": 1, "url": "XVQQlwPb3ns", "time": "00:00:00-00:03:39", "ref_cbook": [], "ref_question": [], "ref_kl": []}',
+      },
+      {
+        video: 0,
+        id: "73e25b71-129e-42b2-acb5-5e0083cd13a9",
+        content:
+          '<p>가로의 길이가 11, 세로의 길이가&nbsp;5인 직사각형의</p><p>넓이와 같은 정사각형의 한 변의 길이를 구하여라.</p><p>①&nbsp;<span class="math-tex">\\(\\sqrt { 51} \\, \\, \\rm cm\\)</span>&nbsp;   &nbsp; &nbsp;②&nbsp;<span class="math-tex">\\(\\sqrt { 52} \\, \\, \\rm cm\\)</span>   &nbsp; &nbsp;③&nbsp;<span class="math-tex">\\(\\sqrt { 53} \\, \\, \\rm cm\\)</span></p><p>④&nbsp;<span class="math-tex">\\(\\sqrt { 54} \\, \\, \\rm cm\\)</span>   &nbsp; &nbsp; ⑤&nbsp;<span class="math-tex">\\(\\sqrt { 55} \\, \\, \\rm cm\\)</span></p><p>&nbsp;</p>',
+        style: 1,
+        level: 2,
+        answer: "5",
+        tag: null,
+        sol_text: [],
+        sol_video: [
+          {
+            time: "00:03:45-00:04:55",
+            title: "제곱근을이용하여정사각형의 한변의길이구하기",
+            url: "XVQQlwPb3ns",
+          },
+        ],
+        json_data:
+          '{"body": null, "id_body": null, "level": 2, "style": 1, "answer": "5", "tag": null, "main": "<p>가로의 길이가 11, 세로의 길이가&nbsp;5인 직사각형의</p><p>넓이와 같은 정사각형의 한 변의 길이를 구하여라.</p><p>①&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt { 51} \\\\, \\\\, \\\\rm cm\\\\)</span>&nbsp;   &nbsp; &nbsp;②&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt { 52} \\\\, \\\\, \\\\rm cm\\\\)</span>   &nbsp; &nbsp;③&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt { 53} \\\\, \\\\, \\\\rm cm\\\\)</span></p><p>④&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt { 54} \\\\, \\\\, \\\\rm cm\\\\)</span>   &nbsp; &nbsp; ⑤&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt { 55} \\\\, \\\\, \\\\rm cm\\\\)</span></p><p>&nbsp;</p>", "sol_text": [], "sol_video": ["6c0a7ea9-a3a6-4ffb-9091-7e6fcbe9dbff"], "ref_cbook": [], "ref_qbook": [], "ref_kl": []}',
+      },
+      {
+        video: 0,
+        id: "02781c9b-5a5a-4637-a343-a8551e65fb18",
+        content:
+          '<p>가로의 길이가 3, 세로의 길이가 13인 직사각형의 넓이와 같은 정사각형의 한 변의 길이를 구하여라.</p><p>①&nbsp;<span class="math-tex">\\(\\sqrt { 38} \\, \\, \\rm cm\\)</span>&nbsp; &nbsp;   &nbsp; ②&nbsp;<span class="math-tex">\\(\\sqrt { 39} \\, \\, \\rm cm\\)</span>  &nbsp;  &nbsp; ③&nbsp;<span class="math-tex">\\(\\sqrt { 40} \\, \\, \\rm cm\\)</span></p><p>④&nbsp;<span class="math-tex">\\(\\sqrt { 41} \\, \\, \\rm cm\\)</span>    &nbsp; &nbsp; ⑤&nbsp;<span class="math-tex">\\(\\sqrt { 42} \\, \\, \\rm cm\\)</span></p><p>&nbsp;</p>',
+        style: 1,
+        level: 2,
+        answer: "2",
+        tag: null,
+        sol_text: [],
+        sol_video: [
+          {
+            time: "00:04:55-00:05:51",
+            title: "제곱근을이용하여정사각형의 한변의길이구하기",
+            url: "XVQQlwPb3ns",
+          },
+        ],
+        json_data:
+          '{"body": null, "id_body": null, "level": 2, "style": 1, "answer": "2", "tag": null, "main": "<p>가로의 길이가 3, 세로의 길이가 13인 직사각형의 넓이와 같은 정사각형의 한 변의 길이를 구하여라.</p><p>①&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt { 38} \\\\, \\\\, \\\\rm cm\\\\)</span>&nbsp; &nbsp;   &nbsp; ②&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt { 39} \\\\, \\\\, \\\\rm cm\\\\)</span>  &nbsp;  &nbsp; ③&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt { 40} \\\\, \\\\, \\\\rm cm\\\\)</span></p><p>④&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt { 41} \\\\, \\\\, \\\\rm cm\\\\)</span>    &nbsp; &nbsp; ⑤&nbsp;<span class=\\"math-tex\\">\\\\(\\\\sqrt { 42} \\\\, \\\\, \\\\rm cm\\\\)</span></p><p>&nbsp;</p>", "sol_text": [], "sol_video": ["181eff99-98df-4d16-b5c9-685764a532d1"], "ref_cbook": [], "ref_qbook": [], "ref_kl": []}',
+      },
+    ],
+  ],
+  units: [
+    {
+      ids: [
+        "4eba284d-a58f-4e1d-aaf7-5ee45ad7dbbd",
+        "50072e21-6f85-49a7-b095-141348b02b65",
+        "077f3303-d484-4377-99ee-5fe61aa16a20",
+      ],
+      types: ["v", "q", "q"],
+    },
+    {
+      ids: [
+        "137c104e-514a-4043-a399-bb7b33422f35",
+        "38df59cf-2e85-4f9e-a35b-5b9dcf25dd9f",
+        "db294d1d-d6e8-4bc4-82ca-f5e62848297c",
+      ],
+      types: ["v", "q", "q"],
+    },
+    {
+      ids: [
+        "4e330222-74b3-4405-b7fd-225712eec49c",
+        "32e95b87-c59f-4bea-b77a-5a701ab1de02",
+        "3bcbbc25-5172-4431-ac00-7bf144213c30",
+      ],
+      types: ["v", "q", "q"],
+    },
+    {
+      ids: [
+        "57b70e8b-25c9-4c17-ab1e-f20f68938f87",
+        "73e25b71-129e-42b2-acb5-5e0083cd13a9",
+        "02781c9b-5a5a-4637-a343-a8551e65fb18",
+      ],
+      types: ["v", "q", "q"],
+    },
+  ],
+  content_type: 12,
+};

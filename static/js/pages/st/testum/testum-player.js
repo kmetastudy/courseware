@@ -20,7 +20,6 @@
 // 2) 오답하기 : 틀린 문제 접근시
 // 테스텀 세로 문제 -> 테스텀 가로 문제
 import { mtoContentFormat } from "../../../core/utils/mto-content-format.js";
-import { mtoConfirmPopup } from "../../../core/ui/output/mto-confirm-popup.js";
 import { mtoEvents } from "../../../core/utils/mto-events.js";
 
 import { mtmPlayerTestumTitle } from "./mtm-player-testum-title.js";
@@ -28,13 +27,9 @@ import { mtmPlayerTestumSubmitAction } from "./mtm-player-testum-submit-action.j
 
 import { mtmPlayerTestumResultAction } from "./mtm-player-testum-result-action.js";
 import { mtmPlayerTestumResultTable } from "./mtm-player-testum-result-table.js";
-import { mtmPlayerExamResultTable } from "./mtm-player-exam-result-table.js";
 
 // Exam Truth Table
-import { mtmListTableStatisticsCourseTruth } from "../../../core/component/mtm-list-table-statistics-course-truth.js";
-
 import { mtmPlayerTestumViewer } from "./mtm-player-testum-viewer.js";
-
 import { mtmPlayerTestumProgress } from "./mtm-player-testum-progress.js";
 import { mtmPlayerTestumIndicator } from "./mtm-player-testum-indicator.js";
 
@@ -896,10 +891,13 @@ TestumPlayer.prototype.onAnswerChangeHandler = function (eData) {
 // Exam 이냐? Testum 이냐 구분
 TestumPlayer.prototype.setPlayOptions = function (options) {
   this.playOptions = options;
+  console.log(this.playOptions);
 
-  this.player.student_id = this.playOptions.student_id;
+  // this.player.student_id = this.playOptions.student_id;
+  this.player.student_id = this.playOptions.studentId;
   this.player.class_id = this.playOptions.class_id;
-  this.player.course_id = this.playOptions.course_id;
+  // this.player.course_id = this.playOptions.course_id;
+  this.player.course_id = this.playOptions.courseId;
   this.player.clinic_id = this.playOptions.clinic_id;
   this.player.content_id = this.playOptions.content_id;
   this.player.content_type = this.playOptions.content_type;

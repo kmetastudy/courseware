@@ -98,3 +98,36 @@ export class MtuForm {
     // if (this.options.onFieldsChange)
   }
 }
+
+// TODO
+// 이런 형태는 어떨까..?
+const formItems = [
+  {
+    item: "input",
+    config: {
+      htmlType: "text",
+      name: "email",
+      icon: "email",
+      placeholder: "Enter the email",
+    },
+  },
+  {
+    item: "input",
+    config: {
+      htmlType: "password",
+      name: "password",
+      icon: "lock",
+      placeholder: "Enter the email",
+    },
+  },
+  {
+    item: "button",
+    config: {
+      htmlType: "submit",
+      name: "submit",
+      text: "Submit!",
+    },
+  },
+];
+// const form = new MtuForm()
+// document.body.appendChild(form.render(formItems))

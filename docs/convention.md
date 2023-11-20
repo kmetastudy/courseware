@@ -403,3 +403,10 @@ https://docs.djangoproject.com/en/dev/internals/contributing/writing-code/coding
 https://github.com/octoenergy/conventions/blob/main/conventions/django.md
 장고 encapsulation
 https://www.dabapps.com/insights/django-models-and-encapsulation/
+
+## Django에서의 IMPORT 순서
+
+1. 표준 라이브러리
+2. 장고 코어
+3. 장고와 무관한 외부 앱
+4. 프로젝트 앱

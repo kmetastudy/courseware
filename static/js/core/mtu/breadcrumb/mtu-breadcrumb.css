@@ -1,0 +1,89 @@
+.mtu-breadcrumb{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+  line-height: 1.5;
+  list-style: none;
+}
+
+.mtu-breadcrumb .mtu-icon {
+  font-size: 14px;
+}
+
+.mtu-breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mtu-breadcrumb a {
+  color: rgba(0, 0, 0, 0.45);
+  transition: color 0.2s;
+  padding: 0 4px;
+  border-radius: 4px;
+  height: 20px;
+  display: inline-block;
+  margin-inline: -4px;
+
+  text-decoration: none;
+  background-color: transparent;
+  outline: none;
+  cursor: pointer;
+}
+
+.mtu-breadcrumb a:hover {
+  color: rgba(0, 0, 0, 0.88);
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.mtu-breadcrumb a:focus-visible {
+  outline: 4px solid #91caff;
+  outline-offset: 1px;
+  transition: outline-offset 0s,outline 0s;
+}
+
+.mtu-breadcrumb li:last-child,
+.mtu-breadcrumb li:last-child a {
+  color: rgba(0, 0, 0, 0.88);
+}
+
+.mtu-breadcrumb-separator{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  margin-inline: 8px;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+
+.mtu-breadcrumb-separator::after {
+  box-sizing: border-box;
+}
+
+.mtu-breadcrumb-link{
+  box-sizing: border-box;
+}
+
+.mtu-breadcrumb a::after {
+  box-sizing: border-box;
+}
+
+.mtu-breadcrumb a:hover {
+  outline: 0;
+  color: rgba(0, 0, 0, 0.88);
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.mtu-breadcrumb a:active {
+  text-decoration: none;
+  outline: 0;
+}
+
+
+
+
+

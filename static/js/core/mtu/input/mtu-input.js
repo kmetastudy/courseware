@@ -1,8 +1,11 @@
-import { MtuIcon, isValidIconName } from "../icon/mtu-icon";
-
+import { MtuIcon } from "../icon/mtu-icon";
+import { config } from "./config";
+import { adjustConfig } from "../_util/adjust-config";
 require("./mtu-input.css");
 export class MtuInput {
   constructor(options) {
+    this.options = adjustConfig(config, options);
+
     this.element = null;
 
     this.input = null;
@@ -10,89 +13,7 @@ export class MtuInput {
     this.elSuffix = null;
     this.elPrefix = null;
 
-    this.defaultOptions = this.#getConfig();
-
-    this.options = this.#getConfiguredOptions(options);
-
     this.#create();
-  }
-
-  #getConfig() {
-    const config = {
-      type: {
-        defaultValue: "text",
-        validate: (value) => typeof value === "string",
-      },
-      size: {
-        defaultValue: "middle",
-        validate: (value) => ["small", "middle", "large"].includes(value),
-      },
-      prefix: {
-        defaultValue: null,
-        validate: (value) => isValidIconName(value),
-      },
-      suffix: {
-        defaultValue: null,
-        validate: (value) => isValidIconName(value),
-      },
-      name: {
-        defaultValue: null,
-        validate: (value) => typeof value === "string",
-      },
-      value: {
-        defaultValue: null,
-        validate: (value) => typeof value === "string",
-      },
-      fixedValue: {
-        // value를 수정 못하게 고정해야되는 경우
-        defaultValue: null,
-        validate: (value) => typeof value === "string",
-      },
-      placeholder: {
-        defaultValue: null,
-        validate: (value) => typeof value === "string",
-      },
-      maxLength: {
-        default: null,
-        validate: (value) => typeof value === "number",
-      },
-      disabled: {
-        defaultValue: false,
-        validate: (value) => typeof value === "boolean",
-      },
-      className: {
-        defaultValue: null,
-        validate: (value) => typeof value === "string",
-      },
-      onClick: {
-        defaultValue: null,
-        validate: (value) => typeof value === "function",
-      },
-      onBlur: {
-        defaultValue: null,
-        validate: (value) => typeof value === "function",
-      },
-      onFocus: {
-        defaultValue: null,
-        validate: (value) => typeof value === "function",
-      },
-    };
-
-    return config;
-  }
-
-  #getConfiguredOptions(userOptions = {}) {
-    const configuredOptions = {};
-
-    for (let key in this.defaultOptions) {
-      if (userOptions.hasOwnProperty(key) && this.defaultOptions[key].validate(userOptions[key])) {
-        configuredOptions[key] = userOptions[key];
-      } else {
-        configuredOptions[key] = this.defaultOptions[key].defaultValue;
-      }
-    }
-
-    return configuredOptions;
   }
 
   #create() {

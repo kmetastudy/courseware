@@ -15,6 +15,27 @@ from django.http import JsonResponse
 import jwt
 
 
+def validate_token(request, token, token_type):
+    token_generator = JWTGenerator()
+    try:
+        payload = jwt.decode(token, config('JWT_KEY'), algorithms='HS256')
+        request.userType = payload['type']
+        request.userId = payload['user']
+        request.userName = payload['name']
+
+        if token_type == 'refresh':
+            new_access_token = token_generator.generate_token(
+                'access', **payload)
+            return new_access_token
+        return None
+    except jwt.ExpiredSignatureError:
+        print(f"{token_type} token expired")
+        return None
+    except jwt.InvalidTokenError:
+        print(f"invalid {token_type} token")
+        return None
+
+
 def decode_token(token, secret, algorithms):
     try:
         return jwt.decode(token, secret, algorithms=algorithms), None
@@ -26,42 +47,6 @@ def decode_token(token, secret, algorithms):
 
 def issue_new_token(payload, secret, algorithm):
     return jwt.encode(payload, secret, algorithm=algorithm)
-
-
-def jwt_required(func):
-    @wraps(func)
-    def wrapper(request, *args, **kwargs):
-        access_token = request.POST.get('access_token')
-
-        if not access_token:
-            refresh_token = request.COOKIES.get('refresh_token', None)
-
-            if not refresh_token:
-                return JsonResponse({'error': 'Authentication required'}, status=401)
-
-            payload, err = decode_token(
-                refresh_token, config("JWT_KEY"), ['HS256'])
-
-            if err:
-                return JsonResponse({'error': err}, status=401)
-
-            new_payload = {'user_id': payload['user_id']}
-            new_access_token = issue_new_token(
-                new_payload, config("JWT_KEY"), 'HS256')
-
-            response = func(request, *args, **kwargs)
-            response.content = JsonResponse(
-                {'access_token': new_access_token}).content
-            return response
-
-        payload, err = decode_token(access_token, config("JWT_KEY"), ['HS256'])
-
-        if err:
-            return JsonResponse({'error': err}, status=401)
-
-        return func(request, *args, **kwargs)
-
-    return wrapper
 
 
 def jwt_required_fake(func):
@@ -147,22 +132,26 @@ def jwt_user(func):
     return wrapper
 
 
-def make_context(request):
-    context = {
-        'demo': request.demo,
-        'userId': request.userId,
-        'userType': request.userType,
-        'userName': request.userName,
-    }
-    print('make_context :', context)
-    return context
+# def make_context(request):
+#     context = {
+#         'demo': request.demo,
+#         'userId': request.userId,
+#         'userType': request.userType,
+#         'userName': request.userName,
+#     }
+#     print('make_context :', context)
+#     return context
 
 
 def make_fake_context(request):
+    course_id = request.GET.get('course_id')
+    content_id = request.GET.get('content_id')
     context = {
         'demo': False,
         'userType': 16,
-        'courseId': '59005c33-84ac-4f19-9e4f-1567607611ef',
+        # 'courseId': '59005c33-84ac-4f19-9e4f-1567607611ef',
+        'courseId': course_id,
+        'contentId': content_id,
         'userName': "Annonymous",
         'userLogin': True,
         # ''
@@ -175,6 +164,35 @@ def make_user_context(request):
         'userLogin': False,
         'returnUrl': request.next,
     }
+    return context
+
+
+def make_context(request):
+    context = {
+        'demo': getattr(request, 'demo', True),
+        'userId': request.userId,
+        'userType': request.userType,
+        'userName': request.userName,  # nickname
+        # 'accessToken': request.access_token,
+        # 'academyCode': request.academyCode,
+        #
+        # 0 : no User (Admin)
+        # 1 : Admin 이 만든 CP(콘텐츠 제작자)
+        # 2 : Admin 이 만든 선생님
+        # 3 : 선생님이 만든 학생
+        # 4 : 학생의 Observer (부모)
+        # 5 : 일반 유저 (스스로 가입한 학생)
+
+        'userAdmin': ((request.userType & ACCOUNT_TYPE_ADMIN) != 0),
+        'userOP': ((request.userType & ACCOUNT_TYPE_OPERATOR) != 0),
+        'userCP':      ((request.userType & ACCOUNT_TYPE_PRODUCER) != 0),
+        'userTeacher': ((request.userType & ACCOUNT_TYPE_TEACHER) != 0),
+        'userStudent': ((request.userType & ACCOUNT_TYPE_STUDENT) != 0),
+        'userParent': ((request.userType & ACCOUNT_TYPE_PARENT) != 0),
+        'userUser': ((request.userType & ACCOUNT_TYPE_USER) != 0),
+        'userLogin': (request.userType != 0),
+    }
+    print('make_context :', context)
     return context
 
 
@@ -194,8 +212,8 @@ class JWTGenerator:
     def _generate_payload(self, token_type, **data):
         expiration_time = self._generate_expiration(token_type)
         payload = {'exp': expiration_time}
-        if token_type == 'access':
-            payload.update(data)
+        print('_generate_payload > data: ', data)
+        payload.update(data)
         return payload
 
     def generate_token(self, token_type, **data):

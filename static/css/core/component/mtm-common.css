@@ -105,6 +105,7 @@
 }
 
 /* version2 theme1 : navy & black */
+/* mto-common.css */
 :root.v2theme1 {
     --theme-color-v2-c0-rgb : rgb(32, 33, 44);
     --theme-color-v2-c0 :   32,33,44;

@@ -2,6 +2,9 @@ import { mtmTabs } from "../../core/ui/mtm-tabs";
 
 import { StudyCourseContainer } from "./study/study-course-container.js";
 import { StudyCourseBuilder } from "./study/study-course-builder.js";
+
+// import { StudyCourseBuilder as StudyCourseBuilderNew } from "./study/study-course-builder-new.js";
+// import { StudyCourseContainer as StudyCourseContainerNew } from "./study/study-course-container-new.js";
 require("./mtm-manager-learn.css");
 
 // Todo. Jstar
@@ -66,8 +69,8 @@ StManager.prototype._create = function () {
 
   this.elLeftPanel.appendChild(this.clLeftTab.elThis);
 
-  // this.clStudyContainer = new mtmStudyContainer(this.options);
   this.clStudyContainer = new StudyCourseContainer(this.options);
+  // this.clStudyContainer = new StudyCourseContainerNew(this.options);
   this.clLeftTab.appendPanel(0, this.clStudyContainer.elThis);
 
   // 이것 현재 안 붙임
@@ -88,7 +91,8 @@ StManager.prototype._create = function () {
 
   this.elRightPanel.appendChild(this.clRightTab.elThis);
 
-  this.clStudyBuilder = new StudyCourseBuilder();
+  this.clStudyBuilder = new StudyCourseBuilder(this.options);
+  // this.clStudyBuilder = new StudyCourseBuilderNew({ courseId: this.options.courseId });
   this.clRightTab.appendPanel(0, this.clStudyBuilder.elThis);
 
   this.rightActiveIndex = 0;

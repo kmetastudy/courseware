@@ -138,6 +138,5 @@ var configCM = Object.assign({}, config, {
     }),
   ],
 });
-
 // Return Array of Configurations
 module.exports = [configMain, configUser, configCP, configCM, configST];

@@ -21,6 +21,7 @@ class mUserCourse(models.Model):
     def is_valid(self):
         if self.expiration_date:
             return self.expiration_date >= timezone.now().date()
+        return False
 
 
 class mStudyResult(models.Model):
@@ -101,7 +102,20 @@ class mStudyResult(models.Model):
     created_date = models.DateTimeField(default=django.utils.timezone.now)
     updated_date = models.DateTimeField(auto_now=True)
     version = models.IntegerField(default=0)
-    pass
+
+    def __str__(self):
+        return self.title if self.title else "mStudyResult"
+
+    def is_demo(self):
+        try:
+            user_course = mUserCourse.objects.filter(
+                user_id=self.id_student,
+                course_id=self.id_course,
+            ).first()
+
+            return user_course.is_valid() == False
+        except:
+            return True
 
 
 class mTestumResult(models.Model):

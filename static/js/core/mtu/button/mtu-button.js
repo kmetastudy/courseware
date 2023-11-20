@@ -1,65 +1,11 @@
 import { MtuIcon, isValidIconName } from "../icon/mtu-icon";
-
+import { config } from "./config";
+import { adjustConfig } from "../_util/adjust-config";
 require("./mtu-button.css");
 export class MtuButton {
   constructor(options = {}) {
-    this.options = this._initOptions(options);
+    this.options = adjustConfig(config, options);
     this._init();
-  }
-  _initOptions(prevOption) {
-    const finalOptions = {};
-
-    this.defaultOptions = {
-      text: {
-        defaultValue: null,
-        validate: (value) => typeof value === "string",
-      },
-      htmlType: {
-        defaultValue: "button",
-        validate: (value) => ["button", "submit", "rest"].includes(value),
-      },
-      type: {
-        defaultValue: "default",
-        validate: (value) => ["default", "primary", "dashed", "link", "text"].includes(value),
-      },
-      shape: {
-        defaultValue: "default",
-        validate: (value) => ["default", "circle", "round"].includes(value),
-      },
-      size: {
-        defaultValue: "middle",
-        validate: (value) => ["small", "middle", "large"].includes(value),
-      },
-      loading: {
-        defaultValue: false,
-        validate: (value) => typeof value === "boolean",
-      },
-      disabled: {
-        defaultValue: false,
-        validate: (value) => typeof value === "boolean",
-      },
-      icon: {
-        defaultValue: null,
-        validate: (value) => isValidIconName(value),
-      },
-      onClick: {
-        defaultValue: null,
-        validate: (value) => typeof value === "function",
-      },
-      onSubmit: {
-        defaultValue: null,
-        validate: (value) => typeof value === "function",
-      },
-    };
-
-    for (let key in this.defaultOptions) {
-      if (prevOption.hasOwnProperty(key) && this.defaultOptions[key].validate(prevOption[key])) {
-        finalOptions[key] = prevOption[key];
-      } else {
-        finalOptions[key] = this.defaultOptions[key].defaultValue;
-      }
-    }
-    return finalOptions;
   }
   _init() {
     //

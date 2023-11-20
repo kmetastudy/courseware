@@ -348,6 +348,7 @@ class mCourseBookBranch(models.Model):
 
     # 유효 한가? 지웠나?
     invalid = models.BooleanField(default=False)
+    is_demo_available = models.BooleanField(default=False)
 
     created_date = models.DateTimeField(default=django.utils.timezone.now)
     updated_date = models.DateTimeField(auto_now=True)

@@ -1,15 +1,11 @@
-from typing import Any
 import json
-import jwt
-import datetime
-from decouple import config
 
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from django.views import View
 
-from .utils import jwt_required, make_fake_context, jwt_required_fake, make_user_context
+from .utils import make_fake_context
 from .decorators import last_visited
 from .utils import JWTGenerator
 from .models import mUser
@@ -18,7 +14,6 @@ from .constants import *
 # Create your views here.
 
 
-# @jwt_required_fake
 @last_visited
 def index(request):
     fake_context = make_fake_context(request)
@@ -78,9 +73,12 @@ class LoginView(View):
         next_url = request.session.get('next', '/')
         result['next_url'] = next_url
         result['success'] = True
+
         refresh_token = self.token_generator.generate_token(
-            'refresh', id=user.id
-        )
+            'refresh',
+            user=str(user.id),
+            type=int(user.type),
+            name=str(user.nickname))
 
         response = JsonResponse(
             {'message': 'login success', 'result': result})
@@ -111,18 +109,28 @@ class SignUpView(View):
         user = mUser.objects.create(
             email=email,
             password=make_password(password),
-            nickname=nickname
+            nickname=nickname,
+            type=64  # TODO : 임시로 default값 지정해줬으니, 추후에 변경하자
         )
 
         next_url = request.session.get('next', '/')
         result['next_url'] = next_url
         result['success'] = True
+
         refresh_token = self.token_generator.generate_token(
-            'refresh', id=user.id
-        )
+            'refresh',
+            id=str(user.id),
+            type=int(user.type),
+            name=str(user.nickname))
 
         response = JsonResponse(
             {'message': 'login success', 'result': result})
         response.set_cookie('refresh_token', refresh_token,
                             httponly=True, samesite='Strict')
         return response
+
+# jwt token payload
+# 1. refesh
+# {'id': str(mUser.id)}
+# 2. access
+# {'id': str(mUser.id), 'type': mUser.type, 'nickname': mUser.nickname}

@@ -16,7 +16,7 @@ export var StudyCourseBuilder = function (options) {
   this.options = options;
   if (!this.options) this.options = {};
 
-  this.api = new ApiCp("cp", "course");
+  this.api = new ApiCp("cp", "course_n");
   this._init();
 };
 

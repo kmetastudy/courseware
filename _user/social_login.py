@@ -1,20 +1,21 @@
 import requests
 from decouple import config
 
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render, redirect
-from django.contrib.auth.hashers import make_password, check_password
+from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.views import View
+from django.utils.decorators import method_decorator
 
-from .utils import jwt_required
+from .models import mUser
+from .decorators import last_visited
 from .constants import *
 
-from _user.models import mUser
 
 # KAKAO
 
 
 class KaKaoSignInView(View):
+    @method_decorator(last_visited)
     def get(self, request):
         print("headers: ", request.headers)
         print("body: ", request.body)
@@ -23,8 +24,8 @@ class KaKaoSignInView(View):
         redirect_uri = 'http://localhost:8000/user/signin/kakao/callback/'
         url = f'{kakao_auth_api}&client_id={app_key}&redirect_uri={redirect_uri}'
 
-        return redirect(url)
         # res = redirect(url)
+        # return res
         return JsonResponse({"message": "redirect", "url": url})
 
 
@@ -54,14 +55,15 @@ class KakaoSignInCallbackView(View):
             # 받아온 token으로, user 정보 가져오기.
             user_info_response = requests.get(
                 'https://kapi.kakao.com/v2/user/me', headers={'Authorization': f'Bearer ${access_token}'})
-
+            # return JsonResponse({'user_info': user_info_response.json()}, status=200)
+            return redirect('/')
             return JsonResponse({'user_info': user_info_response.json()}, status=200)
 
         except KeyError:
             return JsonResponse({"message": "INVALID_TOKEN"}, status=400)
 
         except access_token.DoesNotExist:
-            return JsonResponse({"message": "INVALID_TOKEN"}, status=400)
+            return JsonResponse({"message": f"INVALID_TOKEN: {access_token}"}, status=400)
 
 # NAVER
 

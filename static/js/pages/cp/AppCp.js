@@ -1,11 +1,12 @@
 import { mtoEvents } from "../../core/utils/mto-events";
 import { mtoValidator } from "../../core/utils/mto-validator";
 
-import { NavManager } from "./nav-manager";
+import { NavManager } from "../../core/component/nav-manager";
 import { SidebarManager } from "./sidebar-manager";
 
 import { OverviewManager } from "./overview-manager";
 import { EditManager } from "./edit-manager";
+import { MtuBreadcrumb } from "../../core/mtu/breadcrumb/mtu-breadcrumb";
 
 require("../../../css/pages/cp/app-cp.css");
 export const AppCp = function () {
@@ -23,7 +24,11 @@ AppCp.prototype.initialize = function () {
   this.sidebarManager = new SidebarManager();
   this.overviewManager = new OverviewManager();
   this.editManager = new EditManager();
+  this.breadcrumb = new MtuBreadcrumb({
+    items: [{ title: "title" }, { title: "hello?", href: "/", icon: "" }, { type: "separator", separator: ":" }],
+  });
 
+  this.elThis.appendChild(this.breadcrumb.getElement());
   this.elThis.appendChild(this.editManager.getElement());
 };
 

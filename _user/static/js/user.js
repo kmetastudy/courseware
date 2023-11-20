@@ -1,6 +1,7 @@
 import { mtoEvents } from "../../../static/js/core/utils/mto-events";
 import { UserManager } from "../../../static/js/pages/user/user-manager";
 import { axiosManager } from "../../../static/js/core/utils/axios-manager";
+import { NavManager } from "../../../static/js/core/component/nav-manager";
 // require("../../../static/css/core/component/mtm-common.css");
 require("../../../static/css/index.css");
 function activate(context) {

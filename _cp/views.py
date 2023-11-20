@@ -1,143 +1,47 @@
-from django.shortcuts import render, get_object_or_404
-from django.views import View
-from django.db import models
-from django.http import JsonResponse, HttpResponse, HttpResponseBadRequest
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_POST
-
 import json
 import uuid
-from _cp.models import (mCourseBook,
-                        mCourseBookBranch,
-                        mQuestionBook,
-                        mQuestionBookBranch,
-                        mQuestionAtom,
-                        mVideoAtom,
-                        mLesson,
-                        mLessonUnit,
-                        mTestum,
-                        mTestumUnit,
-                        mQuestionSolutionText,
-                        mQuestionSolutionVideo,
-                        # new
-                        mCourseN,
-                        mElementN,
-                        mCourse,
-                        mElement)
 
-from typing import Type, Dict, Any
-import logging
+from django.shortcuts import render
+from django.http import JsonResponse
 
 # rest api
-from rest_framework import generics
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
-from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework import status
-from rest_framework.pagination import LimitOffsetPagination
-from .serializer import (QuestionBookSerializer,
-                         QuestionBookBranchSerializer,
-                         QuestionAtomSerializer,
-                         VideoAtomSerializer,
-                         CourseBookSerializer,
-                         CourseBookBranchSerializer,
-                         TestumSerializer,
-                         TestumUnitSerializer,
-                         LessonSerializer,
-                         LessonUnitSerializer,
-                         QuestionSolutionTextSerializer,
-                         QuestionSolutionVideoSerializer,
-                         # New
-                         CourseSerializer,
-                         ElementSerializer,
-                         )
 
-# django-filter(23.3)
-from django_filters.rest_framework import DjangoFilterBackend
+from .constants import *
+from .utils import DataValidator, convert_branch_recursive
+from .models import (mCourseBook,
+                     mCourseBookBranch,
+                     mTestum,
+                     mLesson,
+                     mTestumUnit,
+                     mLessonUnit,
+                     mQuestionAtom,
+                     mVideoAtom,
+                     mQuestionSolutionText,
+                     mQuestionSolutionVideo,
+                     mMapperN,
+                     mCourseN,
+                     mElementN,
+                     ##
+                     mCourse,
+                     mElement)
+
+from .serializer import (
+    # New
+    CourseSerializer,
+    ElementSerializer,
+)
 # Create your views here.
 
 
 def index(request):
     return render(request, "_cp/index.html")
 
-# BASIC CRUD
-
-
-class QuestionBookViewSet(viewsets.ModelViewSet):
-    queryset = mQuestionBook.objects.all()
-    serializer_class = QuestionBookSerializer
-
-
-# class QuestionBookBranchViewSet(viewsets.ModelViewSet):
-#     queryset = mQuestionBookBranch.objects.all()
-#     serializer_class = QuestionBookBranchSerializer
-
-class QuestionBookBranchViewSet(viewsets.ModelViewSet):
-    serializer_class = QuestionBookBranchSerializer
-    queryset = mQuestionBookBranch.objects.all()
-
-    filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ['parent_id']
-    ordering = ['created_at']  # default 정렬을 지정
-
-
-class CourseBookViewSet(viewsets.ModelViewSet):
-    queryset = mCourseBook.objects.all()
-    serializer_class = CourseBookSerializer
-
-
-class CourseBookBranchViewSet(viewsets.ModelViewSet):
-    queryset = mCourseBookBranch.objects.all()
-    serializer_class = CourseBookBranchSerializer
-
-    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
-    # search_fields = ['parent_id']
-    filterset_fields = ["parent_id"]
-
-
-class TestumViewSet(viewsets.ModelViewSet):
-    queryset = mTestum.objects.all()
-    serializer_class = TestumSerializer
-
-
-class TestumUnitViewSet(viewsets.ModelViewSet):
-    queryset = mTestumUnit.objects.all()
-    serializer_class = TestumUnitSerializer
-
-
-class LessonViewSet(viewsets.ModelViewSet):
-    queryset = mLesson.objects.all()
-    serializer_class = LessonSerializer
-
-
-class LessonUnitViewSet(viewsets.ModelViewSet):
-    queryset = mLessonUnit.objects.all()
-    serializer_class = LessonUnitSerializer
-
-
-class QuestionAtomViewSet(viewsets.ModelViewSet):
-    queryset = mQuestionAtom.objects.all()
-    serializer_class = QuestionAtomSerializer
-
-
-class VideoAtomViewSet(viewsets.ModelViewSet):
-    queryset = mVideoAtom.objects.all()
-    serializer_class = VideoAtomSerializer
-
-
-class QuestionSolutionTextViewSet(viewsets.ModelViewSet):
-    queryset = mQuestionSolutionText.objects.all()
-    serializer_class = QuestionSolutionTextSerializer
-
-
-class QuestionSolutionVideoViewSet(viewsets.ModelViewSet):
-    queryset = mQuestionSolutionVideo.objects.all()
-    serializer_class = QuestionSolutionVideoSerializer
-
 
 class CourseViewSet(viewsets.ModelViewSet):
-    queryset = mCourseN.objects.all()
+    queryset = mCourse.objects.all()
     serializer_class = CourseSerializer
 
     @action(detail=True, methods=['get'])
@@ -159,11 +63,48 @@ class CourseViewSet(viewsets.ModelViewSet):
 
 
 class ElementViewSet(viewsets.ModelViewSet):
-    queryset = mElementN.objects.all()
+    queryset = mElement.objects.all()
     serializer_class = ElementSerializer
 
+    @action(detail=True, methods=['get'])
+    def get_json_field(self, request, pk=None):
+        obj = self.get_object()
+        json_field = obj.json_data
+        print("course id: ", obj.id)
 
-# Complicate Logic
+        return Response(json_field)
+
+    # @action(detail=False, methods=['post'])
+    # def get_element_list(self, request, pk=None):
+    #     element_list = []
+
+    #     ids = request.data.get('ids')
+    #     types = request.data.get('types')
+
+    #     if not isinstance(ids, list) or not isinstance(types, list):
+    #         return Response({'error': 'Invalid data format, arrays of IDs and Types are expected.'}, status=400)
+
+    #     if len(ids) != len(types):
+    #         return Response({'error': 'The length of IDs and Types arrays must match.'}, status=400)
+
+    #     query = Q()
+    #     for idx, id in enumerate(ids):
+    #         query |= Q(id=id, type=types[idx])
+
+    #     objects = self.queryset.filter(query).iterator()
+
+    #     for obj in objects:
+    #         data = json.loads(obj.json_data)
+    #         type = data.type
+    #         #
+
+    #         #
+
+    #     # 객체들을 시리얼라이즈합니다.
+    #     serializer = self.get_serializer(objects, many=True)
+
+    #     # 시리얼라이즈된 데이터를 응답으로 반환합니다.
+    #     return Response(serializer.data)
 
 
 def get_full_course(request):
@@ -329,38 +270,29 @@ def migrate_element(request):
     return JsonResponse({'result': {}, 'message': f"mElement created, {cnt}/{size}"}, status=201)
 
 
-class DataValidator:
-    def __init__(self):
-        self._field_name_cache = {}
+@api_view(['POST'])
+def convert_course_to_json(request):
+    course_id = request.data.get("course_id")
 
-    def validate(self, model: Type[models.Model], data: Dict[str, Any]) -> Dict[str, Any]:
-        uuid_fields = ['id', 'parent_id']
-        valid_data = {}
+    print(course_id)
+    print(request.data)
+    course = mCourseBook.objects.filter(id=course_id).first()
+    if not course:
+        return Response({}, status.HTTP_204_NO_CONTENT)
 
-        for key, value in data.items():
-            if key in uuid_fields and value:
-                value = self.convert_to_uuid(value)
-                if value is None:
-                    continue  # Skip invalid UUIDs
-            if self.is_valid_field_name(model, key):
-                valid_data[key] = value
-        return valid_data
+    chapter_ids = course.branch_ids.split(",") if course.branch_ids else []
 
-    def convert_to_uuid(self, id_to_check: Any) -> uuid.UUID:
-        try:
-            return uuid.UUID(str(id_to_check))
-        except ValueError:
-            logging.error(f"Invalid UUID: {id_to_check}")
-            return None
+    lists = []
+    contents = []
+    kls = []
 
-    def is_valid_field_name(self, model: Type[models.Model], field_name_to_check: str) -> bool:
-        field_names = self.get_field_names(model)
-        return field_name_to_check in field_names
+    for chapter_id in chapter_ids:
+        convert_branch_recursive(chapter_id, lists, contents, kls)
 
-    def get_field_names(self, model: Type[models.Model]) -> list[str]:
-        if model in self._field_name_cache:
-            return self._field_name_cache[model]
+    results = {
+        "lists": lists,
+        "contents": contents,
+        "kls": kls,
+    }
 
-        field_names = [field.name for field in model._meta.fields]
-        self._field_name_cache[model] = field_names
-        return field_names
+    return Response(results, status.HTTP_200_OK)

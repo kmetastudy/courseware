@@ -3,15 +3,17 @@ export class API {
    *
    * @param {*} endpoint model's name (course_book, testum_unit, ...)
    */
-  constructor(appname, endpoint, baseURL) {
-    this.appname = appname;
-    this.endpoint = endpoint;
-    this.baseURL = baseURL ?? `../${appname}/api/${endpoint}/`;
-  }
+  constructor() {}
 
-  create(data) {
+  post(endpoint, data) {
+    console.log(data);
+    const form = new FormData();
+    for (let [key, value] of Object.entries(data)) {
+      console.log(key, value);
+      form.append(key, value);
+    }
     return axios
-      .post(this.baseURL, data)
+      .post(endpoint, data)
       .then((res) => {
         if (res.data) {
           return res.data;
@@ -20,13 +22,10 @@ export class API {
       .catch((err) => console.error(err));
   }
 
-  get(id = null) {
-    let url = this.baseURL;
-    if (id !== null) {
-      url = `${this.baseURL}${id}/`; // retrieve
-    }
+  get(endpoint) {
+    //api/_cp/course_book/some_id/
     return axios
-      .get(url)
+      .get(endpoint)
       .then((res) => {
         if (res.data) {
           return res.data;
@@ -37,10 +36,12 @@ export class API {
       .catch((err) => console.error(err));
   }
 
-  filter(conditions) {
+  filter(endpoint, params) {
+    //api/cp/course_book/id/
+    // params: {title: '중3-1'}
     return axios
-      .get(this.baseURL, {
-        params: conditions,
+      .get(endpoint, {
+        params: params,
       })
       .then((res) => {
         if (res.data) {
@@ -50,20 +51,36 @@ export class API {
       .catch((err) => console.error(err));
   }
 
-  update(id, data) {
-    const result = axios.patch(`${this.baseURL}${id}/`, data);
-    return result;
+  update({ endpoint, data }) {
+    const result = axios.patch(endpoint, data).then((res) => {
+      if (res.data) {
+        return result;
+      }
+    });
   }
 
-  remove(id) {
-    const result = axios.delete(`${this.baseURL}${id}/`);
-    return result;
+  remove(endpoint) {
+    const result = axios.delete(endpoint).then((res) => {
+      if (res.data) {
+        return res.data;
+      }
+    });
   }
 
-  // #setCondition(conditions) {
-  //   for (let key in conditions) {
-  //     // params[key]
-  //   }
-  //   return params;
-  // }
+  // TODO
+  // 원래 이렇게 하면 안되는데..
+  // 일단 급하니 이렇게 하고, 나중에 수정하자.
+  getJsonField(courseId, param) {
+    const url = `${endpoint}${courseId}/get_json_field/`;
+    return axios
+      .get(url, {
+        params: param,
+      })
+      .then((res) => {
+        if (res.data) {
+          return res.data;
+        }
+      })
+      .catch((err) => console.error(err));
+  }
 }

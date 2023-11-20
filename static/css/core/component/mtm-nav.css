@@ -1,0 +1,89 @@
+.mtm-nav {
+  padding: 0.5rem 0rem;
+  margin-bottom: 8px;
+  /* background: var(--theme-color-main); */
+  background: #fff;
+
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 72;
+
+  box-shadow: 0 2px 4px 0 hsla(0, 0%, 80.8%, .5);
+  height: 64px;
+  min-height: unset;
+
+  display: flex;
+  word-break: break-word;
+}
+
+.mtm-nav.sticky {
+  position: fixed;
+  /* background: var(--theme-color-main); */
+  background: #fff;
+}
+
+.mtm-nav-header {
+  display: flex;
+  padding: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+.mtm-nav-logo{
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  cursor: pointer;
+}
+
+.mtm-nav-logo-image {
+  height: 100%;
+}
+
+.mtm-nav-body {
+  display: flex;
+  justify-content: space-between;
+  flex: 1 1 auto;
+  margin-right: 0;
+}
+
+.mtm-nav-left-section,
+.mtm-nav-right-section {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+}
+
+.mtm-nav-left-section > *,
+.mtm-nav-right-section > * {
+  cursor: pointer;
+}
+
+.mtm-nav-left-section {
+  gap: 48px;
+}
+
+.mtm-nav-right-section {
+  gap: 24px;
+}
+
+.mtm-nav-login-button,
+.mtm-nav-logout-button,
+.mtm-nav-user-name {
+  display: flex;
+  align-items: center;
+  flex-grow: 0;
+  flex-shrink: 0;
+  line-height: 1.5;
+  position: relative;
+  padding: 0 0.75rem;
+}
+
+
+.mtm-nav-user-name {
+  margin-right: 32px;
+}

@@ -13,9 +13,13 @@ staticfiles/
 __pycache__/
 *.sqlite3
 media
+eslintrc.json
+perttierrc
 .DS_Store
 *.zip
 *.json
+_bundle/
+idpw.md
 
 ### dev settings
 

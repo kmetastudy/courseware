@@ -1,51 +1,139 @@
-import { mtoSVGBuilder } from "../../core/utils/mto-svg-builder";
+import { MtuIcon } from "../mtu/icon/mtu-icon";
 import { mtoValidator } from "../utils/mto-validator";
+import { MtuInput } from "../mtu/input/mtu-input";
+import { MtuButton } from "../mtu/button/mtu-button";
 
 require("../../../css/core/component/mtm-nav.css");
-export const mtmNav = function (element, options = {}) {
-  this.elParent = element;
-  this.options = options;
-
-  this._init();
-};
-
-mtmNav.prototype._init = function () {
-  this._validate();
-  this._initOptions();
-  this._create();
-};
-
-mtmNav.prototype._validate = function () {
-  const isDom = mtoValidator.isDom(this.elParent);
-  if (isDom === false) {
-    throw new Error("MtmNav Creation Error - Invalid element provided: ", this.elParent);
+export class MtmNav {
+  constructor(options = {}) {
+    console.log(options);
+    this.options = options;
+    this.init();
   }
-};
 
-mtmNav.prototype._initOptions = function () {};
+  init() {
+    this.create();
+  }
 
-mtmNav.prototype._create = function () {
-  this.elThis = document.createElement("nav");
-  this.elThis.classList.add("mtm-nav");
-  this.elParent.appendChild(this.elThis);
+  create() {
+    this.nav = document.createElement("div");
+    this.nav.classList.add("mtm-nav");
 
-  this.elLogoWrapper = document.createElement("div");
-  this.elLogoWrapper.classList.add("nav-logo-wrapper");
-  this.elThis.appendChild(this.elLogoWrapper);
+    // header
+    this.header = document.createElement("div");
+    this.header.classList.add("mtm-nav-header");
+    this.logo = this.createLogo(this.options.logo);
 
-  this.elLogo = document.createElement("div");
-  this.elLogo.classList.add("nav-logo");
-  this.elLogoWrapper.appendChild(this.elLogo);
+    this.header.appendChild(this.logo);
 
-  this.elTitle = document.createElement("h1");
-  this.elTitle.classList.add("nav-title");
-  this.elThis.appendChild(this.elTitle);
+    // body
+    this.body = document.createElement("div");
+    this.body.classList.add("mtm-nav-body");
+    this.leftSection = this.createLeftSection();
+    this.rightSection = this.createRightSection();
 
-  this.elMenu = document.createElement("div");
-  this.elMenu.classList.add("nav-menu");
-  this.elThis.appendChild(this.elMenu);
+    this.body.appendChild(this.leftSection);
+    this.body.appendChild(this.rightSection);
 
-  this.elIconWrapper = document.createElement("div");
-  this.elIconWrapper.classList.add("nav-icon-wrapper");
-  this.elThis.appendChild(this.elIconWrapper);
-};
+    //
+    this.nav.appendChild(this.header);
+    this.nav.appendChild(this.body);
+  }
+
+  createLogo(config) {
+    const logo = document.createElement("div");
+    logo.classList.add("mtm-nav-logo");
+    if (config.onClick) {
+      logo.addEventListener("click", config.onClick);
+    }
+
+    const logoImage = document.createElement("img");
+    logoImage.classList.add("mtm-nav-logo-image");
+    logoImage.setAttribute("src", config.image);
+    logo.appendChild(logoImage);
+
+    return logo;
+  }
+
+  createLeftSection() {
+    const section = document.createElement("div");
+    section.classList.add(`mtm-nav-left-section`);
+
+    if (this.options.menu) {
+      this.menuElements = [];
+      this.options.menu.forEach((data) => {
+        const menu = this.createMenu(data);
+        console.log("menu: ", menu);
+        section.appendChild(menu);
+        this.menuElements.push(menu);
+      });
+    }
+    return section;
+  }
+
+  createMenu(data) {
+    const menu = document.createElement("div");
+    menu.classList.add("mtu-nav-menu");
+    menu.textContent = data.title;
+    menu.addEventListener("click", data.onClick);
+    return menu;
+  }
+
+  createRightSection() {
+    const section = document.createElement("div");
+    section.classList.add(`mtm-nav-right-section`);
+
+    // if (this.options.search) {
+    //   this.searchBar = createSearchBar(this.options.search);
+    //   section.appendChild(this.searchBar);
+    // }
+
+    if (this.options.userName) {
+      this.userName = this.createUserName(this.options.userName);
+      section.appendChild(this.userName);
+    }
+
+    if (this.options.login) {
+      this.loginButton = this.createLogin(this.options.login);
+      section.appendChild(this.loginButton);
+    }
+
+    if (this.options.logout) {
+      this.logoutButton = this.createLogout(this.options.logout);
+      section.appendChild(this.logoutButton);
+    }
+
+    return section;
+  }
+
+  createSearchBar() {
+    //TODO
+    // Create Select(Serach) component
+  }
+
+  createUserName(name) {
+    const userName = document.createElement("div");
+    userName.classList.add("mtm-nav-user-name");
+    userName.textContent = name;
+    return userName;
+  }
+
+  createLogin(config) {
+    config.className = "mtm-nav-login-button";
+    const clLogin = new MtuButton(config);
+    const login = clLogin.getElement();
+    return login;
+  }
+
+  createLogout(config) {
+    config.className = "mtm-nav-logout-button";
+    const clLogout = new MtuButton(config);
+    const logout = clLogout.getElement();
+    return logout;
+  }
+
+  //////////// API ////////////
+  getElement() {
+    return this.nav;
+  }
+}

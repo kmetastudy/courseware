@@ -600,7 +600,7 @@ generic edit view에서 `TextField`는 다중 행 크기 조정 가능한 입력
 
 https://stackoverflow.com/questions/7354588/whats-the-difference-between-charfield-and-textfield-in-django
 
-## Element pretend
+## Element prepend
 
 자식 element를 부모 element에 붙이는 경우, `appendChild`를 사용한다. 이 때, 자식 element는 부모요소의 자식들 중, 가장 마지막 자식이 된다.
 
@@ -757,4 +757,50 @@ database가 이미 존재하기 때문에, 첫 마이그래이션을 migrate하�
 
 ```bash
 python manage.py migrate --fake _myapp
+```
+
+## `is`, `is not` 과 `==`, `!=` 의 차이는 뭘까
+
+### 1. `is`, `is not`
+
+두 객체가 메모리 상에서 동일한/동일하지 않은 객체인지 확인한다.
+`is`의 경우 두 객체가 같은 객체(메모리 상의 동일한 위치를 가리키는 경우)일 때 True를 반환한다.
+
+### 2. `==`, `!=`
+
+두 객체의 값(value)가 동등한지 비교한다.
+`==`는 두 객체의 값이 같은 경우 True를 반환한다.
+
+### 사용 사례
+
+```python
+a = [1, 2, 3]
+b = a       # b와 a는 같은 객체를 참조합니다.
+c = [1, 2, 3]
+
+print(a is b)   # True, a와 b는 동일한 객체입니다.
+print(a == b)   # True, a와 b는 동일한 값을 가집니다.
+
+print(a is c)   # False, a와 c는 다른 객체입니다.
+print(a == c)   # True, a와 c는 동일한 값을 가집니다.
+
+```
+
+특히, `None`과이ㅡ 비교에서 `is`를 사용한다.(`if x is None:`). 이것은 `None`이 싱글톤 객체이기 때문에,
+메모리 상에서 단 하나의 `None` 객체만 존재하기 때문이다.
+
+### sticky
+
+```css
+.mynav {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 72;
+}
+
+.mynav.sticky {
+  display: fixed;
+}
 ```

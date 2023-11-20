@@ -1,8 +1,17 @@
-from _cp.constants import *
-from _cp.models import mCourseN, mElementN
-
 import uuid
 import json
+
+from _cp.constants import *
+from _cp.models import mCourseN, mElementN
+from .models import mUserCourse
+
+
+def has_course_permission(course_id, user_id):
+    if not course_id or not user_id:
+        return False
+    if mUserCourse.objects.filter(user_id=user_id, course_id=course_id).exists():
+        return True
+    return False
 
 
 def get_content_info(request, content_type):

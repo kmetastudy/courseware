@@ -1,6 +1,6 @@
 import { mtmSortableTree } from "../../core/ui/mtm-sortable-tree";
 import { mtoEvents } from "../../core/utils/mto-events";
-
+import { MtuTree } from "../../core/mtu/tree/mtu-tree";
 export const mtmTreeManager = function (options = {}) {
   this.options = options;
   this.data = null;
