@@ -424,4 +424,7 @@ dist
 .history
 .ionide
 
+### exception for dist
+!static/_dist/katex@0.12.0/dist/
+
 # End of https://www.toptal.com/developers/gitignore/api/node,python,visualstudiocode,django
