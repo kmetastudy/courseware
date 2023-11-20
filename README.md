@@ -43,6 +43,16 @@ npm run dev
 /your-own-branch-name/> git push origin [your-own-branch-name]
 ```
 
-3. github에서 `Neww Pull Request`를 하세요.
-base repository: kmetastudy/courseware/develop
-compare repository: [your-own-branch-name]
+3. github에서 `New Pull Request`를 하세요.
+`push`가 끝나신 경우, 다음과 같이 PR을 보내라는 메세지가 생성됩니다.
+![PR_MESSAGE](./docs/assets/PR_MESSAGE.png)
+
+해당 메시지를 클릭하신 후, 다음과 같이 repository를 설정합니다.
+
+![PR_REPOSITORY](./docs/assets/PR_REPOSITORY.png)
+
+> base repository: kmetastudy/courseware > dev   
+> compare repository: your-repository > [your-own-branch-name]
+
+### 주의사항
+항상 동기화를 생각해주세요.
