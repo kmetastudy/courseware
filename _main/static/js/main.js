@@ -1,8 +1,19 @@
-function init(options) {
-  console.log("hi");
+require("../css/main.css");
+import { Sidebar } from "../../../static/js/pages/main/sidebar/sidebar";
+import { CourseManager } from "../../../static/js/pages/main/course/course-manager";
+import { NavManager } from "../../../static/js/core/component/nav-manager";
+
+export function MainOnReady(context) {
+  console.log(context)
+
+  const clNav = new NavManager(context)
+  $('.navbar_header').append(clNav.getElement())
 
   // 과목 사이드바
-  var clSidebar = new Sidebar(options);
+  const sidebarOptions = {
+    subject_list: context.subject_list
+  }
+  var clSidebar = new Sidebar(sidebarOptions);
   $(".sidebar").append(clSidebar.elThis);
 
   // 현재 검색페이지
@@ -18,15 +29,19 @@ function init(options) {
     info: "정보",
     mor: "도덕",
   };
-  $(".courses_header").text(options.schoolKor + " / " + subjectKor[options.subject]);
+  $(".courses_header").text(context.schoolKor + " / " + subjectKor[context.subject]);
+
+  var clCourses = new CourseManager()
+
 
   // 필터
   var clFilter = new Filter();
   $(".courses_filter").prepend(clFilter.elThis);
   // 코스 리스트
-  var clCourses = new Course();
-  $(".courses_main").html(clCourses.elThis);
+  // var clCourses = new Course();
+  // $(".courses_main").html(clCourses.elThis);
 }
+
 
 function Filter() {
   this.options = null;
@@ -77,20 +92,24 @@ function Course(options) {
   this.create();
 }
 
-Course.prototype.create = function () {
+Course.prototype.create = async function () {
   console.log(this.options);
+
+  // const courses = await this.urlGetCourses();
+  // console.log(courses);
+
   var $elCourses = $('<div class="grid grid-cols-4"></div>');
 
-  // this.data.forEach(function(content) {
+  // courses.forEach(function(content) {
   //     var $elContent = $(`<div class="p-4">
-  //                         <img src="../../static/img/${content.thumnail}">
-  //                         <p>${content.title}</p>
-  //                         <p>${content.publisher}</p>
-  //                         <p>${content.cost}</p>
+  //                           <img src="../../../static/img/001.png">
+  //                           <p>중등 1-1 수학 기초와 개념</p>
+  //                           <p class="text-gray-600 text-sm">megacourse</p>
+  //                           <p class="text-md">55,000원</p>
   //                     </div>`)
-  //     $elContents.append($elContent)
+  //     $elCourses.append($elContent)
   // })
-
+  
   for (var i = 1; i < 53; i++) {
     if (i < 10) {
       var $elCourse = $(`<div class="p-4 cursor-pointer" onclick="location.href='./id/'">
@@ -110,61 +129,17 @@ Course.prototype.create = function () {
 
     $elCourses.append($elCourse);
   }
-
   this.elThis = $elCourses;
 };
 
-function Sidebar(options) {
-  this.options = options;
-  this.elThis = null;
-  this.create();
+Course.prototype.urlGetCourses = function() {
+  return axios.get("../../../cp/api/course_book/").then((res) => {
+    if (res?.data) {
+      return res.data;
+    } else {
+      console.log(res);
+      return [];
+    }
+  });
 }
 
-Sidebar.prototype.create = function () {
-  var subjectEng = {
-    국어: "kor",
-    영어: "eng",
-    수학: "math",
-    사회: "soc",
-    역사: "hist",
-    한국사: "korhist",
-    과학: "sci",
-    정보: "info",
-    도덕: "mor",
-  };
-  var $elSubjects = $('<div class="sidebar-container border"></div>');
-  this.options.subject_list.forEach(function (subject) {
-    var $elSubject =
-      $(`<div class="p-4 border-b text-base cursor-pointer" onclick="location.href='../${subjectEng[subject]}'">
-                            <i class="ri-book-line"></i>
-                            ${subject}
-                        </div>`);
-
-    // $elSubject.on("click",function(){
-    //     // console.log(this.innerText)
-    //     // var header = $('.courses_header').text()
-    //     // $('.courses_header').text(header.split('/')[0]+' / '+this.innerText)
-
-    //     $.ajax({
-    //         url:'courses/getCourses/',
-    //         type: 'POST',
-    //         data: { courseId : courseId },
-    //         headers: { "X-CSRFTOKEN": csrftoken },
-    //         success:function(res){
-    //             if(res.data != null){
-    //                 console.log(res.data)
-    //                 contentDetailOption = res.data
-    //             }
-
-    //         },
-    //         error:function(){
-
-    //         }
-    //     })
-    // })
-
-    $elSubjects.append($elSubject);
-  });
-
-  this.elThis = $elSubjects;
-};
