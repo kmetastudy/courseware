@@ -1,0 +1,71 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>콘텐츠 관리</title>
+    
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tabulator -->
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet" />
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <!-- axios(currently for test) -->
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <!-- ajax -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/44b2667d85.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="{% static '_bundle/main/main-bundle.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/main/main-bundle.js' %}"></script>
+  </head>
+
+  <body>
+    <div id="root" class="flex flex-col items-center">
+      <!-- navigation -->
+      <nav class="navbar w-[1200px]">
+        
+      </nav>
+
+      <!-- main body -->
+      <main id="main" class="p-6 w-[1200px] flex justify-center">
+        <div class="container">
+          <div class="columns flex">
+            <div class="column sidebar w-[200px]">
+              <!-- 과목 사이드바 -->
+            </div>
+            <div class="column courses_body w-full">
+              <header class="courses_header px-4 text-lg">
+                <!-- 중등/전체강의 -->
+              </header>
+              <div class="courses_filter p-4 w-full flex">
+                <!-- 필터 -->
+              </div>
+              <main class="courses_main">
+                <!-- 코스 콘텐츠  -->
+              </main>
+              <footer class="courses_footer"></footer>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+  </body>
+  <script>
+    var csrftoken = "{{csrf_token}}";
+    
+    const context = JSON.parse("{{ context|escapejs }}");
+    const options = JSON.parse("{{ options|escapejs }}");
+
+    window.addEventListener("DOMContentLoaded", function () {
+      console.log("mainlibrary: ", mainlibrary);
+      mainlibrary.CourseMainOnReady(context, options)
+    });
+  </script>
+</html>
