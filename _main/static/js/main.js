@@ -7,7 +7,7 @@ export function MainOnReady(context) {
   console.log(context)
 
   const clNav = new NavManager(context)
-  $('.navbar_header').append(clNav.getElement())
+  $('.navbar').html(clNav.getElement())
 
   // 과목 사이드바
   const sidebarOptions = {
