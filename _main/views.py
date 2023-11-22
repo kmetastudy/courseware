@@ -100,7 +100,7 @@ def getCourses(request, school, subject):
     if difficulty:
         q.add(Q(difficulty__in=difficulty), q.AND)
 
-    courses = courseDetail.objects.filter(q).values('courseId', 'courseTitle', 'cost')
+    courses = courseDetail.objects.filter(q).values('courseId', 'courseTitle', 'subject', 'cost')
 
     courseList = json.dumps(list(courses))
 
@@ -110,9 +110,18 @@ def getCourses(request, school, subject):
 
     return courseList
 
+@jwt_login_required
+def detailView(request, school, subject, id):
+    context_sample = make_context(request)
+    
+    courses = courseDetail.objects.filter(courseId=id).values(
+        'courseId','courseTitle', 'courseSummary', 'desc', 'thumnail',
+        'year', 'school', 'grade', 'semester', 'subject', 'publisher', 'difficulty',
+        'producer', 'duration', 'cost')
 
-def getDetail(request, school, subject, id):
-    context = {'school': school,
-               'subject': subject}
+    detail_context = json.dumps(list(courses))
 
+    context = {"context": json.dumps(context_sample),
+               "options": detail_context}
     return render(request, "_main/detail.html", context)
+

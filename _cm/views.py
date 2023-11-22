@@ -21,7 +21,7 @@ def getCourseBook(request):
 
 def getDetail(request):
     courseId = request.POST.get('courseId')
-    course = courseDetail.objects.filter(courseId=courseId).values().first()
+    course = courseDetail.objects.using("courseware").filter(courseId=courseId).values().first()
 
     print(course)
     
@@ -51,7 +51,7 @@ def setDetail(request):
     detail = courseDetail(year=year, school=school, grade=grade, semester=semester, subject=subject,
                                   publisher=publisher, difficulty=difficulty, duration=duration, cost=cost,
                                   courseId=courseId, courseTitle=courseTitle, courseSummary=courseSummary, desc=desc)
-    detail.save()
+    detail.save(using="courseware")
 
     
     return JsonResponse({'message':'good'})

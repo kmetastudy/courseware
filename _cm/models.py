@@ -19,6 +19,8 @@ class courseDetail(models.Model):
     semester = models.IntegerField(default=0)  # 1:1학기 2:2학기 0:전학기
     subject = models.TextField(null=True, blank=True)
     publisher = models.TextField(null=True, blank=True)
+    isTest = models.BooleanField(default=False)
     difficulty = models.IntegerField(null=True, blank=True)
+    producer = models.TextField(null=True, blank=True)
     duration = models.IntegerField(default=0)
     cost = models.IntegerField(default=0)

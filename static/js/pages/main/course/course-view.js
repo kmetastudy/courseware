@@ -21,7 +21,7 @@ CourseView.prototype.init = function() {
                       </div>`)
 
     $elCourse.on("click", function(){
-      window.location.href = `./${course.courseId}`
+      window.location.href = `../${course.subject}/${course.courseId}`
     })
 
     $elCourseList.append($elCourse)

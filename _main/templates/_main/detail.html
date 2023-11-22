@@ -13,74 +13,23 @@
     <!-- Tabulator -->
     <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet" />
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <!-- axios(currently for test) -->
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
     <!-- ajax -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/44b2667d85.js" crossorigin="anonymous"></script>
-    {% comment %}
-    <link href="{% static '_main/css/main.css' %}" rel="stylesheet" />
-    {% endcomment %}
-    <link href="{% static 'css/main.css' %}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="{% static '_bundle/main/main-bundle.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/main/main-bundle.js' %}"></script>
   </head>
 
   <body>
     <div id="root" class="flex flex-col items-center">
       <!-- navigation -->
-      <nav class="navbar w-[1400px] flex justify-center border-b-2">
-        <div class="container desktop_container p-6 w-[1200px]">
-          <div class="content">
-            <div class="navbar_header pb-2 grid grid-cols-3 justify-self-stretch">
-              <div class="navbar-left"></div>
-              <div class="navbar-search flex justify-center items-center">
-                <input
-                  type="text"
-                  placeholder="검색"
-                  class="px-4 mx-2 py-1 w-2/3 border border-gray-300 rounded-full"
-                />
-                <i class="fa-solid fa-magnifying-glass text-black"></i>
-              </div>
-              <div class="navbar-right justify-self-end flex items-center">
-                <div class="navbar-item buttons">
-                  <button class="mx-2 text-xl">로그인</button>
-                  <button class="mx-2 text-xl">회원가입</button>
-                </div>
-              </div>
-            </div>
-            <div class="navbar_menu flex items-center">
-              <img class="navbar-item w-[130px]" src="{% static 'img/Course12Logo.png' %}" />
-              <div
-                class="element navbar-item mx-4 text-2xl text-gray-400 cursor-pointer hover:text-black"
-                onclick="location.href='/courses/element/all/'"
-              >
-                초등
-              </div>
-              <div
-                class="middle navbar-item mx-4 text-2xl text-gray-400 cursor-pointer hover:text-black"
-                onclick="location.href='/courses/middle/all/'"
-              >
-                중등
-              </div>
-              <div
-                class="midhigh navbar-item mx-4 text-2xl text-gray-400 cursor-pointer hover:text-black"
-                onclick="location.href='/courses/midhigh/all/'"
-              >
-                예비고1
-              </div>
-              <div
-                class="high navbar-item mx-4 text-2xl text-gray-400 cursor-pointer hover:text-black"
-                onclick="location.href='/courses/high/all/'"
-              >
-                고등
-              </div>
-              <div
-                class="high2 navbar-item mx-4 text-2xl text-gray-400 cursor-pointer hover:text-black"
-                onclick="location.href='/courses/high2/all/'"
-              >
-                수능
-              </div>
-            </div>
-          </div>
-        </div>
+      <nav class="navbar w-[1200px]">
+        
       </nav>
 
       <main id="main">
@@ -98,9 +47,8 @@
                     <!-- 코스 설명 -->
                   </div>
                 </div>
-                <div class="course_chapter m-2 p-2 w-[900px] flex justify-between border rounded-md cursor-pointer">
+                <div class="course_chapter m-2 p-2 w-[900px] flex-col border rounded-md cursor-pointer">
                   <p class="p-2">코스 과정</p>
-                  <p class="p-2">></p>
                   <!-- 코스 목차 -->
                 </div>
               </div>
@@ -112,17 +60,17 @@
         </div>
       </main>
     </div>
-
-    {% comment %}
-    <script src="{% static '_main/js/detail.js' %}"></script>
-    {% endcomment %}
-    <script src="{% static 'js/detail.js' %}"></script>
   </body>
   <script>
-    var context = "{{school|safe}}";
+    var csrftoken = "{{csrf_token}}";
+    
+    const context = JSON.parse("{{ context|escapejs }}");
+    const data = JSON.parse("{{ options|escapejs }}");
 
-    console.log(context);
-    $(`.${context}`).removeClass("text-gray-400");
-    $(`.${context}`).addClass("text-black");
+
+    window.addEventListener("DOMContentLoaded", function () {
+      console.log("mainlibrary: ", mainlibrary);
+      mainlibrary.CourseDetailOnReady(context, data)
+    });
   </script>
 </html>
