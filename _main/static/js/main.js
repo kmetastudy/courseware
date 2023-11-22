@@ -20,20 +20,7 @@ export function CourseMainOnReady(context,options, courses) {
 
   var clCourses = new CourseManager(options, courses)
 
-  // 현재 검색페이지
-  var subjectKor = {
-    all: "전과목",
-    kor: "국어",
-    eng: "영어",
-    math: "수학",
-    soc: "사회",
-    hist: "역사",
-    korhist: "한국사",
-    sci: "과학",
-    info: "정보",
-    mor: "도덕",
-  };
-  $(".courses_header").text(options.schoolKor + " / " + subjectKor[options.subject]);
+  
 
   
   // 코스 리스트

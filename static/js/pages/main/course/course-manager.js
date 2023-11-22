@@ -1,5 +1,6 @@
 import { Sidebar } from "./sidebar"
 import { Filter } from "./filter"
+import { CourseView } from "./course-view"
 
 export function CourseManager(options, data) {
   this.options = options
@@ -15,23 +16,14 @@ CourseManager.prototype.init = async function() {
   var clSidebar = new Sidebar(this.sidebarOptions);
   $(".sidebar").append(clSidebar.elThis);
 
+  $(".courses_header").text(options.schoolKor + " / 전과목");
+
   this.filterOptions = this.prepareFilterOptions()
   var clFilter = new Filter(this.filterOptions)
   $(".courses_filter").append(clFilter.elThis);
 
-  // const courses = await this.urlGetCourses();
-  // console.log(courses);
+  this.createCourseView()
 
-  // var $elCourses = $(`<div class="grid grid-cols-4"></div>`)
-
-  // for (let i = 0; i < courses.length; i++) {
-  //     // console.log(courses[i])
-  //     var elCourseCard = new CourseCard(courses[i], i)
-      
-  //     $elCourses.append(elCourseCard.elThis)
-  // }
-
-  // $(".courses_main").html($elCourses);
 }
 
 CourseManager.prototype.prepareSidebarOptions = function(subjects) {
@@ -68,14 +60,22 @@ CourseManager.prototype.prepareFilterOptions = function() {
   }
 }
 
-////////////////////// handler /////////////////////////
-CourseManager.prototype.onSidebarHandler = function(data) {
-  this.subject = data
-  // console.log(this)
-  this.urlGetCourses()
+
+CourseManager.prototype.createCourseView = function() {
+  var clCourseView = new CourseView(this.data)
+  $(".courses_main").html(clCourseView.elThis);
 }
 
-CourseManager.prototype.onFilterHandler = function(key, type) {
+////////////////////// handler /////////////////////////
+CourseManager.prototype.onSidebarHandler = async function(kor,eng) {
+  this.subject = eng
+  // console.log(this)
+  $(".courses_header").text(options.schoolKor + " / " + kor);
+  this.data = await this.urlGetCourses()
+  this.createCourseView()
+}
+
+CourseManager.prototype.onFilterHandler = async function(key, type) {
   const filterData = this.filter[key]
   if (filterData.includes(type)){
     for(let i = 0; i < filterData.length; i++) {
@@ -89,42 +89,26 @@ CourseManager.prototype.onFilterHandler = function(key, type) {
   }
 
   console.log(this.filter)
-  this.urlGetCourses()
+  this.data = await this.urlGetCourses()
+  this.createCourseView()
 }
 
 
 //////////////////// API ///////////////////////
-CourseManager.prototype.urlGetCourses = function() {
+CourseManager.prototype.urlGetCourses = async function() {
+  var courses;
   $.ajax({
-        headers: { "X-CSRFToken": csrftoken },
-        type: "POST",
-        url: `/courses/${this.options.school}/${this.subject}/`,
-        data : this.filter,
-        dataType: "json",
-        success: function (res) {
-          console.log(res)
+    headers: { "X-CSRFToken": csrftoken },
+    type: "POST",
+    url: `/courses/${this.options.school}/${this.subject}/`,
+    data : this.filter,
+    dataType: "json",
+    async: false,
+    success: function (res) {
+      courses = JSON.parse(res.courses)
+      console.log(courses)
+    }, //end success
+  }); // end of ajax
 
-        }, //end success
-      }); // end of ajax
-}
-
-// CourseManager.prototype.urlGetCourses = function() {
-//     return axios.get("../../../cp/api/course_book/").then((res) => {
-//       if (res?.data) {
-//         return res.data;
-//       } else {
-//         console.log(res);
-//         return [];
-//       }
-//     });
-// }
-
-function CourseCard(data, index) {
-  this.data = data
-  this.elThis = $(`<div class="p-4 cursor-pointer" onclick="location.href='../../../st/?course_id=${this.data.id}'">
-                      <img src="../../../static/img/001.png">
-                      <p>${this.data.title}</p>
-                      <p class="text-gray-600 text-sm">megacourse</p>
-                      <p class="text-md">55,000원</p>
-                  </div>`)
+  return courses
 }

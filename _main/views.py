@@ -55,8 +55,8 @@ def mainView(request, school, subject):
             { 'kor':'6모', 'eng':'june'},
             { 'kor':'9모', 'eng':'september'} ]
     }
-
-    if (subject == 'all'):
+    print(request.method)
+    if (subject == 'all' and request.method == 'GET'):
         courses = getCourses(request, school, subject)
 
         context_sample = make_context(request)
@@ -77,7 +77,7 @@ def mainView(request, school, subject):
         
         courses = getCourses(request, school, subject)
 
-        return JsonResponse({"message":subject,"courses": courses})
+        return JsonResponse({"message":subject, "courses":courses})
 
 
 def getCourses(request, school, subject):
@@ -93,14 +93,12 @@ def getCourses(request, school, subject):
     
     if (subject != 'all'):
         q.add(Q(subject=subject), q.AND)
-
-
     if grade:
         q.add(Q(grade__in=grade), q.AND)
     if semester:
-        q.add(Q(semester__in=grade), q.AND)
+        q.add(Q(semester__in=semester), q.AND)
     if difficulty:
-        q.add(Q(difficulty__in=grade), q.AND)
+        q.add(Q(difficulty__in=difficulty), q.AND)
 
     courses = courseDetail.objects.filter(q).values('courseId', 'courseTitle', 'cost')
 
