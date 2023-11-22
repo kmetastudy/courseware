@@ -62,10 +62,11 @@
     
     const context = JSON.parse("{{ context|escapejs }}");
     const options = JSON.parse("{{ options|escapejs }}");
+    const courses = JSON.parse("{{ courses|escapejs }}");
 
     window.addEventListener("DOMContentLoaded", function () {
       console.log("mainlibrary: ", mainlibrary);
-      mainlibrary.CourseMainOnReady(context, options)
+      mainlibrary.CourseMainOnReady(context, options, courses)
     });
   </script>
 </html>

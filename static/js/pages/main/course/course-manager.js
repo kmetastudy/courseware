@@ -1,18 +1,23 @@
-import { Sidebar } from "../sidebar/sidebar"
+import { Sidebar } from "./sidebar"
+import { Filter } from "./filter"
 
-export function CourseManager(options) {
-  this.option = options
-  this.subject = null
-  this.data = null
+export function CourseManager(options, data) {
+  this.options = options
+  this.subject = "all"
+  this.filter = {grade:[], semester:[], difficulty:[], isTest:"True"}
+  this.data = data
   this.init()
 }
 
 CourseManager.prototype.init = async function() {
-  this.sidebarOptions = this.prepareSidebarOptions(this.option.subject_list)
-  console.log(this.sidebarOptions)
+  this.sidebarOptions = this.prepareSidebarOptions(this.options.subject_list)
+  // console.log(this.sidebarOptions)
   var clSidebar = new Sidebar(this.sidebarOptions);
   $(".sidebar").append(clSidebar.elThis);
 
+  this.filterOptions = this.prepareFilterOptions()
+  var clFilter = new Filter(this.filterOptions)
+  $(".courses_filter").append(clFilter.elThis);
 
   // const courses = await this.urlGetCourses();
   // console.log(courses);
@@ -34,7 +39,7 @@ CourseManager.prototype.prepareSidebarOptions = function(subjects) {
   var options = []
   subjects.forEach(function(subject){
     var option = {}
-    option.text = subject.kor
+    option.title = subject.kor
     option.url = subject.eng
     option.onClick = self.onSidebarHandler.bind(self)
     options.push(option)
@@ -43,11 +48,47 @@ CourseManager.prototype.prepareSidebarOptions = function(subjects) {
   return options
 }
 
+CourseManager.prototype.prepareFilterOptions = function() {
+  return {
+    grade:[
+      {text:'1학년', type:1, onClick:this.onFilterHandler.bind(this)},
+      {text:'2학년', type:2, onClick:this.onFilterHandler.bind(this)},
+      {text:'3학년', type:3, onClick:this.onFilterHandler.bind(this)}
+    ],
+    semester:[
+      {text:'공통', type:0, onClick:this.onFilterHandler.bind(this)},
+      {text:'1학기', type:1, onClick:this.onFilterHandler.bind(this)},
+      {text:'2학기', type:2, onClick:this.onFilterHandler.bind(this)},
+    ],
+    difficulty:[
+      {text:'상', type:3, onClick:this.onFilterHandler.bind(this)},
+      {text:'중', type:2, onClick:this.onFilterHandler.bind(this)},
+      {text:'하', type:1, onClick:this.onFilterHandler.bind(this)},
+    ]
+  }
+}
 
 ////////////////////// handler /////////////////////////
 CourseManager.prototype.onSidebarHandler = function(data) {
   this.subject = data
   // console.log(this)
+  this.urlGetCourses()
+}
+
+CourseManager.prototype.onFilterHandler = function(key, type) {
+  const filterData = this.filter[key]
+  if (filterData.includes(type)){
+    for(let i = 0; i < filterData.length; i++) {
+      if(filterData[i] == type)  {
+        filterData.splice(i, 1);
+        i--;
+      }
+    }
+  } else {
+    filterData.push(type)
+  }
+
+  console.log(this.filter)
   this.urlGetCourses()
 }
 
@@ -57,8 +98,8 @@ CourseManager.prototype.urlGetCourses = function() {
   $.ajax({
         headers: { "X-CSRFToken": csrftoken },
         type: "POST",
-        url: `/courses/${this.option.school}/${this.subject}/`,
-        data : {},
+        url: `/courses/${this.options.school}/${this.subject}/`,
+        data : this.filter,
         dataType: "json",
         success: function (res) {
           console.log(res)

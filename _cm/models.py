@@ -11,6 +11,7 @@ class courseDetail(models.Model):
     courseTitle = models.TextField(null=True, blank=True)
     courseSummary = models.TextField(null=True, blank=True)
     desc = models.TextField(null=True, blank=True)
+    thumnail = models.TextField(null=True, blank=True)
 
     year = models.IntegerField(default=0)
     school = models.TextField(null=True, blank=True)

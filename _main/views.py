@@ -1,5 +1,5 @@
 import json
-
+from django.db.models import Q
 from django.shortcuts import render
 from django.http import JsonResponse
 
@@ -57,7 +57,7 @@ def mainView(request, school, subject):
     }
 
     if (subject == 'all'):
-        courses = getSubject(school, subject)
+        courses = getCourses(request, school, subject)
 
         context_sample = make_context(request)
         main_context = {"school": school,
@@ -67,32 +67,50 @@ def mainView(request, school, subject):
         
         
         context = {"context": json.dumps(context_sample),
-                "options": json.dumps(main_context)}
+                "options": json.dumps(main_context),
+                "courses": courses}
         
         print(context)
         return render(request, "_main/course.html", context)
     
     else:
         
-        courses = getSubject(school, subject)
+        courses = getCourses(request, school, subject)
 
-        return JsonResponse({'message':subject})
+        return JsonResponse({"message":subject,"courses": courses})
 
 
-def getSubject(school,subject):
+def getCourses(request, school, subject):
+    grade = request.POST.getlist('grade[]', None)
+    semester = request.POST.getlist('semester[]', None)
+    difficulty = request.POST.getlist('difficulty[]', None)
+    isTest = request.POST.get('isTest')
 
     courses = []
 
-    if (subject == 'all'):
-        courses = courseDetail.objects.filter(school=school).values()
-    else:
-        courses = courseDetail.objects.filter(
-            school=school, subject=subject).values()
-
-    print(courses)
+    q = Q()
+    q.add(Q(school=school), q.AND)
+    
+    if (subject != 'all'):
+        q.add(Q(subject=subject), q.AND)
 
 
-    return courses
+    if grade:
+        q.add(Q(grade__in=grade), q.AND)
+    if semester:
+        q.add(Q(semester__in=grade), q.AND)
+    if difficulty:
+        q.add(Q(difficulty__in=grade), q.AND)
+
+    courses = courseDetail.objects.filter(q).values('courseId', 'courseTitle', 'cost')
+
+    courseList = json.dumps(list(courses))
+
+    print(courseList)
+    print('--------------------')
+
+
+    return courseList
 
 
 def getDetail(request, school, subject, id):

@@ -10,14 +10,15 @@ export function MainOnReady(context) {
 
 }
 
-export function CourseMainOnReady(context,options) {
+export function CourseMainOnReady(context,options, courses) {
   console.log(context)
   console.log(options)
+  console.log(courses)
 
   const clNav = new NavManager(context)
   $('.navbar').html(clNav.getElement())
 
-  var clCourses = new CourseManager(options)
+  var clCourses = new CourseManager(options, courses)
 
   // 현재 검색페이지
   var subjectKor = {
@@ -35,11 +36,6 @@ export function CourseMainOnReady(context,options) {
   $(".courses_header").text(options.schoolKor + " / " + subjectKor[options.subject]);
 
   
-
-
-  // 필터
-  var clFilter = new Filter();
-  $(".courses_filter").prepend(clFilter.elThis);
   // 코스 리스트
   // var clCourses = new Course();
   // $(".courses_main").html(clCourses.elThis);

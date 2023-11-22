@@ -1,7 +1,10 @@
 export function Sidebar(options) {
-  /*
-    text: text
-    onClick: handler
+  /*[
+      {
+        title: text
+        onClick: handler
+      } ...
+    ]
   */
   this.options = options;
   this.elThis = null;
@@ -14,7 +17,7 @@ Sidebar.prototype.create = function () {
     var $elSidebar =
       $(`<div class="p-4 border-b text-base cursor-pointer">
             <i class="ri-book-line"></i>
-            ${option.text}
+            ${option.title}
         </div>`);
 
     
