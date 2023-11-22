@@ -28,61 +28,8 @@
   <body>
     <div id="root" class="flex flex-col items-center">
       <!-- navigation -->
-      <nav class="navbar w-[1400px] flex justify-center border-b-2">
-        <div class="container desktop_container p-6 w-[1200px]">
-          <div class="content">
-            <div class="navbar_header pb-2 grid grid-cols-3 justify-self-stretch">
-              <div class="navbar-left"></div>
-              <div class="navbar-search flex justify-center items-center">
-                <input
-                  type="text"
-                  placeholder="검색"
-                  class="px-4 mx-2 py-1 w-2/3 border border-gray-300 rounded-full"
-                />
-                <i class="fa-solid fa-magnifying-glass text-black cursor-pointer"></i>
-              </div>
-              <div class="navbar-right justify-self-end flex items-center">
-                <div class="navbar-item buttons">
-                  <button class="mx-2 text-xl">로그인</button>
-                  <button class="mx-2 text-xl">회원가입</button>
-                </div>
-              </div>
-            </div>
-            <div class="navbar_menu flex items-center">
-              <img class="navbar-img w-[130px]" src="{% static 'img/Course12Logo.png' %}" />
-              <div
-                class="element navbar-item mx-4 text-2xl text-gray-400 cursor-pointer hover:text-black"
-                onclick="location.href='/courses/element/all/'"
-              >
-                초등
-              </div>
-              <div
-                class="middle navbar-item mx-4 text-2xl text-gray-400 cursor-pointer hover:text-black"
-                onclick="location.href='/courses/middle/all/'"
-              >
-                중등
-              </div>
-              <div
-                class="midhigh navbar-item mx-4 text-2xl text-gray-400 cursor-pointer hover:text-black"
-                onclick="location.href='/courses/midhigh/all/'"
-              >
-                예비고1
-              </div>
-              <div
-                class="high navbar-item mx-4 text-2xl text-gray-400 cursor-pointer hover:text-black"
-                onclick="location.href='/courses/high/all/'"
-              >
-                고등
-              </div>
-              <div
-                class="high2 navbar-item mx-4 text-2xl text-gray-400 cursor-pointer hover:text-black"
-                onclick="location.href='/courses/high2/all/'"
-              >
-                수능
-              </div>
-            </div>
-          </div>
-        </div>
+      <nav class="navbar w-[1200px]">
+        
       </nav>
 
       <!-- main body -->
@@ -114,7 +61,6 @@
     var csrftoken = "{{csrf_token}}";
     
     const context = JSON.parse("{{ context|escapejs }}");
-  
 
     window.addEventListener("DOMContentLoaded", function () {
       console.log("mainlibrary: ", mainlibrary);

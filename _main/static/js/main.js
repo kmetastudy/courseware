@@ -1,5 +1,4 @@
 require("../css/main.css");
-import { Sidebar } from "../../../static/js/pages/main/sidebar/sidebar";
 import { CourseManager } from "../../../static/js/pages/main/course/course-manager";
 import { NavManager } from "../../../static/js/core/component/nav-manager";
 
@@ -7,14 +6,19 @@ export function MainOnReady(context) {
   console.log(context)
 
   const clNav = new NavManager(context)
-  $('.navbar_header').append(clNav.getElement())
+  $('.navbar').html(clNav.getElement())
 
-  // 과목 사이드바
-  const sidebarOptions = {
-    subject_list: context.subject_list
-  }
-  var clSidebar = new Sidebar(sidebarOptions);
-  $(".sidebar").append(clSidebar.elThis);
+}
+
+export function CourseMainOnReady(context,options, courses) {
+  console.log(context)
+  console.log(options)
+  console.log(courses)
+
+  const clNav = new NavManager(context)
+  $('.navbar').html(clNav.getElement())
+
+  var clCourses = new CourseManager(options, courses)
 
   // 현재 검색페이지
   var subjectKor = {
@@ -29,14 +33,9 @@ export function MainOnReady(context) {
     info: "정보",
     mor: "도덕",
   };
-  $(".courses_header").text(context.schoolKor + " / " + subjectKor[context.subject]);
+  $(".courses_header").text(options.schoolKor + " / " + subjectKor[options.subject]);
 
-  var clCourses = new CourseManager()
-
-
-  // 필터
-  var clFilter = new Filter();
-  $(".courses_filter").prepend(clFilter.elThis);
+  
   // 코스 리스트
   // var clCourses = new Course();
   // $(".courses_main").html(clCourses.elThis);

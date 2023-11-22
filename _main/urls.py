@@ -7,7 +7,7 @@ urlpatterns = [
     path('', index, name='index'),
     
     # path('courses/<str:school>/', getSubject, name='getSubject'),
-    path('courses/<str:school>/<str:subject>/', getSubject, name='getDetail'),
-    path('courses/<str:school>/<str:subject>/<str:id>/', getDetail, name='getCourses'),
+    path('courses/<str:school>/<str:subject>/', mainView, name='mainView'),
+    path('courses/<str:school>/<str:subject>/<str:id>/', getDetail, name='getDetail'),
 
 ]
