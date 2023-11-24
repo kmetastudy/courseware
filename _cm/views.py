@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from _cm.models import courseDetail
 
-from _cp.models import mCourse, mCourseBook
+from _cp.nmodels import mCourseN, mElementN
 
 # Create your views here.
 def index(request):
@@ -11,7 +11,7 @@ def index(request):
 
 def getCourseBook(request):
     res = []
-    books = mCourse.objects.filter(type=2)
+    books = mCourseN.objects.using("old").filter(type=2)
     for book in books:
         courseId = book.id
         title = book.title
