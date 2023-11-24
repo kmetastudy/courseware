@@ -23,4 +23,4 @@ class courseDetail(models.Model):
     difficulty = models.IntegerField(null=True, blank=True)
     producer = models.TextField(null=True, blank=True)
     duration = models.IntegerField(default=0)
-    cost = models.IntegerField(default=0)
+    price = models.IntegerField(default=0)

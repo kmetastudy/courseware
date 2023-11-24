@@ -41,7 +41,7 @@ def setDetail(request):
     publisher = request.POST.get('publisher')
     difficulty = request.POST.get('difficulty')
     duration = request.POST.get('duration')
-    cost = request.POST.get('cost')
+    price = request.POST.get('price')
 
     courseId = request.POST.get('courseId')
     courseTitle = request.POST.get('courseTitle')
@@ -49,7 +49,7 @@ def setDetail(request):
     desc = request.POST.get('desc')
 
     detail = courseDetail(year=year, school=school, grade=grade, semester=semester, subject=subject,
-                                  publisher=publisher, difficulty=difficulty, duration=duration, cost=cost,
+                                  publisher=publisher, difficulty=difficulty, duration=duration, price=price,
                                   courseId=courseId, courseTitle=courseTitle, courseSummary=courseSummary, desc=desc)
     detail.save(using="courseware")
 

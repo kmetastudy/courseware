@@ -48,7 +48,7 @@ Content.prototype.create = function () {
 function Card() {
   this.options = {
     img: "001",
-    cost: "55,000",
+    price: "55,000",
     difficulty: "보통",
     duration: "무제한",
     time: "",

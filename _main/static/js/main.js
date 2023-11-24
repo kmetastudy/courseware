@@ -32,22 +32,17 @@ export function CourseMainOnReady(context,options,courses) {
 
 
 export function CourseDetailOnReady(context,data) {
-  console.log(context)
-  console.log(data)
 
   const token = getCookie("csrftoken");
   const defaultAxiosConfig = {
     headers: { "X-CSRFTOKEN": token },
   };
   axios.defaults.headers = defaultAxiosConfig.headers;
-  
-  const parsedContext = context;
-  console.log(parsedContext);
 
   const clNav = new NavManager(context)
   $('.navbar').html(clNav.getElement())
 
-  var clCourseDetail = new DetailManager(parsedContext,data[0])
+  var clCourseDetail = new DetailManager(context,data[0])
 }
 
 function getCookie(name) {

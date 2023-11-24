@@ -17,7 +17,7 @@ CourseView.prototype.init = function() {
                           <img src="../../../static/img/001.png">
                           <p>${course.courseTitle}</p>
                           <p class="text-gray-600 text-sm">megacourse</p>
-                          <p class="text-md">${course.cost}</p>
+                          <p class="text-md">${course.price}</p>
                       </div>`)
 
     $elCourse.on("click", function(){

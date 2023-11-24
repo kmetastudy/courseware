@@ -1,7 +1,8 @@
 import { StudyCourseContainer } from "../../st/study/study-course-container"
+import { CourseCardManager } from "./course-card-manager"
 
-export function DetailManager(parsedContext, data) {
-    this.parsedContext = parsedContext
+export function DetailManager(context, data) {
+    this.context = context
     this.options = {
         school:[
             {text:'초등', type:'element'},
@@ -82,15 +83,17 @@ DetailManager.prototype.init = function() {
     $(".desc_category").append($elCategory);
 
 
-    console.log(this.parsedContext);
+    console.log(this.context);
     const parsedOptions = {
-        demo: this.parsedContext.demo,
-        userType: this.parsedContext.userType,
+        demo: this.context.demo,
+        userType: this.context.userType,
         courseId: this.data.courseId,
-        studentId: this.parsedContext.userId,
+        studentId: this.context.userId,
     };
     var clChapter = new StudyCourseContainer(parsedOptions);
     $(".course_chapter").append(clChapter.elThis)
 
-    // var clCard = new CourseCard();
+    var clCard = new CourseCardManager(this.data);
+    $(".container-right").append(clCard.elThis);
 }
+

@@ -100,7 +100,7 @@ def getCourses(request, school, subject):
     if difficulty:
         q.add(Q(difficulty__in=difficulty), q.AND)
 
-    courses = courseDetail.objects.filter(q).values('courseId', 'courseTitle', 'subject', 'cost')
+    courses = courseDetail.objects.filter(q).values('courseId', 'courseTitle', 'subject', 'price')
 
     courseList = json.dumps(list(courses))
 
@@ -117,7 +117,7 @@ def detailView(request, school, subject, id):
     courses = courseDetail.objects.filter(courseId=id).values(
         'courseId','courseTitle', 'courseSummary', 'desc', 'thumnail',
         'year', 'school', 'grade', 'semester', 'subject', 'publisher', 'difficulty',
-        'producer', 'duration', 'cost')
+        'producer', 'duration', 'price')
 
     detail_context = json.dumps(list(courses))
 

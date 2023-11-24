@@ -93,7 +93,7 @@ ContentDetail.prototype.create = function() {
                                         </div>
                                         <div class="flex">
                                             <p>금액</p>
-                                            <input type="text" name="cost" class="border"/>
+                                            <input type="text" name="price" class="border"/>
                                             <p>원</p>
                                         </div>
                                     </div>
@@ -201,7 +201,7 @@ ContentDetail.prototype.handleSaveButtonClick = function() {
     // formData.append('publisher',myform.publisher.value)
     // formData.append('difficulty',myform.difficulty.value)
     // formData.append('duration',myform.duration.value)
-    // formData.append('cost',myform.cost.value)
+    // formData.append('price',myform.price.value)
 
     // formData.append('courseId',myform.courseId.value)
     // formData.append('courseTitle',myform.courseTitle.value)
