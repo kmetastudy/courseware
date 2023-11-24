@@ -53,9 +53,9 @@ CourseManager.prototype.prepareFilterOptions = function() {
       {text:'2학기', type:2, onClick:this.onFilterHandler.bind(this)},
     ],
     difficulty:[
-      {text:'상', type:3, onClick:this.onFilterHandler.bind(this)},
-      {text:'중', type:2, onClick:this.onFilterHandler.bind(this)},
-      {text:'하', type:1, onClick:this.onFilterHandler.bind(this)},
+      {text:'상', type:2, onClick:this.onFilterHandler.bind(this)},
+      {text:'중', type:1, onClick:this.onFilterHandler.bind(this)},
+      {text:'하', type:0, onClick:this.onFilterHandler.bind(this)},
     ]
   }
 }

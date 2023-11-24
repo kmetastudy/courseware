@@ -48,12 +48,13 @@ ContentDetail.prototype.create = function() {
                                         </div>
                                         <div class="flex">
                                             <p>학교</p>
-                                            <label><input type="radio" name="school" value="element"/>초등학교</label>
-                                            <label><input type="radio" name="school" value="middle"/>중학교</label>
-                                            <label><input type="radio" name="school" value="high"/>고등학교</label>
+                                            <label><input type="radio" name="school" value="E"/>초등학교</label>
+                                            <label><input type="radio" name="school" value="M"/>중학교</label>
+                                            <label><input type="radio" name="school" value="H"/>고등학교</label>
                                         </div>
                                         <div class="flex">
                                             <p>학년</p>
+                                            <label><input type="radio" name="grade" value="0"/>공통</label>
                                             <label><input type="radio" name="grade" value="1"/>1학년</label>
                                             <label><input type="radio" name="grade" value="2"/>2학년</label>
                                             <label><input type="radio" name="grade" value="3"/>3학년</label>
@@ -69,22 +70,31 @@ ContentDetail.prototype.create = function() {
                                             <label><input type="radio" name="subject" value="kor"/>국어</label>
                                             <label><input type="radio" name="subject" value="eng"/>영어</label>
                                             <label><input type="radio" name="subject" value="math"/>수학</label>
+                                            <label><input type="radio" name="subject" value="soc"/>사회</label>
                                             <label><input type="radio" name="subject" value="sci"/>과학</label>
                                             <label><input type="radio" name="subject" value="info"/>정보</label>
-                                            <label><input type="radio" name="subject" value="etc"/>기타</label>
+                                            <label><input type="radio" name="subject" value="korhist"/>한국사</label>
                                         </div>
                                         <div class="flex">
                                             <p>출판사</p>
                                             <select name="publisher">
                                                 <option value="null">없음</option>    
                                                 <option value="visang">비상</option>
+                                                <option value="neungyule">능률</option>
+                                                <option value="cmass">씨마스</option>
+                                                <option value="chunjae">천재</option>
+                                                <option value="miraen">미래엔</option>
                                             </select>
                                         </div>
                                         <div class="flex">
                                             <p>난이도</p>
-                                            <label><input type="radio" name="difficulty" value="3"/>상</label>
-                                            <label><input type="radio" name="difficulty" value="2"/>중</label>
-                                            <label><input type="radio" name="difficulty" value="1"/>하</label>
+                                            <label><input type="radio" name="difficulty" value="0"/>하</label>
+                                            <label><input type="radio" name="difficulty" value="1"/>중</label>
+                                            <label><input type="radio" name="difficulty" value="2"/>상</label>
+                                        </div>
+                                        <div class="flex">
+                                            <p>형성평가</p>
+                                            <label><input type="checkbox" name="isTest" value="1"/>예</label>
                                         </div>
                                         <div class="flex">
                                             <p>수강기간</p>
@@ -95,6 +105,10 @@ ContentDetail.prototype.create = function() {
                                             <p>금액</p>
                                             <input type="text" name="price" class="border"/>
                                             <p>원</p>
+                                        </div>
+                                        <div class="flex">
+                                            <p>제작자</p>
+                                            <input type="text" name="producer" class="border"/>
                                         </div>
                                     </div>
                                     <div class="flex-1">
@@ -116,6 +130,7 @@ ContentDetail.prototype.create = function() {
                                             <div>
                                                 <div class="flex">
                                                     <p>썸네일</p>
+                                                    <input type="text" name="thumnail" class="border"/>
                                                     <div>이미지</div>
                                                 </div>
                                             </div>

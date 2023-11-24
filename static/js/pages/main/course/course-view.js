@@ -14,7 +14,7 @@ CourseView.prototype.init = function() {
   var $elCourseList = $(`<div class="grid grid-cols-4"></div>`)
   this.data.forEach(function(course) {
     var $elCourse = $(`<div class="p-4 cursor-pointer">
-                          <img src="../../../static/img/001.png">
+                          <img src="../../../static/img/${course.thumnail}.png">
                           <p>${course.courseTitle}</p>
                           <p class="text-gray-600 text-sm">megacourse</p>
                           <p class="text-md">${course.price}</p>

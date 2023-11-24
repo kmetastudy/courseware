@@ -5,9 +5,9 @@ export function DetailManager(context, data) {
     this.context = context
     this.options = {
         school:[
-            {text:'초등', type:'element'},
-            {text:'중등', type:'middle'},
-            {text:'고등', type:'high'},
+            {text:'초등', type:'E'},
+            {text:'중등', type:'M'},
+            {text:'고등', type:'H'},
         ],
         grade:[
             {text:'1학년', type:1},
