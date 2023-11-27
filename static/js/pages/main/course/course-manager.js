@@ -28,7 +28,7 @@ CourseManager.prototype.init = async function() {
 
 CourseManager.prototype.prepareSidebarOptions = function(subjects) {
   var self = this
-  var options = []
+  var options = [{title:'전과목',url:'all',onClick:this.onSidebarHandler.bind(this)}]
   subjects.forEach(function(subject){
     var option = {}
     option.title = subject.kor

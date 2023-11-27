@@ -42,7 +42,7 @@ export function DetailManager(context, data) {
 }
 
 DetailManager.prototype.init = function() {
-    var $elHeader = $(`<div class="w-[1200px] p-10">
+    var $elHeader = $(`<div class="w-[1200px] p-6 xl:p-10">
                         <p class="text-2xl">${this.data.courseTitle}</p>
                         ${this.data.courseSummary}
                     </div>`);
@@ -81,6 +81,8 @@ DetailManager.prototype.init = function() {
                             <p>${this.data.producer}</p>
                         </div>`);
     $(".desc_category").append($elCategory);
+
+    $(".desc_content").append(`${this.data.desc}`);
 
 
     console.log(this.context);
