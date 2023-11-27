@@ -8,6 +8,6 @@ urlpatterns = [
     
     # path('courses/<str:school>/', getSubject, name='getSubject'),
     path('courses/<str:school>/<str:subject>/', mainView, name='mainView'),
-    path('courses/<str:school>/<str:subject>/<str:id>/', getDetail, name='getDetail'),
+    path('courses/<str:school>/<str:subject>/<str:id>/', detailView, name='detailView'),
 
 ]

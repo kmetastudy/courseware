@@ -20,6 +20,8 @@ def index(request):
 def mainView(request, school, subject):
     schoolOption = {'element': '초등', 'middle': '중등',
                     'midhigh': '예비고1', 'high': '고등', 'high2': '수능'}
+    schoolOption2 = {'element': 'E', 'middle': 'M',
+                    'midhigh': 'MH', 'high': 'H', 'high2': 'HH'}
     subjectOption = {
         'element': [
             { 'kor':'국어', 'eng':'kor' },
@@ -55,9 +57,9 @@ def mainView(request, school, subject):
             { 'kor':'6모', 'eng':'june'},
             { 'kor':'9모', 'eng':'september'} ]
     }
-
-    if (subject == 'all'):
-        courses = getCourses(request, school, subject)
+    print(request.method)
+    if (subject == 'all' and request.method == 'GET'):
+        courses = getCourses(request, schoolOption2[school], subject)
 
         context_sample = make_context(request)
         main_context = {"school": school,
@@ -75,9 +77,9 @@ def mainView(request, school, subject):
     
     else:
         
-        courses = getCourses(request, school, subject)
+        courses = getCourses(request, schoolOption2[school], subject)
 
-        return JsonResponse({"message":subject,"courses": courses})
+        return JsonResponse({"message":subject, "courses":courses})
 
 
 def getCourses(request, school, subject):
@@ -93,16 +95,14 @@ def getCourses(request, school, subject):
     
     if (subject != 'all'):
         q.add(Q(subject=subject), q.AND)
-
-
     if grade:
         q.add(Q(grade__in=grade), q.AND)
     if semester:
-        q.add(Q(semester__in=grade), q.AND)
+        q.add(Q(semester__in=semester), q.AND)
     if difficulty:
-        q.add(Q(difficulty__in=grade), q.AND)
+        q.add(Q(difficulty__in=difficulty), q.AND)
 
-    courses = courseDetail.objects.filter(q).values('courseId', 'courseTitle', 'cost')
+    courses = courseDetail.objects.using("courseware").filter(q).values('courseId', 'courseTitle', 'subject', 'price', 'thumnail')
 
     courseList = json.dumps(list(courses))
 
@@ -112,9 +112,18 @@ def getCourses(request, school, subject):
 
     return courseList
 
+@jwt_login_required
+def detailView(request, school, subject, id):
+    context_sample = make_context(request)
+    
+    courses = courseDetail.objects.using("courseware").filter(courseId=id).values(
+        'courseId','courseTitle', 'courseSummary', 'desc', 'thumnail',
+        'year', 'school', 'grade', 'semester', 'subject', 'publisher', 'difficulty',
+        'producer', 'duration', 'price')
 
-def getDetail(request, school, subject, id):
-    context = {'school': school,
-               'subject': subject}
+    detail_context = json.dumps(list(courses))
 
+    context = {"context": json.dumps(context_sample),
+               "options": detail_context}
     return render(request, "_main/detail.html", context)
+

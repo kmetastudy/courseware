@@ -1,7 +1,8 @@
 export function Sidebar(options) {
   /*[
       {
-        title: text
+        title: text(kor)
+        url: text(end)
         onClick: handler
       } ...
     ]
@@ -22,7 +23,7 @@ Sidebar.prototype.create = function () {
 
     
     // console.log(option.onClick)
-    $elSidebar.on("click", () => option.onClick(option.url));
+    $elSidebar.on("click", () => option.onClick(option.title, option.url));
 
     $elSidebarList.append($elSidebar);
   });
