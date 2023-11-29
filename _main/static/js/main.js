@@ -4,11 +4,16 @@ import { NavManager } from "../../../static/js/core/component/nav-manager";
 import { CourseManager } from "../../../static/js/pages/main/course/course-manager";
 import { DetailManager } from "../../../static/js/pages/main/course/detail-manager";
 
+export function BaseOnReady(context) {
+  const clNav = new NavManager(context)
+  $('.navbar').html(clNav.getElement())
+}
+
 export function MainOnReady(context) {
   console.log(context)
 
-  const clNav = new NavManager(context)
-  $('.navbar').html(clNav.getElement())
+  // const clNav = new NavManager(context)
+  // $('.navbar').html(clNav.getElement())
 
 }
 

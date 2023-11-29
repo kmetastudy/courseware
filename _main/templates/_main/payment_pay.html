@@ -1,0 +1,26 @@
+{% extends "_main/base.html" %}
+
+{% block content %}
+    <h2>결제하기</h2>
+
+    {{ payment_props|json_script:"payment-props" }}
+
+    <script>
+        window.PAYMENT_CHECK_URL = "{{ payment_check_url }}"
+    </script>
+    <script>
+        var IMP = window.IMP;
+        const code = "iamport"
+        IMP.init(code);
+
+        const json_string = document.querySelector("#payment-props").textContent
+        const props = JSON.parse(json_string)
+
+        console.log(props)
+
+        IMP.request_pay(props, function (res) {
+            location.href = window.PAYMENT_CHECK_URL;
+
+        });
+</script>
+{% endblock %}

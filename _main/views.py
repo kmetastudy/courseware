@@ -1,9 +1,14 @@
 import json
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
+from django.urls import reverse
+
+from decouple import config
 
 from _cm.models import courseDetail
+from _main.forms import PaymentForm
+from _main.models import Payment
 from _user.decorators import jwt_login_required
 from _user.utils import make_context
 
@@ -127,3 +132,48 @@ def detailView(request, school, subject, id):
                "options": detail_context}
     return render(request, "_main/detail.html", context)
 
+
+
+@jwt_login_required
+def payment_new(request):
+    context_sample = make_context(request)
+
+    if request.method == "POST":
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            payment = form.save()
+            return redirect('_main:payment_pay', pk=payment.pk)
+    else:
+        form = PaymentForm()
+
+    context = {
+            "context": json.dumps(context_sample),
+            "form": form
+            }
+    return render(request, "_main/payment_form.html", context)
+
+@jwt_login_required
+def payment_pay(request, pk):
+    context_sample = make_context(request)
+
+    payment = get_object_or_404(Payment, pk=pk)
+    payment_props = {
+        "merchant_uid": payment.merchant_uid,
+        "name": payment.name,
+        "amount": payment.amount,
+    }
+
+    payment_check_url = reverse('_main:payment_check', args=[payment.pk])
+
+    context = {
+            "context": json.dumps(context_sample),
+            "payment_check_url": payment_check_url,
+            "payment_props": payment_props
+            }
+
+    return render(request, "_main/payment_pay.html",context)
+
+@jwt_login_required
+def payment_check(request, pk):
+    payment = get_object_or_404(Payment, pk=pk)
+    return None
