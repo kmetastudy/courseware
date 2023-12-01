@@ -8,6 +8,19 @@ export function CourseCardManager(data) {
 }
 
 CourseCardManager.prototype.create = function() {
+
+  const click = function(){
+    $.ajax({
+      headers: { "X-CSRFToken": csrftoken },
+      type: "GET",
+      url: `/cart/${this.data.courseId}/add/`,
+      async: false,
+      success: function (res) {
+        console.log("장바구니에 담기 성공")
+      }, //end success
+    }); // end of ajax
+  }
+
   var $elCard = $(`<div class="flex flex-row md:flex-col border rounded-md md:w-[300px] md:fixed">
                       <img class="p-2 w-1/2 md:w-full" src="../../../../static/img/001.png">
                       <div class="p-2 w-1/2 md:w-full">
@@ -26,9 +39,23 @@ CourseCardManager.prototype.create = function() {
                               <p class="text-sm">10강(12시간)</p>
                           </div>
                           <p class="p-2 text-2xl text-end">${this.data.price}</p>
-                          <button class="p-2 w-full rounded-lg bg-gray-200" onClick="window.location.href = '/st/?courseid=${this.data.courseId}'">수강하기</button>
                       </div>
                     </div>`)
+
+  var $elButton = $(`<button class="p-2 w-full rounded-lg bg-gray-200">장바구니 담기</button>`)
+  
+  $elButton.on("click", () => {
+    $.ajax({
+      headers: { "X-CSRFToken": csrftoken },
+      type: "POST",
+      url: `/cart/${this.data.courseId}/add/`,
+      success: function (res) {
+        console.log("장바구니에 담기 성공")
+      }, //end success
+    }); // end of ajax
+  })
+
+  $elCard.children('div').append($elButton)
 
   this.elThis = $elCard
 }

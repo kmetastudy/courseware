@@ -1,10 +1,17 @@
 import json
 from django.db.models import Q
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.forms import modelformset_factory
+from django.shortcuts import get_object_or_404, redirect, render
+from django.http import HttpResponse, JsonResponse
+from django.urls import reverse
+
+from decouple import config
 
 from _cm.models import courseDetail
+from _main.forms import CartCourseForm, PaymentForm
+from _main.models import CartCourse, Order, OrderPayment, Payment
 from _user.decorators import jwt_login_required
+from _user.models import mUser
 from _user.utils import make_context
 
 # Create your views here.
@@ -81,7 +88,6 @@ def mainView(request, school, subject):
 
         return JsonResponse({"message":subject, "courses":courses})
 
-
 def getCourses(request, school, subject):
     grade = request.POST.getlist('grade[]', None)
     semester = request.POST.getlist('semester[]', None)
@@ -127,3 +133,174 @@ def detailView(request, school, subject, id):
                "options": detail_context}
     return render(request, "_main/detail.html", context)
 
+
+# 장바구니 관련
+@jwt_login_required
+def cart_detail(request):
+    context_sample = make_context(request)
+
+    cart_course_qs = CartCourse.objects.filter(user=request.userId).select_related("course")
+
+    CartCourseFormSet = modelformset_factory(
+        model=CartCourse,
+        form=CartCourseForm,
+        extra=0,
+        can_delete=True,   
+    )
+
+    if request.method == "POST":
+        formset = CartCourseFormSet(
+            data=request.POST,
+            queryset=cart_course_qs,
+        )
+        if formset.is_valid():
+            formset.save()
+            return redirect("_main:cart_detail")
+    else:
+        formset = CartCourseFormSet(
+            queryset=cart_course_qs
+        )
+
+    context = {
+            "context": json.dumps(context_sample),
+            "formset": formset
+            }
+    return render(request, "_main/cart_detail.html", context)
+
+@jwt_login_required
+def add_to_cart(request, course_pk):
+    
+    course_qs = courseDetail.objects.all()
+    course = get_object_or_404(course_qs, courseId=course_pk)
+
+    cart_course, is_created = CartCourse.objects.get_or_create(
+        user=request.userId,
+        course=course
+    )
+    
+
+    return HttpResponse("Ok")
+
+@jwt_login_required
+def order_list(request):
+    context_sample = make_context(request)
+    order_qs = Order.objects.all().filter(user=request.userId)
+
+    context = {
+            "context": json.dumps(context_sample),
+            "order_list": order_qs
+            }
+    return render(request, "_main/order_list.html", context)
+
+@jwt_login_required
+def order_new(request):
+    cart_product_qs = CartCourse.objects.filter(user=request.userId)
+
+    order = Order.create_from_cart(request.userId, cart_product_qs)
+    cart_product_qs.delete()
+
+    return redirect("_main:order_pay", order.pk)
+
+@jwt_login_required
+def order_pay(request, pk):
+    context_sample = make_context(request)
+    order = get_object_or_404(Order, pk=pk, user=request.userId)
+
+    if not order.can_pay():
+        return redirect("order_detail", order.pk) # TODO: order_detail 구현
+    
+    payment = OrderPayment.create_by_order(order)
+
+    payment_props = {
+        "merchant_uid": payment.merchant_uid,
+        "name": payment.name,
+        "amount": payment.desired_amount,
+        "buyer_name": 'yun',  # user 연결
+        "buyer_email": payment.buyer_email
+    }
+
+    context = {
+            "context": json.dumps(context_sample),
+            "portone_shop_id": config("PORTONE_SHOP_ID"),
+            "payment_props": payment_props,
+            "next_url": reverse("_main:order_check", args=[order.pk, payment.pk])
+            }
+    return render(request, "_main/order_pay.html", context)
+
+
+@jwt_login_required
+def order_check(request, order_pk, payment_pk):
+    payment = get_object_or_404(OrderPayment, pk=payment_pk, order__pk=order_pk)
+    payment.update()
+    return redirect("_main:order_detail", order_pk)
+
+@jwt_login_required
+def order_detail(request, pk):
+    context_sample = make_context(request)
+    order = get_object_or_404(Order, pk=pk, user=request.userId)
+
+    context = {
+            "context": json.dumps(context_sample),
+            "order": order
+            }
+    return render(request, "_main/order_detail.html", context)
+
+# 결제 관련
+@jwt_login_required
+def payment_new(request):
+    context_sample = make_context(request)
+
+    if request.method == "POST":
+        form = PaymentForm(request.POST)
+        if form.is_valid():
+            payment = form.save()
+            return redirect('_main:payment_pay', pk=payment.pk)
+    else:
+        form = PaymentForm()
+
+    context = {
+            "context": json.dumps(context_sample),
+            "form": form
+            }
+    return render(request, "_main/payment_form.html", context)
+
+@jwt_login_required
+def payment_pay(request, pk):
+    context_sample = make_context(request)
+
+    payment = get_object_or_404(Payment, pk=pk)
+    payment_props = {
+        "merchant_uid": payment.merchant_uid,
+        "name": payment.name,
+        "amount": payment.amount,
+    }
+
+    payment_check_url = reverse('_main:payment_check', args=[payment.pk])
+    portone_shop_id = config("PORTONE_SHOP_ID")
+
+    context = {
+            "context": json.dumps(context_sample),
+            "portone_shop_id": portone_shop_id,
+            "payment_check_url": payment_check_url,
+            "payment_props": payment_props
+            }
+
+    return render(request, "_main/payment_pay.html",context)
+
+@jwt_login_required
+def payment_check(request, pk):
+    payment = get_object_or_404(Payment, pk=pk)
+    payment.portone_check()
+    return redirect('_main:payment_detail', pk=pk)
+
+@jwt_login_required
+def payment_detail(request, pk):
+    context_sample = make_context(request)
+    payment = get_object_or_404(Payment, pk=pk)
+
+    context = {
+        "context": json.dumps(context_sample),
+        "payment":payment
+    }
+
+    return render(request, "_main/payment_detail.html", context)
