@@ -23,7 +23,8 @@
     </div>
   </div>
 </main>
-
+{% endblock %}
+{% block extra-script %}
 <script>
   // var csrftoken = "{{csrf_token}}";
   
@@ -35,7 +36,6 @@
     mainlibrary.CourseMainOnReady(context, options, courses)
   });
 </script>
-
 {% endblock %}
 
 
