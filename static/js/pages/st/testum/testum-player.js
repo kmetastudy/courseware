@@ -203,7 +203,12 @@ TestumPlayer.prototype._init = function () {
 
   this.elThis = document.createElement("div");
   this.elThis.setAttribute("id", this.id);
-  this.elThis.classList.add("col-12", "mtm-player-testum");
+
+  // FIX
+  // 2023/12/04
+  // REMOVE COL-12 FOR LAYOUT
+  // this.elThis.classList.add("col-12", "mtm-player-testum");
+  this.elThis.classList.add("mtm-player-testum");
 
   this._createTestumTitle(this.elThis);
   this._createTestumProgress(this.elThis);
