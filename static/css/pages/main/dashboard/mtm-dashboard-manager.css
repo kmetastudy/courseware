@@ -1,0 +1,41 @@
+.mtm-dashboard-manager {
+  margin-left: 30px;
+  width: 83.3333%;
+}
+
+.mtm-dashboard-manager-header {
+  margin-bottom: 16px;
+  display: flex;
+  flex-flow: row;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  gap: 0rem;
+
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.mtm-dashboard-manager-body {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0px, 1fr));
+  gap: 20px;
+}
+
+.dashboard-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  grid-column: span 4;
+  grid-row: unset;
+  padding: 20px 0px;
+  height: auto;
+  min-height: 260px;
+  border: 1px solid rgb(222, 226, 230);
+  border-radius: 8px;
+  background-color: white;
+}
+
+.dashboard-card.grid-span-8 {
+  grid-column: span 8;
+}

@@ -1,0 +1,10 @@
+.dashboard-title {
+  display: flex;
+  min-width: 0px;
+}
+
+.dashboard-title-content {
+  display: flex;
+  min-width: 0px;
+  cursor: default;
+}
