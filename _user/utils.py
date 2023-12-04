@@ -197,8 +197,8 @@ def make_context(request):
 
 
 class JWTGenerator:
-    ACCESS_EXP = datetime.timedelta(weeks=2)
-    REFRESH_EXP = datetime.timedelta(hours=1)
+    ACCESS_EXP = datetime.timedelta(hours=1)
+    REFRESH_EXP = datetime.timedelta(weeks=2)
     JWT_KEY = config("JWT_KEY")
     ALGORITHM = 'HS256'
 
