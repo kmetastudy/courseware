@@ -804,3 +804,19 @@ print(a == c)   # True, a와 c는 동일한 값을 가집니다.
   display: fixed;
 }
 ```
+
+### find
+
+조건을 만족하는 첫 번째 요소 반환
+
+```js
+const data = [{ id: 1 }, { id: 2 }, { id: 1 }, { id: 3 }];
+const targetId = 1;
+
+// using filter
+const results = data.filter((el) => el.id === targetId);
+const result = results.length > 0 ? results[0] : null;
+
+// using find
+const result = data.find((el) => el.id === targetId) ?? null;
+```
