@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from _cm.models import courseDetail
 
-from _cp.models import mCourse, mCourseBook
+from _cp.nmodels import mCourseN, mElementN
 
 # Create your views here.
 def index(request):
@@ -11,7 +11,7 @@ def index(request):
 
 def getCourseBook(request):
     res = []
-    books = mCourse.objects.filter(type=2)
+    books = mCourseN.objects.using("old").filter(type=2)
     for book in books:
         courseId = book.id
         title = book.title
@@ -21,7 +21,7 @@ def getCourseBook(request):
 
 def getDetail(request):
     courseId = request.POST.get('courseId')
-    course = courseDetail.objects.filter(courseId=courseId).values().first()
+    course = courseDetail.objects.using("courseware").filter(courseId=courseId).values().first()
 
     print(course)
     
@@ -29,10 +29,18 @@ def getDetail(request):
 
 
 def setDetail(request):
-    # grade 1:1학년 2:2학년 3:3학년
+    # school E:초등 M:중등 H:고등
+    # grade 0:공통 1:1학년 2:2학년 3:3학년
     # semester 0:전학기 1:1학기 2:2학기
-    # difficulty 1:하 2:중 3:상
+    # subject kor,eng,math,soc,sci,info,korhist
+    # publisher 비상,능률,씨마스,천재,미래엔
+    # difficulty 0:하 1:중 2:상
+    # isTest True:형성평가 False:코스
+    # producer
+    # duration 0:무제한, 값
+    # price 0:무료, 값
     print(request.POST)
+    
     year = request.POST.get('year')
     school = request.POST.get('school')
     grade = request.POST.get('grade')
@@ -40,18 +48,28 @@ def setDetail(request):
     subject = request.POST.get('subject')
     publisher = request.POST.get('publisher')
     difficulty = request.POST.get('difficulty')
+    isTest = False
+    if request.POST.get('isTest'):
+        isTest = request.POST.get('isTest')
     duration = request.POST.get('duration')
-    cost = request.POST.get('cost')
+    price = request.POST.get('price')
+    producer = request.POST.get('producer')
 
+    thumnail = request.POST.get('thumnail')
     courseId = request.POST.get('courseId')
     courseTitle = request.POST.get('courseTitle')
     courseSummary = request.POST.get('courseSummary')
-    desc = request.POST.get('desc')
+    desc = request.POST.get('content')
 
-    detail = courseDetail(year=year, school=school, grade=grade, semester=semester, subject=subject,
-                                  publisher=publisher, difficulty=difficulty, duration=duration, cost=cost,
-                                  courseId=courseId, courseTitle=courseTitle, courseSummary=courseSummary, desc=desc)
-    detail.save()
+    course = courseDetail.objects.using("courseware").filter(courseId=courseId)
+    if (course):
+        course.update(year=year, school=school, grade=grade, semester=semester, subject=subject,
+                                  publisher=publisher, difficulty=difficulty, isTest=isTest, duration=duration, price=price, producer=producer,
+                                  thumnail=thumnail, courseId=courseId, courseTitle=courseTitle, courseSummary=courseSummary, desc=desc)
+    else:
+        detail = courseDetail(year=year, school=school, grade=grade, semester=semester, subject=subject,
+                                    publisher=publisher, difficulty=difficulty, isTest=isTest, duration=duration, price=price, producer=producer,
+                                    thumnail=thumnail, courseId=courseId, courseTitle=courseTitle, courseSummary=courseSummary, desc=desc)
+        detail.save(using="courseware")
 
-    
     return JsonResponse({'message':'good'})

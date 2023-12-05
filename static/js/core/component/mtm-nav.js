@@ -62,7 +62,7 @@ export class MtmNav {
       this.menuElements = [];
       this.options.menu.forEach((data) => {
         const menu = this.createMenu(data);
-        console.log("menu: ", menu);
+        // console.log("menu: ", menu);
         section.appendChild(menu);
         this.menuElements.push(menu);
       });

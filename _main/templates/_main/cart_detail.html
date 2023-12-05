@@ -1,0 +1,43 @@
+{% extends "_main/base.html" %}
+
+{% block content %}
+    <h2>장바구니</h2>
+    
+    <form action="" method="post" novalidate>
+        <table>
+            <thead>
+                <tr>
+                    <td>선택</td>
+                    <td>상품명</td>
+                    <td>수량</td>
+                </tr>
+
+            </thead>
+            <tbody>
+                {% csrf_token %}
+                {{ formset.management_form}}
+                {% for form in formset %}
+                    {% for field in form.hidden_fields %}{{ field }}{% endfor %}
+                    {% with form.instance as cart_course %}
+                        <tr>
+                            <td>{{ form.DELETE }}</td>
+                            <td>{{ cart_course.course.courseTitle }}</td>
+                            <td class="border">
+                                {{ form.quantity }}
+                                {{ form.quantity.errors }}
+                            </td>
+                        </tr>
+                    {% endwith %}
+
+                {% endfor %}
+            </tbody>
+        </table>
+        <input type="submit" class="border rounded-lg" value="장바구니 업데이트"/>
+    </form>
+    
+
+    <div class="">
+        <button class="border rounded-lg" onclick='window.location.href="/orders/new/"'>주문하기</button>
+    </div>
+    
+{% endblock %}
