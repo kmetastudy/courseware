@@ -12,14 +12,15 @@ from _cp.models import mCourseN
 def create_study_result(request, **kwargs):
     course_id = kwargs['course_id']
     student_id = kwargs['student_id']
-    course_json_data = mCourseN.objects.filter(id=course_id)
+    course = mCourseN.objects.filter(id=course_id).first()
 
-    if not course_json_data.exists():
+    if not course:
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     dic_properties = {}
     study_property = []
 
+    course_json_data = json.loads(course.json_data)
     lists = course_json_data['lists']
 
     for i in range(len(lists)):
@@ -47,10 +48,15 @@ def create_study_result(request, **kwargs):
         properties=json_properties,
         type=1,
     )
-    return
+    return json_properties
 
 
 def get_study_result(*args, **kwargs):
+    course_id = kwargs['course_id']
+    user_id = kwargs['user_id']
+    content_id = kwargs['content_id']
+
+    #
     return
 
 

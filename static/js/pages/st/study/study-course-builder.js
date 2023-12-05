@@ -10,6 +10,7 @@ import { TestumPlayer } from "../testum/testum-player";
 import { LessonPlayer } from "../lesson/lesson-player";
 import { mtmStudyAnswerLong } from "./mtm-study-answer-long";
 
+require("../../../../css/pages/st/study/study-course-builder.css");
 export var StudyCourseBuilder = function (options) {
   this.id = "id-mtm-study-builder-" + StudyCourseBuilder.id++;
   this.elThis = null;
@@ -57,10 +58,14 @@ StudyCourseBuilder.prototype._initEvents = function () {
   mtoEvents.on("OnChangeCourseContent", this.onChangeCourseContentHandler.bind(this));
   mtoEvents.on("OnChangeClinicContent", this.onChangeClinicContentHandler.bind(this));
   mtoEvents.on("OnChangeExamContent", this.onChangeExamContentHandler.bind(this));
+
+  //
+  mtoEvents.on("onAsidePositionChange", this.handleAsidePositionChange.bind(this));
 };
 
 StudyCourseBuilder.prototype._init = function () {
   this.elThis = document.createElement("div");
+  this.elThis.classList.add("st-course-builder");
 
   var options = {
     modeStudent: true,
@@ -204,8 +209,15 @@ StudyCourseBuilder.prototype.onChangeExamContentHandler = function (eData) {
   this._urlGetExamContentInfo();
 };
 
+StudyCourseBuilder.prototype.handleAsidePositionChange = function ({ position, width }) {
+  this.setPosition(position, width);
+};
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////// API /////////////////////////////////////
+StudyCourseBuilder.prototype.setPosition = function (position, width) {
+  const positionAttribute = `margin-${position}:${width}px;`;
+  this.elThis.setAttribute("style", positionAttribute);
+};
 
 ////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////// Ajax  /////////////////////////////////////////

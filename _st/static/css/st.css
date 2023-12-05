@@ -2,6 +2,11 @@
 // Rounded Bootstrap Buttons
 // https://codepen.io/davidelvar/pen/dYMgrR 
 */
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+}
 
 .btn-rounded {
   border-radius : 40px;

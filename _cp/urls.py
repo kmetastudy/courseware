@@ -19,5 +19,5 @@ urlpatterns = [
     path('migrate-element/', v.migrate_element, name='migrate_element'),
 
     path('api/convert-course-to-json/',
-         v.convert_course_to_json, name='convert_course_to_json')
+         v.convert_course_to_json, name='convert_course_to_json'),
 ]

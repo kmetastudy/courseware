@@ -34,6 +34,11 @@ class StudyResultViewSet(viewsets.ModelViewSet):
 
         return properties
 
+    @action(detail=False, methods=['get'])
+    def filter_json_data(self, request, pk=None):
+
+        return Response()
+
     @action(detail=True, methods=['get', 'post', 'patch', 'delete'])
     def manage_property(self, request, pk=None):
         if request.method == 'GET':
