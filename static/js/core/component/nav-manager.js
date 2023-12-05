@@ -27,11 +27,14 @@ export class NavManager {
 
     const userName = this.userName;
 
-    let login, logout, searchBar;
+    let login, logout, searchBar, dashboard;
     if (!this.userLogin) {
       login = { text: "로그인", onClick: () => (window.location.href = "/user/"), type: "text" };
+    } else {
       logout = { text: "로그아웃", onClick: () => (window.location.href = "/user/"), type: "text" };
     }
+
+    dashboard = { text: "대시보드", onClick: () => (window.location.href = "#") };
 
     return {
       logo,
@@ -39,6 +42,7 @@ export class NavManager {
       userName,
       login,
       logout,
+      dashboard,
       searchBar,
     };
   }

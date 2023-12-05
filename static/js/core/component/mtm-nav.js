@@ -82,10 +82,15 @@ export class MtmNav {
     const section = document.createElement("div");
     section.classList.add(`mtm-nav-right-section`);
 
-    // if (this.options.search) {
-    //   this.searchBar = createSearchBar(this.options.search);
-    //   section.appendChild(this.searchBar);
-    // }
+    if (this.options.search) {
+      this.searchBar = createSearchBar(this.options.search);
+      this.searchBar ? section.appendChild(this.searchBar) : null;
+    }
+
+    if (this.options.dashboard) {
+      this.dashboard = this.createDashboardButton(this.options.dashboard);
+      section.appendChild(this.dashboard);
+    }
 
     if (this.options.userName) {
       this.userName = this.createUserName(this.options.userName);
@@ -108,6 +113,14 @@ export class MtmNav {
   createSearchBar() {
     //TODO
     // Create Select(Serach) component
+    return;
+  }
+
+  createDashboardButton(config) {
+    config.className = "mtm-nav-dashboard-button";
+    const clDashboard = new MtuButton(config);
+    const dashboard = clDashboard.getElement();
+    return dashboard;
   }
 
   createUserName(name) {
