@@ -33,8 +33,12 @@ export class MtuButton {
     }
 
     if (this.options.icon) {
+      const iconWrapper = document.createElement("span");
+      iconWrapper.classList.add("mtu-btn-icon");
+
       const iconElement = MtuIcon(this.options.icon);
-      this.button.prepend(iconElement);
+      iconWrapper.appendChild(iconElement);
+      this.button.prepend(iconWrapper);
     }
 
     if (this.options.onClick && this.options.htmlType === "button") {

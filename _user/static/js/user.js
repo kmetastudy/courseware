@@ -3,7 +3,7 @@ import { UserManager } from "../../../static/js/pages/user/user-manager";
 import { axiosManager } from "../../../static/js/core/utils/axios-manager";
 import { NavManager } from "../../../static/js/core/component/nav-manager";
 // require("../../../static/css/core/component/mtm-common.css");
-require("../../../static/css/index.css");
+require("../../../static/css/css-reset.css");
 function activate(context) {
   const body = document.getElementById("body");
   console.log(context);

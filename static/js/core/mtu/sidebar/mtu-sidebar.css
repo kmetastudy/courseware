@@ -1,0 +1,57 @@
+.mtu-sidebar {
+  padding: 0;
+  margin: 0;
+  position: fixed;
+  top: 64px;
+  display: flex;
+  flex-direction: column;
+  -moz-box-pack: justify;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 900px;
+  padding-top: 12px;
+  background-color: rgba(248, 249, 250);
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 0px 1px 0px;
+  z-index: 100;
+  padding-top: 12px;
+  
+}
+
+.mtu-sidebar.mtu-sidebar-right {
+  right: 0px;
+}
+
+.mtu-sidebar.mtu-sidebar-left {
+  left: 0px;
+}
+
+
+.mtu-sidebar-item-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 4px;
+  padding: 8px;
+}
+
+.mtu-sidebar-item {
+  display: flex;
+  -moz-box-pack: center;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mtu-sidebar-aside {
+  position: fixed;
+  top: 64px;
+  bottom: 0px;
+  height: 100%;
+  display: none;
+}
+
+.mtu-sidebar-aside.activate {
+  display: flex;
+}
+
+

@@ -1,6 +1,8 @@
+// Deprecated
+// 2023/11/25
 export const mtoValidator = (function () {
   return {
-    isDom: function (element) {
+    isElement: function (element) {
       if (typeof HTMLElement !== "undefined" && element instanceof Element) {
         return true;
       } else if (typeof element === "string") {

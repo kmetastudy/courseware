@@ -66,9 +66,6 @@ def last_visited(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
         if request.method == 'GET':
-            # request.session['next'] = request.get_full_path()
             request.session['next'] = request.META.get('HTTP_REFERER')
-            print("path: ", request.META.get('HTTP_REFERER'))
-            print("referer: ", request.META.get('HTTP_REFERER'))
         return view_func(request, *args, **kwargs)
     return wrapper

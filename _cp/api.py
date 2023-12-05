@@ -1,6 +1,6 @@
 import json
 
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.response import Response
@@ -38,6 +38,8 @@ from .serializer import (QuestionBookSerializer,
                          CourseNSerializer,
                          ElementNSerializer,
                          )
+
+from .utils import create_time_data
 
 
 class QuestionBookViewSet(viewsets.ModelViewSet):
@@ -120,18 +122,34 @@ class CourseNViewSet(viewsets.ModelViewSet):
     def get_json_field(self, request, pk=None):
         obj = self.get_object()
         json_field = obj.json_data
-        print("course id: ", obj.id)
-        # Convert the JSON-like string to a Python dictionary
         json_dict = json.loads(json_field)
 
         # Extract 'lists', 'contents', or 'kl' based on the query parameter
         field_type = request.query_params.get('field_type')
-        if field_type in ['lists', 'contents', 'kl']:
-            data = json_dict.get(field_type)
+        if field_type:
+
+            if field_type in ['lists', 'contents', 'kl']:
+                data = json_dict.get(field_type)
+            else:
+                data = {'error': 'Invalid field_type parameter'}
         else:
-            data = {'error': 'Invalid field_type parameter'}
+            data = json_dict
 
         return Response(data)
+
+    @action(detail=True, methods=['patch'])
+    def add_time(self, request, pk=None):
+        print("add_time")
+        instance = self.get_object()
+
+        updated_json_data = create_time_data(instance)
+        if not updated_json_data:
+            return Response(data={})
+
+        instance.json_data = json.dumps(updated_json_data)
+        instance.save()
+        # return Response(self.get_serializer(instance).data)
+        return Response(updated_json_data)
 
 
 class ElementNViewSet(viewsets.ModelViewSet):

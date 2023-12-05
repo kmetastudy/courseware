@@ -1,0 +1,30 @@
+.dashboard-anchor {
+  flex-shrink: 0;
+  margin-left: 16px;
+}
+
+.dashboard-anchor-link {
+  color: rgb(134, 142, 150);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.dashboard-anchor-link:hover {
+  text-decoration: underline;
+  outline-width: 0px;
+  color: rgb(134, 142, 150);
+}
+
+
+.dashboard-anchor-link-title {
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-right: 0.25rem;
+  line-height: 1.5;
+}
+
+.dashboard-anchor-link-icon {
+  font-size: 14px;
+  color: inherit;
+}

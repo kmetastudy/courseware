@@ -1,0 +1,151 @@
+.st-course-tree {
+  flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  /* width: 500px; */
+  /* background-color: rgba(248, 249, 250); */
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 0px 1px 0px;
+}
+
+.st-course-tree-header {
+  display: flex;
+  -moz-box-align: center;
+  align-items: center;
+  -moz-box-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 20px;
+  color: rgb(27, 28, 29);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.5; 
+}
+
+
+.st-course-tree-info {
+  display: block;
+  padding: 0px 20px 24px;
+}
+
+.st-course-tree-info-title {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.st-course-tree-info-progress {
+  font-size: 16px;
+}
+
+/* Menu */
+.st-course-tree-menu {
+  margin: 0;
+  padding: 0;
+  border: 0px;
+  font-size: 100%;
+
+  flex: 1 1 0%;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.st-course-tree-chapter {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  /* overflow-y: auto; */
+  list-style: none;
+  margin-bottom: 8px;
+}
+
+.st-course-tree-chapter-info{
+  display: flex;
+  gap: 4px;
+  flex-direction: column;
+  -moz-box-pack: justify;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background-color: rgb(241, 243, 245);
+  border-top: 1px solid rgb(222, 226, 230);
+  border-bottom: 1px solid (222, 226, 230);
+}
+
+.st-course-tree-chapter > ul {
+  padding: 0;
+}
+
+
+.st-course-tree-chapter-info-detail {
+  display: flex;
+  -moz-box-pack: justify;
+  justify-content: space-between;
+}
+
+.st-course-tree-chapter-info-detail p {
+  color: rgb(134, 142, 150);
+  font-size: 0.875rem;
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.st-course-tree-chapter-title {
+  color: rgb(33, 37, 41);
+  font-size: inherit;
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.st-course-tree-branch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 32px;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  border-left: medium;
+}
+
+.st-course-tree-branch:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.st-course-tree-branch > .mtuicon {
+  height: 100%;
+}
+
+.st-course-tree-branch-info {
+  flex: 1;
+  padding: 0 20px 0 12px;
+}
+
+.st-course-tree-branch-info-title {
+  margin-bottom: 4px;
+}
+
+.st-course-tree-branch-info-detail {
+  display: flex;
+  align-items: center;
+  justify-content:space-between
+}
+
+.st-course-tree-branch-info-detail > div{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.st-course-tree-branch-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.st-course-tree-branch-progress,
+.st-course-tree-branch-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875em;
+}

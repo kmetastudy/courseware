@@ -1,12 +1,13 @@
 import { mtmTabs } from "../../core/ui/mtm-tabs";
-
 import { StudyCourseContainer } from "./study/study-course-container.js";
 import { StudyCourseBuilder } from "./study/study-course-builder.js";
-
 // import { StudyCourseBuilder as StudyCourseBuilderNew } from "./study/study-course-builder-new.js";
 // import { StudyCourseContainer as StudyCourseContainerNew } from "./study/study-course-container-new.js";
-require("./mtm-manager-learn.css");
 
+import { MtmDashboardManager } from "../main/dashboard/mtm-dashboard-manager.js";
+import { mtmSideMenu } from "../../core/ui/sideMenu/mtm-side-menu.js";
+
+require("../../../css/pages/st/st-manager.css");
 // Todo. Jstar
 // 1) 만약 password 를 바꾸지 않았으면, 노출 위험 경고 문구....
 //
@@ -22,8 +23,71 @@ export var StManager = function (options) {
   this.options = options;
   this.elThis = null;
 
-  this._init();
+  // this.test();
+
+  // this._init();
+  this.init();
 };
+
+StManager.prototype.init = function () {
+  this.elThis = document.createElement("div");
+  this.elThis.classList.add("st-manager");
+
+  this.options.rootElement = this.elThis;
+  this.clStudyContainer = new StudyCourseContainer(this.options);
+  this.clStudyBuilder = new StudyCourseBuilder(this.options);
+
+  // this.elThis.appendChild(this.clStudyContainer.elSidebar);
+  this.elThis.appendChild(this.clStudyContainer.elThis);
+  this.elThis.appendChild(this.clStudyBuilder.elThis);
+};
+
+StManager.prototype.test = function () {
+  this.elThis = document.createElement("div");
+  this.elThis.classList.add("main-test");
+  this.elThis.style.display = "flex";
+  this.elThis.style.justifyContent = "center";
+
+  const sideItems = [
+    { title: "대시보드" },
+    { title: "프로필", onClick: () => (window.location.href = "/"), icon: "user" },
+    { title: "학습 관리", children: [{ title: "내 학습" }, { title: "수강전 문의" }] },
+    {
+      title: "수강신청 관리",
+      children: [
+        { title: "수강바구니" },
+        { title: "좋아요" },
+        { title: "쿠폰함" },
+        { title: "포인트" },
+        { title: "구매내역" },
+      ],
+    },
+    { title: "설정", children: [{ title: "계정 정보" }, { title: "알림 설정" }] },
+  ];
+  const clSide = new mtmSideMenu({ item: sideItems });
+  const elSide = clSide.getElement();
+  this.elThis.appendChild(elSide);
+
+  this.wrapper = document.createElement("div");
+  this.wrapper.classList.add("dashboard-test-wrapper");
+  this.wrapper.style.display = "flex";
+  this.wrapper.style.justifyContent = "center";
+  this.elThis.appendChild(this.wrapper);
+
+  const clDashboard = new MtmDashboardManager();
+  // this.elThis.appendChild(clDashboard.getElement());
+  this.wrapper.appendChild(clDashboard.getElement());
+};
+
+function getItem(label, key, icon, children, type) {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  };
+}
 
 StManager.id = 0;
 
@@ -42,6 +106,17 @@ StManager.prototype._create = function () {
   this.elThis = document.createElement("div");
   this.elThis.classList.add("container-fluid", "pt-2", "mtm-manager-learn");
 
+  ////////////////
+  // TEST SIDEBAR
+  // this.clSidebar = new MtuSidebar({
+  //   items: [
+  //     { title: "학습하기", icon: "form" },
+  //     { title: "통계", icon: "barChart" },
+  //   ],
+  // });
+  // this.elThis.appendChild(this.clSidebar.getElement());
+
+  ////////////////
   this.elOnePanel = document.createElement("div");
   this.elOnePanel.classList.add("row");
   // Todo. Jstar : 좀 더 Nice 한 작업 높이를 확보
@@ -220,3 +295,25 @@ StManager.prototype.onLeftTabActivate = function (index) {
 StManager.prototype.onRightTabActivate = function (index) {
   // console.log('StManager > onLeftTabActivate : ',index);
 };
+
+// 왼 오
+//  1. 왼 -> builder
+//  2. 오 -> sidebar -> container
+
+// sidebar ->
+//
+// root
+//  main (bulider)
+//  sidebar
+//    학습하기 : click -> aside(container) apper!
+//    (통계)
+//  aside(container)
+//  aside(others..)
+
+// aside가 sidebar안에 있는게 아니네?
+
+// aside
+// aside(공통) 기능
+//  우측 상단 X클릭 -> 닫기
+// aside (container) 기능
+// scroll to item

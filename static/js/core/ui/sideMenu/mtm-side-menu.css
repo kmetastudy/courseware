@@ -1,0 +1,57 @@
+.mtm-side-menu {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  line-height: 0;
+  list-style: none;
+  outline: none;
+  color: rgba(0, 0, 0, 0.88);
+  background: #fff;
+
+  height: 100%;
+}
+
+.mtm-side-menu-root {
+  box-shadow: none;
+  border-inline-end: 1px solid rgba(5, 5, 5, 0.06);
+}
+
+.mtm-side-menu-item-group-title {
+  padding: 8px 16px;
+  font-size: 0.875em;
+  line-height: 1.5;
+  transition: all .3s;
+  color: rgba(0, 0, 0, 0.45);
+  box-sizing: border-box;
+}
+
+.mtm-side-menu-item-group-list {
+  margin: 0;
+  padding: 0;
+}
+
+.mtm-side-menu-item {
+  border-radius: 8px;
+  margin: 0;
+  white-space: nowrap;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-inline: 4px;
+  margin-block: 4px;
+  width: calc(100%-8px);
+
+  height: 40px;
+  line-height: 40px;
+  list-style-position: inside;
+  list-style-type: disc;
+
+  display: flex;
+  align-items: center;
+  transition: border-color .3s, background .3s, padding .2s cubic-bezier(.215,.61,.355,1);
+  position: relative;
+  padding-inline: 28px 16px;
+
+  padding-left: 32px;
+}

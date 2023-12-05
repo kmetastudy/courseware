@@ -15,6 +15,6 @@ router.register(r'question_atom', QuestionAtomViewSet)
 router.register(r'video_atom', VideoAtomViewSet)
 router.register(r'question_solution_text', QuestionSolutionTextViewSet)
 router.register(r'question_solution_video', QuestionSolutionVideoViewSet)
-# courseN, ElementN은 나중에 지우자
+
 router.register(r'course_n', CourseNViewSet)
 router.register(r'element_n', ElementNViewSet)

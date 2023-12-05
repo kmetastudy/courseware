@@ -1,0 +1,12 @@
+.st-course-builder {
+  transition: margin-left 0.2s ease 0s, margin-right 0.2s ease 0s;
+  padding: 0 72px;
+  padding-bottom: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+
+.st-course-builder > div {
+  max-width: 100%;
+}

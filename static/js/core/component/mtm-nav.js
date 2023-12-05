@@ -1,5 +1,4 @@
 import { MtuIcon } from "../mtu/icon/mtu-icon";
-import { mtoValidator } from "../utils/mto-validator";
 import { MtuInput } from "../mtu/input/mtu-input";
 import { MtuButton } from "../mtu/button/mtu-button";
 

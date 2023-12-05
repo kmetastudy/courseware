@@ -1,0 +1,107 @@
+.mtu-progress {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  line-height: 1.5714285714285714;
+  list-style: none;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+  display: inline-block;
+}
+
+.mtu-progress-outer {
+  display: inline-block;
+  width: 100%;
+  --progress-width: 8px;
+  margin-inline-end: calc(-2em - var(--progress-width));
+  padding-inline-end: calc(2em + var(--progress-width));
+}
+
+.mtu-progress .mtu-progress-inner {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  vertical-align: middle;
+  background-color: rgba(0, 0, 0, 0.06);
+  border-radius: 100px;
+}
+
+.mtu-progress.mtu-progress-circle .mtu-progress-inner {
+  position: relative;
+  line-height: 1;
+  background-color: transparent;
+}
+
+.mtu-progress-circle-trail {
+  stroke: rgba(0, 0, 0, 0.06);
+}
+
+.mtu-progress-circle-path {
+  stroke: #52c41a;
+}
+
+.mtu-progress .mtu-progress-text{
+  display: inline-block;
+  width: 2em;
+  margin-inline-start: 8px;
+  color: rgba(0,0,0,.88);
+  line-height: 1;
+  white-space: nowrap;
+  text-align: start;
+  vertical-align: middle;
+  word-break: normal;
+}
+
+.mtu-progress.mtu-progress-circle .mtu-progress-text {
+  display: inline-block;
+  margin-inline-start: 8px;
+  word-break: normal;
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 0;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 1em;
+  line-height: 1;
+  white-space: normal;
+  text-align: center;
+  transform: translateY(-50%);
+}
+
+.mtu-progress-line {
+  position: relative;
+  width: 100%;
+  font-size: 14px;
+  margin-inline-end: 8px;
+  margin-bottom: 8px;
+}
+
+.mtu-progress-bg {
+  position: relative;
+  background-color: #1677ff;
+  border-radius: 100px;
+  transition: all .3s cubic-bezier(.78, .14, .15, .86);
+}
+
+/* Steps */
+.mtu-progress .mtu-progress-steps-outer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.mtu-progress .mtu-progress-steps-item {
+  flex-shrink: 0;
+  min-width: 2px;
+  margin-inline-end: 2px;
+  background-color: rgba(0, 0, 0, 0.06);
+  transition: all .3s;
+}
+
+.mtu-progress .mtu-progress-steps-item-active {
+  background-color: #1677ff;
+}

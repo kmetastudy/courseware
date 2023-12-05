@@ -87,16 +87,12 @@ class QuestionSolutionVideoSerializer(serializers.ModelSerializer):
 
 
 class CourseNSerializer(serializers.ModelSerializer):
-    # TODO
-    # REMOVE
     class Meta:
         model = mCourseN
         fields = '__all__'
 
 
 class ElementNSerializer(serializers.ModelSerializer):
-    # TODO
-    # REMOVE
     class Meta:
         model = mElementN
         fields = '__all__'

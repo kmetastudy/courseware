@@ -3,6 +3,7 @@ import uuid
 
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # rest api
 from rest_framework import viewsets, status
@@ -10,7 +11,7 @@ from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 
 from .constants import *
-from .utils import DataValidator, convert_branch_recursive
+from .utils import DataValidator, convert_branch_recursive, create_time_data
 from .models import (mCourseBook,
                      mCourseBookBranch,
                      mTestum,

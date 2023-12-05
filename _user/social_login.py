@@ -15,7 +15,7 @@ from .constants import *
 
 
 class KaKaoSignInView(View):
-    @method_decorator(last_visited)
+    # @method_decorator(last_visited)
     def get(self, request):
         print("headers: ", request.headers)
         print("body: ", request.body)
@@ -32,7 +32,6 @@ class KaKaoSignInView(View):
 class KakaoSignInCallbackView(View):
     def get(self, request):
         try:
-
             auth_code = request.GET.get("code")
             kakao_token_api = 'https://kauth.kakao.com/oauth/token'
             data = {
@@ -56,7 +55,11 @@ class KakaoSignInCallbackView(View):
             user_info_response = requests.get(
                 'https://kapi.kakao.com/v2/user/me', headers={'Authorization': f'Bearer ${access_token}'})
             # return JsonResponse({'user_info': user_info_response.json()}, status=200)
-            return redirect('/')
+            # return redirect('/')
+            redirect_uri = request.session.get("next", "default_url")
+            print("redirect kakao: ", redirect_uri)
+            print(user_info_response.json())
+            return redirect(redirect_uri)
             return JsonResponse({'user_info': user_info_response.json()}, status=200)
 
         except KeyError:
@@ -70,6 +73,7 @@ class KakaoSignInCallbackView(View):
 
 class NaverSignInView(View):
     # https://developers.naver.com/docs/login/devguide/devguide.md#3-4-2-%EB%84%A4%EC%9D%B4%EB%B2%84-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EC%97%B0%EB%8F%99-url-%EC%83%9D%EC%84%B1%ED%95%98%EA%B8%B0
+    @method_decorator(last_visited)
     def get(self, request):
         naver_auth_api = 'https://nid.naver.com/oauth2.0/authorize'
 
@@ -78,11 +82,11 @@ class NaverSignInView(View):
         redirect_uri = 'http://localhost:8000/user/signin/naver/callback'
         state = config('NAVER_STATE')
 
-        print(state)
         url = f'{naver_auth_api}?response_type={response_type}&client_id={app_key}&redirect_uri={redirect_uri}&state={state}'
 
-        res = redirect(url)
-        return res
+        # res = redirect(url)
+        # return res
+        return JsonResponse({"message": "redirect", "url": url})
 
 
 class NaverSignInCallbackView(View):
@@ -119,7 +123,9 @@ class NaverSignInCallbackView(View):
                 'https://openapi.naver.com/v1/nid/me', headers={'Authorization': f'Bearer ${access_token}'})
 
             print(access_token)
+            print(user_info_response)
             return JsonResponse({'user_info': user_info_response.json()}, status=200)
+            # return redirect('/')
 
         except KeyError:
             return JsonResponse({"message": "INVALID_TOKEN"}, status=400)
