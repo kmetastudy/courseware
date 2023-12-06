@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import index, login, index_signup, LoginView, SignUpView
+from .views import index, login, index_signup, LoginView, SignUpView, logout
 from .social_login import *
 app_name = '_user'
 
@@ -9,6 +9,7 @@ urlpatterns = [
     #     path('signup/', index_signup, name='index_signup'),
     path('api/login/', LoginView.as_view(), name='login'),
     path('api/sign-up/', SignUpView.as_view(), name='signup'),
+    path('api/logout/', logout, name='logout'),
 
     path('signin/kakao/', KaKaoSignInView.as_view(), name='kakao_signin'),
     path('signin/kakao/callback/', KakaoSignInCallbackView.as_view(),

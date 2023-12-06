@@ -134,3 +134,12 @@ class SignUpView(View):
 # {'id': str(mUser.id)}
 # 2. access
 # {'id': str(mUser.id), 'type': mUser.type, 'nickname': mUser.nickname}
+
+
+def logout(request):
+    next_url = request.META.get('HTTP_REFERER')
+
+    response = redirect(next_url)
+    response.delete_cookie("refresh_token")
+
+    return response
