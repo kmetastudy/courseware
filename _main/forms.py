@@ -9,4 +9,4 @@ class PaymentForm(forms.ModelForm):
 class CartCourseForm(forms.ModelForm):
     class Meta:
         model = CartCourse
-        fields = ["quantity"]
+        fields = []

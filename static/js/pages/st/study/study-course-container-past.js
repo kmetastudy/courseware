@@ -53,7 +53,7 @@ export class StudyCourseContainer {
       console.log(courseId);
       const formData = new FormData();
       formData.append("id", courseId);
-      return await axios.post("../cp/get-full-course/", formData).then((res) => {
+      return await axios.post("/cp/get-full-course/", formData).then((res) => {
         console.log(res);
         if (res.data.result) {
           return res.data.result;

@@ -15,21 +15,31 @@ export function Filter(options) {
 }
 
 Filter.prototype.create = function() {
-    var $elFilterList = $(`<div class="flex justify-center items-center"></div>`)
+    var $elFilterList = $(`<div class="flex-1 flex flex-wrap justify-start items-center"></div>`)
     for (const [key, values] of Object.entries(this.options)) {
+        var $elFilterGroup = $(`<div class="flex py-2 "></div>`)
         values.forEach(function (value) {
             var $elFilter = $(
-              `<div class="${key} mx-2 px-2 py-1 rounded-full border text-sm cursor-pointer">${value.text}</div>`,
+              `<div class="${key} mx-1 px-3 py-2 flex-none rounded-full ring ring-1 ring-gray-200 ring-inset text-xs cursor-pointer">${value.text}</div>`,
             );
 
             $elFilter.on("click", function () {
-                $(this).toggleClass("border-[#08A843]");
+                $(this).toggleClass("ring-blue-500");
+                $(this).toggleClass("ring-2");
+                // $(this).toggleClass("text-blue-700");
                 value.onClick(key, value.type)
             });
 
-            $elFilterList.append($elFilter);
+            $elFilterGroup.append($elFilter);
         });
-        $elFilterList.append(`<div class="mx-1 text-gray-500">|</div>`);
+        $elFilterList.append($elFilterGroup);
+        $elFilterList.append(`<div class="mx-1 text-gray-400">|</div>`);
     }
+
+    
+
+
+    // $elFilterList.append($elSearch)
+
     this.elThis = $elFilterList
 }

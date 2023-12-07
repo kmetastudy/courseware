@@ -54,7 +54,12 @@ class Payment(models.Model):
             self.save()
 
 class CartCourse(models.Model):
-    user = models.TextField(editable=False, null=True, blank=True)
+    # user = models.TextField(editable=False, null=True, blank=True)
+    user = models.ForeignKey(
+        mUser,
+        on_delete=models.CASCADE,
+        db_constraint=False
+    )
     course = models.ForeignKey(
         courseDetail,
         on_delete=models.CASCADE,
@@ -69,12 +74,30 @@ class CartCourse(models.Model):
     def amount(self):
         return self.course.price * self.quantity
     
+
+class CartBill(models.Model):
+    total_amount = models.PositiveIntegerField("코스 총 금액")
+    points = models.PositiveIntegerField("포인트", default=0)
+
+    @property
+    def actual_payment(self) -> int:
+        return self.total_amount-self.points
+    
+    @classmethod
+    def create_from_cart(cls, user, cart_product_qs) -> "CartBill":
+        cart_product_list = list(cart_product_qs)
+        total_amount = sum(cart_product.amount for cart_product in cart_product_list)
+        bill = cls.objects.create(total_amount=total_amount)
+
+        return bill
+
+    
 class Order(models.Model):
     class Status(models.TextChoices):
         REQUESTED = "requested", "주문요청"
         FAILED_PAYMENT = "failed_payment", "결제실패"
         PAID = "paid", "결제완료"
-        CANCELED = "canceled", "주문취소"
+        CANCELLED = "cancelled", "주문취소"
 
     uid = models.UUIDField(default=uuid.uuid4, editable=False)
     user = models.TextField(editable=False, null=True, blank=True)
@@ -141,7 +164,7 @@ class AbstractPortonePayment(models.Model):
     class PayStatus(models.TextChoices):
         READY = "ready", "결제 준비"
         PAID = "paid", "결제 완료"
-        CANCELED = "canceled", "결제 취소"
+        CANCELLED = "cancelled", "결제 취소"
         FAILED = "failed", "결제 실패"
 
     meta = models.JSONField("포트원 결제내역", default=dict, editable=False)
@@ -190,8 +213,11 @@ class OrderPayment(AbstractPortonePayment):
             # 다수의 결제시도 삭제
             self.order.orderpayment_set.exclude(pk=self.pk).delete()
 
-        elif self.pay_status in (self.PayStatus.CANCELED, self.PayStatus.FAILED):
+        elif self.pay_status in  self.PayStatus.FAILED:
             self.order.status = Order.Status.FAILED_PAYMENT
+            self.order.save()
+        elif self.pay_status in  self.PayStatus.CANCELLED:
+            self.order.status = Order.Status.CANCELLED
             self.order.save()
 
     @classmethod
