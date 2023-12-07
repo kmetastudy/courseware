@@ -1,5 +1,6 @@
-import { StudyCourseContainer } from "../../st/study/study-course-container"
+import { StudyCourseContainer } from "../../st/study/study-course-container-past"
 import { CourseCardManager } from "./course-card-manager"
+import { DetailChapter } from "./detail-chapter"
 
 export function DetailManager(context, data) {
     this.context = context
@@ -10,6 +11,7 @@ export function DetailManager(context, data) {
             {text:'고등', type:'H'},
         ],
         grade:[
+            {text:'공통', type:0},
             {text:'1학년', type:1},
             {text:'2학년', type:2},
             {text:'3학년', type:3}
@@ -31,9 +33,9 @@ export function DetailManager(context, data) {
             {text:'도덕', type:'mor' }
         ],
         difficulty:[
-            {text:'상', type:3},
-            {text:'중', type:2},
-            {text:'하', type:1},
+            {text:'심화', type:2},
+            {text:'실력향상', type:1},
+            {text:'개념과기초', type:0},
         ]
     }
     this.data=data
@@ -42,47 +44,51 @@ export function DetailManager(context, data) {
 }
 
 DetailManager.prototype.init = function() {
-    var $elHeader = $(`<div class="w-[1200px] p-6 xl:p-10">
-                        <p class="text-2xl">${this.data.courseTitle}</p>
+    var $elHeader = $(`<div class="w-[1200px] p-6 xl:p-10 text-white">
+                        <p class="text-2xl text-white">${this.data.courseTitle}</p>
                         ${this.data.courseSummary}
                     </div>`);
     $(".course_header").append($elHeader);
+    console.log(this.data.publisher=='null')
 
-    var $elCategory = $(`<div class="p-2 w-full flex border">
-                            <p class="w-[100px]">코스 제목</p>
-                            <p>${this.data.courseTitle}</p>
+    var pub = this.data.publisher=='null'?'없음':this.data.publisher
+
+    var $elCategory = $(`<div class="px-4 py-3 w-full flex border bg-gray-100">
+                            <p class="w-[100px] text-xs"><i class="ri-flag-fill px-2"></i>코스 제목</p>
+                            <p class="text-xs">${this.data.courseTitle}</p>
                         </div>
-                        <div class="p-2 w-full flex border">
-                            <p class="w-[100px]">년도</p>
-                            <p>${this.data.year}</p>
+                        <div class="px-4 py-3 w-full flex border bg-gray-100">
+                            <p class="w-[100px] text-xs"><i class="ri-calendar-2-fill px-2 "></i>년도</p>
+                            <p class="text-xs">${this.data.year}</p>
                         </div>
-                        <div class="p-2 w-full flex border">
-                            <p class="w-[100px]">학년</p>
-                            <p>${this.options.school.find((obj)=>obj.type == this.data.school).text} ${this.options.grade.find((obj)=>obj.type == this.data.grade).text}</p>
+                        <div class="px-4 py-3 w-full flex border bg-gray-100">
+                            <p class="w-[100px] text-xs"><i class="ri-seedling-fill px-2"></i>학년</p>
+                            <p class="text-xs">${this.options.school.find((obj)=>obj.type == this.data.school).text} ${this.options.grade.find((obj)=>obj.type == this.data.grade).text}</p>
                         </div>
-                        <div class="p-2 w-full flex border">
-                            <p class="w-[100px]">학기</p>
-                            <p>${this.options.semester.find((obj)=>obj.type == this.data.semester).text}</p>
+                        <div class="px-4 py-3 w-full flex border bg-gray-100">
+                            <p class="w-[100px] text-xs"><i class="ri-leaf-line px-2"></i>학기</p>
+                            <p class="text-xs">${this.options.semester.find((obj)=>obj.type == this.data.semester).text}</p>
                         </div>
-                        <div class="p-2 w-full flex border">
-                            <p class="w-[100px]">과목</p>
-                            <p>${this.options.subject.find((obj)=>obj.type == this.data.subject).text}</p>
+                        <div class="px-4 py-3 w-full flex border bg-gray-100">
+                            <p class="w-[100px] text-xs"><i class="ri-book-2-line px-2"></i>과목</p>
+                            <p class="text-xs">${this.options.subject.find((obj)=>obj.type == this.data.subject).text}</p>
                         </div>
-                        <div class="p-2 w-full flex border">
-                            <p class="w-[100px]">출판사</p>
-                            <p>${this.data.publisher}</p>
+                        <div class="px-4 py-3 w-full flex border bg-gray-100">
+                            <p class="w-[100px] text-xs"><i class="ri-book-mark-line px-2"></i>출판사</p>
+                            <p class="text-xs">${pub}</p>
                         </div>
-                        <div class="p-2 w-full flex border">
-                            <p class="w-[100px]">난이도</p>
-                            <p>${this.options.difficulty.find((obj)=>obj.type == this.data.difficulty).text}</p>
+                        <div class="px-4 py-3 w-full flex border bg-gray-100">
+                            <p class="w-[100px] text-xs"><i class="ri-numbers-fill px-2"></i>난이도</p>
+                            <p class="text-xs">${this.options.difficulty.find((obj)=>obj.type == this.data.difficulty).text}</p>
                         </div>
-                        <div class="p-2 w-full flex border">
-                            <p class="w-[100px]">제작자</p>
-                            <p>${this.data.producer}</p>
+                        <div class="px-4 py-3 w-full flex border bg-gray-100">
+                            <p class="w-[100px] text-xs"><i class="ri-user-2-fill px-2"></i>제작자</p>
+                            <p class="text-xs">${this.data.producer}</p>
                         </div>`);
     $(".desc_category").append($elCategory);
 
-    $(".desc_content").append(`${this.data.desc}`);
+    var desc = this.data.desc == 'null'?'':this.data.desc
+    $(".desc_content").append(`${desc}`);
 
 
     console.log(this.context);
@@ -92,10 +98,11 @@ DetailManager.prototype.init = function() {
         courseId: this.data.courseId,
         studentId: this.context.userId,
     };
-    var clChapter = new StudyCourseContainer(parsedOptions);
-    $(".course_chapter").append(clChapter.elThis)
+    // var clChapter = new StudyCourseContainer(parsedOptions);
+    var clChapter = new DetailChapter(this.data.courseId)
+    
 
-    var clCard = new CourseCardManager(this.data);
+    var clCard = new CourseCardManager(this.options, this.data);
     $(".container-right").append(clCard.elThis);
 }
 
