@@ -8,8 +8,9 @@ from django.urls import reverse
 from decouple import config
 
 from _cm.models import courseDetail
+from _cp.nmodels import mCourseN
 from _main.forms import CartCourseForm, PaymentForm
-from _main.models import CartCourse, Order, OrderPayment, Payment
+from _main.models import CartBill, CartCourse, Order, OrderPayment, OrderedProduct, Payment
 from _user.decorators import jwt_login_required
 from _user.models import mUser
 from _user.utils import make_context
@@ -20,8 +21,11 @@ from _user.utils import make_context
 @jwt_login_required
 def index(request):
     context_sample = make_context(request)
-    context_dumped = {"context": json.dumps(context_sample)}
-    return render(request, "_main/_main.html", context_dumped)
+    courses = getCourses(request, 'all', 'all')
+
+    context = {"context": json.dumps(context_sample),
+                "courses": courses}
+    return render(request, "_main/landing.html", context)
 
 @jwt_login_required
 def mainView(request, school, subject):
@@ -97,7 +101,8 @@ def getCourses(request, school, subject):
     courses = []
 
     q = Q()
-    q.add(Q(school=school), q.AND)
+    if(school != 'all'):
+        q.add(Q(school=school), q.AND)
     
     if (subject != 'all'):
         q.add(Q(subject=subject), q.AND)
@@ -108,7 +113,7 @@ def getCourses(request, school, subject):
     if difficulty:
         q.add(Q(difficulty__in=difficulty), q.AND)
 
-    courses = courseDetail.objects.using("courseware").filter(q).values('courseId', 'courseTitle', 'subject', 'price', 'thumnail')
+    courses = courseDetail.objects.filter(q).values('courseId', 'courseTitle', 'school', 'subject', 'price', 'thumnail')
 
     courseList = json.dumps(list(courses))
 
@@ -133,12 +138,20 @@ def detailView(request, school, subject, id):
                "options": detail_context}
     return render(request, "_main/detail.html", context)
 
+def detail_chapter(request):
+    courseId = request.POST.get('courseId')
+    replaced_id = courseId.replace('-','')
+    print(replaced_id)
+    course = get_object_or_404(mCourseN, id=replaced_id)
+    
+    return JsonResponse({"data":course.json_data})
+
 
 # 장바구니 관련
 @jwt_login_required
 def cart_detail(request):
     context_sample = make_context(request)
-
+    user = get_object_or_404(mUser, id=request.userId)
     cart_course_qs = CartCourse.objects.filter(user=request.userId).select_related("course")
 
     CartCourseFormSet = modelformset_factory(
@@ -153,6 +166,7 @@ def cart_detail(request):
             data=request.POST,
             queryset=cart_course_qs,
         )
+
         if formset.is_valid():
             formset.save()
             return redirect("_main:cart_detail")
@@ -161,9 +175,13 @@ def cart_detail(request):
             queryset=cart_course_qs
         )
 
+    bill = CartBill.create_from_cart(request.userId, cart_course_qs)
+
     context = {
             "context": json.dumps(context_sample),
-            "formset": formset
+            "formset": formset,
+            "user":user,
+            "bill":bill
             }
     return render(request, "_main/cart_detail.html", context)
 
@@ -173,8 +191,9 @@ def add_to_cart(request, course_pk):
     course_qs = courseDetail.objects.all()
     course = get_object_or_404(course_qs, courseId=course_pk)
 
+
     cart_course, is_created = CartCourse.objects.get_or_create(
-        user=request.userId,
+        user=get_object_or_404(mUser, id=request.userId),
         course=course
     )
     
@@ -232,7 +251,9 @@ def order_pay(request, pk):
 def order_check(request, order_pk, payment_pk):
     payment = get_object_or_404(OrderPayment, pk=payment_pk, order__pk=order_pk)
     payment.update()
-    return redirect("_main:order_detail", order_pk)
+    # return redirect("_main:order_detail", order_pk)
+    # return redirect("_main:order_list")
+    return redirect("_main:mycourse")
 
 @jwt_login_required
 def order_detail(request, pk):
@@ -244,6 +265,17 @@ def order_detail(request, pk):
             "order": order
             }
     return render(request, "_main/order_detail.html", context)
+
+@jwt_login_required
+def mycourse(request):
+    context_sample = make_context(request)
+    orders = Order.objects.all().filter(user=request.userId)
+
+    context = {
+            "context": json.dumps(context_sample),
+            "orders": orders
+            }
+    return render(request, "_main/mycourse.html", context)
 
 # 결제 관련
 @jwt_login_required

@@ -1,43 +1,118 @@
 {% extends "_main/base.html" %}
-
+{% load humanize %}
 {% block content %}
-    <h2>장바구니</h2>
+
+<div class="w-[1200px]">
+    <p class="pl-8 pb-8 text-xl font-bold">장바구니</p>
+    <div class="flex">
+        <form action="" method="post" class="mx-4 w-[900px] flex flex-col" novalidate>
+            <div class="flex justify-between">
+                <div class="m-2 px-2 py-1 flex">
+                    <input type="checkbox" id="check_all">
+                    <p class="px-2">전체선택</p>
+                </div>
+                <button type="submit" class="m-2 px-2 py-1 border rounded-md self-end hover:border-black">선택 삭제 <i class="ri-close-line"></i></button>
+            </div>
+            
+            <table class="w-full border-t-2 border-black">
+                
+                <tbody>
+                    {% csrf_token %}
+                    {{ formset.management_form}}
+                    {% for form in formset %}
+                        {% for field in form.hidden_fields %}{{ field }}{% endfor %}
+                        {% with form.instance as cart_course %}
+                            <tr class="border-b flex">
+                                <!-- <td class="p-4 w-[50px]">{{ form.DELETE }}</td> -->
+                                <td class="p-4 w-[50px]"><input type="checkbox" class="" name="form-{{ forloop.counter0 }}-DELETE" id="id_form-{{ forloop.counter0 }}-DELETE" /></td>
+                                <td class="p-4 w-[200px]"><img class="shadow-md" src="../../static/img/{{cart_course.course.thumnail}}.png"></td>
+                                <td class="p-4 flex-1 items-start">
+                                    <div class="h-full flex flex-col border-r">
+                                        <div>
+                                            <a href="/courses/{{ cart_course.course.school }}/{{ cart_course.course.subject }}/{{ cart_course.course.courseId }}">{{ cart_course.course.courseTitle }}</a>
+                                        </div>
+                                        <div class="text-sm">
+                                            <span class="text-gray-500">{{ cart_course.course.producer }}</span>  |  <span class="text-green-700">무제한 수강</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <!-- <td class="border">
+                                    {{ form.quantity }}
+                                    {{ form.quantity.errors }}
+                                </td> -->
+                                <td class="p-4 w-[150px] text-sm text-end">{{ cart_course.course.price|intcomma }}원</td>
+                            </tr>
+                        {% endwith %}
     
-    <form action="" method="post" novalidate>
-        <table>
-            <thead>
-                <tr>
-                    <td>선택</td>
-                    <td>상품명</td>
-                    <td>수량</td>
-                </tr>
-
-            </thead>
-            <tbody>
-                {% csrf_token %}
-                {{ formset.management_form}}
-                {% for form in formset %}
-                    {% for field in form.hidden_fields %}{{ field }}{% endfor %}
-                    {% with form.instance as cart_course %}
-                        <tr>
-                            <td>{{ form.DELETE }}</td>
-                            <td>{{ cart_course.course.courseTitle }}</td>
-                            <td class="border">
-                                {{ form.quantity }}
-                                {{ form.quantity.errors }}
-                            </td>
-                        </tr>
-                    {% endwith %}
-
-                {% endfor %}
-            </tbody>
-        </table>
-        <input type="submit" class="border rounded-lg" value="장바구니 업데이트"/>
-    </form>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+        
     
-
-    <div class="">
-        <button class="border rounded-lg" onclick='window.location.href="/orders/new/"'>주문하기</button>
+        <div class="w-[300px]">
+            <div class="p-2 rounded-lg shadow-md">
+                <div class="p-2 flex justify-between border-b text-sm">
+                    <p>구매자 정보</p>
+                    <p class="text-gray-500 underline underline-offset-4 cursor-pointer hover:text-black">수정</p>
+                </div>
+                <div class="p-2 grid grid-cols-2">
+                    <p class="text-sm">이름</p>
+                    <p class="text-sm font-bold">{{ user.nickname }}</p>
+                    <p class="text-sm">이메일</p>
+                    <p class="text-sm font-bold">{{ user.email }}</p>
+                    <p class="text-sm">전화번호</p>
+                    <p class="text-sm font-bold"></p>
+                </div>
+            </div>
+            <div class="my-2 p-2 w-full rounded-lg shadow-md">
+                <div class="p-2 flex justify-between text-sm">
+                    <p>포인트</p>
+                    <p class="text-gray-500 text-xs">보유 <span class="text-green-600">0</span></p>
+                </div>
+                <div class="pb-2 w-full flex justify-center">
+                    <input type="number" class="px-2 w-[180px] border rounded-md text-end" id="point" placeholder="0"/>
+                    <button class="flex-none ml-2 p-2 border rounded-md text-sm">전액사용</button>
+                </div>
+                <div class="p-2 text-xs">
+                    <div class="flex justify-between">
+                        <p class="text-gray-500">전체상품 금액</p>
+                        <p class="text-gray-500">{{bill.total_amount|intcomma}}원</p>
+                    </div>
+                    <div class="flex justify-between">
+                        <p class="text-gray-500">할인금액</p>
+                        <p>-{{bill.points|intcomma}}</p>
+                    </div>
+                    <div class="py-2 flex justify-between text-sm">
+                        <p>총 결제금액</p>
+                        <p>{{bill.actual_payment|intcomma}}원</p>
+                    </div>
+                </div>
+                <button class="p-2 w-full border rounded-lg hover:border-black" onclick='window.location.href="/orders/new/"'>주문하기</button>
+            </div>
+            
+        </div>
     </div>
     
+</div>
+{% endblock %}
+
+{% block extra-script %}
+<script>
+$('#check_all').on("click",function() {
+    $("input[name*='form'][type='checkbox']").prop('checked',this.checked)
+    
+})
+$("input[name*='form'][type='checkbox']").on("click",function() {
+    var isChecked = true
+    $("input[name*='form'][type='checkbox']").each(function(index, box) {
+        isChecked = box.checked
+        if(!isChecked) {
+            return false
+        }
+    });
+    $('#check_all').prop('checked',isChecked)
+})
+</script>
+
 {% endblock %}
