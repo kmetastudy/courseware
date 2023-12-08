@@ -1,12 +1,11 @@
 from django.urls import path, include
-from .views import index, login, index_signup, LoginView, SignUpView, logout
+from .views import index, LoginView, SignUpView, logout
 from .social_login import *
 app_name = '_user'
 
 urlpatterns = [
     path('', index, name='index'),
-    #     path('login/', login, name='login-page'),
-    #     path('signup/', index_signup, name='index_signup'),
+
     path('api/login/', LoginView.as_view(), name='login'),
     path('api/sign-up/', SignUpView.as_view(), name='signup'),
     path('api/logout/', logout, name='logout'),
@@ -23,6 +22,15 @@ urlpatterns = [
     path('signin/google/callback/', GoogleSignInCallbackView.as_view(),
          name='google_signin_callback'),
 
+    path('signin/google/test/', GoogleLoginApi.as_view(),
+         name='google_signin_test'),
+    path('signin/google/test/callback/', GoogleSigninCallBackApi.as_view(),
+         name='google_signin_callback_test'),
+
+    path('signin/google/openid/', GoogleOpenIdView.as_view(),
+         name='google_signin_openid'),
+    path('signin/google/openid/callback/', GoogleOpenIdCallbackView.as_view(),
+         name='google_signin_openid_callback'),
 
     path('signin/facebook/', FaceBookSignInView.as_view(), name='facebook_signin'),
     path('signin/facebook/callback/', FaceBookSignInCallbackView.as_view(),

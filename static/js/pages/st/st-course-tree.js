@@ -1,8 +1,8 @@
 import { MtuIcon } from "../../core/mtu/icon/mtu-icon";
 import { MtuProgress } from "../../core/mtu/progress/mtu-progress";
-import { MtuInput } from "../../core/mtu/input/mtu-input";
 import { pick, sum } from "../../core/utils/_utils";
 import { mtoEvents } from "../../core/utils/mto-events";
+import { isObject } from "../../core/utils/type-check";
 
 require("../../../css/pages/st/st-course-tree.css");
 export class StCourseTree {
@@ -11,30 +11,39 @@ export class StCourseTree {
   // 3. courseN
   constructor({ courseBookData = {}, courseData = [], resultData = [], onCloseClick, title, onBranchClick }) {
     // Data of mCourseBook
-    this.courseBookData = courseBookData ?? {};
+    // this.courseBookData = courseBookData ?? {};
+
+    // mCourseN
+    this.courseData = courseData ?? null;
 
     // mCourseN's json data : {lists, contents, kls}
-    this.courseData = courseData ?? [];
+
+    const jsonData = courseData ? JSON.parse(courseData.json_data) : {};
+    this.jsonData = jsonData;
 
     // mStudyResult's properties['property'] data.
     // You can get data with user_id and course_id
     this.resultData = resultData ?? [];
 
     // Data of chapter/branch, and it's units.
-    this.listsData = courseData?.lists ?? [];
+    // this.listsData = courseData?.lists ?? [];
+    this.listsData = jsonData?.lists ?? [];
 
     // Data of element's id and type, that are used in unit.
     // You can get element's full data, using id and type (mElementN)
-    this.contentsData = courseData?.contents ?? [];
+    // this.contentsData = courseData?.contents ?? [];
+    this.contentsData = jsonData?.contents ?? [];
 
-    this.treeData = courseData?.lists
-      ? this.composeTreeData({ lists: this.listsData, contents: this.contentsData, results: this.resultData })
-      : [];
+    this.treeData =
+      this.listsData.length > 0
+        ? this.composeTreeData({ lists: this.listsData, contents: this.contentsData, results: this.resultData })
+        : [];
+    console.log(this.treeData);
 
     this.onCloseClick = onCloseClick ?? null;
     this.onBranchClick = onBranchClick ?? null;
     this.title = title ?? "학습하기";
-    this.courseTitle = courseBookData?.title ?? null;
+    this.courseTitle = courseData?.title ?? null;
 
     // constants
     this.videoIcon = "playCircle";
@@ -42,15 +51,14 @@ export class StCourseTree {
     this.progressTitle = "진도율";
     this.pointTitle = "점수";
 
-    // TEST
-    // const clProgress = new MtuProgress({ percent: 50, type: "circle" });
-    // document.body.prepend(clProgress.getElement());
     this.init();
   }
 
   composeTreeData({ lists, contents, results }) {
     let treeData = [];
     let currentChapter = null;
+    let chapterProgress = [];
+    let chapterPoint = [];
     const { length } = lists;
 
     for (let i = 0; i < length; i++) {
@@ -62,6 +70,13 @@ export class StCourseTree {
       const type = data.type === 0 ? "chapter" : "branch";
 
       if (type === "chapter") {
+        if (currentChapter) {
+          currentChapter.progress = this.getPercentage(sum(chapterProgress), chapterProgress.length * 100, 0);
+          currentChapter.point = this.getPercentage(sum(chapterPoint), chapterPoint.length * 100, 0);
+        }
+        chapterProgress = [];
+        chapterPoint = [];
+
         data.children = [];
         treeData.push(data);
         currentChapter = data;
@@ -71,11 +86,13 @@ export class StCourseTree {
           unit.contentTimes = content.units[idx].times;
         });
 
-        if (result) {
-          data.results = result.results;
-          data.progress = progress;
-          data.point = point;
-        }
+        data.results = result.results;
+        data.progress = progress;
+        data.point = point;
+
+        chapterProgress.push(progress);
+        chapterPoint.push(point);
+
         currentChapter.children.push(data);
       }
     }
@@ -85,36 +102,29 @@ export class StCourseTree {
   init() {
     this.initVariable();
     this.create();
+    this.initEvents();
   }
 
   initVariable() {
+    console.log(this.resultData);
     this.totalLectures = this.listsData.length;
-    this.completedLectures = this.resultData.filter((data) => data.progress === 100).length ?? 0;
+    this.completedLectures = this.resultData.filter((data) => data.type !== 0 && data?.progress === 100).length ?? 0;
 
-    if (this.completedLectures > 0) {
-      this.progress = parseFloat((this.totalLectures / this.completedLectures).toFixed(2)); //e.g. 20.22
-    } else {
-      this.progress = 0;
-    }
+    this.progress = this.getPercentage(this.completedLectures, this.totalLectures);
 
     this.totalTime = 0;
     this.listsData.forEach((data) => {
-      data.time ? (this.totalTime += data.time) : null;
+      return data.type !== 0 && data.time ? (this.totalTime += data.time) : null;
     });
 
-    this.completedTime = this.resultData.reduce((accumulator, currentValue, index) => {
-      if (currentValue.progress === 100) {
-        return accumulator + this.listsData[index].time;
-      }
-      return accumulator;
-    });
-
-    if (this.completedTime) {
-      this.completedTime = 0;
-    }
+    this.completedTime = this.setCompletedTime(this.listsData, this.resultData);
 
     // TODO
     // 수강 기간
+  }
+
+  initEvents() {
+    mtoEvents.on("OnChangeProgressPoint", this.handleProgressPointChange.bind(this));
   }
 
   create() {
@@ -153,6 +163,7 @@ export class StCourseTree {
 
     const clProgress = new MtuProgress({ percent: this.progress, type: "line" });
     const progressBar = clProgress.getElement();
+    progressBar.classList.add("course-progress-bar");
 
     info.appendChild(textInfo);
     info.appendChild(progressBar);
@@ -222,7 +233,7 @@ export class StCourseTree {
     const branchSize = branchData.length;
     const chapterIndex = index;
     const indexInfo = `챕터 ${chapterIndex}`;
-    const sizeInfo = `${branchSize}강 / ${1}분`;
+    const sizeInfo = `${branchSize}강 / ${data.time ? this.formatTime(data.time) : 0}분`;
 
     const elChapter = document.createElement("li");
     elChapter.classList.add("st-course-tree-chapter");
@@ -232,6 +243,9 @@ export class StCourseTree {
 
     elChapter.appendChild(elChapterInfo);
     elBranch ? elChapter.appendChild(elBranch) : null;
+
+    data.element = elChapter;
+
     return elChapter;
   }
 
@@ -268,6 +282,8 @@ export class StCourseTree {
       const elBranchItem = this.createBranchItem(branchData);
       elBranchItem.addEventListener("click", this.handleBranchClick.bind(this, branchData));
       wrapper.appendChild(elBranchItem);
+
+      branchData.element = elBranchItem;
     }
 
     return wrapper;
@@ -368,6 +384,7 @@ export class StCourseTree {
 
     const clProgress = new MtuProgress({ percent, size: 32 });
     const elProgress = clProgress.getElement();
+    elProgress.classList.add("branch-progress");
 
     elBranchProgress.append(elTitle, elProgress);
     return elBranchProgress;
@@ -379,16 +396,16 @@ export class StCourseTree {
 
     const elTitle = this.createTextElement("점수");
 
-    const clProgress = new MtuProgress({ percent, size: 32 });
-    const elProgress = clProgress.getElement();
+    const clPoint = new MtuProgress({ percent, size: 32 });
+    const elPoint = clPoint.getElement();
+    elPoint.classList.add("branch-point");
 
-    elBranchPoint.append(elTitle, elProgress);
+    elBranchPoint.append(elTitle, elPoint);
     return elBranchPoint;
   }
 
   //////////// Handler ////////////
   handleCloseClick(evt) {
-    console.log(evt.target);
     const rootElement = this.getElement();
     mtoEvents.emit("onAsideClose", rootElement);
   }
@@ -397,7 +414,38 @@ export class StCourseTree {
       this.onBranchClick(branchData);
     }
   }
+
+  handleProgressPointChange({ content_id, progress, point } = {}) {
+    const resultData = this.resultData.filter((data) => data.id === content_id)[0];
+
+    const [prevProgress, prevPoint] = [resultData.progress, resultData.point];
+
+    prevProgress !== progress ? this.updateProgress(content_id, progress) : null;
+    prevPoint !== point ? this.updatePoint(content_id, point) : null;
+  }
+
   //////////// API ////////////
+  getContentData(content_id) {
+    /**
+     * Find data from this.treeData, with id(chapter||branch)
+     * return [chapter data, branchdata]
+     */
+    // chapter
+    const chapterData = this.treeData.find((chapter) => chapter.id === content_id);
+
+    if (chapterData) {
+      return [chapterData, null];
+    }
+
+    // branch
+    const parentData = this.treeData.find((chapter) => {
+      return chapter.children?.find((branch) => branch.id === content_id);
+    });
+
+    const branchData = parentData?.children?.find((branch) => branch.id === content_id);
+    return [parentData, branchData];
+  }
+
   closeMenu() {}
 
   getElement() {
@@ -423,6 +471,80 @@ export class StCourseTree {
     element.textContent = text;
     className ? element.classList.add(className) : null;
     return element;
+  }
+
+  updateProgress(content_id, progress) {
+    const [chapterData, branchData] = this.getContentData(content_id);
+    const resultData = this.resultData.find((data) => data.id === content_id);
+
+    branchData.hasOwnProperty("progress") ? (branchData.progress = progress) : null;
+    chapterData.progress = this.getPercentage(
+      sum(chapterData.children.map((data) => data.progress)),
+      chapterData.children.length * 100,
+      0,
+    );
+
+    resultData.hasOwnProperty("progress") ? (resultData.progress = progress) : null;
+    const elBranch = branchData?.element;
+
+    const elProgress = elBranch.querySelector(".branch-progress");
+
+    const clUpdatedProgress = new MtuProgress({ percent: progress, size: 32 });
+    const elUpdatedProgress = clUpdatedProgress.getElement();
+    elUpdatedProgress.classList.add(".branch-progress");
+
+    elProgress.replaceWith(elUpdatedProgress);
+
+    this.initVariable();
+
+    const elCourseProgress = this.elThis.querySelector(".st-course-tree-info-progress");
+    elCourseProgress.textContent = `진도율 : ${this.completedLectures}/${this.totalLectures} (${
+      this.progress
+    }%) | 시간: ${this.formatTime(this.completedTime)}/${this.formatTime(this.totalTime)}`;
+
+    const elProgressBar = this.elThis.querySelector(".course-progress-bar");
+    const newClProgressBar = new MtuProgress({ percent: this.progress, type: "line" });
+    const newProgressBar = newClProgressBar.getElement();
+    newProgressBar.classList.add("course-progress-bar");
+
+    elProgressBar.replaceWith(newProgressBar);
+  }
+
+  updatePoint(content_id, point) {
+    const [chapterData, branchData] = this.getContentData(content_id);
+    const resultData = this.resultData.find((data) => data.id === content_id);
+
+    branchData.hasOwnProperty("point") ? (branchData.point = point) : null;
+    resultData.hasOwnProperty("point") ? (resultData.point = point) : null;
+
+    chapterData.point = this.getPercentage(
+      sum(chapterData.children.map((data) => data.point)),
+      chapterData.children.length * 100,
+      0,
+    );
+
+    const elBranch = branchData?.element;
+
+    const elPoint = elBranch.querySelector(".branch-point");
+
+    const clUpdatedPoint = new MtuProgress({ percent: point, size: 32 });
+    const elUpdatedPoint = clUpdatedPoint.getElement();
+
+    elPoint.replaceWith(elUpdatedPoint);
+  }
+
+  getPercentage(numerator, denominator, digits = 2) {
+    if (!denominator) {
+      return 0;
+    }
+
+    return parseFloat(((numerator / denominator) * 100).toFixed(digits)); //e.g. 20.22
+  }
+
+  setCompletedTime(listsData, resultsData) {
+    const time = listsData.filter((data, idx) => resultsData[idx].progress === 100).map((data) => data.time).length;
+    this.completedTime = time;
+    return time;
   }
 }
 

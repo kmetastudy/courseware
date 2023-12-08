@@ -1,15 +1,28 @@
 import json
 
+
+from decouple import config
+import jwt
+
+
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
 from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.hashers import make_password, check_password
 from django.views import View
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
+
 
 from .utils import make_fake_context
 from .decorators import last_visited
 from .utils import JWTGenerator
 from .models import mUser
 from .constants import *
+from .authenticate import generate_access_token
 
 # Create your views here.
 
@@ -74,16 +87,21 @@ class LoginView(View):
         result['next_url'] = next_url
         result['success'] = True
 
+        del request.session['next']
+
         refresh_token = self.token_generator.generate_token(
             'refresh',
             user=str(user.id),
             type=int(user.type),
             name=str(user.nickname))
 
+        expiration = self.token_generator.get_max_age()
+        cookie_expiration = expiration
+
         response = JsonResponse(
             {'message': 'login success', 'result': result})
         response.set_cookie('refresh_token', refresh_token,
-                            httponly=True, samesite='Strict')
+                            httponly=True, samesite='Strict', max_age=cookie_expiration)
         return response
 
 
@@ -110,12 +128,14 @@ class SignUpView(View):
             email=email,
             password=make_password(password),
             nickname=nickname,
-            type=64  # TODO : 임시로 default값 지정해줬으니, 추후에 변경하자
+            type=ACCOUNT_TYPE_USER  # TODO : 임시로 default값 지정해줬으니, 추후에 변경하자
         )
 
         next_url = request.session.get('next', '/')
         result['next_url'] = next_url
         result['success'] = True
+
+        del request.session['next']
 
         refresh_token = self.token_generator.generate_token(
             'refresh',
@@ -123,10 +143,13 @@ class SignUpView(View):
             type=int(user.type),
             name=str(user.nickname))
 
+        expiration = self.token_generator.get_max_age()
+        cookie_expiration = expiration
+
         response = JsonResponse(
             {'message': 'login success', 'result': result})
         response.set_cookie('refresh_token', refresh_token,
-                            httponly=True, samesite='Strict')
+                            httponly=True, samesite='Strict', max_age=cookie_expiration)
         return response
 
 # jwt token payload
@@ -143,3 +166,47 @@ def logout(request):
     response.delete_cookie("refresh_token")
 
     return response
+
+
+@method_decorator(csrf_protect, name='dispatch')
+class RefreshJWTtoken(APIView):
+    """
+
+    """
+
+    def post(self, request, *args, **kwargs):
+        refresh_token = request.COOKIES.get('refreshtoken')
+
+        if refresh_token is None:
+            return Response({
+                "message": "Authentication credentials were not provided."
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        try:
+            payload = jwt.decode(
+                refresh_token, config("JWT_REFRESH_KEY"), algorithms=[
+                    'HS256']
+            )
+        except:
+            return Response({
+                "message": "expired refresh token, please login again."
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        user = mUser.objects.filter(id=payload['user_id']).first()
+
+        if user is None:
+            return Response({
+                "message": "user not found"
+            }, status=status.HTTP_400_BAD_REQUEST)
+        if not user.is_active:
+            return Response({
+                "message": "user is inactive"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        access_token = generate_access_token(user)
+
+        return Response(
+            {
+                'access_token': access_token,
+            }
+        )

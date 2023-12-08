@@ -71,10 +71,22 @@ export class SignInForm {
     });
     this.elThis.appendChild(this.clSubmitButton.getElement());
 
+    // Sinup
+    this.clSignupButton = new MtuButton({
+      text: "course-12가 처음이신가요? 가입하기",
+      type: "text",
+      size: "default",
+      // htmlType: "button",
+      onClick: this.handleSignupClick.bind(this),
+    });
+    this.elThis.appendChild(this.clSignupButton.getElement());
+
     // Social Login
     this.socialLogin = document.createElement("div");
     this.socialLogin.classList.add("social-login");
-    this.elThis.appendChild(this.socialLogin);
+    // TODO
+    // 임시로 socail login은 막아둔다.
+    // this.elThis.appendChild(this.socialLogin);
 
     this.socialLoginTitle = document.createElement("div");
     this.socialLoginTitle.classList.add("social-login-title");
@@ -135,6 +147,13 @@ export class SignInForm {
     evt.preventDefault();
     if (this.options.onSocialLogin) {
       this.options.onSocialLogin(name);
+    }
+  }
+
+  handleSignupClick(evt) {
+    evt.preventDefault();
+    if (this.options.onClickRenderSignup) {
+      this.options.onClickRenderSignup();
     }
   }
 

@@ -1,4 +1,6 @@
 import { isValidIconName } from "../icon/mtu-icon";
+import { isObject } from "../_util/type-check";
+
 export const config = {
   text: {
     defaultValue: null,
@@ -39,5 +41,9 @@ export const config = {
   onSubmit: {
     defaultValue: null,
     validate: (value) => typeof value === "function",
+  },
+  styles: {
+    defaultValue: null,
+    validate: (value) => isObject(value),
   },
 };

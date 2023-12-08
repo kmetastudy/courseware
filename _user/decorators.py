@@ -37,6 +37,7 @@ def jwt_login_required(func):
             except jwt.InvalidTokenError:
                 print(f"invalid {token_type} token")
                 return None
+
         # 1. If there is access token
         auth_header = request.META.get("HTTP_AUTHORIZATION", "")
         if auth_header.startswith('Bearer '):
@@ -49,6 +50,9 @@ def jwt_login_required(func):
 
         # 2. If there is no access token, but refresh token
         refresh_token = request.COOKIES.get('refresh_token')
+        print("header cookie: ", request.META.get("Cookie"))
+        print(request.COOKIES)
+
         if refresh_token:
             new_access_token = validate_token(refresh_token, 'refresh')
             if new_access_token:

@@ -26,12 +26,12 @@ function mtfLearnManagerOnReady(context) {
   const clNav = new NavManager(parsedContext);
 
   // StManager
-  console.log(parsedContext);
   const options = {
     demo: parsedContext.demo,
     userType: parsedContext.userType,
     courseId: parsedContext.courseId,
     studentId: parsedContext.userId,
+    userLogin: parsedContext.userLogin,
   };
   const clManager = new StManager(options);
 
@@ -48,6 +48,8 @@ export function st_run(context, csrf_token) {
   const defaultAxiosConfig = {
     headers: { "X-CSRFTOKEN": token },
   };
+
+  const refresh_token = getCookie("refresh_token");
   axios.defaults.headers = defaultAxiosConfig.headers;
   console.log("Mega Student runs ....");
   mtoEvents.emit("OnReady", context);

@@ -1,9 +1,13 @@
-import jwt
+import uuid
 import datetime
+
+import jwt
 from decouple import config
-from django.views import View
+
+from django.contrib.auth.hashers import make_password, check_password
 
 from .constants import *
+from .models import mUser
 
 # 사이트에 접속(main)
 # userType을 통해, client에서는 이 사람의 정보를 알 수 있다.
@@ -201,18 +205,23 @@ class JWTGenerator:
     REFRESH_EXP = datetime.timedelta(weeks=2)
     JWT_KEY = config("JWT_KEY")
     ALGORITHM = 'HS256'
+    cookie_max_age = None
+
+    def get_max_age(self):
+        return self.cookie_max_age
 
     def _generate_expiration(self, token_type):
         if token_type == 'access':
             return datetime.datetime.utcnow() + self.ACCESS_EXP
         elif token_type == 'refresh':
+            self.cookie_max_age = 1209600 + 60  # 2 weeks
             return datetime.datetime.utcnow() + self.REFRESH_EXP
         raise ValueError("Invalid token type provided.")
 
     def _generate_payload(self, token_type, **data):
         expiration_time = self._generate_expiration(token_type)
+
         payload = {'exp': expiration_time}
-        print('_generate_payload > data: ', data)
         payload.update(data)
         return payload
 
@@ -222,4 +231,70 @@ class JWTGenerator:
 
         payload = self._generate_payload(token_type, **data)
         token = jwt.encode(payload, self.JWT_KEY, self.ALGORITHM)
+
+        encoded = jwt.decode(token, self.JWT_KEY, self.ALGORITHM)
+        print(encoded)
         return token
+
+
+def social_user_create(email, password=None, **extra_fields):
+    DEFAULT_NICKNAME = "User"
+    DEFAULT_TYPE = 64  # type of student
+
+    user = mUser(email=email)
+
+    if password:
+        user.password = make_password(password)
+
+    if "nickname" in extra_fields:
+        user.nickname = extra_fields["nickname"]
+    elif "name" in extra_fields:
+        user.nickname = extra_fields["name"]
+    else:
+        user.nickname = DEFAULT_NICKNAME
+
+    if "type" in extra_fields:
+        user.type = extra_fields["type"]
+    else:
+        user.type = DEFAULT_TYPE
+
+    user.full_clean()
+    user.save()
+
+    return user
+
+
+def get_or_create_social_user(email, **extra_data):
+    user = mUser.objects.filter(email=email).first()
+
+    if user:
+        return user, False
+
+    return social_user_create(email=email, **extra_data), True
+
+
+def get_next_url(request, delete=False):
+    """
+    Get next url
+
+    """
+    next_url = request.session.get("next", "/")
+
+    if delete:
+        del request.session['next']
+
+    return next_url
+
+
+def demo_student_id(request):
+    """
+    Get or create demo student(user) id, using session
+    return str(uuid.uuid4())
+    """
+    demo_student_id = request.session.get("demo_student_id")
+    if not demo_student_id:
+        demo_student_id = uuid.uuid4()  # create new
+        request.session["demo_student_id"] = demo_student_id
+        request.session.modified = True
+
+    return demo_student_id

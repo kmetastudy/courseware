@@ -1,5 +1,6 @@
 import { SignUpForm } from "./signup-form";
 
+require("./signup-manager.css");
 export class SignUpManager {
   constructor(options = {}) {
     this.options = options;
@@ -10,11 +11,12 @@ export class SignUpManager {
   #init() {
     this.elThis = document.createElement("div");
     this.elThis.classList.add("sign-up-manager");
-    this.elThis.setAttribute("style", "width:450px;margin:200px 400px;");
+    // this.elThis.setAttribute("style", "width:450px;margin:200px 400px;");
 
     const options = {
       onSubmit: this.handleSignUp.bind(this),
       onSocialLogin: this.handleSocialLogin.bind(this),
+      onClickRenderSignIn: this.handleRenderSignin.bind(this),
     };
     this.clSignUpForm = new SignUpForm(options);
     this.elThis.appendChild(this.clSignUpForm.getElement());
@@ -44,6 +46,12 @@ export class SignUpManager {
   //
   handleSignUpFail(res) {
     console.log("SignUp Fail: ", res);
+  }
+
+  handleRenderSignin() {
+    if (this.options.onClickRenderSignIn) {
+      this.options.onClickRenderSignIn();
+    }
   }
 
   //////////////// URL ////////////////

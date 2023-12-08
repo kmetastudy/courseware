@@ -1,0 +1,14 @@
+.sign-up-manager {
+  display: none;
+}
+
+.sign-up-manager.activate {
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+
+  background-color: rgba(22, 119, 255, 0.3);
+}
