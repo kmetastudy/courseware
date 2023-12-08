@@ -17,7 +17,7 @@ CourseView.prototype.init = function() {
       course.price='무료'
       var $elCourse = $(`<div class="m-4 cursor-pointer">
                           <img src="../../../static/img/${course.thumnail}.png">
-                          <p class="text-sm md:text-base">${course.courseTitle}</p>
+                          <p class="text-sm md:text-base truncate">${course.courseTitle}</p>
                           <p class="text-gray-600 text-sm">megacourse</p>
                           <div class="flex justify-between">
                             <p class="text-xs md:text-sm text-emerald-600 font-bold">${(course.price).toLocaleString()}</p>
