@@ -674,7 +674,8 @@ TestumPlayer.prototype._updateTestumResult = function (bGrade, eData) {
   }
 
   // 결과 서버에 전송
-  this._urlUpdateTestumResultInfo();
+  // this._urlUpdateTestumResultInfo();
+  this.urlUpdateTestumResult();
   this.infoResult = this.clTestumResultTable.setTestumResultList(
     this.player.testum_unit_new,
     this.player.testum_result_new,
@@ -1032,4 +1033,38 @@ TestumPlayer.prototype._urlUpdateTestumResultInfo = function (data) {
       // window.location.href = "/";
     },
   }); // end of ajax
+};
+
+TestumPlayer.prototype.urlUpdateTestumResult = function () {
+  console.log(this.playOptions.userLogin);
+  const url = this.playOptions.userLogin
+    ? "../st/api/study_result/properties/"
+    : "../st/api/demo_study_result/properties/";
+
+  const eData = {};
+  eData.content_id = this.player.content_id;
+  eData.progress = this.player.progress;
+  eData.point = this.player.point;
+
+  mtoEvents.emit("OnChangeProgressPoint", eData);
+
+  return axios
+    .patch(url, {
+      student_id: this.player.student_id,
+      course_id: this.player.course_id,
+      content_id: this.player.content_id,
+      content_type: this.player.content_type,
+      course_type: this.player.content_type,
+      properties: JSON.stringify(this.player.testum_result_new), // one record of properties['property']
+      progress: this.player.progress,
+      point: this.player.point,
+    })
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };

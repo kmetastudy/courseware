@@ -31,7 +31,7 @@ export class NavManager {
     if (!this.userLogin) {
       login = { text: "로그인", onClick: () => (window.location.href = "/user/"), type: "text" };
     } else {
-      logout = { text: "로그아웃", onClick: () => (window.location.href = "/user/"), type: "text" };
+      logout = { text: "로그아웃", onClick: () => (window.location.href = "/user/api/logout/"), type: "text" };
     }
 
     dashboard = { text: "대시보드", onClick: () => (window.location.href = "#") };

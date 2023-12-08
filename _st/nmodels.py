@@ -113,7 +113,9 @@ class mDemoStudyResult(models.Model):
     created_date = models.DateTimeField(default=django.utils.timezone.now)
     updated_date = models.DateTimeField(auto_now=True)
     version = models.IntegerField(default=0)
-    pass
+
+    def __str__(self):
+        return self.title if self.title else "mDemoStudyResult"
 
 
 class mDemoStudyLogN(models.Model):

@@ -1,5 +1,6 @@
 import { SignInForm } from "./signin-form";
 
+require("./signin-manager.css");
 export class SignInManager {
   constructor(options = {}) {
     this.options = options;
@@ -9,11 +10,12 @@ export class SignInManager {
   #init() {
     this.elThis = document.createElement("div");
     this.elThis.classList.add("sign-in-manager");
-    this.elThis.setAttribute("style", "width:450px;margin:200px 400px;");
+    // this.elThis.setAttribute("style", "width:450px;margin:200px 400px;");
 
     this.clSignInForm = new SignInForm({
       onSubmit: this.handleLogin.bind(this),
       onSocialLogin: this.handleSocialLogin.bind(this),
+      onClickRenderSignup: this.handleRenderSignup.bind(this),
     });
 
     this.elThis.appendChild(this.clSignInForm.getElement());
@@ -35,9 +37,7 @@ export class SignInManager {
 
   async handleSocialLogin(socialName) {
     try {
-      console.log(socialName);
       const res = await this.urlSocialLogin(socialName);
-      console.log(res);
     } catch (err) {
       // console.log(err);
     }
@@ -45,6 +45,12 @@ export class SignInManager {
 
   handleLoginFail(res) {
     console.log("Login Fail!", res);
+  }
+
+  handleRenderSignup() {
+    if (this.options.onClickRenderSignup) {
+      this.options.onClickRenderSignup();
+    }
   }
   //////////////// URL ////////////////
 
@@ -60,16 +66,18 @@ export class SignInManager {
       .catch((err) => console.error("urlLogin error: ", err.response.data));
   }
 
-  // get authcode from auth server
+  // get url of authcode
   urlSocialLogin(socialName) {
-    const url = `../user/signin/${socialName}/`;
+    // const url = `../user/signin/${socialName}/`;
+    const url = socialName === "google" ? `../user/signin/google/test/` : `../user/signin/${socialName}/`;
+
     return axios.get(url).then((res) => {
-      console.log("res");
       if (res.data && res.data.url) {
         window.location.href = res.data.url;
-        // this.urlGetSocialInfo(res.data.url);
+        return;
       } else {
         console.log("social fail");
+        return;
       }
     });
   }

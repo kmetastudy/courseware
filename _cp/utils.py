@@ -162,9 +162,19 @@ def create_time_data(course_n):
         contents = json_data['contents']
 
         contents_size = len(contents)
+        current_chapter_time = 0
+        current_chapter = None
+        branch_types = [CP_TYPE_TESTUM, CP_TYPE_LESSON, CP_TYPE_EXAM]
+
         for i in range(contents_size):
             content_data = contents[i]
             list_data = lists[i]
+
+            if list_data["type"] not in branch_types:
+                if current_chapter:
+                    current_chapter["time"] = current_chapter_time
+                current_chapter = list_data
+                current_chapter_time = 0
 
             content_units = content_data['units']
             list_units = list_data['units']
@@ -200,6 +210,10 @@ def create_time_data(course_n):
                 list_time += (sum(seconds))
 
             list_data['time'] = list_time
+            current_chapter_time += list_time
+        if current_chapter:
+            current_chapter["time"] = current_chapter_time
+
         return json_data
     except Exception as e:
         print("create_time_data failed : ", e)

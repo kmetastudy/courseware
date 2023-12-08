@@ -95,10 +95,18 @@ export class SignUpForm {
     });
     this.elThis.appendChild(this.clSubmitButton.getElement());
 
+    this.clSignInButton = new MtuButton({
+      text: "이미 계정이 있으신가요?",
+      type: "text",
+      size: "default",
+      onClick: this.handleSignInClick.bind(this),
+    });
+    this.elThis.appendChild(this.clSignInButton.getElement());
+
     // Social Login
     this.socialLogin = document.createElement("div");
     this.socialLogin.classList.add("social-login");
-    this.elThis.appendChild(this.socialLogin);
+    // this.elThis.appendChild(this.socialLogin);
 
     this.socialLoginTitle = document.createElement("div");
     this.socialLoginTitle.classList.add("social-login-title");
@@ -170,6 +178,13 @@ export class SignUpForm {
     evt.preventDefault();
     if (this.options.onSocialLogin) {
       this.options.onSocialLogin(name);
+    }
+  }
+
+  handleSignInClick(evt) {
+    evt.preventDefault();
+    if (this.options.onClickRenderSignIn) {
+      this.options.onClickRenderSignIn();
     }
   }
 

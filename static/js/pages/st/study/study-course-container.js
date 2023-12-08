@@ -10,7 +10,6 @@ import { StCourseTree } from "../st-course-tree";
 export class StudyCourseContainer {
   constructor(options = {}) {
     this.options = options;
-    console.log(this.options);
     this.elThis = null;
 
     this._init();
@@ -23,21 +22,23 @@ export class StudyCourseContainer {
 
     const courseId = this.courseId;
     const studentId = this.studentId;
-    const { courseBookData, courseData, resultData } = await this.getCourseData(courseId, studentId);
+    // const { courseBookData, courseData, resultData } = await this.getCourseData(courseId, studentId);
+    const { courseData, resultData } = await this.getCourseData(courseId, studentId);
     this.courseData = courseData;
     this.resultData = resultData;
-    this.courseBookData = courseBookData;
+    // this.courseBookData = courseBookData;
 
-    this.initCourseTree({ courseBookData, courseData, resultData });
+    this.initCourseTree({ courseData, resultData });
 
     this.initSidebar();
   }
 
   _initVariables() {
     this.courseId = this.options.courseId ?? null;
-    this.isDemo = this.options.demo ?? null; // annonymous?
+    this.isDemo = this.options.demo ?? false; // annonymous?
     this.userType = this.options.userId ?? null;
     this.studentId = this.options.studentId ?? null;
+    this.isLogin = this.options.userLogin ?? false;
   }
 
   initSidebar() {
@@ -101,7 +102,23 @@ export class StudyCourseContainer {
       throw new Error(error);
     }
   }
-  urlGetCourse(id, field_type) {
+
+  urlGetCourse(id) {
+    try {
+      return axios
+        .get(`../cp/api/course_n/${id}/`)
+        .then((res) => {
+          if (res.data) {
+            return res.data;
+          }
+        })
+        .catch((err) => console.error(err));
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  urlGetCourseJsonField(id, field_type) {
     try {
       const validFieldType = ["lists", "contents", "keys"];
       if (field_type && validFieldType.indexOf(field_type) === -1) {
@@ -126,18 +143,42 @@ export class StudyCourseContainer {
     }
   }
 
-  urlGetStudyResult(courseId, userId) {
+  urlGetStudyResultProperties(courseId, userId) {
     try {
       const param = {
-        id_student: userId,
-        id_course: courseId,
-        id_content: courseId,
+        student_id: userId,
+        course_id: courseId,
+        content_id: courseId,
       };
-      console.log(param);
-      return axios.get("../st/api/study_result/", param).then((res) => {
-        const result = res?.data ? res.data : [];
-        return result;
-      });
+
+      return axios
+        .get("../st/api/study_result/properties/", {
+          params: param,
+        })
+        .then((res) => {
+          const result = res?.data ? res.data : [];
+          return result;
+        });
+    } catch (err) {
+      throw new Error(err);
+    }
+  }
+
+  urlGetDemoStudyResultProperties(courseId) {
+    try {
+      const param = {
+        course_id: courseId,
+        content_id: courseId,
+      };
+
+      return axios
+        .get("../st/api/demo_study_result/properties/", {
+          params: param,
+        })
+        .then((res) => {
+          const result = res?.data ? res.data : [];
+          return result;
+        });
     } catch (err) {
       throw new Error(err);
     }
@@ -147,10 +188,22 @@ export class StudyCourseContainer {
   ////////////////////////////////////////////////////////////////////////////////////////
   async getCourseData(courseId, studentId) {
     try {
-      const courseBookData = await this.urlGetCourseBook(courseId);
       const courseData = await this.urlGetCourse(courseId);
-      const resultData = await this.urlGetStudyResult(courseId, studentId);
-      return { courseBookData, courseData, resultData };
+      /**
+       * 지금은 로그인 하지 않은 경우 다 데모
+       * 나중에는 코스의 체험판 여부를 통해 데모여부를 설정
+       */
+      let resultData;
+      console.log(this.isLogin);
+      if (this.isLogin === true) {
+        resultData = await this.urlGetStudyResultProperties(courseId, studentId);
+      } else {
+        resultData = await this.urlGetDemoStudyResultProperties(courseId, studentId);
+      }
+      console.log(resultData);
+
+      // return { courseBookData, courseData, resultData };
+      return { courseData, resultData };
     } catch (err) {
       throw new Error(err);
     }

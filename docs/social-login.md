@@ -94,6 +94,7 @@ https://velog.io/@nuri00/Google-OAuth-%EB%A1%9C%EA%B7%B8%EC%9D%B8-%EA%B5%AC%ED%9
 - https://www.googleapis.com/auth/userinfo.profile
 - 개인정보(공개로 설정한 개인정보 전부 포함) 보기
 - family name 등 이름 관련된 정보가 나오는데, 유저가 비공개로 설정을 해놨다면 받아올 수 없다.
+- ID, Full name, Given Name, Family Name, Image URL
 
 3. OpenID
 

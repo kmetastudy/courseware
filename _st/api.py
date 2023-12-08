@@ -1,19 +1,26 @@
 import json
-import uuid
 
+from django.views import View
+from django.http import JsonResponse
+from django.utils.decorators import method_decorator
 
 from rest_framework import viewsets
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .models import mStudyResult
-from _cp.models import mCourseN
-from .serializer import StudyResultSerializer
+from .models import mStudyResult, mDemoStudyResult
+from .serializer import StudyResultSerializer, DemoStudyResultSerializer
+from .results import create_study_result, get_study_result, update_study_result
+from .results import create_demo_study_result, get_demo_study_result, update_demo_study_result
+from _user.utils import demo_student_id
+from _user.decorators import jwt_login_required
 
 
+# @method_decorator(jwt_login_required, name='dispatch')
 class StudyResultViewSet(viewsets.ModelViewSet):
     queryset = mStudyResult.objects.all()
     serializer_class = StudyResultSerializer
@@ -21,98 +28,99 @@ class StudyResultViewSet(viewsets.ModelViewSet):
     filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
     filterset_fields = ['id_student', 'id_course', 'id_content']
 
-    def get_property_data(self, pk):
-        query = self.get_object()
-
-        if not query.properties:
-            return {}
-
-        try:
-            properties = json.loads(query.properties)
-        except json.JSONDecodeError:
-            return {}
-
-        return properties
-
-    @action(detail=False, methods=['get'])
-    def filter_json_data(self, request, pk=None):
-
-        return Response()
-
-    @action(detail=True, methods=['get', 'post', 'patch', 'delete'])
-    def manage_property(self, request, pk=None):
+    @action(detail=False, methods=['get', 'post', 'patch', 'delete'])
+    def properties(self, request):
+        """
+        Handle properties of Study result
+        api/study_result/<id>/properties/
+        """
         if request.method == 'GET':
-            return self.get_property(request, pk)
+            course_id = request.query_params.get("course_id")
+            student_id = request.query_params.get("student_id")
+
+            query = get_study_result(
+                course_id=course_id, student_id=student_id)
+
+            properties = json.loads(query.properties)['property']
+
+            # return JsonResponse({"message": "Get mStudyResult properties", "result": properties})
+            return Response(data=properties)
 
         if request.method == 'POST':
-            return self.create_property(request, pk)
+            course_id = request.POST.get("course_id")
+            student_id = request.POST.get("student_id")
+
+            query = create_study_result(
+                course_id=course_id, student_id=student_id)
+
+            properties = json.loads(query.properties["property"])
+
+            return Response(data=properties)
 
         if request.method == 'PATCH':
-            return self.update_property(request, pk)
+            """
+            data values
+            course_id, student_id, content_id, results, point, progress
+            """
+            data = request.data
 
-        if request.method == 'DELETE':
-            return self.delete_property(request, pk)
+            query, err_response = update_study_result(**data)
 
-    def get_property(self, request, pk=None):
-        property_data = self.get_property_data(pk)
+            if err_response:
+                return err_response
 
-        return Response(data=property_data, status=status.HTTP_200_OK)
+            properties = json.loads(query.properties)['property']
 
-    def create_property(self, request, pk=None):
-        course_id = request.data['course_id']
-        student_id = request.data['student_id']
-        course_json_data = mCourseN.objects.filter(id=course_id)
+            return Response(data=properties)
 
-        if not course_json_data.exists():
-            print("Invalid course_id")
-            return Response(status=status.HTTP_404_NOT_FOUND)
 
-        dic_properties = {}
-        study_property = []
+class DemoStudyResultViewSet(viewsets.ModelViewSet):
+    queryset = mDemoStudyResult.objects.all()
+    serializer_class = DemoStudyResultSerializer
 
-        lists = course_json_data['lists']
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
+    filterset_fields = ['id_student', 'id_course', 'id_content']
 
-        for i in range(len(lists)):
-            list_data = lists[i]
-            property_data = {
-                'id': list_data['id'],
-                'title': list_data['title'],
-                'type': list_data['level'],
-                # 'level': content['level'],
-                # 'date': content['date'],
-                # 'show': content['show'],
-                'progress': 0,
-                'point': 0,
-                'results': [],
-                'units': list_data['units']
-            }
-            study_property.append(property_data)
+    @action(detail=False, methods=['get', 'post', 'patch', 'delete'])
+    def properties(self, request):
+        """
+        Handle properties of Demo Study result
+        api/demo_study_result/<id>/properties/
+        """
 
-        dic_properties['property'] = study_property
-        json_properties = json.dumps(dic_properties, ensure_ascii=False)
+        student_id = demo_student_id(request=request)
 
-        study_result = mStudyResult.objects.create(
-            id_course=uuid.UUID(course_id),
-            id_student=uuid.UUID(student_id),
-            properties=json_properties,
-            type=1,
-        )
+        if request.method == 'GET':
+            course_id = request.query_params.get("course_id")
 
-        return Response(status=status.HTTP_201_CREATED)
+            query = get_demo_study_result(
+                course_id=course_id, student_id=student_id)
 
-    def update_property(self, request, pk=None):
-        properties = request.data['properties']
-        point = int(request.data['point'])
-        progress = int(request.data['progress'])
-        content_id = request.data['content_id']
+            properties = json.loads(query.properties)['property']
+            return Response(data=properties)
 
-        study_result = mStudyResult.objects.filter(
-            # id_class =
-        )
-        property_data = self.get_property_data(pk)
+        elif request.method == 'POST':
+            course_id = request.POST.get("course_id")
+            query = create_demo_study_result(
+                course_id=course_id, student_id=student_id)
 
-        return Response(status=status.HTTP_200_OK)
+            properties = json.loads(query.properties["property"])
 
-    def delete_property(self, request, pk=None):
-        property_data = self.get_property_data(pk)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+            return Response(data=properties)
+
+        elif request.method == 'PATCH':
+            """
+            data values
+            course_id, student_id, content_id, results, point, progress
+            """
+            data = request.data
+            data["student_id"] = student_id
+
+            query, err_response = update_demo_study_result(**data)
+
+            if err_response:
+                return err_response
+
+            properties = json.loads(query.properties)['property']
+
+            return Response(data=properties)

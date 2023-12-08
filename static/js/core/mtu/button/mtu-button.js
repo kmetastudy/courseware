@@ -54,6 +54,12 @@ export class MtuButton {
     if (this.options.loading === true) {
       // this.setLoading(this.button);
     }
+
+    if (this.options.styles) {
+      Object.entries(this.options.styles).forEach(([property, value]) => {
+        this.button.style[property] = value;
+      });
+    }
   }
 
   createTextElement(text) {

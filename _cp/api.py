@@ -139,7 +139,6 @@ class CourseNViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['patch'])
     def add_time(self, request, pk=None):
-        print("add_time")
         instance = self.get_object()
 
         updated_json_data = create_time_data(instance)
@@ -149,7 +148,25 @@ class CourseNViewSet(viewsets.ModelViewSet):
         instance.json_data = json.dumps(updated_json_data)
         instance.save()
         # return Response(self.get_serializer(instance).data)
-        return Response(updated_json_data)
+        return Response(data=updated_json_data)
+
+    @action(detail=False, methods=['patch'])
+    def add_time_all(self, request):
+        courses = mCourseN.objects.filter(type=2)
+        if not courses:
+            return Response(data={})
+
+        updated_course_num = 0
+        for course in courses:
+            updated_json_data = create_time_data(course)
+            if not updated_json_data:
+                return Response(data={})
+
+            course.json_data = json.dumps(updated_json_data)
+            course.save()
+            updated_course_num += 1
+
+        return Response({"message": f"Total {updated_course_num} courses updated"})
 
 
 class ElementNViewSet(viewsets.ModelViewSet):
