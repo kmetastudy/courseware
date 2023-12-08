@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'django_filters',
+    'django_dump_load_utf8'
     # 'debug_toolbar',
 ]
 

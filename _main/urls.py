@@ -5,6 +5,7 @@ app_name = '_main'
 
 urlpatterns = [
     path('', index, name='index'),
+    path('desc/<str:page>/', descView, name='descView'),
     
     # path('courses/<str:school>/', getSubject, name='getSubject'),
     path('courses/<str:school>/<str:subject>/', mainView, name='mainView'),

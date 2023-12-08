@@ -2,14 +2,55 @@
 @font-face {
   font-family: 'NanumSquareNeo-Variable';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
+
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard.woff') format('woff');
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Single+Day&display=swap');
+
+@font-face {
+  font-family: 'Daehan-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Daehan-Regular.woff') format('woff');
 }
  
  body{
   font-family: 'NanumSquareNeo-Variable';
-  font-weight: normal;
-  font-style: normal;
+
+ }
+
+ .page1{
+  font-family: 'Pretendard';
+ }
+
+ .page2{
+  background-image: url('../../../static/img/banner2-2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family:'Single Day';
+ }
+
+ .page3{
+  background-image: url('../../../static/img/banner3-2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+ }
+
+ .page4{
+  background-image: url('../../../static/img/banner4-2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+ }
+
+ .font_daehan{
+  font-family: 'Daehan-Regular';
+ }
+
+ .font_singleday{
+  font-family:'Single Day';
  }
 
  .slide1 {
@@ -30,6 +71,11 @@
  }
  .slide4 {
   background-image: url('../../../static/img/banner4-2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+ }
+ .slide5 {
+  background-image: url('../../../static/img/banner5-2.png');
   background-repeat: no-repeat;
   background-size: cover;
  }

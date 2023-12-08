@@ -28,6 +28,15 @@ def index(request):
     return render(request, "_main/landing.html", context)
 
 @jwt_login_required
+def descView(request,page):
+    context_sample = make_context(request)
+
+    context = {"context": json.dumps(context_sample)}
+    pageName = '_main/landing'+page+'.html'
+
+    return render(request, pageName, context)
+
+@jwt_login_required
 def mainView(request, school, subject):
     schoolOption = {'element': '초등', 'middle': '중등',
                     'midhigh': '예비고1', 'high': '고등', 'high2': '수능'}
@@ -127,7 +136,7 @@ def getCourses(request, school, subject):
 def detailView(request, school, subject, id):
     context_sample = make_context(request)
     
-    courses = courseDetail.objects.using("courseware").filter(courseId=id).values(
+    courses = courseDetail.objects.filter(courseId=id).values(
         'courseId','courseTitle', 'courseSummary', 'desc', 'thumnail',
         'year', 'school', 'grade', 'semester', 'subject', 'publisher', 'difficulty',
         'producer', 'duration', 'price')

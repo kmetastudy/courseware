@@ -16,6 +16,50 @@ export function CourseLandingOnReady(context,courses) {
   console.log(courses)
 
 
+  var $elSearch = $(`<div class="flex flex-1 justify-center items-center">
+                        <input type="text" class="mx-2 p-2 w-1/2 border border-gray-500 rounded-full text-xs focus:outline-none focus:shadow-lg" placeholder="과목을 입력해보세요.">
+                        <i class="ri-search-line cursor-pointer"></i>
+                    </div>`)
+
+  $elSearch[0].children[0].addEventListener('keyup', function(e){
+    if(e.keyCode == 13){
+      // console.log('enter')
+      var keyword = $elSearch[0].children[1].previousElementSibling.value
+      var obj = courses
+      // console.log(obj)
+      var keyCourse = obj.filter(course => course.courseTitle.includes(keyword))
+      console.log(keyCourse)
+      if(keyCourse.length == 0){
+        var clCourseView = new CourseView(courses)
+        $(".courses_landing").html(clCourseView.elThis);
+      } else{
+        var clCourseView = new CourseView(keyCourse)
+        $(".courses_landing").html(clCourseView.elThis);
+      }
+
+      
+    }
+  })
+
+  $elSearch[0].children[1].addEventListener('click', () => {
+      console.log($elSearch[0].children[1].previousElementSibling.value)
+      var keyword = $elSearch[0].children[1].previousElementSibling.value
+      var obj = courses
+      // console.log(obj)
+      var keyCourse = obj.filter(course => course.courseTitle.includes(keyword))
+      console.log(keyCourse)
+
+      if(keyCourse.length == 0){
+        var clCourseView = new CourseView(courses)
+        $(".courses_landing").html(clCourseView.elThis);
+      } else{
+        var clCourseView = new CourseView(keyCourse)
+        $(".courses_landing").html(clCourseView.elThis);
+      }
+  })
+
+  $(".search").append($elSearch)
+
   var clCourseView = new CourseView(courses)
   $(".courses_landing").append(clCourseView.elThis);
 }

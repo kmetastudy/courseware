@@ -11,7 +11,7 @@ def index(request):
 
 def getCourseBook(request):
     res = []
-    books = mCourseN.objects.using("old").filter(type=2)
+    books = mCourseN.objects.filter(type=2)
     for book in books:
         courseId = book.id
         title = book.title
@@ -21,7 +21,7 @@ def getCourseBook(request):
 
 def getDetail(request):
     courseId = request.POST.get('courseId')
-    course = courseDetail.objects.using("courseware").filter(courseId=courseId).values().first()
+    course = courseDetail.objects.filter(courseId=courseId).values().first()
 
     print(course)
     
@@ -61,7 +61,7 @@ def setDetail(request):
     courseSummary = request.POST.get('courseSummary')
     desc = request.POST.get('content')
 
-    course = courseDetail.objects.using("courseware").filter(courseId=courseId)
+    course = courseDetail.objects.filter(courseId=courseId)
     if (course):
         course.update(year=year, school=school, grade=grade, semester=semester, subject=subject,
                                   publisher=publisher, difficulty=difficulty, isTest=isTest, duration=duration, price=price, producer=producer,
@@ -70,6 +70,6 @@ def setDetail(request):
         detail = courseDetail(year=year, school=school, grade=grade, semester=semester, subject=subject,
                                     publisher=publisher, difficulty=difficulty, isTest=isTest, duration=duration, price=price, producer=producer,
                                     thumnail=thumnail, courseId=courseId, courseTitle=courseTitle, courseSummary=courseSummary, desc=desc)
-        detail.save(using="courseware")
+        detail.save()
 
     return JsonResponse({'message':'good'})

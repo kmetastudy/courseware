@@ -25,8 +25,6 @@ CourseCardManager.prototype.create = function() {
                               <p class="text-sm text-gray-400">수강기간</p>
                               <p class="text-sm">무제한</p>
 
-                              <p class="text-sm text-gray-400">총 강의 수</p>
-                              <p class="text-sm">10강(12시간)</p>
                           </div>
                           <p class="p-2 text-2xl text-end">${price}</p>
                           <div class="flex"></div>
@@ -35,7 +33,7 @@ CourseCardManager.prototype.create = function() {
 
   
   var $elCart = $(`<button class="rounded-lg"><i class="ri-shopping-cart-2-line text-[24px] hover:text-blue-800"></i></button>`)
-  var $elButton = $(`<button class="mx-2 p-2 flex-1 rounded-lg bg-blue-800 text-white" onclick='window.location.href="/st/?courseid=${this.data.courseId}"'>수강하기</button>`)
+  var $elButton = $(`<button class="mx-2 p-2 flex-1 rounded-lg bg-blue-800 text-white" onclick='window.location.href="/st/?course_id=${this.data.courseId}"'>수강하기</button>`)
 
   
   $elCart.on("click", () => {
