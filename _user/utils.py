@@ -294,7 +294,7 @@ def demo_student_id(request):
     demo_student_id = request.session.get("demo_student_id")
     if not demo_student_id:
         demo_student_id = uuid.uuid4()  # create new
-        request.session["demo_student_id"] = demo_student_id
+        request.session["demo_student_id"] = str(demo_student_id)
         request.session.modified = True
 
     return demo_student_id

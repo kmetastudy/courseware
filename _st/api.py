@@ -89,38 +89,48 @@ class DemoStudyResultViewSet(viewsets.ModelViewSet):
         """
 
         student_id = demo_student_id(request=request)
+        try:
 
-        if request.method == 'GET':
-            course_id = request.query_params.get("course_id")
 
-            query = get_demo_study_result(
-                course_id=course_id, student_id=student_id)
+            if request.method == 'GET':
+                course_id = request.query_params.get("course_id")
 
-            properties = json.loads(query.properties)['property']
-            return Response(data=properties)
+                query = get_demo_study_result(
+                    course_id=course_id, student_id=student_id)
+                # print(json.loads(query.properties))
 
-        elif request.method == 'POST':
-            course_id = request.POST.get("course_id")
-            query = create_demo_study_result(
-                course_id=course_id, student_id=student_id)
+                properties = json.loads(query.properties)['property']
+                print(properties[0])
+                try:
 
-            properties = json.loads(query.properties["property"])
+                    return Response(data=properties)
+                except Exception as e:
+                    print(str(e))
 
-            return Response(data=properties)
+            elif request.method == 'POST':
+                course_id = request.POST.get("course_id")
+                query = create_demo_study_result(
+                    course_id=course_id, student_id=student_id)
 
-        elif request.method == 'PATCH':
-            """
-            data values
-            course_id, student_id, content_id, results, point, progress
-            """
-            data = request.data
-            data["student_id"] = student_id
+                properties = json.loads(query.properties["property"])
 
-            query, err_response = update_demo_study_result(**data)
+                return Response(data=properties)
 
-            if err_response:
-                return err_response
+            elif request.method == 'PATCH':
+                """
+                data values
+                course_id, student_id, content_id, results, point, progress
+                """
+                data = request.data
+                data["student_id"] = student_id
 
-            properties = json.loads(query.properties)['property']
+                query, err_response = update_demo_study_result(**data)
 
-            return Response(data=properties)
+                if err_response:
+                    return err_response
+
+                properties = json.loads(query.properties)['property']
+
+                return Response(data=properties)
+        except Exception as e:
+            return Response({"error": f"error: {e}"})

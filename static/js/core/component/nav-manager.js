@@ -20,9 +20,9 @@ export class NavManager {
     const menu = [
       { title: "초등", onClick: () => (window.location.href = "/courses/element/all") },
       { title: "중등", onClick: () => (window.location.href = "/courses/middle/all") },
-      { title: "예비고1", onClick: () => (window.location.href = "/courses/midhigh/all") },
+      // { title: "예비고1", onClick: () => (window.location.href = "/courses/midhigh/all") },
       { title: "고등", onClick: () => (window.location.href = "/courses/high/all") },
-      { title: "수능", onClick: () => (window.location.href = "/courses/high2/all") },
+      // { title: "수능", onClick: () => (window.location.href = "/courses/high2/all") },
     ];
 
     const userName = this.userName;
@@ -34,7 +34,7 @@ export class NavManager {
       logout = { text: "로그아웃", onClick: () => (window.location.href = "/user/api/logout/"), type: "text" };
     }
 
-    dashboard = { text: "대시보드", onClick: () => (window.location.href = "#") };
+    // dashboard = { text: "대시보드", onClick: () => (window.location.href = "#") };
 
     return {
       logo,

@@ -83,7 +83,7 @@ CourseManager.prototype.prepareFilterOptions = function() {
 CourseManager.prototype.createCourseView = function() {
   var clCourseView = new CourseView(this.data)
   if(this.data.length == 0) {
-    $(".courses_main").html(`<div class="p-4 text-center flex flex-col items-center"><i class="ri-information-line text-[40px]"></i>코스를 준비하고 있어요.</div>`);
+    $(".courses_main").html(`<div class="h-[500px] p-4 text-center flex flex-col justify-center items-center"><i class="ri-information-line text-[40px]"></i>코스를 준비하고 있어요.</div>`);
   } else {
     $(".courses_main").html(clCourseView.elThis);
   }
