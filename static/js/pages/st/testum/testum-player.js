@@ -181,9 +181,13 @@ TestumPlayer.prototype._createGradeButton = function (parent) {
     "mtm-input-button-hover-theme",
     "px-4",
   );
+  // this.elGradingButton.setAttribute(
+  //   "style",
+  //   "z-index: 10;position: fixed; bottom: 20px; right: 40px; font-weight:600;",
+  // );
   this.elGradingButton.setAttribute(
     "style",
-    "z-index: 10;position: fixed; bottom: 20px; right: 40px; font-weight:600;",
+    "z-index: 10;position: absolute; bottom: 20px; right: 0px; font-weight:600;",
   );
   this.elGradingButton.setAttribute("type", "button");
   this.elGradingButton.setAttribute("tabindex", "-1");
@@ -219,7 +223,8 @@ TestumPlayer.prototype._init = function () {
   this._createTestumResultAction(this.elThis);
   this._createTestumResultTable(this.elThis);
 
-  this._createGradeButton(this.elThis);
+  // this._createGradeButton(this.elThis);
+  this._createGradeButton(this.clPlayerTestumViewer.elThis);
 
   // Fixed. Jstar : Testum 문제 동영상 해설보기
   // this.clStudyPlayerVideo = null;

@@ -355,7 +355,8 @@ export class LessonPlayer {
     eData.point = this.player.point;
 
     // mtoEvents.emit('OnUpdateLessonResult',eData);
-    this._urlUpdateLessonResultInfo();
+    // this._urlUpdateLessonResultInfo();
+    this.urlUpdateLessonResult();
 
     // 아래 두개는 같은 기능의 코드
     this.infoResult = this.clLessonResultTable.setLessonResultList(
@@ -959,6 +960,39 @@ export class LessonPlayer {
         // window.location.href = "/";
       },
     }); // end of ajax
+  }
+
+  urlUpdateLessonResult() {
+    const url = this.playOptions.userLogin
+      ? "../st/api/study_result/properties/"
+      : "../st/api/demo_study_result/properties/";
+
+    const eData = {};
+    eData.content_id = this.player.content_id;
+    eData.progress = this.player.progress;
+    eData.point = this.player.point;
+
+    mtoEvents.emit("OnChangeProgressPoint", eData);
+
+    return axios
+      .patch(url, {
+        student_id: this.player.student_id,
+        course_id: this.player.course_id,
+        content_id: this.player.content_id,
+        content_type: this.player.content_type,
+        course_type: this.player.content_type,
+        properties: JSON.stringify(this.player.lesson_result_new), // one record of properties['property']
+        progress: this.player.progress,
+        point: this.player.point,
+      })
+      .then((res) => {
+        if (res.data) {
+          return res.data;
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }
 }
 

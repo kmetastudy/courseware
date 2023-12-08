@@ -491,7 +491,7 @@ export class StCourseTree {
 
     const clUpdatedProgress = new MtuProgress({ percent: progress, size: 32 });
     const elUpdatedProgress = clUpdatedProgress.getElement();
-    elUpdatedProgress.classList.add(".branch-progress");
+    elUpdatedProgress.classList.add("branch-progress");
 
     elProgress.replaceWith(elUpdatedProgress);
 
