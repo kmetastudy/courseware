@@ -301,7 +301,7 @@ export class StCourseTree {
     units.forEach((unit) => {
       videoNum += unit.types.filter((value) => value === "v").length;
       questionNum += unit.types.filter((value) => value === "q").length;
-      const videoTimes = unit.contentTimes.filter((value, idx) => unit.types[idx] === "v");
+      const videoTimes = unit?.contentTimes?.filter((value, idx) => unit.types[idx] === "v");
       totalVideoTime += sum(videoTimes);
     });
 

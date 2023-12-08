@@ -6,6 +6,7 @@ export function CourseManager(options, data) {
   this.options = options
   this.subject = "all"
   this.filter = {grade:[], semester:[], difficulty:[], isTest:"True"}
+  this.oriData = data
   this.data = data
   this.init()
 }
@@ -21,6 +22,24 @@ CourseManager.prototype.init = async function() {
   this.filterOptions = this.prepareFilterOptions()
   var clFilter = new Filter(this.filterOptions)
   $(".courses_filter").append(clFilter.elThis);
+
+  // var $elSearch = $(`<div class="flex flex-1 items-center">
+  //                       <input type="text" class="mx-2 p-2 w-[150px] 2xl:w-full border rounded-full text-xs">
+  //                       <i class="ri-search-line cursor-pointer"></i>
+  //                   </div>`)
+
+  // $elSearch[0].children[1].addEventListener('click', () => {
+  //     console.log($elSearch[0].children[1].previousElementSibling.value)
+  //     var keyword = $elSearch[0].children[1].previousElementSibling.value
+  //     var obj = this.oriData
+  //     // console.log(obj)
+  //     var courses = obj.filter(course => course.courseTitle.includes(keyword))
+  //     console.log(courses)
+  //     this.data = courses
+  //     this.createCourseView()
+  // })
+
+  // $(".courses_filter > div").append($elSearch)
 
   this.createCourseView()
 
@@ -53,9 +72,9 @@ CourseManager.prototype.prepareFilterOptions = function() {
       {text:'2학기', type:2, onClick:this.onFilterHandler.bind(this)},
     ],
     difficulty:[
-      {text:'상', type:2, onClick:this.onFilterHandler.bind(this)},
-      {text:'중', type:1, onClick:this.onFilterHandler.bind(this)},
-      {text:'하', type:0, onClick:this.onFilterHandler.bind(this)},
+      {text:'개념과 기초', type:0, onClick:this.onFilterHandler.bind(this)},
+      {text:'실력향상', type:1, onClick:this.onFilterHandler.bind(this)},
+      {text:'심화', type:2, onClick:this.onFilterHandler.bind(this)},
     ]
   }
 }
@@ -63,7 +82,13 @@ CourseManager.prototype.prepareFilterOptions = function() {
 
 CourseManager.prototype.createCourseView = function() {
   var clCourseView = new CourseView(this.data)
-  $(".courses_main").html(clCourseView.elThis);
+  if(this.data.length == 0) {
+    $(".courses_main").html(`<div class="p-4 text-center flex flex-col items-center"><i class="ri-information-line text-[40px]"></i>코스를 준비하고 있어요.</div>`);
+  } else {
+    $(".courses_main").html(clCourseView.elThis);
+  }
+  
+  
 }
 
 ////////////////////// handler /////////////////////////

@@ -1,0 +1,58 @@
+{% extends "_main/base.html" %}
+
+{% block content %}
+<div class="w-full flex flex-col items-center">
+    <div class="swiper w-full">
+        <div class="swiper-wrapper ">
+            <div class="swiper-slide slide5 cursor-pointer flex justify-center"><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner5-1.png"></div>
+            <div class="swiper-slide slide1 cursor-pointer flex justify-center" onclick='window.location.href="/desc/1/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner1-1.png"></div>
+            <div class="swiper-slide slide2 cursor-pointer flex justify-center" onclick='window.location.href="/desc/2/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner2-1.png"></div>
+            <div class="swiper-slide slide3 cursor-pointer flex justify-center" onclick='window.location.href="/desc/3/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner3-1.png"></div>
+            <div class="swiper-slide slide4 cursor-pointer flex justify-center" onclick='window.location.href="/desc/4/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner4-1.png"></div>
+            
+        </div>
+        <div class="py-2 flex justify-end items-center swiper-pagination"></div>
+        
+    </div>
+    <div class="p-8 w-full xl:w-2/3 flex flex-col items-center">
+        <div class="search w-full flex">
+            
+        </div>
+        <div class="w-full"><p class="pt-4 self-start text-lg">전체 강의<span class="text-sm text-red-400">new</span></p></div>
+        <div class="courses_landing">
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block extra-script %}
+<script>
+    var mySwiper = new Swiper('.swiper',{
+        loop:true,
+        autoplay:{
+            delay:5000,
+        },
+        navigation: {
+            prevEl:'.bt1',
+            nextEl:'.bt2' 
+        },
+        pagination:{
+            el:'.swiper-pagination',
+            clickable: true,
+            type: 'bullets',
+            
+        },
+        
+        centeredSlides:true
+    })
+    window.addEventListener("DOMContentLoaded", function () {
+        // console.log("mainlibrary: ", mainlibrary);
+
+        var courses = JSON.parse("{{ courses|escapejs }}");
+        mainlibrary.CourseLandingOnReady(context, courses)
+    });
+</script>
+{% endblock %}
