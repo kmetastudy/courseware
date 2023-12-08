@@ -3,21 +3,24 @@
 {% block content %}
 <div class="w-full flex flex-col items-center">
     <div class="swiper w-full">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide slide1 cursor-pointer flex justify-center"><img class="xl:h-[600px] 2xl:h-[700px]" src="/static/img/banner1-1.png"></div>
-            <div class="swiper-slide slide2 cursor-pointer flex justify-center"><img class="xl:h-[600px] 2xl:h-[700px]" src="/static/img/banner2-1.png"></div>
-            <div class="swiper-slide slide3 cursor-pointer flex justify-center"><img class="xl:h-[600px] 2xl:h-[700px]" src="/static/img/banner3-1.png"></div>
-            <div class="swiper-slide slide4 cursor-pointer flex justify-center"><img class="xl:h-[600px] 2xl:h-[700px]" src="/static/img/banner4-1.png"></div>
+        <div class="swiper-wrapper ">
+            <div class="swiper-slide slide5 cursor-pointer flex justify-center"><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner5-1.png"></div>
+            <div class="swiper-slide slide1 cursor-pointer flex justify-center" onclick='window.location.href="/desc/1/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner1-1.png"></div>
+            <div class="swiper-slide slide2 cursor-pointer flex justify-center" onclick='window.location.href="/desc/2/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner2-1.png"></div>
+            <div class="swiper-slide slide3 cursor-pointer flex justify-center" onclick='window.location.href="/desc/3/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner3-1.png"></div>
+            <div class="swiper-slide slide4 cursor-pointer flex justify-center" onclick='window.location.href="/desc/4/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner4-1.png"></div>
+            
         </div>
-        <div class="py-2 flex justify-center items-center swiper-pagination"></div>
+        <div class="py-2 flex justify-end items-center swiper-pagination"></div>
         
     </div>
     <div class="p-8 w-full xl:w-2/3 flex flex-col items-center">
-        <div class="flex">
-            <input type="text" class="px-2 py-1 w-[300px] border border-black rounded-full">
+        <div class="search w-full flex">
+            
         </div>
-        <div class="py-4 courses_landing">
-            <p class="self-start text-lg">전체 강의<span class="text-sm text-red-400">new</span></p>
+        <div class="w-full"><p class="pt-4 self-start text-lg">전체 강의<span class="text-sm text-red-400">new</span></p></div>
+        <div class="courses_landing">
+            
         </div>
     </div>
 </div>
