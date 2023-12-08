@@ -6,6 +6,7 @@ export function CourseManager(options, data) {
   this.options = options
   this.subject = "all"
   this.filter = {grade:[], semester:[], difficulty:[], isTest:"True"}
+  this.oriData = data
   this.data = data
   this.init()
 }
@@ -22,20 +23,23 @@ CourseManager.prototype.init = async function() {
   var clFilter = new Filter(this.filterOptions)
   $(".courses_filter").append(clFilter.elThis);
 
-  var $elSearch = $(`<div class="flex flex-1 items-center">
-                        <input type="text" class="mx-2 p-2 w-[150px] 2xl:w-full border rounded-full text-xs">
-                        <i class="ri-search-line cursor-pointer"></i>
-                    </div>`)
+  // var $elSearch = $(`<div class="flex flex-1 items-center">
+  //                       <input type="text" class="mx-2 p-2 w-[150px] 2xl:w-full border rounded-full text-xs">
+  //                       <i class="ri-search-line cursor-pointer"></i>
+  //                   </div>`)
 
-  $elSearch[0].children[1].addEventListener('click', () => {
-      console.log($elSearch[0].children[1].previousElementSibling.value)
-      var keyword = $elSearch[0].children[1].previousElementSibling.value
-      var obj = this.data
-      console.log(obj)
+  // $elSearch[0].children[1].addEventListener('click', () => {
+  //     console.log($elSearch[0].children[1].previousElementSibling.value)
+  //     var keyword = $elSearch[0].children[1].previousElementSibling.value
+  //     var obj = this.oriData
+  //     // console.log(obj)
+  //     var courses = obj.filter(course => course.courseTitle.includes(keyword))
+  //     console.log(courses)
+  //     this.data = courses
+  //     this.createCourseView()
+  // })
 
-  })
-
-  $(".courses_filter > div").append($elSearch)
+  // $(".courses_filter > div").append($elSearch)
 
   this.createCourseView()
 

@@ -8,7 +8,7 @@ conn = sqlite3.connect('../db_old.sqlite3')
 #테스트
 cursor = conn.cursor()
 
-cursor.execute("SELECT * FROM __cp_mCourseN[id,type,title,json_data,year,date_created,date_updated]")
+cursor.execute("SELECT * FROM __cp_mCourseN")
 
 result = cursor.fetchall()
 
