@@ -91,7 +91,6 @@ class DemoStudyResultViewSet(viewsets.ModelViewSet):
         student_id = demo_student_id(request=request)
         try:
 
-
             if request.method == 'GET':
                 course_id = request.query_params.get("course_id")
 

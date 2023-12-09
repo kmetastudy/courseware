@@ -130,7 +130,7 @@ def update_study_result(*args, **kwargs):
 
         for data in properties:
             if data["id"] == str(content_id):
-                data["results"] = results
+                data["results"] = json.loads(results)
                 data["progress"] = progress
                 data["point"] = point
 
@@ -238,7 +238,7 @@ def update_demo_study_result(*args, **kwargs):
 
         for data in properties:
             if data["id"] == str(content_id):
-                data["results"] = results
+                data["results"] = json.loads(results)
                 data["progress"] = progress
                 data["point"] = point
 

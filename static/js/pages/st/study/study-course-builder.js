@@ -111,6 +111,7 @@ StudyCourseBuilder.prototype.onChangeCourseContentHandler = async function ({
   content_id,
   content_type,
   title,
+  results,
 }) {
   // this.options.student_id = eData.student_id;
   // this.options.class_id = eData.class_id;
@@ -132,7 +133,7 @@ StudyCourseBuilder.prototype.onChangeCourseContentHandler = async function ({
     //   content_type: [],
     //   units: []
     // }
-    console.log(content);
+    // const result = await this.urlGetResult();
 
     this.options.course_id = course_id;
     this.options.content_id = content_id;
@@ -142,7 +143,8 @@ StudyCourseBuilder.prototype.onChangeCourseContentHandler = async function ({
     this.options.units = content.units;
     // TODO
     // 일단 result 배제 (empty result)
-    this.options.results = [];
+    // this.options.results = [];
+    this.options.results = results;
 
     if (content.content_type === 11 || content.content_type === 13) {
       this._studyTestum();
