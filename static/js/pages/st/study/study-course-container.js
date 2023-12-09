@@ -86,6 +86,7 @@ export class StudyCourseContainer {
       results: contentData.results,
       units: contentData.units,
     };
+    // console.log(JSON.parse(param.results));s
     mtoEvents.emit("OnChangeCourseContent", param);
     // branchData.id;
   }
@@ -194,7 +195,7 @@ export class StudyCourseContainer {
        * 나중에는 코스의 체험판 여부를 통해 데모여부를 설정
        */
       let resultData;
-      console.log(this.isLogin);
+
       if (this.isLogin === true) {
         resultData = await this.urlGetStudyResultProperties(courseId, studentId);
       } else {

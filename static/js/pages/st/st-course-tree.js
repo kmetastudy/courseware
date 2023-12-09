@@ -46,7 +46,6 @@ export class StCourseTree {
       this.listsData.length > 0
         ? this.composeTreeData({ lists: this.listsData, contents: this.contentsData, results: this.resultData })
         : [];
-    console.log(this.treeData);
 
     this.onCloseClick = onCloseClick ?? null;
     this.onBranchClick = onBranchClick ?? null;
@@ -71,6 +70,10 @@ export class StCourseTree {
     let chapterProgress = [];
     let chapterPoint = [];
     const { length } = lists;
+
+    const clonedLists = structuredClone(lists);
+    const clonedContents = structuredClone(contents);
+    const clonedResults = structuredClone(results);
 
     for (let i = 0; i < length; i++) {
       const data = structuredClone(lists)[i];
@@ -125,7 +128,6 @@ export class StCourseTree {
   }
 
   initVariable() {
-    console.log(this.resultData);
     this.totalLectures = this.listsData.length;
     this.completedLectures = this.resultData.filter((data) => data.type !== 0 && data?.progress === 100).length ?? 0;
 
