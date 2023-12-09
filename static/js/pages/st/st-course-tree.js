@@ -9,7 +9,15 @@ export class StCourseTree {
   // 1. 전체 tree data ../cp/get-full-course/
   // 2. mStudyResult -> data, progress, point
   // 3. courseN
-  constructor({ courseBookData = {}, courseData = [], resultData = [], onCloseClick, title, onBranchClick }) {
+  constructor({
+    courseBookData = {},
+    courseData = [],
+    resultData = [],
+    onCloseClick,
+    title,
+    onBranchClick,
+    initialContentId,
+  }) {
     // Data of mCourseBook
     // this.courseBookData = courseBookData ?? {};
 
@@ -45,11 +53,14 @@ export class StCourseTree {
     this.title = title ?? "학습하기";
     this.courseTitle = courseData?.title ?? null;
 
+    this.initialContentId = initialContentId ?? null;
     // constants
     this.videoIcon = "playCircle";
     this.questionIcon = "form";
     this.progressTitle = "진도율";
     this.pointTitle = "점수";
+
+    this.elSelectedBranch = null; // current clicked(selected) branch
 
     this.init();
   }
@@ -103,6 +114,14 @@ export class StCourseTree {
     this.initVariable();
     this.create();
     this.initEvents();
+
+    // if (this.initialContentId) {
+    //   const data = this.getContentData(this.initialContentId);
+    //   this.activateBranch(data.element, data);
+    // } else {
+    //   const data = this.treeData[0].children[0];
+    //   this.activateBranch(data.element, data);
+    // }
   }
 
   initVariable() {
@@ -280,7 +299,7 @@ export class StCourseTree {
       const branchData = branchDataArray[i];
 
       const elBranchItem = this.createBranchItem(branchData);
-      elBranchItem.addEventListener("click", this.handleBranchClick.bind(this, branchData));
+      elBranchItem.addEventListener("click", this.handleBranchClick.bind(this, elBranchItem, branchData));
       wrapper.appendChild(elBranchItem);
 
       branchData.element = elBranchItem;
@@ -409,7 +428,14 @@ export class StCourseTree {
     const rootElement = this.getElement();
     mtoEvents.emit("onAsideClose", rootElement);
   }
-  handleBranchClick(branchData, evt) {
+
+  handleBranchClick(element, branchData, evt) {
+    if (this.elSelectedBranch) {
+      this.elSelectedBranch.classList.remove("activate");
+    }
+
+    element.classList.add("activate");
+    this.elSelectedBranch = element;
     if (this.onBranchClick) {
       this.onBranchClick(branchData);
     }
@@ -425,6 +451,15 @@ export class StCourseTree {
   }
 
   //////////// API ////////////
+  activateBranch(element, branchData) {
+    // const contentWrapper = this.elSimplebarBody.querySelector(".simplebar-content-wrapper");
+    this.handleBranchClick(element, branchData);
+
+    // TODO
+    // scroll
+    // this.elMenu
+  }
+
   getContentData(content_id) {
     /**
      * Find data from this.treeData, with id(chapter||branch)

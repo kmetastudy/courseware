@@ -114,6 +114,10 @@
   background-color: rgba(0, 0, 0, 0.02);
 }
 
+.st-course-tree-branch.activate {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 .st-course-tree-branch > .mtuicon {
   height: 100%;
 }

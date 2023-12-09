@@ -21,6 +21,16 @@ export class MtuSidebar {
     this.create();
 
     this.setEvents();
+
+    if (this.items.length > 0) {
+      setTimeout(() => {
+        /**
+         * To calculate width of dom element
+         * check setAsidePosition
+         */
+        this.activate(this.items[0]);
+      }, 0);
+    }
   }
 
   create() {
@@ -164,6 +174,8 @@ export class MtuSidebar {
   setAsidePosition(aside) {
     const width = this.sidebar.offsetWidth;
     aside.setAttribute("style", `${this.position}: ${width}px;`);
+
+    console.log("setAsidePosition, width: ", width);
 
     this.handleAsidePositionChange(aside);
   }
