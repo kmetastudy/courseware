@@ -144,7 +144,7 @@ StudyCourseBuilder.prototype.onChangeCourseContentHandler = async function ({
     // TODO
     // 일단 result 배제 (empty result)
     // this.options.results = [];
-    this.options.results = results;
+    this.options.results = results ?? [];
 
     if (content.content_type === 11 || content.content_type === 13) {
       this._studyTestum();
