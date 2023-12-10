@@ -625,6 +625,9 @@ mtmPlayerTestumResultTable.prototype.setTestumResultList = function (listUnit, l
     this.listData.push(data);
   }
 
+  console.log(listResult);
+  console.log(typeof listResult);
+  console.log(typeof listResult[0]);
   for (var i = 0; i < listResult.length; i++) {
     // 본 테스트
     var first_field = mtmPlayerTestumResultTable.columnField[i * 2];

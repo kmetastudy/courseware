@@ -76,9 +76,13 @@ export class StCourseTree {
     const clonedResults = structuredClone(results);
 
     for (let i = 0; i < length; i++) {
-      const data = structuredClone(lists)[i];
-      const content = structuredClone(contents)[i];
-      const result = results ? structuredClone(results)[i] : null;
+      // const data = structuredClone(lists)[i];
+      // const content = structuredClone(contents)[i];
+      // const result = results ? structuredClone(results)[i] : null;
+      const data = clonedLists[i];
+      const content = clonedContents[i];
+      const result = clonedResults ? clonedResults[i] : null;
+
       const progress = result?.progress ?? 0;
       const point = result?.point ?? 0;
       const type = data.type === 0 ? "chapter" : "branch";
