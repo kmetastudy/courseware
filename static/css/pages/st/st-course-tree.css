@@ -7,7 +7,7 @@
   flex-direction: column;
   overflow-y: auto;
   /* width: 500px; */
-  width: 30vw;
+  width: 25vw;
   /* background-color: rgba(248, 249, 250); */
   box-shadow: rgba(0, 0, 0, 0.56) 0px 0px 1px 0px;
 }
@@ -125,6 +125,8 @@
 .st-course-tree-branch-info {
   flex: 1;
   padding: 0 20px 0 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .st-course-tree-branch-info-title {
