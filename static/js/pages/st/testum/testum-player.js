@@ -187,7 +187,7 @@ TestumPlayer.prototype._createGradeButton = function (parent) {
   // );
   this.elGradingButton.setAttribute(
     "style",
-    "z-index: 10;position: absolute; bottom: 20px; right: 0px; font-weight:600;",
+    "z-index: 10;position: absolute; bottom: 40px; right: 0px; font-weight:600;",
   );
   this.elGradingButton.setAttribute("type", "button");
   this.elGradingButton.setAttribute("tabindex", "-1");
