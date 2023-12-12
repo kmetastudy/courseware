@@ -1041,10 +1041,7 @@ TestumPlayer.prototype._urlUpdateTestumResultInfo = function (data) {
 };
 
 TestumPlayer.prototype.urlUpdateTestumResult = function () {
-  console.log(this.playOptions.userLogin);
-  const url = this.playOptions.userLogin
-    ? "../st/api/study_result/properties/"
-    : "../st/api/demo_study_result/properties/";
+  const url = this.player.student_id ? "../st/api/study_result/properties/" : "../st/api/demo_study_result/properties/";
 
   const eData = {};
   eData.content_id = this.player.content_id;

@@ -963,7 +963,7 @@ export class LessonPlayer {
   }
 
   urlUpdateLessonResult() {
-    const url = this.playOptions.userLogin
+    const url = this.player.student_id
       ? "../st/api/study_result/properties/"
       : "../st/api/demo_study_result/properties/";
 
