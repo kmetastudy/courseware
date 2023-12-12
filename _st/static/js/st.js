@@ -32,6 +32,7 @@ function mtfLearnManagerOnReady(context) {
     courseId: parsedContext.courseId,
     studentId: parsedContext.userId,
     userLogin: parsedContext.userLogin,
+    contentId: parsedContext.contentId,
   };
   const clManager = new StManager(options);
 
