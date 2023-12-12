@@ -25,12 +25,18 @@ export class StudyCourseContainer {
     // const { courseBookData, courseData, resultData } = await this.getCourseData(courseId, studentId);
     const { courseData, resultData } = await this.getCourseData(courseId, studentId);
     this.courseData = courseData;
+
+    this.courseData ? (document.title = this.courseData.title) : null;
     this.resultData = resultData;
     // this.courseBookData = courseBookData;
 
     this.initCourseTree({ courseData, resultData });
 
     this.initSidebar();
+
+    if (this.contentId) {
+      this.clCourseTree.activateContent(this.contentId);
+    }
   }
 
   _initVariables() {
@@ -39,6 +45,8 @@ export class StudyCourseContainer {
     this.userType = this.options.userId ?? null;
     this.studentId = this.options.studentId ?? null;
     this.isLogin = this.options.userLogin ?? false;
+    //
+    this.contentId = this.options.contentId ?? null;
   }
 
   initSidebar() {
@@ -201,7 +209,6 @@ export class StudyCourseContainer {
       } else {
         resultData = await this.urlGetDemoStudyResultProperties(courseId, studentId);
       }
-      console.log(resultData);
 
       // return { courseBookData, courseData, resultData };
       return { courseData, resultData };
