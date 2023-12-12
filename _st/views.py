@@ -19,7 +19,7 @@ from _cp.constants import *
 def index(request):
     course_id = request.GET.get("course_id")
     user_id = request.userId
-    print(course_id)
+    content_id = request.GET.get("content_id")
 
     request.demo = True
     if has_course_permission(course_id, user_id):
@@ -31,6 +31,9 @@ def index(request):
     # remove after test
     if not course_id:
         st_context['courseId'] = '59005c33-84ac-4f19-9e4f-1567607611ef'
+
+    if not course_id and not content_id:
+        st_context['contentId'] = "99b17e60-c066-4f1c-9a59-7ad2b363b166"
 
     print("st_context: ", st_context)
     context = {'context': json.dumps(st_context)}
