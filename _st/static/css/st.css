@@ -174,4 +174,14 @@ figure.table table {
 
 :root {
   --nav-height: 64px;
+  --tablet-min-width: 1025px;
+
+  --tablet-toolbar-height: 70px;
+}
+
+
+body {
+  /* font-family: 'Noto Sans KR', sans-serif; */
+  font-family: 'Noto Sans KR';
+  font-weight: 500;
 }
