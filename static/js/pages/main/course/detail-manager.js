@@ -1,6 +1,7 @@
 import { StudyCourseContainer } from "../../st/study/study-course-container-past"
 import { CourseCardManager } from "./course-card-manager"
 import { DetailChapter } from "./detail-chapter"
+import { MtuIcon } from "../../../core/mtu/icon/mtu-icon"
 
 export function DetailManager(context, data) {
     this.context = context
@@ -45,7 +46,7 @@ export function DetailManager(context, data) {
 
 DetailManager.prototype.init = function() {
     var $elHeader = $(`<div class="w-[1200px] p-6 xl:p-10 text-white">
-                        <p class="text-2xl text-white">${this.data.courseTitle}</p>
+                        <p class="text-[24px] text-white">${this.data.courseTitle}</p>
                         ${this.data.courseSummary}
                     </div>`);
     $(".course_header").append($elHeader);
@@ -53,37 +54,37 @@ DetailManager.prototype.init = function() {
 
     var pub = this.data.publisher=='null'?'없음':this.data.publisher
 
-    var $elCategory = $(`<div class="px-4 py-3 w-full flex border bg-gray-100">
-                            <p class="w-[100px] text-xs"><i class="ri-flag-fill px-2"></i>코스 제목</p>
-                            <p class="text-xs">${this.data.courseTitle}</p>
+    var $elCategory = $(`<div class="px-4 py-3 w-full flex items-center border bg-gray-100">
+                            <p class="w-[150px] text-[16px] flex items-center">${MtuIcon('courseTitle').innerHTML}<span class="px-2">코스 제목</span></p>
+                            <p class="text-[16px]">${this.data.courseTitle}</p>
                         </div>
-                        <div class="px-4 py-3 w-full flex border bg-gray-100">
-                            <p class="w-[100px] text-xs"><i class="ri-calendar-2-fill px-2 "></i>년도</p>
-                            <p class="text-xs">${this.data.year}</p>
+                        <div class="px-4 py-3 w-full flex items-center border bg-gray-100">
+                            <p class="w-[150px] text-[16px] flex items-center">${MtuIcon('year').innerHTML}<span class="px-2">년도</span></p>
+                            <p class="text-[16px]">${this.data.year}</p>
                         </div>
-                        <div class="px-4 py-3 w-full flex border bg-gray-100">
-                            <p class="w-[100px] text-xs"><i class="ri-seedling-fill px-2"></i>학년</p>
-                            <p class="text-xs">${this.options.school.find((obj)=>obj.type == this.data.school).text} ${this.options.grade.find((obj)=>obj.type == this.data.grade).text}</p>
+                        <div class="px-4 py-3 w-full flex items-center border bg-gray-100">
+                            <p class="w-[150px] text-[16px] flex items-center">${MtuIcon('grade').innerHTML}<span class="px-2">학년</span></p>
+                            <p class="text-[16px]">${this.options.school.find((obj)=>obj.type == this.data.school).text} ${this.options.grade.find((obj)=>obj.type == this.data.grade).text}</p>
                         </div>
-                        <div class="px-4 py-3 w-full flex border bg-gray-100">
-                            <p class="w-[100px] text-xs"><i class="ri-leaf-line px-2"></i>학기</p>
-                            <p class="text-xs">${this.options.semester.find((obj)=>obj.type == this.data.semester).text}</p>
+                        <div class="px-4 py-3 w-full flex items-center border bg-gray-100">
+                            <p class="w-[150px] text-[16px] flex items-center">${MtuIcon('semester').innerHTML}<span class="px-2">학기</span></p>
+                            <p class="text-[16px]">${this.options.semester.find((obj)=>obj.type == this.data.semester).text}</p>
                         </div>
-                        <div class="px-4 py-3 w-full flex border bg-gray-100">
-                            <p class="w-[100px] text-xs"><i class="ri-book-2-line px-2"></i>과목</p>
-                            <p class="text-xs">${this.options.subject.find((obj)=>obj.type == this.data.subject).text}</p>
+                        <div class="px-4 py-3 w-full flex items-center border bg-gray-100">
+                            <p class="w-[150px] text-[16px] flex items-center">${MtuIcon('subject').innerHTML}<span class="px-2">과목</span></p>
+                            <p class="text-[16px]">${this.options.subject.find((obj)=>obj.type == this.data.subject).text}</p>
                         </div>
-                        <div class="px-4 py-3 w-full flex border bg-gray-100">
-                            <p class="w-[100px] text-xs"><i class="ri-book-mark-line px-2"></i>출판사</p>
-                            <p class="text-xs">${pub}</p>
+                        <div class="px-4 py-3 w-full flex items-center border bg-gray-100">
+                            <p class="w-[150px] text-[16px] flex items-center">${MtuIcon('publisher').innerHTML}<span class="px-2">출판사</span></p>
+                            <p class="text-[16px]">${pub}</p>
                         </div>
-                        <div class="px-4 py-3 w-full flex border bg-gray-100">
-                            <p class="w-[100px] text-xs"><i class="ri-numbers-fill px-2"></i>난이도</p>
-                            <p class="text-xs">${this.options.difficulty.find((obj)=>obj.type == this.data.difficulty).text}</p>
+                        <div class="px-4 py-3 w-full flex items-center border bg-gray-100">
+                            <p class="w-[150px] text-[16px] flex items-center">${MtuIcon('difficulty').innerHTML}<span class="px-2">난이도</span></p>
+                            <p class="text-[16px]">${this.options.difficulty.find((obj)=>obj.type == this.data.difficulty).text}</p>
                         </div>
-                        <div class="px-4 py-3 w-full flex border bg-gray-100">
-                            <p class="w-[100px] text-xs"><i class="ri-user-2-fill px-2"></i>제작자</p>
-                            <p class="text-xs">${this.data.producer}</p>
+                        <div class="px-4 py-3 w-full flex items-center border bg-gray-100">
+                            <p class="w-[150px] text-[16px] flex items-center">${MtuIcon('producer').innerHTML}<span class="px-2">제작자</span></p>
+                            <p class="text-[16px]">${this.data.producer}</p>
                         </div>`);
     $(".desc_category").append($elCategory);
 
