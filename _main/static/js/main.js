@@ -17,7 +17,7 @@ export function CourseLandingOnReady(context,courses) {
 
 
   var $elSearch = $(`<div class="flex flex-1 justify-center items-center">
-                        <input type="text" class="mx-2 p-2 w-1/2 border border-gray-500 rounded-full text-xs focus:outline-none focus:shadow-lg" placeholder="과목을 입력해보세요.">
+                        <input type="text" class="mx-2 p-2 w-1/2 border border-gray-500 rounded-full text-[12px] focus:outline-none focus:shadow-lg" placeholder="과목을 입력해보세요.">
                         <i class="ri-search-line cursor-pointer"></i>
                     </div>`)
 

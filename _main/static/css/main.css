@@ -5,6 +5,9 @@
 
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
+
+
 @font-face {
   font-family: 'Pretendard';
   src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard.woff') format('woff');
@@ -18,7 +21,7 @@
 }
  
  body{
-  font-family: 'NanumSquareNeo-Variable';
+  font-family: 'Noto Sans KR', sans-serif;
 
  }
 

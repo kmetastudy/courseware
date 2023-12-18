@@ -17,10 +17,10 @@ CourseView.prototype.init = function() {
       course.price='무료'
       var $elCourse = $(`<div class="m-4 cursor-pointer">
                           <img src="../../../static/img/${course.thumnail}.png">
-                          <p class="text-sm md:text-base truncate">${course.courseTitle}</p>
-                          <p class="text-gray-600 text-sm">megacourse</p>
+                          <p class="text-[16px] truncate">${course.courseTitle}</p>
+                          <p class="text-gray-600 text-[12px]">megacourse</p>
                           <div class="flex justify-between">
-                            <p class="text-xs md:text-sm text-emerald-600 font-bold">${(course.price).toLocaleString()}</p>
+                            <p class="text-[12px] text-[#1E40AF] font-bold">${(course.price).toLocaleString()}</p>
                             <div class="flex">
                               <i class="ri-heart-3-line hover:text-red-500"></i>
                             </div>
@@ -29,10 +29,10 @@ CourseView.prototype.init = function() {
     } else{
       var $elCourse = $(`<div class="m-4 cursor-pointer">
                           <img src="../../../static/img/${course.thumnail}.png">
-                          <p class="text-sm md:text-base">${course.courseTitle}</p>
-                          <p class="text-gray-600 text-sm">megacourse</p>
+                          <p class="text-[16px]">${course.courseTitle}</p>
+                          <p class="text-gray-600 text-[12px]">megacourse</p>
                           <div class="flex justify-between">
-                            <p class="text-xs md:text-sm text-emerald-600 font-bold">￦ ${(course.price).toLocaleString()}</p>
+                            <p class="text-[12px] text-[#1E40AF] font-bold">￦ ${(course.price).toLocaleString()}</p>
                             <div class="add-option flex">
                               <i class="ri-heart-3-line hover:text-red-500"></i>
                             </div>
