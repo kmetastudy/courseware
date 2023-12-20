@@ -12,7 +12,7 @@ DetailChapter.prototype.init = async function() {
     chapter_list.level1.forEach((title, index) => {
         var $large = $(`<div class="">
                             <div class="p-2 border bg-gray-100 flex justify-between">
-                                <p class="text-sm">${title}</p>
+                                <p class="text-[16px]">${title}</p>
                                 <i class="ri-arrow-down-s-line"></i>
                                 <i class="ri-arrow-up-s-line hidden"></i>
                             </div>

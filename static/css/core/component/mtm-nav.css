@@ -65,7 +65,7 @@
 }
 
 .mtm-nav-left-section {
-  gap: 48px;
+  gap: 2rem;
 }
 
 .mtm-nav-right-section {
@@ -84,7 +84,14 @@
   padding: 0 0.75rem;
 }
 
+.mtu-nav-menu{
+  font-size: 20px
+}
 
 .mtm-nav-user-name {
   margin-right: 32px;
+}
+
+.mtu-nav-menu:hover {
+  color: #1E40AF;
 }

@@ -25,12 +25,26 @@
     <script src="{% static '_dist/ckeditor5/inspector.js' %}"></script>
     <script src="{% static '_dist/ckeditor5/ckeditor.js' %}"></script>
 
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/44b2667d85.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
+
     <link rel="stylesheet" href="{% static '_bundle/cm/cm-bundle.css' %}" />
     <script type="text/javascript" src="{% static '_bundle/cm/cm-bundle.js' %}"></script>
   </head>
 
   <body>
+    <div class="sidebar w-64 h-screen border-r">
+      <header class="border-b">
+        <img  class="p-4 w-1/2" src="/static/img/Course12Logo.png">
+      </header>
+      <nav class="nav">
 
+      </nav>
+    </div>
+
+    {% block content %}
+    {% endblock %}
     
   </body>
 
@@ -40,7 +54,7 @@
 
     window.addEventListener("DOMContentLoaded", function () {
       console.log("cmlibrary: ", cmlibrary);
-      cmlibrary.contentManagementOnReady(context)
+      cmlibrary.BaseOnReady(context)
     });
   </script>
 </html>

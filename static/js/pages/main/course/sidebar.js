@@ -13,7 +13,7 @@ export function Sidebar(options) {
 }
   
 Sidebar.prototype.create = function () {
-  var $elSidebarList = $('<div class="sidebar-container w-[150px] border fixed"></div>');
+  var $elSidebarList = $('<div class="sidebar-container w-[150px] border fixed hidden md:block"></div>');
   this.options.forEach(function(option) {
     var $elSidebar =
       $(`<div class="px-4 py-3 flex justify-between border-b text-sm cursor-pointer bg-[#FAFAFA]">
@@ -25,8 +25,10 @@ Sidebar.prototype.create = function () {
     // console.log(option.onClick)
     $elSidebar.on("click", function() {
       option.onClick(option.title, option.url)
-      $elSidebarList.children().removeClass('bg-gray-200')
-      this.classList.add('bg-gray-200')
+      $elSidebarList.children().removeClass('bg-[#1E40AF]')
+      this.classList.add('bg-[#1E40AF]')
+      $elSidebarList.children().removeClass('text-white')
+      this.classList.add('text-white')
       
     });
 

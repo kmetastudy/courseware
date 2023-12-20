@@ -1,5 +1,18 @@
 require("../css/cm.css");
 import { ContentsManager } from "../../../static/js/pages/cm/contents-manager";
+import { Accordion } from "../../../static/js/pages/cm/accordion";
+
+export function BaseOnReady(context) {
+    var navOptions = [
+        {title:'대시보드', url:'banner/', icon:'ri-dashboard-fill', submenu:false},
+        {title:'메인화면', url:'banner/', icon:'ri-home-3-fill', submenu:true, subMenuItems:[{title:'배너 관리'},{title:'추천 코스 관리'}]},
+        {title:'콘텐츠 제공자', url:'content/', icon:'ri-user-2-fill', submenu:true, subMenuItems:[{title:'제공자 관리'},{title:'콘텐츠 관리'}]},
+        {title:'콘텐츠 구매자', url:'banner/', icon:'ri-user-fill', submenu:true, subMenuItems:[{title:'구매자 관리'},{title:'포인트 관리'},{title:'주문 관리'}]},
+        {title:'설정', url:'banner/', icon:'ri-equalizer-fill', submenu:true, subMenuItems:[{title:'카테고리 관리'},{title:'태그 관리'}]},
+    ]   
+    const clNav = new Accordion(navOptions)
+    $('.nav').append(clNav.elThis)
+}
 
 export function contentManagementOnReady(context){
     var optionsCM = {}
