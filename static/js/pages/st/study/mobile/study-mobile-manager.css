@@ -1,0 +1,7 @@
+.st-mobile-manager {
+  display: none;
+}
+
+.st-mobile-manager.activate {
+  display: block;
+}

@@ -1,0 +1,97 @@
+/* ========= Variable ========= */
+
+.study-mobile-info {
+  --color-text: rgba(0, 0, 0, 0.88);
+  --color-text-heading: rgba(0, 0, 0, 0.88);
+  --font-size:14px;
+  --line-height: 1.57;
+  --line-width: 1px;
+  --line-type: solid;
+  --color-border: #d9d9d9;
+  --motion-duration-slow: 0.3s;
+}
+
+.study-mobile-info-collapse {
+  --collapse-header-padding: 12px 16px;
+  --collapse-header-bg: rgba(0, 0, 0, 0.02);
+  --collapse-content-padding: 16px 16px;
+  --collapse-content-bg: #ffffff;
+  --collapse-font-height: 22px;
+}
+
+/* ========= Mobile-info ========= */
+@media (min-width: 1025px) {
+  .study-mobile-info {
+    display: none;
+  }
+  
+}
+.study-mobile-info {
+  background-color: rgba(255, 255, 255);
+}
+
+/* ========= Collapse ========= */
+
+.study-mobile-info-collapse {
+  color: var(--color-text);
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+  list-style: none;
+  border-bottom: var(--line-width) var(--line-type) var(--color-border);
+}
+
+.study-mobile-info-collapse-header {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  padding: var(--collapse-header-padding);
+  color: var(--color-text-heading);
+  line-height: var(--line-height);
+  cursor: pointer;
+  transition: all var(--motion-duration-slow),visibility 0s;
+}
+
+.study-mobile-info-collapse-icon-wrapper {
+  height: var(--collapse-font-height);
+  display: flex;
+  align-items: center;
+  padding-inline-end: 12px;
+}
+
+.study-mobile-info-collapse-header-text {
+  flex: auto;
+  margin-inline-end: auto;
+}
+
+.study-mobile-info-collapse-content {
+  color: var(--color-text);
+  background-color: var(--collapse-content-bg);
+  border-top: var(--line-width) var(--line-type) var(--color-border);
+}
+
+.study-mobile-info-collapse-content.hidden {
+  display: none;
+}
+
+.study-mobile-info-collapse-content-box {
+  padding: var(--collapse-content-padding);
+}
+
+/* ========= ToolBar ========= */
+.study-mobile-info-toolbar {
+  display: flex;
+  padding: 12px 20px;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.study-mobile-info-toolbar-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 56px;
+  min-height: 64px;
+  cursor: pointer;
+}
