@@ -84,7 +84,9 @@ mtmPlayerVideoContent.prototype._init = function () {
 
   this.clPlayerVideo.show(true);
 
-  this.elVideoWrapper.appendChild(this.clPlayerVideo.elThis);
+  // this.elVideoWrapper.appendChild(this.clPlayerVideo.elThis);
+  this.elThis.appendChild(this.clPlayerVideo.elThis);
+  // 816 504
 };
 
 ////////////////////// API //////////////////////////////

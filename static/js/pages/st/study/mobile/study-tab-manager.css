@@ -1,0 +1,79 @@
+.study-tab-manager {
+  flex-direction: row;
+}
+
+/* tab */
+
+.study-tab-manager-tabList {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: flex-start;
+  border-bottom: 0.125rem solid rgb(233, 236, 239);
+  z-index: 1;
+  position: sticky;
+  /* top: 64px; */
+  top: 0;
+  width: 100%;
+  background-color: white;
+}
+
+.study-tab-manager-tab {
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  border-width: 0px 0px 0.125rem;
+  border-top-style: initial;
+  border-right-style: initial;
+  border-left-style: initial;
+  border-top-color: initial;
+  border-right-color: initial;
+  border-left-color: initial;
+  border-image: initial;
+  appearance: none;
+  background-color: transparent;
+  text-align: left;
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  box-sizing: border-box;
+  position: relative;
+  white-space: nowrap;
+  z-index: 0;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  line-height: 1;
+  border-bottom-style: solid;
+  border-bottom-color: transparent;
+  margin-bottom: -0.125rem;
+  border-radius: 0.5rem 0.5rem 0px 0px;
+  padding: 14px 16px;
+  height: auto;
+  font-size: 16px;
+}
+
+.study-tab-manager-tab[data-active] {
+  border-color: rgb(0, 196, 113);
+  color: rgb(0,0,0);
+}
+
+.study-tab-manager-tab[data-active="true"] {
+  font-weight: 700;
+}
+
+/* panel */
+.study-tab-manager-panel {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: auto;
+  padding-bottom: 0px;
+}
+
+.study-tab-manager-panel.active {
+  display: block;
+}
+
+.study-tab-manager-panel {
+  display: none;
+  
+}

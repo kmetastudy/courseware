@@ -91,10 +91,10 @@ export class DashboardTotalStats {
     return elInfoBox;
   }
 
-  createProgress(progress) {
+  createProgress(progress = 0) {
     const elWrapper = createElement("div", { className: `${this.prefixCls}-progress` });
 
-    const clProgress = new MtuProgress({ type: "circle", percent: 75 });
+    const clProgress = new MtuProgress({ type: "circle", percent: progress });
     const elProgress = clProgress.getElement();
 
     elWrapper.appendChild(elProgress);

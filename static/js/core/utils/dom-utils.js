@@ -1,4 +1,5 @@
 import { isElement, isObject } from "../mtu/_util/type-check";
+import isString from "./type/isString";
 
 function camelToDash(text) {
   const dashed = text.replace(/[A-Z]/g, (m) => "-" + m.toLowerCase());
@@ -51,12 +52,14 @@ export function setClassName(element, className) {
   }
 }
 
-export function createElement(tagName = "div", { className, attributes, styles } = {}) {
+export function createElement(tagName = "div", { className, attributes, styles, text } = {}) {
   const element = document.createElement(tagName);
 
   setClassName(element, className);
   setAttributes(element, attributes);
   setStyles(element, styles);
+
+  isString(text) ? (element.textContent = text) : null;
 
   return element;
 }

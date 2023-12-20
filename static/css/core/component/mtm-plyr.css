@@ -1,19 +1,34 @@
 /* set Plyr size */
 /* https://stackoverflow.com/questions/47184146/resize-video-proportionally-to-its-container */
 .mtm-plyr {
-    height: 100%;
-    width: 100%;
+    /* height: calc(var(--vh, 1vh)*100 - 64px - 64px - 32px); */
+    display: flex;
+    justify-content: center;
 }
 
 .plyr {
     height: 100%;
-    width :100%;
+    width: 100%;
 }
 
-.plyr__video-wrapper {
+/* .plyr__video-wrapper {
     height: 100%;
-}
-.plyr__video-wrapper iframe {
+} */
+
+/* .plyr__video-wrapper iframe {
     width: 100%;
     height: 100%;
+} */
+
+.plyr__video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+}
+
+.plyr__video-wrapper iframe {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
 }

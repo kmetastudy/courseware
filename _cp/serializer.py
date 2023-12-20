@@ -1,3 +1,5 @@
+import json
+
 from rest_framework import serializers
 from .models import *
 
@@ -108,3 +110,33 @@ class ElementSerializer(serializers.ModelSerializer):
     class Meta:
         model = mElement
         fields = '__all__'
+
+
+class MyModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = mCourseN
+        fields = '__all__'
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+
+        textfield_content = representation.get('json_data', None)
+        if textfield_content:
+            try:
+                representation['json_data'] = json.loads(textfield_content)
+            except json.JSONDecodeError as e:
+                print("JSONDecodeError in MyModelSerializer", str(e))
+
+        return representation
+
+    def to_internal_value(self, data):
+        json_data = data.get('json_data', None)
+        print("to_internal_value > json data type: ", type(json_data))
+        if json_data and not isinstance(json_data, str):
+            try:
+                print("to_internal_valu > dump")
+                data['json_data'] = json.dumps(json_data)
+            except (TypeError, ValueError):
+                raise serializers.ValidationError("유효하지 않은 JSON 형식입니다.")
+
+        return super().to_internal_value(data)

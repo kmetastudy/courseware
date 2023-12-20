@@ -37,6 +37,7 @@ from .serializer import (QuestionBookSerializer,
                          QuestionSolutionVideoSerializer,
                          CourseNSerializer,
                          ElementNSerializer,
+                         MyModelSerializer,
                          )
 
 from .utils import create_time_data
@@ -116,7 +117,8 @@ class QuestionSolutionVideoViewSet(viewsets.ModelViewSet):
 
 class CourseNViewSet(viewsets.ModelViewSet):
     queryset = mCourseN.objects.all()
-    serializer_class = CourseNSerializer
+    # serializer_class = CourseNSerializer
+    serializer_class = MyModelSerializer
 
     @action(detail=True, methods=['get'])
     def get_json_field(self, request, pk=None):
