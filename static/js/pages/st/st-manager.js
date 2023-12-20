@@ -4,8 +4,10 @@ import { StudyCourseBuilder } from "./study/study-course-builder.js";
 // import { StudyCourseBuilder as StudyCourseBuilderNew } from "./study/study-course-builder-new.js";
 // import { StudyCourseContainer as StudyCourseContainerNew } from "./study/study-course-container-new.js";
 
+// Test
 import { MtmDashboardManager } from "../main/dashboard/mtm-dashboard-manager.js";
 import { mtmSideMenu } from "../../core/ui/sideMenu/mtm-side-menu.js";
+import { CourseDashboard } from "../main/dashboard/course/course-dashboard.js";
 
 require("../../../css/pages/st/st-manager.css");
 // Todo. Jstar
@@ -75,8 +77,10 @@ StManager.prototype.test = function () {
   this.elThis.appendChild(this.wrapper);
 
   const clDashboard = new MtmDashboardManager();
+  const clCourseDashboard = new CourseDashboard(this.options);
   // this.elThis.appendChild(clDashboard.getElement());
-  this.wrapper.appendChild(clDashboard.getElement());
+  this.wrapper.appendChild(clCourseDashboard.getElement());
+  // this.wrapper.appendChild(clDashboard.getElement());
 };
 
 function getItem(label, key, icon, children, type) {

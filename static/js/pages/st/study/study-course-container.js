@@ -1,12 +1,16 @@
 import { mtoEvents } from "../../../core/utils/mto-events";
 import { MtuSidebar } from "../../../core/mtu/sidebar/mtu-sidebar";
-import { mtuMenu } from "../../../core/ui/menu/mtu-menu";
 import { StCourseTree } from "../st-course-tree";
+import { StudyMobileInfo } from "./mobile/study-mobile-info";
+import { TabBar } from "./mobile/tab-bar";
+import { MtuMenu } from "../../../core/ui/menu/mtu-menu";
+import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
 /**
  *
  * Refactor mtmStudyContainer
  * @param {*} options
  */
+require("../../../../css/pages/st/study/mobile/study-mobile.css");
 export class StudyCourseContainer {
   constructor(options = {}) {
     this.options = options;
@@ -29,20 +33,29 @@ export class StudyCourseContainer {
     this.courseData ? (document.title = this.courseData.title) : null;
     this.resultData = resultData;
     // this.courseBookData = courseBookData;
+    this.clMobileInfo = new StudyMobileInfo({
+      headerText: this?.courseData?.title,
+      // contentText
+    });
+    this.elMobileInfo = this.clMobileInfo.getElement();
+    this.options.rootElement.append(this.elMobileInfo);
 
     this.initCourseTree({ courseData, resultData });
 
     this.initSidebar();
 
+    const initialContentId = this.getDefaultInitialContentId(courseData, this.contentId);
     if (this.contentId) {
-      this.clCourseTree.activateContent(this.contentId);
+      this.clCourseTree.activateContent(courseData, this.contentId);
     }
+
+    this.initTabBar();
   }
 
   _initVariables() {
     this.courseId = this.options.courseId ?? null;
     this.isDemo = this.options.demo ?? false; // annonymous?
-    this.userType = this.options.userId ?? null;
+    this.userType = this.options.userType ?? null;
     this.studentId = this.options.studentId ?? null;
     this.isLogin = this.options.userLogin ?? false;
     //
@@ -61,7 +74,6 @@ export class StudyCourseContainer {
     });
     this.elSidebar = this.clSidebar.getElement();
     this.options.rootElement.prepend(this.elSidebar);
-    // document.body.appendChild(this.elSidebar);
   }
 
   initCourseTree({ courseBookData, courseData, resultData }) {
@@ -71,18 +83,26 @@ export class StudyCourseContainer {
       courseData,
       resultData,
       title,
-
       onBranchClick: this.handleContentClick.bind(this),
     });
+
     this.elCourseTree = this.clCourseTree.getElement();
-    // this.elThis.appendChild(this.elCourseTree);
     this.options.rootElement.appendChild(this.elCourseTree);
+  }
+
+  initTabBar() {
+    const items = [{ text: "학습하기", icon: MtuIcon("form"), onClick: this.handleTabBarLearnClick }];
+    this.clTabBar = new TabBar(items);
+
+    this.elTabBar = this.clTabBar.getElement();
+    this.options.rootElement.appendChild(this.elTabBar);
   }
   ////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////// Handler  ////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
   // Click Branch
   handleContentClick(data) {
+    console.log(data);
     const contentData = data;
     const param = {
       student_id: this.studentId,
@@ -94,53 +114,16 @@ export class StudyCourseContainer {
       results: contentData.results,
       units: contentData.units,
     };
-    // console.log(JSON.parse(param.results));s
+    //
     mtoEvents.emit("OnChangeCourseContent", param);
-    // branchData.id;
   }
   ////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////// URL  //////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
-  urlGetCourseBook(courseId) {
-    try {
-      const url = `../cp/api/course_book/${courseId}`;
-      return axios.get(url).then((res) => {
-        return res.data ? res.data : {};
-      });
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
-
   urlGetCourse(id) {
     try {
       return axios
         .get(`../cp/api/course_n/${id}/`)
-        .then((res) => {
-          if (res.data) {
-            return res.data;
-          }
-        })
-        .catch((err) => console.error(err));
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  urlGetCourseJsonField(id, field_type) {
-    try {
-      const validFieldType = ["lists", "contents", "keys"];
-      if (field_type && validFieldType.indexOf(field_type) === -1) {
-        throw new Error(`Invalid field_type: ${field_type}`);
-      }
-
-      const param = {
-        field_type: field_type,
-      };
-      return axios
-        .get(`../cp/api/course_n/${id}/get_json_field/`, {
-          params: param,
-        })
         .then((res) => {
           if (res.data) {
             return res.data;
@@ -217,18 +200,77 @@ export class StudyCourseContainer {
     }
   }
 
-  composeTreeData(lists) {
+  composeTreeData({ lists, contents, results }) {
     let treeData = [];
-    lists.forEach((data) => {
+    let currentChapter = null;
+    let chapterProgress = [];
+    let chapterPoint = [];
+    const { length } = lists;
+
+    const clonedLists = structuredClone(lists);
+    const clonedContents = structuredClone(contents);
+    const clonedResults = structuredClone(results);
+
+    for (let i = 0; i < length; i++) {
+      const data = clonedLists[i];
+      const content = clonedContents[i];
+      const result = clonedResults ? clonedResults[i] : null;
+
+      const progress = result?.progress ?? 0;
+      const point = result?.point ?? 0;
       const type = data.type === 0 ? "chapter" : "branch";
+
       if (type === "chapter") {
-        data["children"] = [];
+        if (currentChapter) {
+          currentChapter.progress = this.getPercentage(sum(chapterProgress), chapterProgress.length * 100, 0);
+          currentChapter.point = this.getPercentage(sum(chapterPoint), chapterPoint.length * 100, 0);
+        }
+        chapterProgress = [];
+        chapterPoint = [];
+
+        data.children = [];
         treeData.push(data);
+        currentChapter = data;
       } else if (type === "branch") {
-        const chapterSize = treeData.length - 1;
-        treeData[chapterSize].children.push(data);
+        data.units.forEach((unit, idx) => {
+          unit.contentIds = content.units[idx].ids;
+          unit.contentTimes = content.units[idx].times;
+        });
+
+        data.results = result.results;
+        data.progress = progress;
+        data.point = point;
+
+        chapterProgress.push(progress);
+        chapterPoint.push(point);
+
+        currentChapter.children.push(data);
       }
-    });
+    }
     return treeData;
+  }
+
+  // ============ Utils ============
+  getPercentage(numerator, denominator, digits = 2) {
+    if (!denominator) {
+      return 0;
+    }
+
+    return parseFloat(((numerator / denominator) * 100).toFixed(digits)); //e.g. 20.22
+  }
+
+  // setCompletedTime(listsData, resultsData) {
+  //   const time = listsData.filter((data, idx) => resultsData[idx].progress === 100).map((data) => data.time).length;
+  //   this.completedTime = time;
+  //   return time;
+  // }
+
+  getDefaultInitialContentId(data, id) {
+    console.log("data: ", data);
+    console.log("id: ", id);
+
+    if (id) {
+      //
+    }
   }
 }
