@@ -1,25 +1,28 @@
-import { createElement } from "../../../core/utils/dom-utils";
-import { dashboardHeader } from "./common/dashboard-header";
-import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
-import { MtuProgress } from "../../../core/mtu/progress/mtu-progress";
-import { classNames } from "../../../core/utils/class-names";
+import { createElement } from "../../../../core/utils/dom-utils";
+import { dashboardHeader } from "../common/dashboard-header";
+import { MtuIcon } from "../../../../core/mtu/icon/mtu-icon";
+import { MtuProgress } from "../../../../core/mtu/progress/mtu-progress";
+import { classNames } from "../../../../core/utils/class-names";
 
-require("../../../../css/pages/main/dashboard/dashboard-total-stats.css");
-export class DashboardTotalStats {
+require("./course-total-stats.css");
+export class CourseTotalStats {
   constructor({ progress, questionCorrectRate, videoCorrectRate, className } = {}) {
     this.progress = typeof progress === "number" ? progress : 0;
     this.questionCorrectRate = typeof questionCorrectRate === "number" ? questionCorrectRate : 0;
-    this.videoCorrectRate = typeof videoCorrectRate === "number" ? videoCorrectRate : 0;
+    // this.videoCorrectRate = typeof videoCorrectRate === "number" ? videoCorrectRate : 0;
     this.className = typeof className === "string" ? className : null;
+
     this.init();
   }
+
   init() {
     this.initVariables();
     this.create();
   }
 
   initVariables() {
-    this.prefixCls = `dashboard-total-stats`;
+    this.prefixCls = `course-total-stats`;
+    this.title = "학습 통계";
 
     this.stringProgress = `${Math.round(this.progress)}%`;
     this.stringQuestionCorrectRate = `${Math.round(this.questionCorrectRate)}%`;
@@ -33,6 +36,7 @@ export class DashboardTotalStats {
     this.elBody = this.createBody();
 
     this.elThis.append(this.elHeader, this.elBody);
+    console.log(this.elThis);
   }
 
   createHeader() {
@@ -60,10 +64,11 @@ export class DashboardTotalStats {
   createStatInfoBoxContainer() {
     const elContainer = createElement("div", { className: `${this.prefixCls}-body-info-box-container` });
     //
-    const elVideoCorrectRate = this.createInfoBox("playCircleFilled", "영상 문제 정답률", this.stringVideoCorrectRate);
+    // const elVideoCorrectRate = this.createInfoBox("playCircleFilled", "영상 문제 정답률", this.stringVideoCorrectRate);
     const elQuestionCorrectRate = this.createInfoBox("form", "테스트 정답률", this.stringQuestionCorrectRate);
 
-    elContainer.append(elVideoCorrectRate, elQuestionCorrectRate);
+    // elContainer.append(elVideoCorrectRate, elQuestionCorrectRate);
+    elContainer.append(elQuestionCorrectRate);
 
     return elContainer;
   }
@@ -100,6 +105,18 @@ export class DashboardTotalStats {
     elWrapper.appendChild(elProgress);
     return elWrapper;
   }
+
+  setData(data) {
+    this.data = data;
+
+    this.progress = this.composeProgress(data);
+  }
+
+  // 메가코스
+  // 김포 양국고등학교
+  // AI 코스웨어
+  // 메가코스 국어 체험
+  // 어휘테스트
 
   getElement() {
     return this.elThis;
