@@ -30,3 +30,13 @@ export function adjustConfig(defaultConfig, userConfig) {
 // };
 
 // const adjustedConfig = adjustUserConfig(componentConfigSchema, userProvidedConfig);
+
+export function getDefaultConfig(defaultConfig, userConfig) {
+  const adjustedConfig = {};
+
+  for (let key in defaultConfig) {
+    adjustedConfig[key] = defaultConfig[key](userConfig[key]);
+  }
+
+  return adjustedConfig;
+}
