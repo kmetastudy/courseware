@@ -1,5 +1,7 @@
 import { NavManager } from "../../../static/js/core/component/nav-manager";
 import { AppDashboard } from "../../../static/js/pages/main/dashboard/app-dashboard";
+
+require("../../../static/css/css-reset.css");
 export function dashboard_run(context) {
   const parsedContext = JSON.parse(context);
   const { usertype, studentId, userLogin } = parsedContext;
