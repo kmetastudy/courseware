@@ -107,6 +107,7 @@ StudyCourseBuilder.prototype.onExamStartHandler = function (eData) {
  * @param {number} params.content_type - type of branch(lesson/testum), testum: 11, lesson: 12, exam: 13
  */
 StudyCourseBuilder.prototype.onChangeCourseContentHandler = async function ({
+  student_id,
   course_id,
   content_id,
   content_type,
@@ -135,6 +136,7 @@ StudyCourseBuilder.prototype.onChangeCourseContentHandler = async function ({
     // }
     // const result = await this.urlGetResult();
 
+    this.options.student_id = student_id;
     this.options.course_id = course_id;
     this.options.content_id = content_id;
     this.options.title = title;

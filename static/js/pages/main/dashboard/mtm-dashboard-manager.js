@@ -1,8 +1,8 @@
 import { DashboardRecentCourse } from "./dashboard-recent-course";
 import { DashboardTotalStats } from "./dashboard-total-stats";
 import { DashboardCategoryStats } from "./dashboard-category-stats";
-import { DashboardAnnualStats } from "./dashboard-annual-stats";
 import { dashboardTitle } from "./common/dashboard-title";
+
 import { createElement } from "../../../core/utils/dom-utils";
 
 require("../../../../css/pages/main/dashboard/mtm-dashboard-manager.css");
@@ -35,13 +35,10 @@ export class MtmDashboardManager {
     });
     this.elTotalStats = this.totalStats.getElement();
 
-    this.annualStats = new DashboardAnnualStats({ className: [prefixCls, gridSpan8] });
-    this.elAnnualStats = this.annualStats.getElement();
-
     this.categoryStats = new DashboardCategoryStats({ className: [prefixCls, gridSpan8] });
     this.elCategoryStats = this.categoryStats.getElement();
 
-    this.elContents.push(this.elRecentLecture, this.elTotalStats, this.elAnnualStats, this.elCategoryStats);
+    this.elContents.push(this.elRecentLecture, this.elTotalStats, this.elCategoryStats);
   }
 
   create() {

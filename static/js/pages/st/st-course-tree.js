@@ -26,8 +26,9 @@ export class StCourseTree {
 
     // mCourseN's json data : {lists, contents, kls}
 
-    const jsonData = courseData ? JSON.parse(courseData.json_data) : {};
-    this.jsonData = jsonData;
+    console.log(typeof courseData.json_data);
+    // const jsonData = courseData ? JSON.parse(courseData.json_data) : {};
+    const jsonData = courseData.json_data;
 
     // mStudyResult's properties['property'] data.
     // You can get data with user_id and course_id
@@ -124,11 +125,12 @@ export class StCourseTree {
 
     // if (this.initialContentId) {
     //   const data = this.getContentData(this.initialContentId);
-    //   this.activateBranch(data.element, data);
+    //   this.activateContent(data.element, data);
     // } else {
     //   const data = this.treeData[0].children[0];
-    //   this.activateBranch(data.element, data);
+    //   this.activateContent(data.element, data);
     // }
+    console.log(this.treeData);
   }
 
   initVariable() {
@@ -318,7 +320,9 @@ export class StCourseTree {
     const { title, type, units } = branchData;
     const { progress, point, results } = branchData;
 
-    const icon = type === 12 ? "youtube" : "form";
+    // const icon = type === 12 ? "youtube" : "form";
+    // const icon = type === 12 ? "playCircleFilled" : "form";
+    const icon = type === 12 ? "stVideo" : "stTest";
 
     let videoNum = 0;
     let questionNum = 0;
@@ -346,9 +350,9 @@ export class StCourseTree {
   }
 
   createBranchIcon(icon) {
-    // const elIcon = MtuIcon(icon);
     const iconStyle = {
-      fontSize: "1.5em",
+      fontSize: "2em",
+      color: "rgba(152, 109, 80)",
     };
     const elIcon = MtuIcon(icon, { style: iconStyle });
     return elIcon;
@@ -364,10 +368,12 @@ export class StCourseTree {
       const elBranchDetail = document.createElement("div");
       elBranchDetail.classList.add("st-course-tree-branch-info-detail");
 
-      if (videoNum > 0 && totalVideoTime > 0) {
+      // if (videoNum > 0 && totalVideoTime > 0) {
+      if (videoNum > 0) {
         const elVideo = document.createElement("div");
         const elVideoIcon = MtuIcon(this.videoIcon);
-        const elVideoTimeText = this.createTextElement(`${this.formatTime(totalVideoTime)}`);
+        // const elVideoTimeText = this.createTextElement(`${this.formatTime(totalVideoTime)}`);
+        const elVideoTimeText = this.createTextElement(`${videoNum} 개`);
         elVideo.appendChild(elVideoIcon);
         elVideo.appendChild(elVideoTimeText);
 
@@ -436,11 +442,12 @@ export class StCourseTree {
   }
 
   handleBranchClick(element, branchData, evt) {
+    console.log(element, branchData);
     if (this.elSelectedBranch) {
       this.elSelectedBranch.classList.remove("activate");
     }
 
-    element.classList.add("activate");
+    element?.classList.add("activate");
     this.elSelectedBranch = element;
     if (this.onBranchClick) {
       this.onBranchClick(branchData);
@@ -457,9 +464,13 @@ export class StCourseTree {
   }
 
   //////////// API ////////////
-  activateBranch(element, branchData) {
+  activateContent(contentId) {
     // const contentWrapper = this.elSimplebarBody.querySelector(".simplebar-content-wrapper");
-    this.handleBranchClick(element, branchData);
+    const [chapterData, branchData] = this.getContentData(contentId);
+
+    if (branchData) {
+      this.handleBranchClick(branchData?.element, branchData);
+    }
 
     // TODO
     // scroll
@@ -570,6 +581,7 @@ export class StCourseTree {
 
     const clUpdatedPoint = new MtuProgress({ percent: point, size: 32 });
     const elUpdatedPoint = clUpdatedPoint.getElement();
+    elUpdatedPoint.classList.add(".branch-point");
 
     elPoint.replaceWith(elUpdatedPoint);
   }
@@ -587,6 +599,20 @@ export class StCourseTree {
     this.completedTime = time;
     return time;
   }
+
+  // ============ Set Data ============
+  //
+  setTitle(text) {
+    //
+  }
+
+  setCourseTitle(text) {}
+
+  setCourseProgress(percent) {}
+
+  setBranchProgress(percent) {}
+
+  setBranchPoint(percent) {}
 }
 
 //////////// Tree Data Structure ////////////

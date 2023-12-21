@@ -171,3 +171,17 @@ figure.table table {
   vertical-align: top;
   /* border-top: 1px solid #dee2e6; */
 }
+
+:root {
+  --nav-height: 64px;
+  --tablet-min-width: 1025px;
+
+  --tablet-toolbar-height: 70px;
+}
+
+
+body {
+  /* font-family: 'Noto Sans KR', sans-serif; */
+  font-family: 'Noto Sans KR';
+  font-weight: 500;
+}

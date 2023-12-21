@@ -1,0 +1,286 @@
+.study-mobile-tree {
+  flex: 1 1 0%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 0px 1px 0px;
+}
+
+.study-mobile-tree-info {
+  padding: 24px 16px;
+}
+
+.study-mobile-tree-info-header {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0rem;
+
+  margin-bottom: 24px;
+}
+
+.study-mobile-tree-info-header > * {
+  box-sizing: border-box;
+  flex-grow: 0;
+}
+
+.study-mobile-tree-info-text-wrapper {
+  /* color: rgb(193, 194, 197); */
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: wrap;
+  /* -webkit-box-align: center; */
+  align-items: center;
+  -webkit-box-pack: start;
+  /* justify-content: flex-start; */
+  gap: 0rem;
+}
+
+.study-mobile-tree-info-title {
+  /* font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif; */
+  -webkit-tap-highlight-color: transparent;
+  
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  line-height: 1.5;
+}
+
+.study-mobile-tree-info-progress {
+  display: flex;
+  gap: 16px;
+}
+
+.study-mobile-tree-info-progress > span {
+  font-size: 1.5rem;
+}
+
+
+.study-mobile-tree-info-progress-wrapper {
+  flex: 1 1 auto;
+}
+
+.study-mobile-tree-info-progress-content {
+  display: flex;
+  /* -webkit-box-align: center; */
+  align-items: center;
+  padding-right: 12px;
+}
+
+.study-mobile-tree-info-progress-label {
+  color: rgb(33, 37, 41);
+  font-size: 0.875rem;
+  text-decoration: none;
+  margin-right: 0.5rem;
+  line-height: 1.5;
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+
+.study-mobile-tree-course-progress {
+  flex: 1 1 auto;
+}
+
+.study-mobile-tree-info-progress-text-wrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: wrap;
+  /* -webkit-box-align: center; */
+  align-items: center;
+  /* -webkit-box-pack: start; */
+  justify-content: flex-start;
+  gap: 0rem;
+}
+
+.study-mobile-tree-info-progress-text {
+  -webkit-tap-highlight-color: transparent;
+  color: rgb(33, 37, 41);
+  font-size: 0.875rem;
+  text-decoration: none;
+  margin-right: 0.25rem;
+  line-height: 1.5;
+}
+
+/* 
+
+.study-mobile-tree-header {
+  display: flex;
+  -moz-box-align: center;
+  align-items: center;
+  -moz-box-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 20px;
+  color: rgb(27, 28, 29);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.5; 
+}
+
+
+.study-mobile-tree-info {
+  display: block;
+  padding: 0px 20px 24px;
+}
+
+.study-mobile-tree-info-title {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.study-mobile-tree-info-progress {
+  font-size: 16px;
+} */
+
+/* Menu */
+.study-mobile-tree-menu {
+  margin: 0;
+  padding: 0;
+  border: 0px;
+  font-size: 100%;
+
+  flex: 1 1 0%;
+  overflow-y: auto;
+  list-style: none;
+  /* text-overflow: ellipsis; */
+}
+
+.study-mobile-tree-chapter {
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  /* overflow-y: auto; */
+  list-style: none;
+  margin-bottom: 8px;
+}
+
+/* Handle Accordion */
+.study-mobile-tree-chapter .study-mobile-tree-chapter-info-wrapper svg {
+  transform: rotate(0deg);
+}
+
+.study-mobile-tree-chapter.activate .study-mobile-tree-chapter-info-wrapper svg{
+  transform: rotate(180deg);
+}
+
+.study-mobile-tree-chapter > ul {
+  display: none;
+}
+.study-mobile-tree-chapter.activate > ul {
+  display: block;
+}
+
+
+.study-mobile-tree-chapter-info-wrapper {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 16px 20px;
+  background-color: rgb(241, 243, 245);
+  border-top: 1px solid rgb(222, 226, 230);
+  border-bottom: 1px solid (222, 226, 230);
+}
+
+.study-mobile-tree-chapter-info{
+  flex: 1;
+  display: flex;
+  gap: 4px;
+  flex-direction: column;
+  -moz-box-pack: justify;
+  justify-content: space-between;
+  /* padding: 16px 20px; */
+  margin-right: 48px;
+}
+
+.study-mobile-tree-chapter > ul {
+  padding: 0;
+}
+
+
+.study-mobile-tree-chapter-info-detail {
+  display: flex;
+  justify-content: space-between;
+}
+
+.study-mobile-tree-chapter-info-detail p {
+  color: rgb(134, 142, 150);
+  font-size: 0.875rem;
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.study-mobile-tree-chapter-title {
+  color: rgb(33, 37, 41);
+  font-size: inherit;
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.study-mobile-tree-branch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 8px 32px;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  border-left: medium;
+}
+
+.study-mobile-tree-branch:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.study-mobile-tree-branch.activate {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.study-mobile-tree-branch > .mtuicon {
+  height: 100%;
+}
+
+.study-mobile-tree-branch-info {
+  flex: 1;
+  padding: 0 20px 0 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.study-mobile-tree-branch-info-title {
+  margin-bottom: 4px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  
+}
+
+.study-mobile-tree-branch-info-detail {
+  display: flex;
+  align-items: center;
+  justify-content:space-between
+}
+
+.study-mobile-tree-branch-info-detail > div{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.study-mobile-tree-branch-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.study-mobile-tree-branch-progress,
+.study-mobile-tree-branch-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875em;
+}

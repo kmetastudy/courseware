@@ -187,7 +187,7 @@ TestumPlayer.prototype._createGradeButton = function (parent) {
   // );
   this.elGradingButton.setAttribute(
     "style",
-    "z-index: 10;position: absolute; bottom: 20px; right: 0px; font-weight:600;",
+    "z-index: 10;position: absolute; bottom: 40px; right: 0px; font-weight:600;",
   );
   this.elGradingButton.setAttribute("type", "button");
   this.elGradingButton.setAttribute("tabindex", "-1");
@@ -1041,10 +1041,7 @@ TestumPlayer.prototype._urlUpdateTestumResultInfo = function (data) {
 };
 
 TestumPlayer.prototype.urlUpdateTestumResult = function () {
-  console.log(this.playOptions.userLogin);
-  const url = this.playOptions.userLogin
-    ? "../st/api/study_result/properties/"
-    : "../st/api/demo_study_result/properties/";
+  const url = this.player.student_id ? "../st/api/study_result/properties/" : "../st/api/demo_study_result/properties/";
 
   const eData = {};
   eData.content_id = this.player.content_id;

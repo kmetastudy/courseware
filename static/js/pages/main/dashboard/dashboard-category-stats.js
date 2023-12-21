@@ -1,76 +1,102 @@
 import { dashboardTitle } from "./common/dashboard-title";
-import { LineChart } from "../../../core/component/d3/line-chart";
 import { createElement } from "../../../core/utils/dom-utils";
 import { DateStepper } from "./common/date-stepper";
 import { classNames } from "../../../core/utils/class-names";
-import { CircleLegend } from "../../../core/component/d3/circle-legend";
 
 require("../../../../css/pages/main/dashboard/dashboard-category-stats.css");
 export class DashboardCategoryStats {
-  static testData = [
-    { category: "math", month: 1, achievement: 100 },
-    { category: "math", month: 2, achievement: 20 },
-    { category: "math", month: 3, achievement: 50 },
-    { category: "math", month: 4, achievement: 90 },
-    { category: "math", month: 5, achievement: 70 },
-    { category: "math", month: 6, achievement: 30 },
-    { category: "math", month: 7, achievement: 0 },
-    { category: "math", month: 8, achievement: 10 },
-    { category: "math", month: 9, achievement: 60 },
-    { category: "math", month: 10, achievement: 30 },
-    { category: "math", month: 11, achievement: 80 },
-    { category: "math", month: 12, achievement: 40 },
-    { category: "science", month: 1, achievement: 50 },
-    { category: "science", month: 2, achievement: 10 },
-    { category: "science", month: 3, achievement: 30 },
-    { category: "science", month: 4, achievement: 20 },
-    { category: "science", month: 5, achievement: 80 },
-    { category: "science", month: 6, achievement: 10 },
-    { category: "science", month: 7, achievement: 100 },
-    { category: "science", month: 8, achievement: 80 },
-    { category: "science", month: 9, achievement: 20 },
-    { category: "science", month: 10, achievement: 60 },
-    { category: "science", month: 11, achievement: 20 },
-    { category: "science", month: 12, achievement: 35 },
-    { category: "english", month: 1, achievement: 10 },
-    { category: "english", month: 2, achievement: 0 },
-    { category: "english", month: 3, achievement: 0 },
-    { category: "english", month: 4, achievement: 20 },
-    { category: "english", month: 5, achievement: 0 },
-    { category: "english", month: 6, achievement: 30 },
-    { category: "english", month: 7, achievement: 60 },
-    { category: "english", month: 8, achievement: 100 },
-    { category: "english", month: 9, achievement: 80 },
-    { category: "english", month: 10, achievement: 90 },
-    { category: "english", month: 11, achievement: 100 },
-    { category: "english", month: 12, achievement: 70 },
+  static testProgressData = [
+    { name: "국어", data: [20, 30, 50, 0, 10, 20, 30, 40, 60, 70, 50, 20] },
+    { name: "수학", data: [10, 40, 20, 0, 100, 100, 60, 40, 20, 70, 50, 20] },
+    { name: "영어", data: [100, 100, 100, 100, 10, 20, 30, 40, 20, 50, 60, 50] },
+    { name: "과학", data: [100, 100, 100, 100, 100, 100, 30, 50, 60, 20, 50, 20] },
+  ];
+  static testAccuracyRateData = [
+    { name: "국어", data: [100, 100, 100, 100, 100, 100, 30, 50, 60, 20, 50, 20] },
+    { name: "수학", data: [20, 30, 50, 0, 10, 20, 30, 40, 60, 70, 50, 20] },
+    { name: "영어", data: [10, 40, 20, 0, 100, 100, 60, 40, 20, 70, 50, 20] },
+    { name: "과학", data: [100, 100, 100, 100, 10, 20, 30, 40, 20, 50, 60, 50] },
   ];
 
   constructor({ data, className } = {}) {
-    this.data = Array.isArray(data) ? data : DashboardCategoryStats.testData;
     this.className = typeof className === "string" || Array.isArray(className) ? className : null;
     this.init();
   }
 
   init() {
     this.initVariables();
-    this.prepareData();
     this.create();
 
-    if (this.data) {
-      this.drawChart(this.data);
-    }
+    this.renderChart();
+
+    this.getData();
   }
 
   initVariables() {
     this.prefixCls = "dashboard-category-stats";
-    this.title = "학습별 상세 통계";
+    this.title = "과목별 상세 통계";
+    this.yaxis = "성취도 (%)";
+    this.tooltip = {
+      y: {
+        formatter: function (val) {
+          return "$ " + val + " thousands";
+        },
+      },
+    };
+
+    this.chartOptions = {
+      series: [],
+      chart: {
+        type: "bar",
+        height: 350,
+        toolbar: {
+          show: false,
+        },
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: "55%",
+          endingShape: "rounded",
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        show: true,
+        width: 2,
+        colors: ["transparent"],
+      },
+      xaxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      },
+      yaxis: {
+        title: {
+          text: this.yaxis,
+        },
+        min: 0,
+        max: 100,
+      },
+      fill: {
+        opacity: 1,
+      },
+      tooltip: this.tooltip,
+      noData: {
+        text: "통계를 계산중입니다...",
+      },
+    };
   }
 
-  prepareData() {
-    // if (!this.data) {
-    //   this.data = DashboardCategoryStats.testData;
-    // }
+  getData() {
+    if (!this.data) {
+      this.data = DashboardCategoryStats.testProgressData;
+    }
+
+    // this.series = this.composeSeries();
+    setTimeout(() => {
+      this.updateChartData(this.data);
+    }, 3000);
   }
 
   create() {
@@ -99,12 +125,9 @@ export class DashboardCategoryStats {
   createBody() {
     const elBody = createElement("div", { className: `${this.prefixCls}-body` });
 
-    this.elChartContainer = createElement("div", { className: `${this.prefixCls}-chart-wrapper` });
-    this.elLegendContainer = createElement("div", { className: `${this.prefixCls}-chart-legend` });
+    this.elChart = createElement("div", { className: `${this.prefixCls}-chart` });
 
-    elBody.appendChild(this.elChartContainer);
-    elBody.appendChild(this.elLegendContainer);
-
+    elBody.appendChild(this.elChart);
     return elBody;
   }
 
@@ -119,30 +142,18 @@ export class DashboardCategoryStats {
     return this.elThis;
   }
 
-  drawChart(data) {
-    data.forEach((data) => {
-      data.month = new Date(2023, data.month - 1);
-    });
+  renderChart() {
+    this.clChart = new ApexCharts(this.elChart, this.chartOptions);
 
-    const color = d3.scaleOrdinal(d3.schemeCategory10);
-    this.elChart = LineChart(data, {
-      x: (d) => d.month,
-      y: (d) => d.achievement,
-      z: (d) => d.category,
-      yLabel: "학업 성취도",
-      height: 500,
-      color,
-    });
+    this.clChart.render();
+  }
 
-    const categories = [...new Set(data.map((value) => value.category))];
+  updateChartData(series) {
+    if (!this.clChart || !series) {
+      return;
+    }
 
-    // this.elLegend = categories.CircleLegend({ keys: categories, color: d3.scaleOrdinal(d3.schemeCategory10) });
-    // categories.forEach((category) => {
-    //   const elLegend = CircleLegend({ title: category, color: color(category) });
-    //   this.elLegendContainer.appendChild(elLegend);
-    // });
-
-    this.elChart ? this.elChartContainer.appendChild(this.elChart) : null;
-    // this.elLegend ? this.elLegendContainer.appendChild(this.elLegend) : null;
+    console.log(series);
+    this.clChart.updateSeries(series);
   }
 }

@@ -10,6 +10,8 @@ import { mtmNaviBar } from "../../../static/js/core/ui/navi/mtm-navi-bar.js";
 import { NavManager } from "../../../static/js/core/component/nav-manager.js";
 import { mtoCommon } from "../../../static/js/core/component/mto-common.js";
 
+import { StudyMobileManager } from "../../../static/js/pages/st/study/mobile/study-mobile-manager.js";
+
 function mtfLearnManagerOnReady(context) {
   const parsedContext = JSON.parse(context);
   console.log(parsedContext);
@@ -32,12 +34,18 @@ function mtfLearnManagerOnReady(context) {
     courseId: parsedContext.courseId,
     studentId: parsedContext.userId,
     userLogin: parsedContext.userLogin,
+    contentId: parsedContext.contentId,
   };
   const clManager = new StManager(options);
 
   var body = document.getElementById("body");
   // body.appendChild(clNavibar.elThis);
   body.appendChild(clNav.getElement());
+
+  // Mobile Manager
+  // const clMobileManager = new StudyMobileManager(options);
+  // body.append(clMobileManager.getElement());
+
   body.appendChild(clManager.elThis);
 }
 

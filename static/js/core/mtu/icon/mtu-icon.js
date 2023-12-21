@@ -1,5 +1,6 @@
 import { iconData } from "./data";
-import { isObject } from "../_util/type-check";
+import { isObject, isNumber } from "../../utils/type/index";
+
 require("./mtu-icon.css");
 
 const DEFAULT_CLASS_NAME = "mtuicon";
@@ -25,23 +26,15 @@ function calculateAspectRatio(svgElement) {
   return aspectRatio;
 }
 
-function shouldApplyRotate(rotateOption) {
-  return rotateOption === true;
-}
-
 function shouldApplySpin(spinOption) {
   return spinOption === true;
 }
 
-function createWrapperElement({ iconName, shouldRotate, shouldSpin }) {
+function createWrapperElement({ iconName, shouldSpin }) {
   const wrapper = document.createElement("span");
   wrapper.classList.add(DEFAULT_CLASS_NAME, `${DEFAULT_CLASS_NAME}-${iconName}`);
   wrapper.setAttribute("role", "img");
   wrapper.setAttribute("aria-label", iconName);
-
-  if (shouldRotate) {
-    wrapper.classList.add(`${DEFAULT_CLASS_NAME}-rotate`);
-  }
 
   if (shouldSpin) {
     wrapper.classList.add(`${DEFAULT_CLASS_NAME}-spin`);
@@ -50,12 +43,16 @@ function createWrapperElement({ iconName, shouldRotate, shouldSpin }) {
   return wrapper;
 }
 
-function createSvgElement(iconName) {
+function createSvgElement(iconName, rotate) {
   const svgString = iconData[iconName];
   const parser = new DOMParser();
   const doc = parser.parseFromString(svgString, "image/svg+xml");
 
   const svgElement = doc.documentElement;
+
+  if (rotate) {
+    svgElement.style.transform = `rotate(${rotate}deg)`;
+  }
   return svgElement;
 }
 
@@ -66,14 +63,13 @@ export function MtuIcon(iconName, { style, className, rotate, spin } = {}) {
 
   const wrapperElement = createWrapperElement({
     iconName,
-    shouldRotate: shouldApplyRotate(rotate),
     shouldSpin: shouldApplySpin(spin),
   });
 
   className ? wrapperElement.classList.add(className) : null;
   isObject(style) ? setStyle(wrapperElement, style) : null;
 
-  const svgElement = createSvgElement(iconName);
+  const svgElement = createSvgElement(iconName, rotate);
 
   wrapperElement.appendChild(svgElement);
   return wrapperElement;

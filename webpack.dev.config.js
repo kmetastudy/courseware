@@ -138,5 +138,26 @@ var configCM = Object.assign({}, config, {
     }),
   ],
 });
+
+var configDashboard = Object.assign({}, config, {
+  name: "configDashboard",
+
+  entry: {
+    st: path.resolve(__dirname, "_main/static/js/dashboard.js"),
+  },
+  output: {
+    path: path.resolve(__dirname, "static/_bundle/main"),
+    library: "dashboardlibrary",
+    filename: "dashboard-bundle.js",
+    libraryTarget: "var",
+    clean: true,
+    // assetModuleFilename: '[name][ext]',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "dashboard-bundle.css",
+    }),
+  ],
+});
 // Return Array of Configurations
-module.exports = [configMain, configUser, configCP, configCM, configST];
+module.exports = [configMain, configUser, configCP, configCM, configST, configDashboard];

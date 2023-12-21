@@ -1,0 +1,84 @@
+.st-mobile-menu {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: auto;
+  padding-bottom: 0px;
+}
+
+.st-mobile-menu-info {
+  padding: 24px 16px;
+}
+
+.st-mobile-menu-info-header {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0rem;
+
+  margin-bottom: 24px;
+}
+
+.st-mobile-menu-info-header > * {
+  box-sizing: border-box;
+  flex-grow: 0;
+}
+
+.st-mobile-menu-info-text-wrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: wrap;
+  /* -webkit-box-align: center; */
+  align-items: center;
+  -webkit-box-pack: start;
+  /* justify-content: flex-start; */
+  gap: 0rem;
+}
+
+.st-mobile-menu-info-title {
+  /* font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif; */
+  -webkit-tap-highlight-color: transparent;
+  color: inherit;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  line-height: 1.5;
+}
+
+.st-mobile-menu-info-progress {
+  display: flex;
+}
+
+.st-mobile-menu-info-progress-wrapper {
+  flex: 1 1 auto;
+}
+
+.st-mobile-menu-info-progress-content {
+  display: flex;
+  /* -webkit-box-align: center; */
+  align-items: center;
+  padding-right: 12px;
+}
+
+.st-mobile-menu-info-progress-text-wrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: wrap;
+  /* -webkit-box-align: center; */
+  align-items: center;
+  /* -webkit-box-pack: start; */
+  justify-content: flex-start;
+  gap: 0rem;
+}
+
+.st-mobile-menu-info-progress-text {
+  -webkit-tap-highlight-color: transparent;
+  color: rgb(33, 37, 41);
+  font-size: 0.875rem;
+  text-decoration: none;
+  margin-right: 0.25rem;
+  line-height: 1.5;
+}
+

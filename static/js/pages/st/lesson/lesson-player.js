@@ -42,6 +42,7 @@ import { StudyResultTable } from "../study/study-result-table.js";
 // playMode == contentKind  :    0 --> normal Class Content
 //                              1 --> clinic content
 // playMode == action_request (DB)
+require("../../../../css/core/component/mtm-plyr.css");
 export class LessonPlayer {
   constructor(options) {
     this.id = "id-mtm-player-lesson-" + LessonPlayer.id++;
@@ -963,7 +964,7 @@ export class LessonPlayer {
   }
 
   urlUpdateLessonResult() {
-    const url = this.playOptions.userLogin
+    const url = this.player.student_id
       ? "../st/api/study_result/properties/"
       : "../st/api/demo_study_result/properties/";
 
