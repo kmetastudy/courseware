@@ -15,28 +15,15 @@
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 
     <link rel="icon" href="{% static 'img/mdb-favicon.ico' %}" type="image/x-icon" />
-    <!-- d3(v7: for test) -->
-    <script src="{% static '_dist/d3/d3.v7.min.js' %}"></script>
-
     <!-- apexcharts -->
     <script type="text/javascript" src="{% static '_dist/apexcharts/apexcharts.min.js' %}"></script>
-
-    <!-- Cal-Heatmap(d3(v6, v7) plugins) -->
-    <!-- js(125B), css(124B) -->
-    <script src="https://unpkg.com/cal-heatmap/dist/cal-heatmap.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/cal-heatmap/dist/cal-heatmap.css" />
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script src="https://unpkg.com/cal-heatmap/dist/plugins/Tooltip.min.js"></script>
-    <script src="https://unpkg.com/cal-heatmap/dist/plugins/LegendLite.min.js"></script>
-    <script src="https://unpkg.com/cal-heatmap/dist/plugins/Legend.min.js"></script>
-    <script src="https://unpkg.com/cal-heatmap/dist/plugins/CalendarLabel.min.js"></script>
   </head>
 
   <body>
     <div id="main"></div>
 
-    <link rel="stylesheet" href="{% static '_bundle/main/dashboard-bundle.css' %}" />
-    <script type="text/javascript" src="{% static '_bundle/main/dashboard-bundle.js' %}"></script>
+    <link rel="stylesheet" href="{% static '_bundle/dashboard/dashboard-bundle.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/dashboard/dashboard-bundle.js' %}"></script>
   </body>
 
   <script>

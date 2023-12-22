@@ -143,10 +143,10 @@ var configDashboard = Object.assign({}, config, {
   name: "configDashboard",
 
   entry: {
-    st: path.resolve(__dirname, "_main/static/js/dashboard.js"),
+    dashboard: path.resolve(__dirname, "_main/static/js/dashboard.js"),
   },
   output: {
-    path: path.resolve(__dirname, "static/_bundle/main"),
+    path: path.resolve(__dirname, "static/_bundle/dashboard"),
     library: "dashboardlibrary",
     filename: "dashboard-bundle.js",
     libraryTarget: "var",
