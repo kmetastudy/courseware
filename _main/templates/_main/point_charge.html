@@ -1,0 +1,58 @@
+{% extends "_main/base.html" %}
+{% load humanize %}
+{% block content %}
+
+<form method="post" class="w-full h-screen bg-gray-100 flex flex-col justify-stretch items-center">
+    {% csrf_token %}
+    <p class="pt-4 text-[20px] text-center">포인트 충전하기</p>
+    <div class="py-6 w-1/3 h-full">
+        <div class="p-6 h-full border bg-white shadow">
+            <p class="py-4">Course-12 포인트로</p>
+            <div class="flex items-center">
+                <div class="w-full flex">
+                    <input name="charge" class="py-2 w-full border-b-2 focus:outline-none focus:border-blue-500" placeholder="충전할 금액을 입력해 주세요." onkeyup="inputNumberFormat(this);"/>
+                    <i class="ri-close-circle-fill py-2 border-b-2 text-gray-300 hover:text-red-600" onclick="$('input[name=charge-input]').val('')"></i>
+                </div>
+                <p class="p-2">원</p>
+                
+            </div>
+            <div class="flex">
+                <div class="m-2 p-2 w-1/2 border">+1천원</div>
+                <div class="m-2 p-2 w-1/2 border">+1만원</div>
+            </div>
+            <div>
+                <p>추가 포인트 적립 혜택</p>
+                <p>1,000원 -> 1,000P</p>
+                <p>10,000원 -> 10,000P + 1,000P 추가 = 11,000P</p>
+            </div>
+            <button class="charge-button my-2 py-2 w-full rounded bg-gray-200 text-gray-400" onclick="window.location.href='/point/charge/'">충전하기</button>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block extra-script %}
+<script>
+    function comma(str) {
+        str = String(str);
+        return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    }
+
+    function uncomma(str) {
+        str = String(str);
+        return str.replace(/[^\d]+/g, '');
+    } 
+    
+    function inputNumberFormat(obj) {
+        obj.value = comma(uncomma(obj.value));
+        $('.charge-button').addClass('bg-blue-500')
+        $('.charge-button').addClass('text-white')
+        if(!obj.value){
+            $('.charge-button').removeClass('bg-blue-500')
+            $('.charge-button').removeClass('text-white')
+        }
+    }
+
+    
+</script>
+{% endblock %}

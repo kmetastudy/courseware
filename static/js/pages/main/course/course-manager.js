@@ -1,5 +1,5 @@
 import { Sidebar } from "./sidebar"
-import { Filter } from "./filter"
+import { FilterView } from "./mtv-filter"
 import { CourseView } from "./course-view"
 
 export function CourseManager(options, data) {
@@ -15,13 +15,14 @@ CourseManager.prototype.init = async function() {
   this.sidebarOptions = this.prepareSidebarOptions(this.options.subject_list)
   // console.log(this.sidebarOptions)
   var clSidebar = new Sidebar(this.sidebarOptions);
+  clSidebar.elThis.children('div:eq(0)').addClass('bg-[#1E40AF]').addClass('text-white')
   $(".sidebar").append(clSidebar.elThis);
 
   $(".courses_header").text(options.schoolKor + " / 전과목");
 
   this.filterOptions = this.prepareFilterOptions()
-  var clFilter = new Filter(this.filterOptions)
-  $(".courses_filter").append(clFilter.elThis);
+  var clFilterView = new FilterView(this.filterOptions)
+  $(".courses_filter").append(clFilterView.elThis);
 
   // var $elSearch = $(`<div class="flex flex-1 items-center">
   //                       <input type="text" class="mx-2 p-2 w-[150px] 2xl:w-full border rounded-full text-xs">
@@ -62,14 +63,22 @@ CourseManager.prototype.prepareSidebarOptions = function(subjects) {
 CourseManager.prototype.prepareFilterOptions = function() {
   return {
     grade:[
+      {text:'공통', type:0, onClick:this.onFilterHandler.bind(this)},
       {text:'1학년', type:1, onClick:this.onFilterHandler.bind(this)},
       {text:'2학년', type:2, onClick:this.onFilterHandler.bind(this)},
       {text:'3학년', type:3, onClick:this.onFilterHandler.bind(this)}
     ],
     semester:[
-      {text:'공통', type:0, onClick:this.onFilterHandler.bind(this)},
-      {text:'1학기', type:1, onClick:this.onFilterHandler.bind(this)},
-      {text:'2학기', type:2, onClick:this.onFilterHandler.bind(this)},
+      {text:'전체 학기', type:0, onClick:this.onFilterHandler.bind(this)},
+      {text:'1학기 중간', type:1, onClick:this.onFilterHandler.bind(this)},
+      {text:'1학기 기말', type:2, onClick:this.onFilterHandler.bind(this)},
+      {text:'2학기 중간', type:3, onClick:this.onFilterHandler.bind(this)},
+      {text:'2학기 기말', type:4, onClick:this.onFilterHandler.bind(this)},
+    ],
+    publisher:[
+      {text:'미래엔', type:'miraen'},
+      {text:'비상', type:'visang'},
+      {text:'천재', type:'chunjae'}
     ],
     difficulty:[
       {text:'개념과 기초', type:0, onClick:this.onFilterHandler.bind(this)},
@@ -114,8 +123,8 @@ CourseManager.prototype.onFilterHandler = async function(key, type) {
   }
 
   console.log(this.filter)
-  this.data = await this.urlGetCourses()
-  this.createCourseView()
+  // this.data = await this.urlGetCourses()
+  // this.createCourseView()
 }
 
 
