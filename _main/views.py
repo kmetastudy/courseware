@@ -157,6 +157,8 @@ def dashboard_view(request):
 
     context = {'context': json.dumps(dashboard_context)}
 
+    return render(request, "_main/dashboard.html", context)
+
 
 @jwt_login_required
 def stats_view(request):
