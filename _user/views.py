@@ -48,7 +48,6 @@ def index_signup(request):
 
 
 def login(request):
-    print('login?')
     context = {
         'isLogin': True,
         'isSignup': False,
@@ -139,7 +138,7 @@ class SignUpView(View):
 
         refresh_token = self.token_generator.generate_token(
             'refresh',
-            id=str(user.id),
+            user=str(user.id),
             type=int(user.type),
             name=str(user.nickname))
 
