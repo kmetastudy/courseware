@@ -80,8 +80,7 @@ def create_study_result(course_id, student_id, *args, **kwargs):
 
 def get_study_result(course_id, student_id):
     if not course_id or not student_id:
-        study_result = mStudyResult.objects.all()
-        return study_result
+        return None
 
     id_course = uuid.UUID(str(course_id))
     id_student = uuid.UUID(str(student_id))
@@ -192,8 +191,7 @@ def create_demo_study_result(course_id, student_id, *args, **kwargs):
 
 def get_demo_study_result(course_id, student_id):
     if not course_id or not student_id:
-        demo_study_result = mDemoStudyResult.objects.all()
-        return demo_study_result
+        return None
 
     id_course = uuid.UUID(str(course_id))
     id_student = uuid.UUID(str(student_id))

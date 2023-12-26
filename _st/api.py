@@ -41,9 +41,11 @@ class StudyResultViewSet(viewsets.ModelViewSet):
             query = get_study_result(
                 course_id=course_id, student_id=student_id)
 
+            if not query:
+                return Response(data={}, status=status.HTTP_204_NO_CONTENT)
+
             properties = json.loads(query.properties)['property']
 
-            # return JsonResponse({"message": "Get mStudyResult properties", "result": properties})
             return Response(data=properties)
 
         if request.method == 'POST':
@@ -90,21 +92,18 @@ class DemoStudyResultViewSet(viewsets.ModelViewSet):
 
         student_id = demo_student_id(request=request)
         try:
-
             if request.method == 'GET':
                 course_id = request.query_params.get("course_id")
 
                 query = get_demo_study_result(
                     course_id=course_id, student_id=student_id)
-                # print(json.loads(query.properties))
+
+                if not query:
+                    return Response(data={}, status=status.HTTP_204_NO_CONTENT)
 
                 properties = json.loads(query.properties)['property']
-                print(properties[0])
-                try:
 
-                    return Response(data=properties)
-                except Exception as e:
-                    print(str(e))
+                return Response(data=properties, status=status.HTTP_200_OK)
 
             elif request.method == 'POST':
                 course_id = request.POST.get("course_id")
