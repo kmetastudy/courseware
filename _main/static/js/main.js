@@ -89,8 +89,6 @@ export function CourseDetailOnReady(context,data) {
   };
   axios.defaults.headers = defaultAxiosConfig.headers;
 
-  const clNav = new NavManager(context)
-  $('.navbar').html(clNav.getElement())
 
   var clCourseDetail = new DetailManager(context,data[0])
 }

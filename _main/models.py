@@ -75,22 +75,6 @@ class CartCourse(models.Model):
         return self.course.price * self.quantity
     
 
-class CartBill(models.Model):
-    total_amount = models.PositiveIntegerField("코스 총 금액")
-    points = models.PositiveIntegerField("포인트", default=0)
-
-    @property
-    def actual_payment(self) -> int:
-        return self.total_amount-self.points
-    
-    @classmethod
-    def create_from_cart(cls, user, cart_product_qs) -> "CartBill":
-        cart_product_list = list(cart_product_qs)
-        total_amount = sum(cart_product.amount for cart_product in cart_product_list)
-        bill = cls.objects.create(total_amount=total_amount)
-
-        return bill
-
     
 class Order(models.Model):
     class Status(models.TextChoices):
@@ -229,3 +213,14 @@ class OrderPayment(AbstractPortonePayment):
             buyer_name=order.user,  # user FK로 연동
             buyer_email=order.user
         )
+    
+class PointCharge(AbstractPortonePayment):
+
+    @classmethod
+    def create(cls, user, charge_amount) -> "PointCharge":
+        return cls.objects.create(
+            name='포인트 충전',
+            desired_amount=charge_amount,
+            buyer_name=user,  # user FK로 연동
+            # buyer_email=user
+    )

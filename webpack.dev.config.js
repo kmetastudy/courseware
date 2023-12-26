@@ -108,7 +108,7 @@ var configMain = Object.assign({}, config, {
     library: "mainlibrary",
     filename: "main-bundle.js",
     libraryTarget: "var",
-    clean: true,
+    // clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
@@ -150,7 +150,7 @@ var configDashboard = Object.assign({}, config, {
     library: "dashboardlibrary",
     filename: "dashboard-bundle.js",
     libraryTarget: "var",
-    clean: true,
+    // clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [

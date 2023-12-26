@@ -17,11 +17,15 @@ urlpatterns = [
     path('cart/', cart_detail, name='cart_detail'),
     path('cart/<str:course_pk>/add/', add_to_cart, name='add_to_cart'),
 
+    path('point/history/',point_history, name='point_history'),
+    path('point/charge/', point_charge, name='point_charge'),
+    path('point/<int:pk>/pay/', point_pay, name='point_pay'),
+    path('point/check/<int:payment_pk>/', point_check, name='point_check'),
+
     path('orders/', order_list, name='order_list'),
     path('orders/new/', order_new, name='order_new'),
     path('orders/<int:pk>/pay/', order_pay, name='order_pay'),
-    path('orders/<int:order_pk>/check/<int:payment_pk>/',
-         order_check, name='order_check'),
+    path('orders/<int:order_pk>/check/<int:payment_pk>/', order_check, name='order_check'),
     path('orders/<int:pk>/', order_detail, name='order_detail'),
 
     path('mycourse/', mycourse, name='mycourse'),
