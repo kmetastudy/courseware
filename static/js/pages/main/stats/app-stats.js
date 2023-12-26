@@ -12,7 +12,7 @@ export class AppStats {
    * @property {string} config.usertype
    * @property {string} config.userLogin
    */
-  constructor(config) {
+  constructor(config = {}) {
     this.config = config;
 
     this.init();
@@ -57,6 +57,7 @@ export class AppStats {
 
     this.elDashboard = createElement("div", { className: "stats-wrapper" });
 
+    console.log("config: ", this.config);
     this.clDashboardManager = new StatsManager(this.config);
     this.elDashboardManager = this.clDashboardManager.getElement();
     this.elDashboard.append(this.elDashboardManager);

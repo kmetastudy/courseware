@@ -5,7 +5,7 @@ import { MtmDashboardManager } from "./mtm-dashboard-manager";
 
 require("../../../../css/pages/main/dashboard/app-dashboard.css");
 export class AppDashboard {
-  /**demo, usertype, studentId, userLogin
+  /**usertype, studentId, userLogin
    *
    * @param {Object} config
    * @property {string} config.studentId
@@ -14,7 +14,6 @@ export class AppDashboard {
    */
   constructor(config) {
     this.config = config;
-    Object.assign(this, config);
 
     this.init();
   }
@@ -58,7 +57,7 @@ export class AppDashboard {
 
     this.elDashboard = createElement("div", { className: "dashboard-wrapper" });
 
-    this.clDashboardManager = new MtmDashboardManager();
+    this.clDashboardManager = new MtmDashboardManager(this.config);
     this.elDashboardManager = this.clDashboardManager.getElement();
     this.elDashboard.append(this.elDashboardManager);
 

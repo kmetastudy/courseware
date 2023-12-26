@@ -9,7 +9,6 @@ export class CourseTotalStats {
   constructor({ progress, questionCorrectRate, videoCorrectRate, className } = {}) {
     this.progress = typeof progress === "number" ? progress : 0;
     this.questionCorrectRate = typeof questionCorrectRate === "number" ? questionCorrectRate : 0;
-    // this.videoCorrectRate = typeof videoCorrectRate === "number" ? videoCorrectRate : 0;
     this.className = typeof className === "string" ? className : null;
 
     this.init();

@@ -7,7 +7,6 @@ import { StudyCourseBuilder } from "./study/study-course-builder.js";
 // Test
 import { MtmDashboardManager } from "../main/dashboard/mtm-dashboard-manager.js";
 import { mtmSideMenu } from "../../core/ui/sideMenu/mtm-side-menu.js";
-import { CourseDashboard } from "../main/dashboard/course/course-dashboard.js";
 
 require("../../../css/pages/st/st-manager.css");
 // Todo. Jstar
@@ -44,44 +43,7 @@ StManager.prototype.init = function () {
   this.elThis.appendChild(this.clStudyBuilder.elThis);
 };
 
-StManager.prototype.test = function () {
-  this.elThis = document.createElement("div");
-  this.elThis.classList.add("main-test");
-  this.elThis.style.display = "flex";
-  this.elThis.style.justifyContent = "center";
-
-  const sideItems = [
-    { title: "대시보드" },
-    { title: "프로필", onClick: () => (window.location.href = "/"), icon: "user" },
-    { title: "학습 관리", children: [{ title: "내 학습" }, { title: "수강전 문의" }] },
-    {
-      title: "수강신청 관리",
-      children: [
-        { title: "수강바구니" },
-        { title: "좋아요" },
-        { title: "쿠폰함" },
-        { title: "포인트" },
-        { title: "구매내역" },
-      ],
-    },
-    { title: "설정", children: [{ title: "계정 정보" }, { title: "알림 설정" }] },
-  ];
-  const clSide = new mtmSideMenu({ item: sideItems });
-  const elSide = clSide.getElement();
-  this.elThis.appendChild(elSide);
-
-  this.wrapper = document.createElement("div");
-  this.wrapper.classList.add("dashboard-test-wrapper");
-  this.wrapper.style.display = "flex";
-  this.wrapper.style.justifyContent = "center";
-  this.elThis.appendChild(this.wrapper);
-
-  const clDashboard = new MtmDashboardManager();
-  const clCourseDashboard = new CourseDashboard(this.options);
-  // this.elThis.appendChild(clDashboard.getElement());
-  this.wrapper.appendChild(clCourseDashboard.getElement());
-  // this.wrapper.appendChild(clDashboard.getElement());
-};
+StManager.prototype.test = function () {};
 
 function getItem(label, key, icon, children, type) {
   return {

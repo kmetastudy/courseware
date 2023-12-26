@@ -66,6 +66,12 @@ export class ChapterStatsChart {
       chart: {
         type: "bar",
         height: 480, //FIXME: responsive height, width
+        toolbar: {
+          show: false,
+        },
+      },
+      noData: {
+        text: "통계를 계산중입니다...",
       },
       plotOptions: {
         bar: {
