@@ -1,8 +1,8 @@
-import { createElement } from "../../../../core/utils/dom-utils";
-import { classNames } from "../../../../core/utils/class-names";
+import { createElement } from "../../../core/utils/dom-utils";
+import { classNames } from "../../../core/utils/class-names";
 import { StudyResultServices } from "./study-result-services";
 
-import { dashboardHeader } from "../common/dashboard-header";
+import { dashboardHeader } from "../dashboard/common/dashboard-header";
 
 import { ChapterStatsChart } from "./chapter-stats-chart";
 import { CourseResultsTable } from "./course-results-table";

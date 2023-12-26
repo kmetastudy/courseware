@@ -1,8 +1,8 @@
-import { createElement } from "../../../../core/utils/dom-utils";
-import { dashboardHeader } from "../common/dashboard-header";
-import { MtuIcon } from "../../../../core/mtu/icon/mtu-icon";
-import { MtuProgress } from "../../../../core/mtu/progress/mtu-progress";
-import { classNames } from "../../../../core/utils/class-names";
+import { createElement } from "../../../core/utils/dom-utils";
+import { dashboardHeader } from "../dashboard/common/dashboard-header";
+import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
+import { MtuProgress } from "../../../core/mtu/progress/mtu-progress";
+import { classNames } from "../../../core/utils/class-names";
 
 require("./course-total-stats.css");
 export class CourseTotalStats {

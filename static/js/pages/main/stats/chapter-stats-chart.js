@@ -1,7 +1,7 @@
-import { createElement } from "../../../../core/utils/dom-utils";
-import { isNumber, isObject } from "../../../../core/utils/type/index";
-import { classNames } from "../../../../core/utils/class-names";
-import { dashboardHeader } from "../common/dashboard-header";
+import { createElement } from "../../../core/utils/dom-utils";
+import { isNumber, isObject } from "../../../core/utils/type/index";
+import { classNames } from "../../../core/utils/class-names";
+import { dashboardHeader } from "../dashboard/common/dashboard-header";
 
 export class ChapterStatsChart {
   static #CHAPTER_TYPE = 0;
