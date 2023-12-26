@@ -10,7 +10,7 @@ from decouple import config
 from _cm.models import courseDetail
 from _cp.nmodels import mCourseN
 from _main.forms import CartCourseForm, PaymentForm
-from _main.models import CartBill, CartCourse, Order, OrderPayment, OrderedProduct, Payment
+from _main.models import CartCourse, Order, OrderPayment, OrderedProduct, Payment, PointCharge
 from _user.decorators import jwt_login_required
 from _user.models import mUser
 from _user.utils import make_context
@@ -53,31 +53,23 @@ def mainView(request, school, subject):
             {'kor': '과학', 'eng': 'sci'},
             {'kor': '도덕', 'eng': 'mor'}],
         'middle': [
-            {'kor': '국어', 'eng': 'kor'},
-            {'kor': '영어', 'eng': 'eng'},
-            {'kor': '수학', 'eng': 'math'},
-            {'kor': '사회', 'eng': 'soc'},
-            {'kor': '역사', 'eng': 'hist'},
-            {'kor': '과학', 'eng': 'sci'},
-            {'kor': '정보', 'eng': 'info'},
-            {'kor': '도덕', 'eng': 'mor'}],
-        'midhigh': [
-            {'kor': '국어', 'eng': 'kor'},
-            {'kor': '영어', 'eng': 'eng'},
-            {'kor': '수학', 'eng': 'math'},
-            {'kor': '과학', 'eng': 'sci'}],
+            { 'kor':'국어', 'eng':'kor' },
+            { 'kor':'영어', 'eng':'eng' },
+            { 'kor':'수학', 'eng':'math' },
+            { 'kor':'사회', 'eng':'soc' },
+            { 'kor':'역사', 'eng':'hist' },
+            { 'kor':'과학', 'eng':'sci' },
+            { 'kor':'정보', 'eng':'info' },
+            { 'kor':'도덕', 'eng':'mor' } ],
         'high': [
-            {'kor': '국어', 'eng': 'kor'},
-            {'kor': '영어', 'eng': 'eng'},
-            {'kor': '수학', 'eng': 'math'},
-            {'kor': '사회', 'eng': 'soc'},
-            {'kor': '한국사', 'eng': 'korhist'},
-            {'kor': '과학', 'eng': 'sci'},
-            {'kor': '정보', 'eng': 'info'},
-            {'kor': '도덕', 'eng': 'mor'}],
-        'high2': [
-            {'kor': '6모', 'eng': 'june'},
-            {'kor': '9모', 'eng': 'september'}]
+            { 'kor':'국어', 'eng':'kor' },
+            { 'kor':'영어', 'eng':'eng' },
+            { 'kor':'수학', 'eng':'math' },
+            { 'kor':'사회', 'eng':'soc' },
+            { 'kor':'한국사', 'eng':'korhist' },
+            { 'kor':'과학', 'eng':'sci' },
+            { 'kor':'정보', 'eng':'info' },
+            { 'kor':'도덕', 'eng':'mor' } ],
     }
     print(request.method)
     if (subject == 'all' and request.method == 'GET'):
@@ -198,14 +190,12 @@ def cart_detail(request):
             queryset=cart_course_qs
         )
 
-    bill = CartBill.create_from_cart(request.userId, cart_course_qs)
-
     context = {
-        "context": json.dumps(context_sample),
-        "formset": formset,
-        "user": user,
-        "bill": bill
-    }
+            "context": json.dumps(context_sample),
+            "formset": formset,
+            "user":user
+            }
+
     return render(request, "_main/cart_detail.html", context)
 
 
@@ -222,6 +212,61 @@ def add_to_cart(request, course_pk):
 
     return HttpResponse("Ok")
 
+@jwt_login_required
+def point_history(request):
+    context_sample = make_context(request)
+    context = {
+            "context": json.dumps(context_sample),
+            }
+    return render(request, "_main/mycourse.html", context)
+
+
+@jwt_login_required
+def point_charge(request):
+    context_sample = make_context(request)
+
+    if request.method == "POST":
+        charge = request.POST.get('charge')
+        charge_re = int(charge.replace(',',''))
+        payment = PointCharge.create(request.userId, charge_re)
+        return redirect('_main:point_pay', pk=payment.pk)
+
+    context = {
+            "context": json.dumps(context_sample),
+            }
+    return render(request, "_main/point_charge.html", context)
+
+@jwt_login_required
+def point_pay(request, pk):
+    context_sample = make_context(request)
+
+    payment = get_object_or_404(PointCharge, pk=pk)
+
+    payment_props = {
+        "merchant_uid": payment.merchant_uid,
+        "name": payment.name,
+        "amount": payment.desired_amount,
+        "buyer_name": 'yun',  # user 연결
+        "buyer_email": ''
+    }
+
+    context = {
+        "context": json.dumps(context_sample),
+        "portone_shop_id": config("PORTONE_SHOP_ID"),
+        "payment_props": payment_props,
+        "next_url": reverse("_main:point_check", args=[payment.pk])
+    }
+
+    return render(request, "_main/point_pay.html", context)
+
+@jwt_login_required
+def point_check(request, payment_pk):
+    payment = get_object_or_404(
+        PointCharge, pk=payment_pk)
+    payment.update()
+    # return redirect("_main:order_detail", order_pk)
+    # return redirect("_main:order_list")
+    return redirect("_main:point_history")
 
 @jwt_login_required
 def order_list(request):

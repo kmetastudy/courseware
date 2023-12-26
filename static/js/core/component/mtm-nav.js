@@ -92,6 +92,11 @@ export class MtmNav {
       section.appendChild(this.dashboard);
     }
 
+    if (this.options.point) {
+      this.point = this.createPointButton(this.options.point);
+      section.appendChild(this.point);
+    }
+
     if (this.options.userName) {
       this.userName = this.createUserName(this.options.userName);
       section.appendChild(this.userName);
@@ -121,6 +126,13 @@ export class MtmNav {
     const clDashboard = new MtuButton(config);
     const dashboard = clDashboard.getElement();
     return dashboard;
+  }
+
+  createPointButton(config) {
+    config.className = "mtm-nav-point-button";
+    const clPoint = new MtuButton(config);
+    const point = clPoint.getElement();
+    return point;
   }
 
   createUserName(name) {
