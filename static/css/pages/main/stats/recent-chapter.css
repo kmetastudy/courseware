@@ -1,0 +1,42 @@
+/* .recent-chapter {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  grid-column: span 4;
+  grid-row: unset;
+  padding: 20px 0px;
+  height: auto;
+  min-height: 260px;
+  border: 1px solid rgb(222, 226, 230);
+  border-radius: 8px;
+  background-color: white;
+} */
+
+.recent-chapter-body {
+  position: relative;
+  padding: 0px 20px;
+  height: 100%;
+}
+
+.recent-chapter-body a{
+  word-break: keep-all;
+  margin-bottom: 8px;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.recent-chapter-footer {
+  margin-top: auto;
+  padding: 0px 20px;
+  text-align: right;
+}
+
+.recent-chapter-footer-button-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}

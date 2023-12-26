@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.http import JsonResponse
 from _cm.models import courseDetail
@@ -5,9 +7,12 @@ from _cm.models import courseDetail
 from _cp.nmodels import mCourseN, mElementN
 
 # Create your views here.
+
+
 def index(request):
-    context = {'user':'mega'}
+    context = {'user': 'mega'}
     return render(request, "_cm/_cm.html", context)
+
 
 def getCourseBook(request):
     res = []
@@ -16,15 +21,16 @@ def getCourseBook(request):
         courseId = book.id
         title = book.title
 
-        res.append({"id":courseId, "title":title})
+        res.append({"id": courseId, "title": title})
     return JsonResponse({"book": res})
+
 
 def getDetail(request):
     courseId = request.POST.get('courseId')
     course = courseDetail.objects.filter(courseId=courseId).values().first()
 
     print(course)
-    
+
     return JsonResponse({"data": course})
 
 
@@ -40,7 +46,7 @@ def setDetail(request):
     # duration 0:무제한, 값
     # price 0:무료, 값
     print(request.POST)
-    
+
     year = request.POST.get('year')
     school = request.POST.get('school')
     grade = request.POST.get('grade')
@@ -64,12 +70,26 @@ def setDetail(request):
     course = courseDetail.objects.filter(courseId=courseId)
     if (course):
         course.update(year=year, school=school, grade=grade, semester=semester, subject=subject,
-                                  publisher=publisher, difficulty=difficulty, isTest=isTest, duration=duration, price=price, producer=producer,
-                                  thumnail=thumnail, courseId=courseId, courseTitle=courseTitle, courseSummary=courseSummary, desc=desc)
+                      publisher=publisher, difficulty=difficulty, isTest=isTest, duration=duration, price=price, producer=producer,
+                      thumnail=thumnail, courseId=courseId, courseTitle=courseTitle, courseSummary=courseSummary, desc=desc)
     else:
         detail = courseDetail(year=year, school=school, grade=grade, semester=semester, subject=subject,
-                                    publisher=publisher, difficulty=difficulty, isTest=isTest, duration=duration, price=price, producer=producer,
-                                    thumnail=thumnail, courseId=courseId, courseTitle=courseTitle, courseSummary=courseSummary, desc=desc)
+                              publisher=publisher, difficulty=difficulty, isTest=isTest, duration=duration, price=price, producer=producer,
+                              thumnail=thumnail, courseId=courseId, courseTitle=courseTitle, courseSummary=courseSummary, desc=desc)
         detail.save()
 
-    return JsonResponse({'message':'good'})
+    return JsonResponse({'message': 'good'})
+
+
+def get_detail_list(request):
+    try:
+        course_ids = request.POST.get("course_ids")
+        if course_ids:
+            course_ids = json.loads(course_ids)
+        queryset = courseDetail.objects.filter(
+            courseId__in=course_ids).values()
+
+        data = list(queryset)
+        return JsonResponse({"message": "success", "data": data})
+    except Exception as e:
+        return JsonResponse({"message": "Fail: get_detail_list"}, status=404)

@@ -1,15 +1,16 @@
-import { createElement } from "../../../../core/utils/dom-utils";
-import { classNames } from "../../../../core/utils/class-names";
+import { createElement } from "../../../core/utils/dom-utils";
+import { classNames } from "../../../core/utils/class-names";
 import { StudyResultServices } from "./study-result-services";
 
-import { dashboardHeader } from "../common/dashboard-header";
+import { dashboardHeader } from "../dashboard/common/dashboard-header";
 
+import { RecentChapter } from "./recent-chapter";
 import { ChapterStatsChart } from "./chapter-stats-chart";
 import { CourseResultsTable } from "./course-results-table";
 import { CourseTotalStats } from "./course-total-stats";
 
-require("./course-dashboard.css");
-export class CourseDashboard {
+require("../../../../css/pages/main/stats/stats-manager.css");
+export class StatsManager {
   static #studyResultEndpoint = "../st/api/study_result/properties/";
   /**
    *
@@ -18,7 +19,7 @@ export class CourseDashboard {
    * @param {string} options.courseId UUID format string
    */
   constructor(options = {}) {
-    // demo user도 dashboard를 사용할 수 있어야될까? 일단은 아니라고 둔다.
+    options.courseId = "9b4400f7-f7ad-4442-a4fe-380436d7a2a8";
     if (!options.studentId || !options.courseId) {
       throw new Error(`You need both student id and course id`);
     }
@@ -27,7 +28,7 @@ export class CourseDashboard {
     // TEST:
     this.courseId = "9b4400f7-f7ad-4442-a4fe-380436d7a2a8";
 
-    this.prefixCls = "course-dashboard";
+    this.prefixCls = "stats-manager";
     this.cardPrefixCls = "dashboard-card";
     this.largeLayoutCls = "grid-span-8";
     this.smallLayoutCls = "grid-span-4";
@@ -49,6 +50,9 @@ export class CourseDashboard {
     this.clChapterStats = new ChapterStatsChart(classNames([this.cardPrefixCls, `grid-span-${8}`]));
     this.elChapterStats = this.clChapterStats.getElement();
 
+    this.clRecentChapter = new RecentChapter({ className: "dashboard-card" });
+    this.elRecentChapter = this.clRecentChapter.getElement();
+
     this.clCourseResultsTable = new CourseResultsTable(classNames([this.cardPrefixCls, `grid-span-${8}`]));
     this.elCourseResultsTable = this.clCourseResultsTable.getElement();
 
@@ -67,7 +71,7 @@ export class CourseDashboard {
     });
 
     this.elBody = createElement("div", { className: `${this.prefixCls}-body` });
-    this.elBody.append(this.elChapterStats, this.elCourseResultsTable);
+    this.elBody.append(this.elRecentChapter, this.elChapterStats, this.elCourseResultsTable);
 
     this.elWrapper.append(this.elHeader, this.elBody);
   }
@@ -85,7 +89,7 @@ export class CourseDashboard {
     try {
       const param = { student_id: studentId, course_id: courseId };
       return axios
-        .get(CourseDashboard.#studyResultEndpoint, {
+        .get(StatsManager.#studyResultEndpoint, {
           params: param,
         })
         .then((res) => {
@@ -106,6 +110,7 @@ export class CourseDashboard {
     if (data) {
       this.studyResultData = data;
       this.clStudyResultServices = new StudyResultServices(data);
+      this.clStudyResultServices.getRecentChapters();
 
       this.totalAccuracyRate = this.clStudyResultServices.composeTotalAccuracyRate();
       this.totalProgress = this.clStudyResultServices.composeTotalProgress();
@@ -115,6 +120,7 @@ export class CourseDashboard {
   }
 
   renderDashboard(data) {
+    this.clRecentChapter.setData(data);
     this.clChapterStats.setData(data);
     this.clCourseResultsTable.setData(data);
 
@@ -126,8 +132,7 @@ export class CourseDashboard {
     });
 
     this.elCourseTotalStats = this.clCourseTotalStats.getElement();
-    console.log(this.elCourseTotalStats);
-    this.elBody.append(this.elCourseTotalStats);
+    this.elBody.prepend(this.elCourseTotalStats);
   }
 
   getElement() {

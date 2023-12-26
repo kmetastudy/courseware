@@ -1,9 +1,9 @@
-import { createElement } from "../../../../core/utils/dom-utils";
-import { MtuIcon } from "../../../../core/mtu/icon/mtu-icon";
-import isObject from "../../../../core/utils/type/isObject";
-import { classNames } from "../../../../core/utils/class-names";
+import { createElement } from "../../../core/utils/dom-utils";
+import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
+import isObject from "../../../core/utils/type/isObject";
+import { classNames } from "../../../core/utils/class-names";
 
-import { dashboardHeader } from "../common/dashboard-header";
+import { dashboardHeader } from "../dashboard/common/dashboard-header";
 
 export class CourseResultsTable {
   constructor(prefixCls) {

@@ -6,7 +6,7 @@ from _cp.models import mCourseN
 from _cp.constants import CP_TYPE_TESTUM, CP_TYPE_LESSON, CP_TYPE_EXAM
 
 from django.http.response import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.utils import timezone
 
 
 def create_property(course_id):
@@ -80,8 +80,7 @@ def create_study_result(course_id, student_id, *args, **kwargs):
 
 def get_study_result(course_id, student_id):
     if not course_id or not student_id:
-        study_result = mStudyResult.objects.all()
-        return study_result
+        return None
 
     id_course = uuid.UUID(str(course_id))
     id_student = uuid.UUID(str(student_id))
@@ -128,11 +127,15 @@ def update_study_result(*args, **kwargs):
 
         properties = json_properties["property"]
 
+        now_utc = timezone.now()
+        updated_date = now_utc.isoformat()
+
         for data in properties:
             if data["id"] == str(content_id):
                 data["results"] = json.loads(results)
                 data["progress"] = progress
                 data["point"] = point
+                data['updated_date'] = updated_date
 
         study_result.properties = json.dumps(
             json_properties, ensure_ascii=False)
@@ -188,8 +191,7 @@ def create_demo_study_result(course_id, student_id, *args, **kwargs):
 
 def get_demo_study_result(course_id, student_id):
     if not course_id or not student_id:
-        demo_study_result = mDemoStudyResult.objects.all()
-        return demo_study_result
+        return None
 
     id_course = uuid.UUID(str(course_id))
     id_student = uuid.UUID(str(student_id))
@@ -236,11 +238,15 @@ def update_demo_study_result(*args, **kwargs):
 
         properties = json_properties["property"]
 
+        now_utc = timezone.now()
+        updated_date = now_utc.isoformat()
+
         for data in properties:
             if data["id"] == str(content_id):
                 data["results"] = json.loads(results)
                 data["progress"] = progress
                 data["point"] = point
+                data['updated_date'] = updated_date
 
         demo_study_result.properties = json.dumps(
             json_properties, ensure_ascii=False)

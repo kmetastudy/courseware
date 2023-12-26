@@ -1,10 +1,10 @@
 import { createElement } from "../../../core/utils/dom-utils";
 
 import { mtmSideMenu } from "../../../core/ui/sideMenu/mtm-side-menu";
-import { MtmDashboardManager } from "./mtm-dashboard-manager";
+import { StatsManager } from "./stats-manager";
 
-require("../../../../css/pages/main/dashboard/app-dashboard.css");
-export class AppDashboard {
+require("../../../../css/pages/main/stats/app-stat.css");
+export class AppStats {
   /**usertype, studentId, userLogin
    *
    * @param {Object} config
@@ -12,7 +12,7 @@ export class AppDashboard {
    * @property {string} config.usertype
    * @property {string} config.userLogin
    */
-  constructor(config) {
+  constructor(config = {}) {
     this.config = config;
 
     this.init();
@@ -50,14 +50,15 @@ export class AppDashboard {
   }
 
   create() {
-    this.elThis = createElement("main", { className: "app-dashboard" });
+    this.elThis = createElement("main", { className: "app-stats" });
 
     this.clSide = new mtmSideMenu({ item: this.sideItems });
     this.elSide = this.clSide.getElement();
 
-    this.elDashboard = createElement("div", { className: "dashboard-wrapper" });
+    this.elDashboard = createElement("div", { className: "stats-wrapper" });
 
-    this.clDashboardManager = new MtmDashboardManager(this.config);
+    console.log("config: ", this.config);
+    this.clDashboardManager = new StatsManager(this.config);
     this.elDashboardManager = this.clDashboardManager.getElement();
     this.elDashboard.append(this.elDashboardManager);
 

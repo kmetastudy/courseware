@@ -1,5 +1,5 @@
-import { isNumber } from "../../../../core/utils/type/index";
-import { sum } from "../../../../core/utils/_utils";
+import { isNumber } from "../../../core/utils/type/index";
+import { sum } from "../../../core/utils/_utils";
 
 export class StudyResultServices {
   static #CHAPTER_TYPE = 0;
@@ -116,6 +116,20 @@ export class StudyResultServices {
         return Math.floor((solvedQuestionCount / attemptedQuestionCount) * 100);
       }
     });
+  }
+
+  getRecentChapters(num) {
+    const branchData = this.data.filter((data) => data.type !== StudyResultServices.#CHAPTER_TYPE && data.updated_date);
+    console.log(branchData);
+    branchData.forEach((data) => {
+      if (data.updated_date) {
+        data.updated_date = new Date(data.updated_date);
+      }
+    });
+
+    branchData.sort((a, b) => a.updated_date - b.updated_date);
+
+    return branchData;
   }
 
   // Utils

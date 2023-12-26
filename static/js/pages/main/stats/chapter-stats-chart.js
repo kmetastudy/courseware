@@ -1,7 +1,7 @@
-import { createElement } from "../../../../core/utils/dom-utils";
-import { isNumber, isObject } from "../../../../core/utils/type/index";
-import { classNames } from "../../../../core/utils/class-names";
-import { dashboardHeader } from "../common/dashboard-header";
+import { createElement } from "../../../core/utils/dom-utils";
+import { isNumber, isObject } from "../../../core/utils/type/index";
+import { classNames } from "../../../core/utils/class-names";
+import { dashboardHeader } from "../dashboard/common/dashboard-header";
 
 export class ChapterStatsChart {
   static #CHAPTER_TYPE = 0;
@@ -66,6 +66,12 @@ export class ChapterStatsChart {
       chart: {
         type: "bar",
         height: 480, //FIXME: responsive height, width
+        toolbar: {
+          show: false,
+        },
+      },
+      noData: {
+        text: "통계를 계산중입니다...",
       },
       plotOptions: {
         bar: {

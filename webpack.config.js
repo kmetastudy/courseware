@@ -139,10 +139,10 @@ var configDashboard = Object.assign({}, config, {
   name: "configDashboard",
 
   entry: {
-    st: path.resolve(__dirname, "_main/static/js/dashboard.js"),
+    dashboard: path.resolve(__dirname, "_main/static/js/dashboard.js"),
   },
   output: {
-    path: path.resolve(__dirname, "static/_bundle/main"),
+    path: path.resolve(__dirname, "static/_bundle/dashboard"),
     library: "dashboardlibrary",
     filename: "dashboard-bundle.js",
     libraryTarget: "var",
@@ -156,5 +156,26 @@ var configDashboard = Object.assign({}, config, {
   ],
 });
 
+var configStats = Object.assign({}, config, {
+  name: "configStats",
+
+  entry: {
+    dashboard: path.resolve(__dirname, "_main/static/js/stats.js"),
+  },
+  output: {
+    path: path.resolve(__dirname, "static/_bundle/stats"),
+    library: "statslibrary",
+    filename: "stats-bundle.js",
+    libraryTarget: "var",
+    clean: true,
+    // assetModuleFilename: '[name][ext]',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "stats-bundle.css",
+    }),
+  ],
+});
+
 // Return Array of Configurations
-module.exports = [configMain, configUser, configCP, configCM, configST, configDashboard];
+module.exports = [configMain, configUser, configCP, configCM, configST, configDashboard, configStats];
