@@ -160,9 +160,14 @@ def dashboard_view(request):
 
 @jwt_login_required
 def stats_view(request):
-    dashboard_context = make_context(request)
+    stats_context = make_context(request)
+    course_id = request.GET.get("course_id")
+    if course_id:
+        stats_context['course_id'] = course_id
+    else:
+        stats_context['course_id'] = None
 
-    context = {'context': json.dumps(dashboard_context)}
+    context = {'context': json.dumps(stats_context)}
 
     return render(request, "_main/stats.html", context)
 
