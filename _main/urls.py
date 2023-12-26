@@ -33,5 +33,6 @@ urlpatterns = [
 
     # dashboard
     path('dashboard/', dashboard_view, name='dashboard_view'),
+    path('stats/', stats_view, name='stats_view'),
 
 ]
