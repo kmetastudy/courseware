@@ -56,28 +56,28 @@
   font-family:'Single Day';
  }
 
- .slide1 {
+ .landing-swiper .slide1 {
   background-image: url('../../../static/img/banner1-2.png');
   background-repeat: no-repeat;
   background-size: cover;
  }
- .slide2 {
+ .landing-swiper .slide2 {
   background-image: url('../../../static/img/banner2-2.png');
   background-repeat: no-repeat;
   background-size: cover;
  }
- .slide3 {
+ .landing-swiper .slide3 {
   background-image: url('../../../static/img/banner3-2.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
  }
- .slide4 {
+ .landing-swiper .slide4 {
   background-image: url('../../../static/img/banner4-2.png');
   background-repeat: no-repeat;
   background-size: cover;
  }
- .slide5 {
+ .landing-swiper .slide5 {
   background-image: url('../../../static/img/banner5-2.png');
   background-repeat: no-repeat;
   background-size: cover;
