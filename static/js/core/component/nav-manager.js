@@ -31,11 +31,11 @@ export class NavManager {
     if (!this.userLogin) {
       login = { text: "로그인", onClick: () => (window.location.href = "/user/"), type: "text" };
     } else {
-      point = { text: "포인트 충전", onClick: () => (window.location.href = "/point/charge/") }
+      point = { text: "포인트 충전", onClick: () => (window.location.href = "/point/charge/") };
       logout = { text: "로그아웃", onClick: () => (window.location.href = "/user/api/logout/"), type: "text" };
     }
 
-    // dashboard = { text: "대시보드", onClick: () => (window.location.href = "#") };
+    dashboard = { text: "대시보드", onClick: () => (window.location.href = "/dashboard/") };
 
     return {
       logo,
