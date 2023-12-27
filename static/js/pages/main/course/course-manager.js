@@ -5,7 +5,7 @@ import { CourseView } from "./course-view"
 export function CourseManager(options, data) {
   this.options = options
   this.subject = "all"
-  this.filter = {grade:[], semester:[], difficulty:[], isTest:"True"}
+  this.filter = {grade:[], semester:[], publisher:[], difficulty:[], isTest:"True"}
   this.oriData = data
   this.data = data
   this.init()
@@ -76,9 +76,9 @@ CourseManager.prototype.prepareFilterOptions = function() {
       {text:'2학기 기말', type:4, onClick:this.onFilterHandler.bind(this)},
     ],
     publisher:[
-      {text:'미래엔', type:'miraen'},
-      {text:'비상', type:'visang'},
-      {text:'천재', type:'chunjae'}
+      {text:'미래엔', type:'miraen', onClick:this.onFilterHandler.bind(this)},
+      {text:'비상', type:'visang', onClick:this.onFilterHandler.bind(this)},
+      {text:'천재', type:'chunjae', onClick:this.onFilterHandler.bind(this)}
     ],
     difficulty:[
       {text:'개념과 기초', type:0, onClick:this.onFilterHandler.bind(this)},
@@ -123,8 +123,8 @@ CourseManager.prototype.onFilterHandler = async function(key, type) {
   }
 
   console.log(this.filter)
-  // this.data = await this.urlGetCourses()
-  // this.createCourseView()
+  this.data = await this.urlGetCourses()
+  this.createCourseView()
 }
 
 
