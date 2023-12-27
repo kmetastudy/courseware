@@ -214,6 +214,51 @@ class OrderPayment(AbstractPortonePayment):
             buyer_email=order.user
         )
     
+
+class PointUse(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, db_constraint=False)
+
+    class PayMethod(models.TextChoices):
+        POINT = "point", "포인트"
+
+    class PayStatus(models.TextChoices):
+        READY = "ready", "결제 준비"
+        PAID = "paid", "결제 완료"
+        CANCELLED = "cancelled", "결제 취소"
+        FAILED = "failed", "결제 실패"
+
+    name = models.CharField("결제명", max_length=200)
+    desired_amount = models.PositiveIntegerField("결제금액", editable=False)
+    buyer_name = models.CharField("구매자 이름", max_length=100, editable=False)
+    pay_method = models.CharField("결제수단", max_length=20, choices=PayMethod.choices, default=PayMethod.POINT)
+    pay_status = models.CharField("결제상태", max_length=20, choices=PayStatus.choices, default=PayStatus.READY)
+    is_paid_ok = models.BooleanField("결제성공 여부", default=False, db_index=True, editable=False)
+
+
+    def update(self):
+        self.is_paid_ok = True
+        if self.is_paid_ok:
+            self.order.status = Order.Status.PAID
+            self.order.save()
+            # 다수의 결제시도 삭제
+            self.order.pointuse_set.exclude(pk=self.pk).delete()
+
+        elif self.pay_status in  self.PayStatus.FAILED:
+            self.order.status = Order.Status.FAILED_PAYMENT
+            self.order.save()
+        elif self.pay_status in  self.PayStatus.CANCELLED:
+            self.order.status = Order.Status.CANCELLED
+            self.order.save()
+
+    @classmethod
+    def create_by_order(cls, order) -> "PointUse":
+        return cls.objects.create(
+            order=order,
+            name=order.name,
+            desired_amount=order.total_amount,
+            buyer_name=order.user,  # user FK로 연동
+        )
+    
 class PointCharge(AbstractPortonePayment):
 
     @classmethod
@@ -224,3 +269,12 @@ class PointCharge(AbstractPortonePayment):
             buyer_name=user,  # user FK로 연동
             # buyer_email=user
     )
+
+class Points(models.Model):
+    user = models.UUIDField(null=False, editable=False)
+    points = models.PositiveIntegerField("보유포인트", default=0)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    

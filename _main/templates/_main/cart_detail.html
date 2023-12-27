@@ -40,7 +40,7 @@
                                     {{ form.quantity }}
                                     {{ form.quantity.errors }}
                                 </td> -->
-                                <td class="p-4 w-[150px] text-sm text-end">{{ cart_course.course.price|intcomma }}원</td>
+                                <td class="p-4 w-[150px] text-sm text-end">{{ cart_course.course.price|intcomma }}P</td>
                             </tr>
                         {% endwith %}
     
@@ -67,25 +67,21 @@
             </div>
             <div class="my-2 p-2 w-full rounded-lg shadow-md">
                 <div class="p-2 flex justify-between text-sm">
-                    <p>포인트</p>
-                    <p class="text-gray-500 text-xs">보유 <span class="text-green-600">0</span></p>
+                    <p>포인트 결제</p>
+                    
                 </div>
-                <div class="pb-2 w-full flex justify-center">
-                    <input type="number" class="px-2 w-[180px] border rounded-md text-end" id="point" placeholder="0"/>
-                    <button class="flex-none ml-2 p-2 border rounded-md text-sm">전액사용</button>
+                <div class="pb-2 w-full flex justify-between border-b">
+                    <p class="p-2 text-gray-500">보유 <span class="text-green-600">{{point.points|intcomma}}</span>P</p>
+                    <button class="flex-none ml-2 p-2 border rounded-md text-sm" onclick="window.location.href='/point/charge/'">충전</button>
                 </div>
-                <div class="p-2 text-xs">
+                <div class="p-2">
                     <div class="flex justify-between">
                         <p class="text-gray-500">전체상품 금액</p>
-                        <p class="text-gray-500">{{bill.total_amount|intcomma}}원</p>
+                        <p class="">{{total_amount|intcomma}}P</p>
                     </div>
                     <div class="flex justify-between">
-                        <p class="text-gray-500">할인금액</p>
-                        <p>-{{bill.points|intcomma}}</p>
-                    </div>
-                    <div class="py-2 flex justify-between text-sm">
-                        <p>총 결제금액</p>
-                        <p>{{bill.actual_payment|intcomma}}원</p>
+                        <p class="text-gray-500">포인트 사용</p>
+                        <p class="">-{{total_amount|intcomma}}P</p>
                     </div>
                 </div>
                 <button class="p-2 w-full border rounded-lg hover:border-black" onclick='window.location.href="/orders/new/"'>주문하기</button>

@@ -2,7 +2,7 @@ import json
 from django.db.models import Q
 from django.forms import modelformset_factory
 from django.shortcuts import get_object_or_404, redirect, render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 
 from decouple import config
@@ -10,7 +10,7 @@ from decouple import config
 from _cm.models import courseDetail
 from _cp.nmodels import mCourseN
 from _main.forms import CartCourseForm, PaymentForm
-from _main.models import CartCourse, Order, OrderPayment, OrderedProduct, Payment, PointCharge
+from _main.models import CartCourse, Order, OrderPayment, OrderedProduct, Payment, PointCharge, PointUse, Points
 from _user.decorators import jwt_login_required
 from _user.models import mUser
 from _user.utils import make_context
@@ -98,6 +98,7 @@ def mainView(request, school, subject):
 def getCourses(request, school, subject):
     grade = request.POST.getlist('grade[]', None)
     semester = request.POST.getlist('semester[]', None)
+    publisher = request.POST.getlist('publisher[]', None)
     difficulty = request.POST.getlist('difficulty[]', None)
     isTest = request.POST.get('isTest')
 
@@ -113,6 +114,8 @@ def getCourses(request, school, subject):
         q.add(Q(grade__in=grade), q.AND)
     if semester:
         q.add(Q(semester__in=semester), q.AND)
+    if publisher:
+        q.add(Q(publisher__in=publisher), q.AND)
     if difficulty:
         q.add(Q(difficulty__in=difficulty), q.AND)
 
@@ -204,10 +207,15 @@ def cart_detail(request):
             queryset=cart_course_qs
         )
 
+    total_amount = sum(cart_product.amount for cart_product in list(cart_course_qs))
+    point = Points.objects.get(user=request.userId)
+
     context = {
             "context": json.dumps(context_sample),
             "formset": formset,
-            "user":user
+            "user":user,
+            "total_amount":total_amount,
+            "point":point
             }
 
     return render(request, "_main/cart_detail.html", context)
@@ -229,10 +237,12 @@ def add_to_cart(request, course_pk):
 @jwt_login_required
 def point_history(request):
     context_sample = make_context(request)
+    charge = PointCharge.objects.filter(is_paid_ok=True, buyer_name=request.userId).values('name', 'desired_amount')
     context = {
             "context": json.dumps(context_sample),
+            "charge": charge
             }
-    return render(request, "_main/mycourse.html", context)
+    return render(request, "_main/point_history.html", context)
 
 
 @jwt_login_required
@@ -278,6 +288,12 @@ def point_check(request, payment_pk):
     payment = get_object_or_404(
         PointCharge, pk=payment_pk)
     payment.update()
+
+    points, created = Points.objects.get_or_create(user=request.userId, defaults = {'points':payment.desired_amount})
+
+    if not created:
+        points.points += payment.desired_amount
+        points.save()
     # return redirect("_main:order_detail", order_pk)
     # return redirect("_main:order_list")
     return redirect("_main:point_history")
@@ -312,30 +328,38 @@ def order_pay(request, pk):
     if not order.can_pay():
         return redirect("order_detail", order.pk)  # TODO: order_detail 구현
 
-    payment = OrderPayment.create_by_order(order)
+    # payment = OrderPayment.create_by_order(order)
+    payment = PointUse.create_by_order(order)
 
-    payment_props = {
-        "merchant_uid": payment.merchant_uid,
-        "name": payment.name,
-        "amount": payment.desired_amount,
-        "buyer_name": 'yun',  # user 연결
-        "buyer_email": payment.buyer_email
-    }
+    # payment_props = {
+    #     # "merchant_uid": payment.merchant_uid,
+    #     "name": payment.name,
+    #     "amount": payment.desired_amount,
+    #     "buyer_name": 'yun',  # user 연결
+    #     "buyer_email": payment.buyer_email
+    # }
 
-    context = {
-        "context": json.dumps(context_sample),
-        "portone_shop_id": config("PORTONE_SHOP_ID"),
-        "payment_props": payment_props,
-        "next_url": reverse("_main:order_check", args=[order.pk, payment.pk])
-    }
-    return render(request, "_main/order_pay.html", context)
+    # context = {
+    #     "context": json.dumps(context_sample),
+    #     "portone_shop_id": config("PORTONE_SHOP_ID"),
+    #     "payment_props": payment_props,
+    #     "next_url": reverse("_main:order_check", args=[order.pk, payment.pk])
+    # }
+    # return render(request, "_main/order_pay.html", context)
+    return HttpResponseRedirect(reverse("_main:order_check", args=[order.pk, payment.pk]))
 
 
 @jwt_login_required
 def order_check(request, order_pk, payment_pk):
+    # payment = get_object_or_404(
+    #     OrderPayment, pk=payment_pk, order__pk=order_pk)
     payment = get_object_or_404(
-        OrderPayment, pk=payment_pk, order__pk=order_pk)
+        PointUse, pk=payment_pk, order__pk=order_pk)
     payment.update()
+
+    points = Points.objects.get(user=request.userId)
+    points.points -= payment.desired_amount
+    points.save()
     # return redirect("_main:order_detail", order_pk)
     # return redirect("_main:order_list")
     return redirect("_main:mycourse")
