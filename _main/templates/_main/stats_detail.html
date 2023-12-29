@@ -1,0 +1,39 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>대시보드</title>
+    <!-- MDB icon -->
+
+    <!-- font(NotoSansKr) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet" />
+    <!-- axios(currently for test) -->
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
+    <link rel="icon" href="{% static 'img/mdb-favicon.ico' %}" type="image/x-icon" />
+
+    <!-- Tabulator -->
+    <link rel="stylesheet" href="{% static '_dist/tabulator/tabulator_modern.min.css' %}" />
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <!-- apexcharts -->
+    <script type="text/javascript" src="{% static '_dist/apexcharts/apexcharts.min.js' %}"></script>
+  </head>
+
+  <body>
+    <div id="main"></div>
+
+    <link rel="stylesheet" href="{% static '_bundle/statsdetail/stats-detail-bundle.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/statsdetail/stats-detail-bundle.js' %}"></script>
+  </body>
+
+  <script>
+    var csrftoken = "{{csrf_token}}";
+    window.addEventListener("DOMContentLoaded", function () {
+      statsdetaillibrary.stats_detail_run("{{ context|escapejs }}");
+    });
+  </script>
+</html>

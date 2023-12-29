@@ -53,23 +53,23 @@ def mainView(request, school, subject):
             {'kor': '과학', 'eng': 'sci'},
             {'kor': '도덕', 'eng': 'mor'}],
         'middle': [
-            { 'kor':'국어', 'eng':'kor' },
-            { 'kor':'영어', 'eng':'eng' },
-            { 'kor':'수학', 'eng':'math' },
-            { 'kor':'사회', 'eng':'soc' },
-            { 'kor':'역사', 'eng':'hist' },
-            { 'kor':'과학', 'eng':'sci' },
-            { 'kor':'정보', 'eng':'info' },
-            { 'kor':'도덕', 'eng':'mor' } ],
+            {'kor': '국어', 'eng': 'kor'},
+            {'kor': '영어', 'eng': 'eng'},
+            {'kor': '수학', 'eng': 'math'},
+            {'kor': '사회', 'eng': 'soc'},
+            {'kor': '역사', 'eng': 'hist'},
+            {'kor': '과학', 'eng': 'sci'},
+            {'kor': '정보', 'eng': 'info'},
+            {'kor': '도덕', 'eng': 'mor'}],
         'high': [
-            { 'kor':'국어', 'eng':'kor' },
-            { 'kor':'영어', 'eng':'eng' },
-            { 'kor':'수학', 'eng':'math' },
-            { 'kor':'사회', 'eng':'soc' },
-            { 'kor':'한국사', 'eng':'korhist' },
-            { 'kor':'과학', 'eng':'sci' },
-            { 'kor':'정보', 'eng':'info' },
-            { 'kor':'도덕', 'eng':'mor' } ],
+            {'kor': '국어', 'eng': 'kor'},
+            {'kor': '영어', 'eng': 'eng'},
+            {'kor': '수학', 'eng': 'math'},
+            {'kor': '사회', 'eng': 'soc'},
+            {'kor': '한국사', 'eng': 'korhist'},
+            {'kor': '과학', 'eng': 'sci'},
+            {'kor': '정보', 'eng': 'info'},
+            {'kor': '도덕', 'eng': 'mor'}],
     }
     print(request.method)
     if (subject == 'all' and request.method == 'GET'):
@@ -166,6 +166,20 @@ def stats_view(request):
     return render(request, "_main/stats.html", context)
 
 
+@jwt_login_required
+def stats_detail_view(request, course_id):
+    if not course_id:
+
+        return redirect('stats')
+    else:
+        stats_context = make_context(request)
+        stats_context['course_id'] = course_id
+
+        context = {'context': json.dumps(stats_context)}
+
+        return render(request, "_main/stats_detail.html", context)
+
+
 def detail_chapter(request):
     courseId = request.POST.get('courseId')
     replaced_id = courseId.replace('-', '')
@@ -205,10 +219,10 @@ def cart_detail(request):
         )
 
     context = {
-            "context": json.dumps(context_sample),
-            "formset": formset,
-            "user":user
-            }
+        "context": json.dumps(context_sample),
+        "formset": formset,
+        "user": user
+    }
 
     return render(request, "_main/cart_detail.html", context)
 
@@ -226,12 +240,13 @@ def add_to_cart(request, course_pk):
 
     return HttpResponse("Ok")
 
+
 @jwt_login_required
 def point_history(request):
     context_sample = make_context(request)
     context = {
-            "context": json.dumps(context_sample),
-            }
+        "context": json.dumps(context_sample),
+    }
     return render(request, "_main/mycourse.html", context)
 
 
@@ -241,14 +256,15 @@ def point_charge(request):
 
     if request.method == "POST":
         charge = request.POST.get('charge')
-        charge_re = int(charge.replace(',',''))
+        charge_re = int(charge.replace(',', ''))
         payment = PointCharge.create(request.userId, charge_re)
         return redirect('_main:point_pay', pk=payment.pk)
 
     context = {
-            "context": json.dumps(context_sample),
-            }
+        "context": json.dumps(context_sample),
+    }
     return render(request, "_main/point_charge.html", context)
+
 
 @jwt_login_required
 def point_pay(request, pk):
@@ -273,6 +289,7 @@ def point_pay(request, pk):
 
     return render(request, "_main/point_pay.html", context)
 
+
 @jwt_login_required
 def point_check(request, payment_pk):
     payment = get_object_or_404(
@@ -281,6 +298,7 @@ def point_check(request, payment_pk):
     # return redirect("_main:order_detail", order_pk)
     # return redirect("_main:order_list")
     return redirect("_main:point_history")
+
 
 @jwt_login_required
 def order_list(request):
