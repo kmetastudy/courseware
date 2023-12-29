@@ -1,31 +1,32 @@
-import { createElement } from "../../../core/utils/dom-utils";
-import { dashboardHeader } from "../dashboard/common/dashboard-header";
-import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
-import { MtuProgress } from "../../../core/mtu/progress/mtu-progress";
-import { classNames } from "../../../core/utils/class-names";
+import { createElement } from "../../../../core/utils/dom-utils";
+import { dashboardHeader } from "../../dashboard/common/dashboard-header";
+import { MtuIcon } from "../../../../core/mtu/icon/mtu-icon";
+import { MtuProgress } from "../../../../core/mtu/progress/mtu-progress";
+import { classNames } from "../../../../core/utils/class-names";
+import isNumber from "../../../../core/utils/type/isNumber";
 
 require("./course-total-stats.css");
 export class CourseTotalStats {
-  constructor({ progress, questionCorrectRate, videoCorrectRate, className } = {}) {
-    this.progress = typeof progress === "number" ? progress : 0;
-    this.questionCorrectRate = typeof questionCorrectRate === "number" ? questionCorrectRate : 0;
+  constructor({ className } = {}) {
+    this.progress = 0;
+    this.questionCorrectRate = 0;
+    this.videoCorrectRate = 0;
     this.className = typeof className === "string" ? className : null;
+
+    this.elInfoRegistry = {};
 
     this.init();
   }
 
   init() {
     this.initVariables();
+
     this.create();
   }
 
   initVariables() {
     this.prefixCls = `course-total-stats`;
-    this.title = "학습 통계";
-
-    this.stringProgress = `${Math.round(this.progress)}%`;
-    this.stringQuestionCorrectRate = `${Math.round(this.questionCorrectRate)}%`;
-    this.stringVideoCorrectRate = `${Math.round(this.videoCorrectRate)}%`;
+    this.title = "학습 현황";
   }
 
   create() {
@@ -35,7 +36,6 @@ export class CourseTotalStats {
     this.elBody = this.createBody();
 
     this.elThis.append(this.elHeader, this.elBody);
-    console.log(this.elThis);
   }
 
   createHeader() {
@@ -49,31 +49,33 @@ export class CourseTotalStats {
   }
 
   createBody() {
-    //
     const elBody = createElement("div", { className: `${this.prefixCls}-body` });
-    const elStatInfoBoxContainer = this.createStatInfoBoxContainer();
-    const elProgress = this.createProgress(this.progress);
+    this.elStatInfoBoxContainer = this.createStatInfoBoxContainer();
+    this.elProgress = this.createProgress(this.progress);
 
-    elBody.append(elStatInfoBoxContainer, elProgress);
-    // elBody.append(elStatInfoBoxContainer);
-
+    elBody.append(this.elStatInfoBoxContainer, this.elProgress);
     return elBody;
   }
 
   createStatInfoBoxContainer() {
     const elContainer = createElement("div", { className: `${this.prefixCls}-body-info-box-container` });
-    //
-    // const elVideoCorrectRate = this.createInfoBox("playCircleFilled", "영상 문제 정답률", this.stringVideoCorrectRate);
-    const elQuestionCorrectRate = this.createInfoBox("form", "테스트 정답률", this.stringQuestionCorrectRate);
+
+    // this.elVideoCorrectRate = this.createInfoBox("playCircleFilled", "영상 문제 정답률", this.videoCorrectRate);
+    this.elQuestionCorrectRate = this.createInfoBox(
+      "form",
+      "테스트 정답률",
+      `${this.questionCorrectRate}%`,
+      "questionCorrectRate",
+    );
 
     // elContainer.append(elVideoCorrectRate, elQuestionCorrectRate);
-    elContainer.append(elQuestionCorrectRate);
+    elContainer.append(this.elQuestionCorrectRate);
 
     return elContainer;
   }
 
   // 왼쪽에는 아이콘, 오른쪽에는 text가 있는 ui
-  createInfoBox(icon, title, info) {
+  createInfoBox(icon, title, info, key) {
     const prefixCls = "dashboard-stat-info-box";
     const elInfoBox = createElement("div", { className: prefixCls });
 
@@ -89,9 +91,12 @@ export class CourseTotalStats {
     const elInfo = createElement("p", { className: `${prefixCls}-info` });
     elInfo.textContent = info;
 
+    key ? (this.elInfoRegistry[key] = elInfo) : null;
+
     elTextWrapper.append(elTitle, elInfo);
 
     elInfoBox.append(elIconWrapper, elTextWrapper);
+
     return elInfoBox;
   }
 
@@ -105,17 +110,28 @@ export class CourseTotalStats {
     return elWrapper;
   }
 
-  setData(data) {
-    this.data = data;
+  // ============ API ============
 
-    this.progress = this.composeProgress(data);
+  setData({ progress = 0, questionCorrectRate = 0 } = {}) {
+    if (isNumber(progress)) {
+      this.setProgress(progress);
+    }
+
+    if (isNumber(questionCorrectRate)) {
+      this.setQuestionCorrectRate(questionCorrectRate);
+    }
   }
 
-  // 메가코스
-  // 김포 양국고등학교
-  // AI 코스웨어
-  // 메가코스 국어 체험
-  // 어휘테스트
+  setProgress(progress) {
+    const newProgress = this.createProgress(progress);
+    this.elProgress.replaceWith(newProgress);
+
+    this.elProgress = newProgress;
+  }
+
+  setQuestionCorrectRate(questionCorrectRate) {
+    this.elInfoRegistry["questionCorrectRate"].textContent = questionCorrectRate;
+  }
 
   getElement() {
     return this.elThis;

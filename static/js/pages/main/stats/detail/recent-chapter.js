@@ -1,9 +1,9 @@
-import { createElement } from "../../../core/utils/dom-utils";
-import { MtuButton } from "../../../core/mtu/button/mtu-button";
-import { dashboardHeader } from "../dashboard/common/dashboard-header";
-import { classNames } from "../../../core/utils/class-names";
+import { createElement } from "../../../../core/utils/dom-utils";
+import { MtuButton } from "../../../../core/mtu/button/mtu-button";
+import { dashboardHeader } from "../../dashboard/common/dashboard-header";
+import { classNames } from "../../../../core/utils/class-names";
 
-require("../../../../css/pages/main/stats/recent-chapter.css");
+require("../../../../../css/pages/main/stats/detail/recent-chapter.css");
 export class RecentChapter {
   static #CHAPTER_TYPE = 0;
 
@@ -23,6 +23,7 @@ export class RecentChapter {
   initVariables() {
     this.title = "최근 학습 강의";
     this.prefixCls = "recent-chapter";
+    this.noDataText = "아직 수강하신 강의가 없습니다.";
   }
 
   async prepareData() {
@@ -46,9 +47,6 @@ export class RecentChapter {
         title: this.title,
         className: `${this.prefixCls}-title`,
       },
-      anchor: {
-        className: `${this.prefixCls}-anchor`,
-      },
     });
     return elHeader;
   }
@@ -56,14 +54,14 @@ export class RecentChapter {
   createBody() {
     const elBody = createElement("div", { className: `${this.prefixCls}-body` });
 
-    const elCourseTitle = createElement("a", {
-      className: `${this.prefixCls}-course-title`,
+    this.elBranchTitle = createElement("a", {
+      className: `${this.prefixCls}-branch-title`,
       attributes: { href: this.courseUrl },
     });
 
-    elCourseTitle.textContent = this.courseTitle ? this.courseTitle : "아직 수강하신 강의가 없습니다.";
+    this.elBranchTitle.textContent = this.noDataText;
 
-    elBody.append(elCourseTitle);
+    elBody.append(this.elBranchTitle);
     return elBody;
   }
 
@@ -89,23 +87,21 @@ export class RecentChapter {
   setData(data) {
     if (data) {
       const recentData = this.getRecentData(data);
-      console.log(recentData);
+      this.elBranchTitle.textContent = recentData?.title ? recentData.title : this.noDataText;
     }
-    //
   }
 
-  getRecentData(data) {
+  getRecentData(data = []) {
     const dataWithDate = data.filter((data) => data.type !== RecentChapter.#CHAPTER_TYPE && data.updated_date);
     dataWithDate.forEach((data) => {
       if (data.updated_date) {
         data.updated_date = new Date(data.updated_date);
       }
     });
-
     dataWithDate.sort((a, b) => a.updated_date - b.updated_date);
-
     return dataWithDate[0];
   }
+
   getElement() {
     return this.elThis;
   }

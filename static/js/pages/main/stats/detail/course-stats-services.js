@@ -1,21 +1,31 @@
-import { isNumber } from "../../../core/utils/type/index";
-import { sum } from "../../../core/utils/_utils";
+import { isNumber } from "../../../../core/utils/type/index";
+import { sum } from "../../../../core/utils/_utils";
 
-export class StudyResultServices {
+/**
+ * This is service to handle stats, using result data
+ * {this.data} is data of mStudyResults/mDemoStudyResults
+ * [this.property] is part of this.data mStudyResults > properties > property
+ * property contains result informations.
+ */
+export class CourseStatsServices {
   static #CHAPTER_TYPE = 0;
   static #QUESTION_TYPE = "q";
-  constructor(data) {
-    if (!data) {
-      throw new Error("Require data");
-    }
 
+  constructor() {}
+
+  setData(data) {
     this.data = data;
+    this.property = data?.properties?.property;
+  }
+
+  getProperty() {
+    return this.property;
   }
 
   composeTotalAccuracyRate() {
     let [attemptedQuestionCount, solvedQuestionCount] = [0, 0];
 
-    const branchData = this.data.filter((data) => data.type !== StudyResultServices.#CHAPTER_TYPE);
+    const branchData = this.property.filter((data) => data.type !== CourseStatsServices.#CHAPTER_TYPE);
 
     branchData.forEach((item) => {
       const flattenedTypes = item.units.map((unit) => unit.types).flat();
@@ -30,7 +40,7 @@ export class StudyResultServices {
         const repeat = flattendRepeat[i];
 
         // 일단은 비디오는 고려하지 않고, 문제만 고려한다.
-        if (type !== StudyResultServices.#QUESTION_TYPE) {
+        if (type !== CourseStatsServices.#QUESTION_TYPE) {
           continue;
         }
 
@@ -57,7 +67,7 @@ export class StudyResultServices {
      * 한번에 맞춘게 아니면, 틀렸다고 간주한다.
      * 비디오는 제외하고, 문제만 계산한다.
      */
-    const chapterData = this.data.filter((data) => data.type === StudyResultServices.#CHAPTER_TYPE);
+    const chapterData = this.property.filter((data) => data.type === CourseStatsServices.#CHAPTER_TYPE);
     const { length } = chapterData;
 
     const attemptedQuestions = new Array(length).fill(0);
@@ -65,8 +75,8 @@ export class StudyResultServices {
 
     let chapterIndex = -1;
 
-    this.data.forEach((data) => {
-      if (data.type === StudyResultServices.#CHAPTER_TYPE) {
+    this.property.forEach((data) => {
+      if (data.type === CourseStatsServices.#CHAPTER_TYPE) {
         chapterIndex++;
       } else {
         if (data.results.length === 0) {
@@ -90,7 +100,7 @@ export class StudyResultServices {
           const repeat = flattendRepeat[i];
 
           // 일단은 비디오는 고려하지 않고, 문제만 고려한다.
-          if (type !== StudyResultServices.#QUESTION_TYPE) {
+          if (type !== CourseStatsServices.#QUESTION_TYPE) {
             continue;
           }
 
@@ -119,8 +129,10 @@ export class StudyResultServices {
   }
 
   getRecentChapters(num) {
-    const branchData = this.data.filter((data) => data.type !== StudyResultServices.#CHAPTER_TYPE && data.updated_date);
-    console.log(branchData);
+    const branchData = this.property.filter(
+      (data) => data.type !== CourseStatsServices.#CHAPTER_TYPE && data.updated_date,
+    );
+
     branchData.forEach((data) => {
       if (data.updated_date) {
         data.updated_date = new Date(data.updated_date);
@@ -132,15 +144,11 @@ export class StudyResultServices {
     return branchData;
   }
 
-  // Utils
-
   composeTotalProgress() {
-    const branchData = this.data.filter((data) => data.type !== StudyResultServices.#CHAPTER_TYPE);
+    const branchData = this.property.filter((data) => data.type !== CourseStatsServices.#CHAPTER_TYPE);
 
     const maxProgressSum = branchData.length * 100;
     const progressSum = sum(branchData.map((data) => data.progress ?? 0));
-
-    console.log(maxProgressSum, progressSum);
 
     if (maxProgressSum === 0) {
       return 0;
@@ -149,6 +157,7 @@ export class StudyResultServices {
     return Math.floor((progressSum / maxProgressSum) * 100);
   }
 
+  // Utils
   isCorrectOnFirstAttempt(result, repeat) {
     return result === "O" && repeat === 1;
   }
