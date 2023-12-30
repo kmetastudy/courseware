@@ -1,26 +1,71 @@
 {% extends "_main/base.html" %}
-
+{% load static %}
 {% block content %}
 <div class="w-full flex flex-col items-center">
-    <div class="swiper w-full">
+    <div class="landing-swiper w-full overflow-hidden">
         <div class="swiper-wrapper ">
-            <div class="swiper-slide slide5 cursor-pointer flex justify-center"><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner5-1.png"></div>
-            <div class="swiper-slide slide1 cursor-pointer flex justify-center" onclick='window.location.href="/desc/1/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner1-1.png"></div>
-            <div class="swiper-slide slide2 cursor-pointer flex justify-center" onclick='window.location.href="/desc/2/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner2-1.png"></div>
-            <div class="swiper-slide slide3 cursor-pointer flex justify-center" onclick='window.location.href="/desc/3/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner3-1.png"></div>
-            <div class="swiper-slide slide4 cursor-pointer flex justify-center" onclick='window.location.href="/desc/4/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner4-1.png"></div>
+            <div class="swiper-slide slide5 cursor-pointer flex justify-center"><img class="xl:h-[500px] 2xl:h-[600px]" src="{% static 'img/banner5-1.png' %}"></div>
+            <div class="swiper-slide slide1 cursor-pointer flex justify-center" onclick='window.location.href="/desc/1/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="{% static 'img/banner1-1.png' %}"></div>
+            <div class="swiper-slide slide2 cursor-pointer flex justify-center" onclick='window.location.href="/desc/2/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="{% static 'img/banner2-1.png' %}"></div>
+            <div class="swiper-slide slide3 cursor-pointer flex justify-center" onclick='window.location.href="/desc/3/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="{% static 'img/banner3-1.png' %}"></div>
+            <div class="swiper-slide slide4 cursor-pointer flex justify-center" onclick='window.location.href="/desc/4/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="{% static 'img/banner4-1.png' %}"></div>
             
         </div>
         <div class="py-2 flex justify-end items-center swiper-pagination"></div>
         
     </div>
-    <div class="p-8 w-full xl:w-2/3 flex flex-col items-center">
+    <div class="flex flex-col items-center">
         <div class="search w-full flex">
             
         </div>
-        <div class="w-full"><p class="pt-4 self-start text-lg">전체 강의<span class="text-sm text-red-400">new</span></p></div>
-        <div class="courses_landing">
+        <div class="courses_recomend w-full">
+            <!-- <div class="course-swiper w-[1000px]">
+                <div class="swiper-container py-2 w-full">
+                    <p class="w-fit border-b-4 border-b-[#322757] text-xl">국어 추천코스</p>
+                    <div id="국어" class="swiper-wrapper">
+                    </div>
+                </div>
+                <div class="swiper-container py-2 w-full">
+                    <p class="w-fit border-b-4 border-b-[#322757] text-xl">영어 추천코스</p>
+                    <div id="영어" class="swiper-wrapper">
+                    </div>
+                </div>
+                <div class="swiper-container py-2 w-full">
+                    <p class="w-fit border-b-4 border-b-[#322757] text-xl">수학 추천코스</p>
+                    <div id="수학" class="swiper-wrapper">
+                    </div>
+                </div>
+                <div class="swiper-container py-2 w-full">
+                    <p class="w-fit border-b-4 border-b-[#322757] text-xl">학교별 강의</p>
+                    <div id="학교" class="swiper-wrapper">
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="w-2/3"><p class="pt-4 self-start text-lg">전체 강의<span class="text-sm text-red-400">new</span></p></div>
+        
+        <div class="w-2/3 courses_landing">
             
+        </div>
+
+        <div class="pt-6 w-2/3 flex items-center"><object type="image/svg+xml" data="/static/assets/Star5.svg"></object><p class="pl-2 text-[32px]">자주하는 질문 FAQ</p></div>
+        <div class="pb-6 w-2/3">
+            <div class="py-4 w-full">
+                <div class="faq-btn p-2 text-[#3884FF] border shadow">01. 회원가입 & 로그인</div>
+                <div class="p-2 border hidden"><img src="/static/img/landing/FAQ1.png"></div>
+            </div>
+            <div class="py-4 w-full">
+                <div class="faq-btn p-2 text-[#3884FF] border shadow">02. 포인트 충전 방법</div>
+                <div class="p-2 border hidden"><img src="/static/img/landing/FAQ2.png"></div>
+            </div>
+            <div class="py-4 w-full">
+                <div class="faq-btn p-2 text-[#3884FF] border shadow">03. 영상 후 문제 (나노학습)</div>
+                <div class="p-2 border hidden"><img src="/static/img/landing/FAQ1.png"></div>
+            </div>
+            <div class="py-4 w-full">
+                <div class="faq-btn p-2 text-[#3884FF] border shadow">04. 수료증</div>
+                <div class="p-2 border hidden"><img src="/static/img/landing/FAQ4.png"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -30,7 +75,11 @@
 
 {% block extra-script %}
 <script>
-    var mySwiper = new Swiper('.swiper',{
+    $('.faq-btn').on('click', (e) => {
+        e.target.nextElementSibling.classList.toggle('hidden')
+    })
+
+    var mySwiper = new Swiper('.landing-swiper',{
         loop:true,
         autoplay:{
             delay:5000,
@@ -48,11 +97,14 @@
         
         centeredSlides:true
     })
+
     window.addEventListener("DOMContentLoaded", function () {
         // console.log("mainlibrary: ", mainlibrary);
 
         var courses = JSON.parse("{{ courses|escapejs }}");
-        mainlibrary.CourseLandingOnReady(context, courses)
+        var recommend = JSON.parse("{{ recommend|escapejs }}");
+        mainlibrary.CourseLandingOnReady(context, courses, recommend)
+
     });
 </script>
 {% endblock %}

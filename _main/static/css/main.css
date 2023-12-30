@@ -5,7 +5,7 @@
 
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600&display=swap');
 
 
 @font-face {
@@ -22,8 +22,8 @@
  
  body{
   font-family: 'Noto Sans KR', sans-serif;
-
  }
+
 
  .page1{
   font-family: 'Pretendard';
@@ -56,35 +56,36 @@
   font-family:'Single Day';
  }
 
- .slide1 {
-  background-image: url('../../../static/img/banner1-2.png');
+ .landing-swiper .slide1 {
+  background-image: url('/static/img/banner1-2.png');
   background-repeat: no-repeat;
   background-size: cover;
  }
- .slide2 {
-  background-image: url('../../../static/img/banner2-2.png');
+ .landing-swiper .slide2 {
+  background-image: url('/static/img/banner2-2.png');
   background-repeat: no-repeat;
   background-size: cover;
  }
- .slide3 {
-  background-image: url('../../../static/img/banner3-2.png');
+ .landing-swiper .slide3 {
+  background-image: url('/static/img/banner3-2.png');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
  }
- .slide4 {
-  background-image: url('../../../static/img/banner4-2.png');
+ .landing-swiper .slide4 {
+  background-image: url('/static/img/banner4-2.png');
   background-repeat: no-repeat;
   background-size: cover;
  }
- .slide5 {
-  background-image: url('../../../static/img/banner5-2.png');
+ .landing-swiper .slide5 {
+  background-image: url('/static/img/banner5-2.png');
   background-repeat: no-repeat;
   background-size: cover;
  }
 
- .swiper-pagination-bullet { width: 12px; height: 12px; background: transparent; border: 1px solid white; opacity: 1; }
+.swiper-pagination-bullet { width: 12px; height: 12px; background: transparent; border: 1px solid white; opacity: 1; }
 .swiper-pagination-bullet-active { width: 40px; transition: width .5s; border-radius: 5px; background: white; border: 1px solid transparent; }
+
 
  #toast_message {
   opacity: 0;
@@ -114,6 +115,30 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 /* Firefox */
-input[type=number] {
+/* input[type=number] {
   -moz-appearance: textfield;
-}
+} */
+
+.swiper-background1 {
+  background-image: url('/static/img/landing/background1.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+ }
+
+ .swiper-background2 {
+  background-image: url('/static/img/landing/background2.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+ }
+
+ .swiper-background3 {
+  background-image: url('/static/img/landing/background3.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+ }
+
+ .swiper-background4 {
+  background-image: url('/static/img/landing/background4.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+ }

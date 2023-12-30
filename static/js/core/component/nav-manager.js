@@ -16,20 +16,31 @@ export class NavManager {
   }
 
   prepareNavOptions() {
-    const logo = { image: "/static/img/Course12Logo.png", onClick: () => (window.location.href = "/") };
+    const logo = { image: "/static/assets/logo_courseware_white.png", onClick: () => (window.location.href = "/") };
     const menu = [
-      { title: "초등", onClick: () => (window.location.href = "/courses/element/all") },
-      { title: "중등", onClick: () => (window.location.href = "/courses/middle/all") },
+      { title: "초등", onClick: () => (window.location.href = "/courses/element/all"), color: "FFF500" },
+      { title: "중등", onClick: () => (window.location.href = "/courses/middle/all"), color: "F6D5EA" },
       // { title: "예비고1", onClick: () => (window.location.href = "/courses/midhigh/all") },
-      { title: "고등", onClick: () => (window.location.href = "/courses/high/all") },
+      { title: "고등", onClick: () => (window.location.href = "/courses/high/all"), color: "F17272" },
       // { title: "수능", onClick: () => (window.location.href = "/courses/high2/all") },
     ];
 
     const userName = this.userName;
 
-    let login, logout, searchBar, dashboard, point;
+    let login, logout;
     if (!this.userLogin) {
-      login = { text: "로그인", onClick: () => (window.location.href = "/user/"), type: "text" };
+      login = [
+        {
+          text: "포인트 충전",
+          onClick: () => (window.location.href = "/point/charge/"),
+          icon: "Point.svg",
+          display: "hidden",
+        },
+        { text: "최근학습", onClick: () => (window.location.href = "#"), icon: "RecentStudy.svg", display: "hidden" },
+        { text: "장바구니", onClick: () => (window.location.href = "/cart/"), icon: "Cart.svg", display: "hidden" },
+        { text: "로그인", onClick: () => (window.location.href = "/user/"), icon: "Login.svg" },
+        { text: "회원가입", onClick: () => (window.location.href = "/user/"), type: "text", icon: "Signup.svg" },
+      ];
     } else {
       point = { text: "포인트 충전", onClick: () => (window.location.href = "/point/charge/") };
       logout = { text: "로그아웃", onClick: () => (window.location.href = "/user/api/logout/"), type: "text" };
@@ -43,9 +54,6 @@ export class NavManager {
       userName,
       login,
       logout,
-      point,
-      dashboard,
-      searchBar,
     };
   }
 

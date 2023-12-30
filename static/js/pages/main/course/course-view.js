@@ -16,7 +16,7 @@ CourseView.prototype.init = function() {
     if(course.price == '0'){
       course.price='무료'
       var $elCourse = $(`<div class="m-4 cursor-pointer">
-                          <img src="../../../static/img/${course.thumnail}.png">
+                          <img src="/static/img/${course.thumnail}.png">
                           <p class="text-[16px] truncate">${course.courseTitle}</p>
                           <p class="text-gray-600 text-[12px]">megacourse</p>
                           <div class="flex justify-between">
@@ -28,7 +28,7 @@ CourseView.prototype.init = function() {
                       </div>`)
     } else{
       var $elCourse = $(`<div class="m-4 cursor-pointer">
-                          <img src="../../../static/img/${course.thumnail}.png">
+                          <img src="/static/img/${course.thumnail}.png">
                           <p class="text-[16px]">${course.courseTitle}</p>
                           <p class="text-gray-600 text-[12px]">megacourse</p>
                           <div class="flex justify-between">

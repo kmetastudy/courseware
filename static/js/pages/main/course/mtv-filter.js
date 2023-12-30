@@ -35,9 +35,9 @@ FilterView.prototype.init = function() {
     $elFilterView.append(clFilterUnit.elThis)
 
     // 검색 버튼
-    this.options.button = {title:'검색', style:'my-2 px-4 py-1 w-full rounded-full bg-[#1E40AF] text-white hover:bg-blue-700'}
-    var clButton = new Button(this.options.button)
-    $elFilterView.append(clButton.elThis)
+    // this.options.button = {title:'검색', style:'my-2 px-4 py-1 w-full rounded-full bg-[#1E40AF] text-white hover:bg-blue-700'}
+    // var clButton = new Button(this.options.button)
+    // $elFilterView.append(clButton.elThis)
 
     this.elThis=$elFilterView
 

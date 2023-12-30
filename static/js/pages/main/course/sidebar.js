@@ -26,6 +26,7 @@ Sidebar.prototype.create = function () {
     $elSidebar.on("click", function() {
       option.onClick(option.title, option.url)
       $elSidebarList.children().removeClass('bg-[#1E40AF]')
+      this.classList.remove('bg-[#FAFAFA]')
       this.classList.add('bg-[#1E40AF]')
       $elSidebarList.children().removeClass('text-white')
       this.classList.add('text-white')

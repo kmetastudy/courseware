@@ -15,7 +15,7 @@
             {% for order in orders %}
                 {% for ordered_product in order.orderedproduct_set.all %}
                 <div class="p-2 w-[200px] cursor-pointer" onclick="window.location.href='/st/?courseid={{ ordered_product.product.courseId }}'">
-                    <img src="../../../static/img/{{ ordered_product.product.thumnail }}.png">
+                    <img src="{% static '/img/{{ ordered_product.product.thumnail }}.png' %}">
                     <div class="flex justify-between items-center">
                         <p>{{ ordered_product.name }}</p>
                         <i class="ri-play-circle-line text-[28px]"></i>
