@@ -1,0 +1,38 @@
+.btn-expand-list {
+    display: flex;
+}
+
+.btn-expand {
+    width: fit-content;
+    height:36px;
+    margin: 2px;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: #F17272;
+}
+
+.btn-expand:hover {
+    justify-content: space-between;
+    width: fit-content;
+}
+
+.hidden {
+    display: none;
+}
+
+.btn-expand p {
+    color: white;
+    font-size: 12px;
+    padding-left: 0.5rem;
+}
+
+
+
+.btn-expand:hover p {
+    display: block;
+    color: white;
+    font-size: 12px;
+}
