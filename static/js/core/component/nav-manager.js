@@ -42,8 +42,23 @@ export class NavManager {
         { text: "회원가입", onClick: () => (window.location.href = "/user/"), type: "text", icon: "Signup.svg" },
       ];
     } else {
-      point = { text: "포인트 충전", onClick: () => (window.location.href = "/point/charge/") };
-      logout = { text: "로그아웃", onClick: () => (window.location.href = "/user/api/logout/"), type: "text" };
+      logout = [
+        {
+          text: "포인트 충전",
+          onClick: () => (window.location.href = "/point/charge/"),
+          icon: "Point.svg",
+          display: "hidden",
+        },
+        { text: "최근학습", onClick: () => (window.location.href = "#"), icon: "RecentStudy.svg", display: "hidden" },
+        { text: "장바구니", onClick: () => (window.location.href = "/cart/"), icon: "Cart.svg", display: "hidden" },
+        { text: "마이페이지", onClick: () => (window.location.href = "/dashboard/"), icon: "Login.svg" },
+        {
+          text: "로그아웃",
+          onClick: () => (window.location.href = "/user/api/logout/"),
+          type: "text",
+          icon: "Signup.svg",
+        },
+      ];
     }
 
     dashboard = { text: "대시보드", onClick: () => (window.location.href = "/dashboard/") };
