@@ -15,7 +15,7 @@ class courseDetail(models.Model):
     # price 0:무료, 값
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    courseId = models.TextField(editable=False, null=True, blank=True)
+    courseId = models.TextField(editable=False, null=True, blank=True) # UUID 필드로 바꾸기
     courseTitle = models.TextField(null=True, blank=True)
     courseSummary = models.TextField(null=True, blank=True)
     desc = models.TextField(null=True, blank=True)
@@ -32,3 +32,8 @@ class courseDetail(models.Model):
     producer = models.TextField(null=True, blank=True)
     duration = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
+
+
+class courseLanding(models.Model):
+    courseId = models.UUIDField(null=False)
+    subject = models.TextField(null=True, blank=True)

@@ -33,7 +33,7 @@ CourseCardManager.prototype.create = function() {
 
   
   var $elCart = $(`<button class="rounded-lg"><i class="ri-shopping-cart-2-line text-[24px] hover:text-blue-800"></i></button>`)
-  var $elButton = $(`<button class="mx-2 p-2 flex-1 rounded-lg bg-blue-800 text-white" onclick='window.location.href="/st/?course_id=${this.data.courseId}"'>수강하기</button>`)
+  var $elButton = $(`<button class="mx-2 p-2 flex-1 rounded-lg bg-blue-800 text-white" onclick='window.location.href="/st/?course_id=${this.data.courseId}"'>체험하기</button>`)
 
   
   $elCart.on("click", () => {
