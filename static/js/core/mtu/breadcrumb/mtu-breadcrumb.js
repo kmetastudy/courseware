@@ -1,6 +1,7 @@
 import { config, itemConfig } from "./config";
 import { adjustConfig } from "../_util/adjust-config";
 import { MtuIcon } from "../icon/mtu-icon";
+import isFunction from "../../utils/type/isFunction";
 
 require("./mtu-breadcrumb.css");
 export class MtuBreadcrumb {
@@ -105,6 +106,10 @@ export class MtuBreadcrumb {
       item.appendChild(elTitle);
     } else {
       item.textContent = config.title;
+    }
+
+    if (config.onClick && isFunction(config.onClick)) {
+      item.addEventListener("click", config.onClick);
     }
   }
 

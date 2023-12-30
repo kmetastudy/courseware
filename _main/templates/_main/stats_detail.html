@@ -17,9 +17,6 @@
     <link rel="icon" href="{% static 'img/mdb-favicon.ico' %}" type="image/x-icon" />
 
     <!-- Tabulator -->
-    {% comment %}
-    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet" />
-    {% endcomment %}
     <link rel="stylesheet" href="{% static '_dist/tabulator/tabulator_modern.min.css' %}" />
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
     <!-- apexcharts -->
@@ -29,14 +26,14 @@
   <body>
     <div id="main"></div>
 
-    <link rel="stylesheet" href="{% static '_bundle/stats/stats-bundle.css' %}" />
-    <script type="text/javascript" src="{% static '_bundle/stats/stats-bundle.js' %}"></script>
+    <link rel="stylesheet" href="{% static '_bundle/statsdetail/stats-detail-bundle.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/statsdetail/stats-detail-bundle.js' %}"></script>
   </body>
 
   <script>
     var csrftoken = "{{csrf_token}}";
     window.addEventListener("DOMContentLoaded", function () {
-      statslibrary.stats_run("{{ context|escapejs }}");
+      statsdetaillibrary.stats_detail_run("{{ context|escapejs }}");
     });
   </script>
 </html>

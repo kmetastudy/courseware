@@ -1,4 +1,4 @@
-import { dashboardHeader } from "../dashboard/common/dashboard-header";
+import { dashboardHeader } from "../../dashboard/common/dashboard-header";
 
 export class CourseInfoCard {
   constructor(prefixCls) {

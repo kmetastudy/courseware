@@ -1,0 +1,9 @@
+.course-table {
+  /* min-height: 200px; */
+  display: none;
+  max-height: 300px;
+}
+
+.course-table.activate {
+  display: block;
+}

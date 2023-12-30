@@ -28,6 +28,7 @@ export class AppDashboard {
     this.sideItems = [
       { title: "대시보드" },
       { title: "프로필", onClick: () => (window.location.href = "/"), icon: "user" },
+      { title: "통계", onClick: () => (window.location.href = "../stats/"), icon: "barChart" },
       {
         title: "학습 관리",
         children: [

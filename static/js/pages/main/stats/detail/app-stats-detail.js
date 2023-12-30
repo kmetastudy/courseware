@@ -1,16 +1,17 @@
-import { createElement } from "../../../core/utils/dom-utils";
+import { createElement } from "../../../../core/utils/dom-utils";
 
-import { mtmSideMenu } from "../../../core/ui/sideMenu/mtm-side-menu";
-import { StatsManager } from "./stats-manager";
+import { mtmSideMenu } from "../../../../core/ui/sideMenu/mtm-side-menu";
+import { StatsDetailManager } from "./stats-detail-manager";
 
-require("../../../../css/pages/main/stats/app-stat.css");
-export class AppStats {
+require("../../../../../css/pages/main/stats/detail/app-stats-detail.css");
+export class AppStatsDetail {
   /**usertype, studentId, userLogin
    *
    * @param {Object} config
    * @property {string} config.studentId
    * @property {string} config.usertype
    * @property {string} config.userLogin
+   * @property {string} config.courseId
    */
   constructor(config = {}) {
     this.config = config;
@@ -26,9 +27,9 @@ export class AppStats {
 
   setup() {
     this.sideItems = [
-      { title: "대시보드", onClick: () => (window.location.href = "../dashboard/") },
+      { title: "대시보드", onClick: () => (window.location.href = "../../dashboard/") },
       { title: "프로필", icon: "user" },
-      { title: "통계", onClick: () => (window.location.href = "../stats/"), icon: "barChart" },
+      { title: "통계", onClick: () => (window.location.href = "../"), icon: "barChart" },
       {
         title: "학습 관리",
         children: [
@@ -51,18 +52,19 @@ export class AppStats {
   }
 
   create() {
-    this.elThis = createElement("main", { className: "app-stats" });
+    this.elThis = createElement("main", { className: "app-stats-detail" });
 
     this.clSide = new mtmSideMenu({ item: this.sideItems });
     this.elSide = this.clSide.getElement();
 
     this.elStats = createElement("div", { className: "stats-wrapper" });
 
-    this.clStatsManager = new StatsManager(this.config.studentId);
+    this.clStatsManager = new StatsDetailManager({ ...this.config });
     this.elStatsManager = this.clStatsManager.getElement();
     this.elStats.append(this.elStatsManager);
 
-    this.elThis.append(this.elSide, this.elStats);
+    // this.elThis.append(this.elSide, this.elStats);
+    this.elThis.append(this.elStats);
   }
 
   getElement() {

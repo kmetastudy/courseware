@@ -25,9 +25,10 @@ def index(request):
 
     course_recomend = courseLanding.objects.all().values()
     # print(list(course_recomend))
-    recommend = {'kor':[], 'eng':[], 'math':[], 'etc':[]}
+    recommend = {'kor': [], 'eng': [], 'math': [], 'etc': []}
     for content in course_recomend:
-        course = courseDetail.objects.filter(courseId=content['courseId']).values('courseId', 'courseTitle', 'thumnail', 'school', 'grade')[0]
+        course = courseDetail.objects.filter(courseId=content['courseId']).values(
+            'courseId', 'courseTitle', 'thumnail', 'school', 'grade')[0]
         # course['type'] = content['subject']
         # print(course)
         recommend[content['subject']].append(course)
@@ -63,23 +64,23 @@ def mainView(request, school, subject):
             {'kor': '과학', 'eng': 'sci'},
             {'kor': '도덕', 'eng': 'mor'}],
         'middle': [
-            { 'kor':'국어', 'eng':'kor' },
-            { 'kor':'영어', 'eng':'eng' },
-            { 'kor':'수학', 'eng':'math' },
-            { 'kor':'사회', 'eng':'soc' },
-            { 'kor':'역사', 'eng':'hist' },
-            { 'kor':'과학', 'eng':'sci' },
-            { 'kor':'정보', 'eng':'info' },
-            { 'kor':'도덕', 'eng':'mor' } ],
+            {'kor': '국어', 'eng': 'kor'},
+            {'kor': '영어', 'eng': 'eng'},
+            {'kor': '수학', 'eng': 'math'},
+            {'kor': '사회', 'eng': 'soc'},
+            {'kor': '역사', 'eng': 'hist'},
+            {'kor': '과학', 'eng': 'sci'},
+            {'kor': '정보', 'eng': 'info'},
+            {'kor': '도덕', 'eng': 'mor'}],
         'high': [
-            { 'kor':'국어', 'eng':'kor' },
-            { 'kor':'영어', 'eng':'eng' },
-            { 'kor':'수학', 'eng':'math' },
-            { 'kor':'사회', 'eng':'soc' },
-            { 'kor':'한국사', 'eng':'korhist' },
-            { 'kor':'과학', 'eng':'sci' },
-            { 'kor':'정보', 'eng':'info' },
-            { 'kor':'도덕', 'eng':'mor' } ],
+            {'kor': '국어', 'eng': 'kor'},
+            {'kor': '영어', 'eng': 'eng'},
+            {'kor': '수학', 'eng': 'math'},
+            {'kor': '사회', 'eng': 'soc'},
+            {'kor': '한국사', 'eng': 'korhist'},
+            {'kor': '과학', 'eng': 'sci'},
+            {'kor': '정보', 'eng': 'info'},
+            {'kor': '도덕', 'eng': 'mor'}],
     }
     print(request.method)
     if (subject == 'all' and request.method == 'GET'):
@@ -179,6 +180,19 @@ def stats_view(request):
     return render(request, "_main/stats.html", context)
 
 
+@jwt_login_required
+def stats_detail_view(request, course_id):
+    if not course_id:
+        return redirect('stats')
+    else:
+        stats_context = make_context(request)
+        stats_context['courseId'] = course_id
+
+        context = {'context': json.dumps(stats_context)}
+
+        return render(request, "_main/stats_detail.html", context)
+
+
 def detail_chapter(request):
     courseId = request.POST.get('courseId')
     replaced_id = courseId.replace('-', '')
@@ -219,16 +233,15 @@ def cart_detail(request):
             queryset=cart_course_qs
         )
 
-    total_amount = sum(cart_product.amount for cart_product in list(cart_course_qs))
+    total_amount = sum(
+        cart_product.amount for cart_product in list(cart_course_qs))
     point = Points.objects.get(user=request.userId)
 
     context = {
-            "context": json.dumps(context_sample),
-            "formset": formset,
-            "user":user,
-            "total_amount":total_amount,
-            "point":point
-            }
+        "context": json.dumps(context_sample),
+        "formset": formset,
+        "user": user
+    }
 
     return render(request, "_main/cart_detail.html", context)
 
@@ -246,15 +259,16 @@ def add_to_cart(request, course_pk):
 
     return HttpResponse("Ok")
 
+
 @jwt_login_required
 def point_history(request):
     context_sample = make_context(request)
-    charge = PointCharge.objects.filter(is_paid_ok=True, buyer_name=request.userId).values('name', 'desired_amount')
+    charge = PointCharge.objects.filter(
+        is_paid_ok=True, buyer_name=request.userId).values('name', 'desired_amount')
     context = {
-            "context": json.dumps(context_sample),
-            "charge": charge
-            }
-    return render(request, "_main/point_history.html", context)
+        "context": json.dumps(context_sample),
+    }
+    return render(request, "_main/mycourse.html", context)
 
 
 @jwt_login_required
@@ -264,14 +278,15 @@ def point_charge(request):
         return redirect("_user:index")
     if request.method == "POST":
         charge = request.POST.get('charge')
-        charge_re = int(charge.replace(',',''))
+        charge_re = int(charge.replace(',', ''))
         payment = PointCharge.create(request.userId, charge_re)
         return redirect('_main:point_pay', pk=payment.pk)
 
     context = {
-            "context": json.dumps(context_sample),
-            }
+        "context": json.dumps(context_sample),
+    }
     return render(request, "_main/point_charge.html", context)
+
 
 @jwt_login_required
 def point_pay(request, pk):
@@ -296,13 +311,15 @@ def point_pay(request, pk):
 
     return render(request, "_main/point_pay.html", context)
 
+
 @jwt_login_required
 def point_check(request, payment_pk):
     payment = get_object_or_404(
         PointCharge, pk=payment_pk)
     payment.update()
 
-    points, created = Points.objects.get_or_create(user=request.userId, defaults = {'points':payment.desired_amount})
+    points, created = Points.objects.get_or_create(
+        user=request.userId, defaults={'points': payment.desired_amount})
 
     if not created:
         points.points += payment.desired_amount
@@ -310,6 +327,7 @@ def point_check(request, payment_pk):
     # return redirect("_main:order_detail", order_pk)
     # return redirect("_main:order_list")
     return redirect("_main:point_history")
+
 
 @jwt_login_required
 def order_list(request):

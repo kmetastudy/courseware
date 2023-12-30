@@ -1,7 +1,7 @@
-import { createElement } from "../../../core/utils/dom-utils";
-import { isNumber, isObject } from "../../../core/utils/type/index";
-import { classNames } from "../../../core/utils/class-names";
-import { dashboardHeader } from "../dashboard/common/dashboard-header";
+import { createElement } from "../../../../core/utils/dom-utils";
+import { isNumber, isObject } from "../../../../core/utils/type/index";
+import { classNames } from "../../../../core/utils/class-names";
+import { dashboardHeader } from "../../dashboard/common/dashboard-header";
 
 export class ChapterStatsChart {
   static #CHAPTER_TYPE = 0;
@@ -11,11 +11,17 @@ export class ChapterStatsChart {
     this.className = "dashboard-chapter-stats";
     this.title = "통계 보기";
 
+    this.categories = null;
+    this.progressData = null;
+    this.accuracyRateData = null;
+
     this.init();
   }
 
   init() {
     this.create();
+
+    this.initChart();
   }
 
   create() {
@@ -31,6 +37,16 @@ export class ChapterStatsChart {
     this.elThis.append(this.elHeader, this.elBody);
   }
 
+  // Initial render
+  initChart() {
+    this.chartConfig = this.setChartConfig();
+
+    this.clChart = new ApexCharts(this.elChart, this.chartConfig);
+    this.clChart.render();
+  }
+
+  // ============ API ============
+
   setData(data) {
     if (isObject(data) === false) {
       return;
@@ -38,29 +54,26 @@ export class ChapterStatsChart {
 
     this.data = data;
 
-    this.composeChartData(data);
-    this.setChartConfig();
+    const [categories, series] = this.composeCategoriesAndSeries(data);
+    console.log(categories, series);
 
-    this.render(this.elChart, this.chartConfig);
+    const config = this.setChartConfig({ categories, series });
+
+    this.updateChart(config);
   }
 
-  composeChartData(data) {
-    this.data = data;
+  composeCategoriesAndSeries(data) {
+    const categories = this.composeCategories(data);
+    const series = this.composeSeries(data);
 
-    this.categories = this.composeCategories(data);
-    this.progressData = this.composeProgressData(data);
-    this.accuracyRateData = this.composeAccuracyRateData(data);
-
-    this.chartConfig = this.setChartConfig();
+    return [categories, series];
   }
 
-  setChartConfig() {
-    const categories = this.categories;
-    const series = [
-      { name: "성취도", data: this.progressData },
-      { name: "정답률", data: this.accuracyRateData },
-    ];
+  updateChart(config) {
+    this.clChart.updateOptions(config);
+  }
 
+  setChartConfig({ categories, series = [] } = {}) {
     const chartConfig = {
       series,
       chart: {
@@ -98,31 +111,16 @@ export class ChapterStatsChart {
         shared: true,
         intersect: false,
       },
-      xaxis: {
-        categories,
-      },
-      // yaxis: {
-      //   title: {
-      //     text: "%",
-      //   },
-      // },
       fill: {
         opacity: 1,
       },
-      // tooltip: {
-      //   y: {
-      //     formatter: function (value) {
-      //       return `${value} %`;
-      //     },
-      //   },
-      // },
     };
-    return chartConfig;
-  }
 
-  render(node, chartConfig) {
-    var clChart = new ApexCharts(node, chartConfig);
-    clChart.render();
+    if (categories) {
+      chartConfig.xaxis = { categories };
+    }
+
+    return chartConfig;
   }
 
   getElement() {
@@ -136,6 +134,20 @@ export class ChapterStatsChart {
       .map((chapter) => chapter.title);
 
     return categories;
+  }
+
+  composeSeries(data) {
+    const progress = this.composeProgressData(data);
+    const accuracyRate = this.composeAccuracyRateData(data);
+
+    if (!progress || !accuracyRate) {
+      return [];
+    }
+
+    return [
+      { name: "성취도", data: progress },
+      { name: "정답률", data: accuracyRate },
+    ];
   }
 
   composeProgressData(resultData) {

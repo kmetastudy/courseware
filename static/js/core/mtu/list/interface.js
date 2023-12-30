@@ -1,0 +1,25 @@
+import { isBoolean, isString, isArray, isHTMLNode, isObject, isFunction } from "../../utils/type/index";
+
+export const config = {
+  bordered: (value) => (isBoolean(value) ? value : false),
+  className: (value) => (isString(value) ? value : null),
+  rootClassName: (value) => (isString(value) ? value : null),
+  style: (value) => (isObject(value) ? value : null),
+  children: (value) => (isHTMLNode(value) ? value : null),
+  dataSource: (value) => (isArray(value) ? value : []),
+  extra: (value) => (isHTMLNode(value) ? value : null),
+  grid: (value) => (isObject(value) ? value : null),
+  id: (value) => (isString(value) ? value : null),
+  itemLayout: (value) => (isObject(value) ? value : null),
+  loading: (value) => (isBoolean(value) ? value : false),
+  loadMore: (value) => (isHTMLNode(value) ? value : null),
+  pagination: (value) => (isBoolean(value) ? value : false),
+  prefixCls: (value) => (isString(value) ? value : null),
+  rowKey: (value) => (isFunction(value) ? value : null),
+  renderItem: (value) => (isFunction(value) ? value : null),
+  size: (value) => (["default", "large", "small"].includes(value) ? value : "default"),
+  split: (value) => (isBoolean(value) ? value : false),
+  header: (value) => (isHTMLNode(value) ? value : null),
+  footer: (value) => (isHTMLNode(value) ? value : null),
+  locale: (value) => (isObject(value) ? value : null),
+};
