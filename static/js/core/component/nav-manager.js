@@ -61,7 +61,7 @@ export class NavManager {
       ];
     }
 
-    dashboard = { text: "대시보드", onClick: () => (window.location.href = "/dashboard/") };
+    // dashboard = { text: "대시보드", onClick: () => (window.location.href = "/dashboard/") };
 
     return {
       logo,
