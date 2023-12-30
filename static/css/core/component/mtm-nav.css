@@ -1,8 +1,8 @@
 .mtm-nav {
-  padding: 0.5rem 0rem;
+  /* padding: 0.5rem 0rem; */
   /* margin-bottom: 8px; */
   /* background: var(--theme-color-main); */
-  background: #fff;
+  background: #175CBE;
 
   position: sticky;
   top: 0;
@@ -11,7 +11,7 @@
   z-index: 72;
 
   /* box-shadow: 0 2px 4px 0 hsla(0, 0%, 80.8%, .5); */
-  height: 64px;
+  height: 48px;
   /* height: var(--nav-height); */
   min-height: unset;
 
@@ -27,7 +27,7 @@
 
 .mtm-nav-header {
   display: flex;
-  padding: 8px;
+  /* padding: 8px; */
   align-items: center;
   justify-content: center;
   margin-right: 16px;
@@ -65,7 +65,7 @@
 }
 
 .mtm-nav-left-section {
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .mtm-nav-right-section {
@@ -94,4 +94,20 @@
 
 .mtu-nav-menu:hover {
   color: #1E40AF;
+}
+
+.star1:hover{
+  cursor: pointer;
+}
+.star1:hover path{
+  stroke: #FFF500;
+  stroke-width: 2;
+}
+.star2:hover path{
+  stroke: #F6D5EA;
+  stroke-width: 2;
+}
+.star3:hover path{
+  stroke: #F17272;
+  stroke-width: 2;
 }

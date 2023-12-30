@@ -7,7 +7,7 @@ from django.urls import reverse
 
 from decouple import config
 
-from _cm.models import courseDetail
+from _cm.models import courseDetail, courseLanding
 from _cp.nmodels import mCourseN
 from _main.forms import CartCourseForm, PaymentForm
 from _main.models import CartCourse, Order, OrderPayment, OrderedProduct, Payment, PointCharge, PointUse, Points
@@ -23,8 +23,18 @@ def index(request):
     context_sample = make_context(request)
     courses = getCourses(request, 'all', 'all')
 
+    course_recomend = courseLanding.objects.all().values()
+    # print(list(course_recomend))
+    recommend = {'kor':[], 'eng':[], 'math':[], 'etc':[]}
+    for content in course_recomend:
+        course = courseDetail.objects.filter(courseId=content['courseId']).values('courseId', 'courseTitle', 'thumnail', 'school', 'grade')[0]
+        # course['type'] = content['subject']
+        # print(course)
+        recommend[content['subject']].append(course)
+    print(recommend)
     context = {"context": json.dumps(context_sample),
-               "courses": courses}
+               "courses": courses,
+               "recommend": json.dumps(recommend)}
     return render(request, "_main/landing.html", context)
 
 
@@ -182,6 +192,8 @@ def detail_chapter(request):
 @jwt_login_required
 def cart_detail(request):
     context_sample = make_context(request)
+    if context_sample['userLogin'] == False:
+        return redirect("_user:index")
     user = get_object_or_404(mUser, id=request.userId)
     cart_course_qs = CartCourse.objects.filter(
         user=request.userId).select_related("course")
@@ -248,7 +260,8 @@ def point_history(request):
 @jwt_login_required
 def point_charge(request):
     context_sample = make_context(request)
-
+    if context_sample['userLogin'] == False:
+        return redirect("_user:index")
     if request.method == "POST":
         charge = request.POST.get('charge')
         charge_re = int(charge.replace(',',''))

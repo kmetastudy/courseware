@@ -2,7 +2,7 @@
 {% load humanize %}
 {% block content %}
 
-<div class="w-[1200px]">
+<div class="w-[1200px] h-screen">
     <p class="pl-8 pb-8 text-xl font-bold">장바구니</p>
     <div class="flex">
         <form action="" method="post" class="mx-4 w-[900px] flex flex-col" novalidate>
@@ -25,7 +25,7 @@
                             <tr class="border-b flex">
                                 <!-- <td class="p-4 w-[50px]">{{ form.DELETE }}</td> -->
                                 <td class="p-4 w-[50px]"><input type="checkbox" class="" name="form-{{ forloop.counter0 }}-DELETE" id="id_form-{{ forloop.counter0 }}-DELETE" /></td>
-                                <td class="p-4 w-[200px]"><img class="shadow-md" src="../../static/img/{{cart_course.course.thumnail}}.png"></td>
+                                <td class="p-4 w-[200px]"><img class="shadow-md" src="/static/img/{{cart_course.course.thumnail}}.png"></td>
                                 <td class="p-4 flex-1 items-start">
                                     <div class="h-full flex flex-col border-r">
                                         <div>

@@ -5,18 +5,19 @@ import { CourseManager } from "../../../static/js/pages/main/course/course-manag
 import { DetailManager } from "../../../static/js/pages/main/course/detail-manager";
 import { mtmSideMenu } from "../../../static/js/core/ui/sideMenu/mtm-side-menu";
 import { CourseView } from "../../../static/js/pages/main/course/course-view"
+import { CourseSwiperView } from "../../../static/js/pages/main/course/mtv-course-swiper";
 
 export function BaseOnReady(context) {
   const clNav = new NavManager(context)
   $('.navbar').html(clNav.getElement())
 }
 
-export function CourseLandingOnReady(context,courses) {
+export function CourseLandingOnReady(context,courses, recommend) {
   console.log(context)
   console.log(courses)
 
 
-  var $elSearch = $(`<div class="flex flex-1 justify-center items-center">
+  var $elSearch = $(`<div class="my-6 flex flex-1 justify-center items-center">
                         <input type="text" class="mx-2 p-2 w-1/2 border border-gray-500 rounded-full text-[12px] focus:outline-none focus:shadow-lg" placeholder="과목을 입력해보세요.">
                         <i class="ri-search-line cursor-pointer"></i>
                     </div>`)
@@ -59,6 +60,19 @@ export function CourseLandingOnReady(context,courses) {
   })
 
   $(".search").append($elSearch)
+
+  var clCourseSwiper = new CourseSwiperView(recommend)
+  $(".courses_recomend").append(clCourseSwiper.elThis)
+
+  var slider  = new Swiper('.swiper-container', {
+    slidesPerView: 4,
+    spaceBetween:20,
+    navigation: {
+      nextEl: '.prev-btn',
+      prevEl: '.next-btn',
+    },
+  });
+
 
   var clCourseView = new CourseView(courses)
   $(".courses_landing").append(clCourseView.elThis);
