@@ -44,9 +44,10 @@ export class StudyCourseContainer {
 
     this.initSidebar();
 
-    const initialContentId = this.getDefaultInitialContentId(courseData, this.contentId);
-    if (this.contentId) {
-      this.clCourseTree.activateContent(courseData, this.contentId);
+    const initialContentId = this.getDefaultInitialContentId(resultData, courseData);
+    // console.log(initialContentId);
+    if (initialContentId) {
+      this.clCourseTree.activateContent(initialContentId);
     }
 
     this.initTabBar();
@@ -265,12 +266,41 @@ export class StudyCourseContainer {
   //   return time;
   // }
 
-  getDefaultInitialContentId(data, id) {
-    console.log("data: ", data);
-    console.log("id: ", id);
-
-    if (id) {
-      //
+  getDefaultInitialContentId(result, course) {
+    let { lists } = course.json_data;
+    const recentBranch = this.getRecentBranch(result);
+    if (recentBranch) {
+      return recentBranch?.id;
     }
+    const firstBranch = this.getFirstBranch(lists);
+    return firstBranch?.id;
+  }
+
+  getRecentBranch(result) {
+    try {
+      let recentBranch = null;
+      const branchData = result.filter((data) => data?.type !== 0 && data.updated_date);
+
+      branchData.forEach((data) => {
+        if (data.updated_date) {
+          data.updated_date = new Date(data.updated_date);
+        }
+      });
+
+      branchData.sort((a, b) => a.updated_date - b.updated_date);
+
+      if (branchData.length > 0) {
+        recentBranch = branchData[0];
+        return recentBranch;
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      return undefined;
+    }
+  }
+
+  getFirstBranch(lists) {
+    return lists.find((item) => item.units.length > 0);
   }
 }
