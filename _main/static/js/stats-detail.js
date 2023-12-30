@@ -4,6 +4,7 @@ import { AppStatsDetail } from "../../../static/js/pages/main/stats/detail/app-s
 require("../../../static/css/css-reset.css");
 export function stats_detail_run(context) {
   const parsedContext = JSON.parse(context);
+  console.log(parsedContext);
   const { usertype, userId, userLogin, courseId } = parsedContext;
 
   if (!userLogin) {
@@ -15,7 +16,7 @@ export function stats_detail_run(context) {
   const main = document.querySelector("#main");
 
   const clNav = new NavManager(parsedContext);
-  // const clAppStats = new AppStats({ usertype, studentId: userId, userLogin, courseId });
+  const clAppStatsDetail = new AppStatsDetail({ usertype, studentId: userId, userLogin, courseId });
 
-  main.append(clNav.getElement(), clAppStats.getElement());
+  main.append(clNav.getElement(), clAppStatsDetail.getElement());
 }

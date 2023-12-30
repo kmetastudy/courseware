@@ -20,7 +20,7 @@ export class CourseStatsManager {
     this.cardPrefixCls = "dashboard-card";
     this.largeLayoutCls = "grid-span-8";
     this.smallLayoutCls = "grid-span-4";
-    this.title = "코스 통계";
+    this.title = this.options?.title ?? "코스 통계";
 
     this.init();
   }
@@ -55,7 +55,7 @@ export class CourseStatsManager {
 
     this.elHeader = dashboardHeader({
       className: `${this.prefixCls}-header`,
-      title: { title: this.title, className: `${this.prefixCls}-title` },
+      title: { title: "", className: `${this.prefixCls}-title` },
     });
 
     this.elBody = createElement("div", { className: `${this.prefixCls}-body` });
@@ -77,22 +77,10 @@ export class CourseStatsManager {
     this.clChapterStats.setData(property);
     this.clCourseResultsTable.setData(property);
     this.clCourseTotalStats.setData({ progress: this.totalProgress, questionCorrectRate: this.totalAccuracyRate });
+  }
 
-    //
-    // this.clCourseTotalStats = new CourseTotalStats({
-    //   progress: this.totalProgress,
-    //   questionCorrectRate: this.totalAccuracyRate,
-    //   className: classNames([this.cardPrefixCls, `grid-span-${4}`]),
-    // });
-
-    // const elCourseTotalStats = this.clCourseTotalStats.getElement();
-    // if (this.elCourseTotalStats) {
-    //   this.elCourseTotalStats.replaceWith(elCourseTotalStats);
-    // } else {
-    //   this.elBody.prepend(elCourseTotalStats);
-    // }
-
-    // this.elCourseTotalStats = elCourseTotalStats;
+  setTitle(title) {
+    this.elHeader.textContent = title;
   }
 
   getElement() {

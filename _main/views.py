@@ -169,11 +169,10 @@ def stats_view(request):
 @jwt_login_required
 def stats_detail_view(request, course_id):
     if not course_id:
-
         return redirect('stats')
     else:
         stats_context = make_context(request)
-        stats_context['course_id'] = course_id
+        stats_context['courseId'] = course_id
 
         context = {'context': json.dumps(stats_context)}
 

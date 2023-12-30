@@ -15,7 +15,7 @@ export function stats_run(context) {
   const main = document.querySelector("#main");
 
   const clNav = new NavManager(parsedContext);
-  const clManager = new AppStats({ usertype, studentId: userId, userLogin, courseId });
+  const clAppStats = new AppStats({ usertype, studentId: userId, userLogin, courseId });
 
-  main.append(clNav.getElement(), clManager.getElement());
+  main.append(clNav.getElement(), clAppStats.getElement());
 }
