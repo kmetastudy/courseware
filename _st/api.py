@@ -16,6 +16,7 @@ from .models import mStudyResult, mDemoStudyResult
 from .serializer import StudyResultSerializer, DemoStudyResultSerializer
 from .results import create_study_result, get_study_result, update_study_result
 from .results import create_demo_study_result, get_demo_study_result, update_demo_study_result
+from .results import get_information, update_information
 from _user.utils import demo_student_id
 from _user.decorators import jwt_login_required
 
@@ -74,6 +75,45 @@ class StudyResultViewSet(viewsets.ModelViewSet):
             properties = json.loads(query.properties)['property']
 
             return Response(data=properties)
+
+    @action(detail=False, methods=['get', 'patch', 'post'])
+    def information(self, request):
+        if request.method == 'GET':
+            id_student = request.query_params.get("id_student", None)
+            id_course = request.query_params.get("id_course", None)
+
+            if not id_student or not id_course:
+                return Response({
+                    {'error': 'Bad Request',
+                        'message': "Missing required parameter: 'id_student, id_course'"},
+                }, status=status.HTTP_400_BAD_REQUEST)
+
+            queryset = self.queryset.filter(
+                id_student=id_student, id_course=id_course)
+
+            if queryset.exists():
+                instance = queryset.first()
+                data = get_information(instance)
+                if not data:
+                    return Response(data={}, status=status.HTTP_200_OK)
+                return Response(data=data, status=status.HTTP_200_OK)
+
+            return Response(data={}, status=status.HTTP_200_OK)
+
+        if request.method == 'PATCH' or request.method == 'POST':
+            filter_params = request.data.get("filter", {})
+            data = request.data.get("data", {})
+
+            queryset = self.queryset.filter(**filter_params)
+
+            if queryset.exists():
+                instance = queryset.first()
+                updated_information = update_information(instance, data)
+                if not updated_information:
+                    return Response({"message": "update fail"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response(data=updated_information, status=status.HTTP_200_OK)
+
+            return Response(data={}, status=status.HTTP_200_OK)
 
 
 class DemoStudyResultViewSet(viewsets.ModelViewSet):

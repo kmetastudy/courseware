@@ -51,6 +51,8 @@ export class StudyCourseContainer {
     }
 
     this.initTabBar();
+
+    this.initEvents();
   }
 
   _initVariables() {
@@ -98,12 +100,15 @@ export class StudyCourseContainer {
     this.elTabBar = this.clTabBar.getElement();
     this.options.rootElement.appendChild(this.elTabBar);
   }
+
+  initEvents() {
+    document.addEventListener("visibilitychange", this.handlePageLeave.bind(this));
+  }
   ////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////// Handler  ////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
   // Click Branch
   handleContentClick(data) {
-    console.log(data);
     const contentData = data;
     const param = {
       student_id: this.studentId,
@@ -115,8 +120,25 @@ export class StudyCourseContainer {
       results: contentData.results,
       units: contentData.units,
     };
-    //
+
+    this.contentId = contentData.id;
     mtoEvents.emit("OnChangeCourseContent", param);
+  }
+
+  async handlePageLeave(evt) {
+    if (document.visibilityState === "hidden" && this.studentId && this.courseId) {
+      const data = {
+        filter: { id_course: this.courseId, id_student: this.studentId },
+        data: {
+          recent_timestamp: new Date(),
+        },
+      };
+      if (this.contentId) {
+        data.data.recent_content = this.contentId;
+      }
+
+      this.urlUpdateResultInformation(data);
+    }
   }
   ////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////// URL  //////////////////////////////////////////
@@ -175,6 +197,13 @@ export class StudyCourseContainer {
     } catch (err) {
       throw new Error(err);
     }
+  }
+
+  urlUpdateResultInformation(data) {
+    data.csrfmiddlewaretoken = csrftoken;
+    const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+
+    navigator.sendBeacon("../st/api/study_result/information/", blob);
   }
   ////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////// API  //////////////////////////////////////////

@@ -257,3 +257,33 @@ def update_demo_study_result(*args, **kwargs):
 
     except Exception as e:
         return None, JsonResponse({"error": str(e)}, status=500)
+
+
+############ timestamp ############
+def get_information(instance):
+    try:
+        properties = json.loads(instance.properties)
+    except json.JSONDecodeError:
+        print("update_timestamp > JSONDecodeError", type(properties))
+        return None
+    properties.setdefault('information', {})
+
+    return properties['information']
+
+
+def update_information(instance, data):
+    try:
+        properties = json.loads(instance.properties)
+    except json.JSONDecodeError:
+        print("update_timestamp > JSONDecodeError", type(properties))
+        return None
+
+    properties.setdefault('information', {})
+
+    properties['information'].update(data)
+    updated_properties = json.dumps(properties)
+
+    instance.properties = updated_properties
+    instance.save()
+
+    return properties['information']
