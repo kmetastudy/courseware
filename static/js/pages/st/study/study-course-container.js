@@ -69,8 +69,8 @@ export class StudyCourseContainer {
     this.clSidebar = new MtuSidebar({
       position: "right",
       items: [
-        { title: "학습하기", icon: "form", aside: learnTarget },
-        { title: "통계", icon: "barChart" },
+        { title: "학습하기", icon: "stCategory", aside: learnTarget },
+        // { title: "통계", icon: "barChart" },
       ],
     });
     this.elSidebar = this.clSidebar.getElement();

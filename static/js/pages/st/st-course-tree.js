@@ -55,8 +55,8 @@ export class StCourseTree {
 
     this.initialContentId = initialContentId ?? null;
     // constants
-    this.videoIcon = "playCircle";
-    this.questionIcon = "form";
+    this.videoIcon = "stVideo";
+    this.questionIcon = "stQuestion";
     this.progressTitle = "진도율";
     this.pointTitle = "점수";
 
@@ -322,7 +322,7 @@ export class StCourseTree {
 
     // const icon = type === 12 ? "youtube" : "form";
     // const icon = type === 12 ? "playCircleFilled" : "form";
-    const icon = type === 12 ? "stVideo" : "stTest";
+    const icon = type === 12 ? "stLesson" : "stTestum";
 
     let videoNum = 0;
     let questionNum = 0;
