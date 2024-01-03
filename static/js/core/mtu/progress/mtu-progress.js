@@ -3,11 +3,12 @@ import { ProgressLine } from "./progress-line";
 import { ProgressSteps } from "./progress-steps";
 import { getSuccessPercent, validProgress, isValidSuccess } from "./utils";
 import { isObject } from "../_util/type-check";
+import { classNames } from "../../utils/class-names";
 
 require("./mtu-progress.css");
 export class MtuProgress {
   constructor({
-    prefixCls = "mtu-progress",
+    prefixCls,
     className,
     rootClassName,
     steps,
@@ -23,7 +24,7 @@ export class MtuProgress {
     ...restProps
   }) {
     const props = {
-      prefixCls: typeof prefixCls === "string" ? prefixCls : "mtu-progress",
+      prefixCls: typeof prefixCls === "string" ? prefixCls : null,
       className: typeof className === "string" ? className : null,
       rootClassName: typeof className === "string" ? className : null,
       steps: typeof steps === "number" ? steps : null,
@@ -52,6 +53,7 @@ export class MtuProgress {
   }
 
   initVariables() {
+    this.rootCls = "mtu-progress";
     this.percentNumber = this.composePercentNumber(this.percent);
     this.progressStatus = this.getProgressStatus(this.status, this.steps, this.percentNumber);
     this.strokeColorNotArray = this.composeStrokeColorNotArray(this.strokeColor);
@@ -79,7 +81,10 @@ export class MtuProgress {
 
   createProgressWrapper({ size, type, showInfo, status, percent }) {
     const elProgressWrapper = document.createElement("div");
-    elProgressWrapper.classList.add("mtu-progress");
+    elProgressWrapper.classList.add(this.rootCls);
+    if (this.prefixCls) {
+      elProgressWrapper.classList.add(this.prefixCls);
+    }
     size ? elProgressWrapper.classList.add(`mtu-progress-${size}`) : null;
     type ? elProgressWrapper.classList.add(`mtu-progress-${type}`) : null;
     elProgressWrapper.classList.add(`mtu-progress-status-${status}`);
@@ -108,7 +113,7 @@ export class MtuProgress {
     const config = {
       ...this.props,
       strokeColor: this.strokeColorNotArray,
-      prefixCls: this.prefixCls,
+      prefixCls: this.rootCls,
       // direction: this.direction
     };
 
@@ -121,7 +126,7 @@ export class MtuProgress {
     const config = {
       ...this.props,
       strokeColor: this.strokeColorNotGradient,
-      prefixCls: this.prefixCls,
+      prefixCls: this.rootCls,
       steps: this.steps,
     };
 
@@ -135,7 +140,7 @@ export class MtuProgress {
     const elProgressCircle = progressCircle({
       ...this.props,
       strokeColor: this.strokeColorNotArray,
-      prefixCls: this.prefixCls,
+      prefixCls: this.rootCls,
       progressStatus: this.progressStatus,
     });
     return elProgressCircle;
@@ -162,7 +167,7 @@ export class MtuProgress {
 
   createInfoElement(text) {
     const elInfo = document.createElement("span");
-    elInfo.classList.add(`${this.prefixCls}-text`);
+    elInfo.classList.add(`${this.rootCls}-text`);
     elInfo.setAttribute("title", typeof text === "string" ? text : undefined);
     elInfo.textContent = text;
     return elInfo;
