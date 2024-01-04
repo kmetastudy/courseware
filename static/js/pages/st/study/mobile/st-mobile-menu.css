@@ -1,0 +1,201 @@
+.st-mobile-menu-item {
+  color: rgb(0, 0, 0);
+  border-bottom: none;
+}
+
+/* item */
+
+.st-mobile-menu-item-button {
+  cursor: pointer;
+  border-width: 0px 0px 1px;
+  border-top-style: initial;
+  border-right-style: initial;
+  border-left-style: initial;
+  border-top-color: initial;
+  border-right-color: initial;
+  border-left-color: initial;
+  border-image: initial;
+  padding: 0px 1rem 0px calc(1.25rem);
+  appearance: none;
+  font-size: 1rem;
+  background-color: transparent;
+  text-decoration: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  width: 100%;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  flex-direction: row-reverse;
+  text-align: left;
+  color: rgb(0, 0, 0);
+  border-bottom-style: solid;
+  border-bottom-color: rgb(222, 226, 230);
+}
+
+.st-mobile-menu-item-button:hover,
+.st-mobile-menu-item-button:focus {
+  cursor: pointer;
+  /* background-color: rgb(248, 249, 250); */
+}
+
+.st-mobile-menu-item-button[aria-expanded="true"] + .st-mobile-menu-subitem-panel {
+  opacity: 1;
+  max-height: 2100px;
+  transition: all 200ms linear;
+  will-change: opacity, max-height;
+}
+
+
+.st-mobile-menu-item-button>.mtuicon {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  transition: transform 0ms ease 0s;
+  margin-right: 0px;
+  margin-left: 1.25rem;
+  width: 1.5rem;
+  min-width: 1.5rem;
+}
+
+.st-mobile-menu-item-text-container {
+  color: inherit;
+  font-weight: 400;
+  flex: 1 1 0%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.st-mobile-menu-item-text-wrapper {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  gap: 0rem;
+}
+
+.st-mobile-menu-item-title {
+  -webkit-tap-highlight-color: transparent;
+  color: inherit;
+  font-size: inherit;
+  text-decoration: none;
+  margin-right: 16px;
+  line-height: 1.5;
+}
+
+.st-mobile-menu-item-progress {
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  color: rgb(134, 142, 150);
+  font-size: 0.875rem;
+  text-decoration: none;
+  margin-left: auto;
+  line-height: 1.5;
+}
+
+/* subitem */
+.st-mobile-menu-subitem-panel {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 200ms linear, max-height 200ms linear;
+  will-change: opacity, max-height;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
+.st-mobile-menu-subitem-wrapper {
+  padding: 0px;
+}
+
+.st-mobile-menu-subitem-root {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: stretch;
+  align-items: stretch;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  gap: 0rem;
+  padding-left: 0;
+}
+
+.st-mobile-menu-subitem {
+  cursor: pointer;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  gap: 0rem;
+  padding: 1rem;
+  background-color: rgb(241, 243, 245);
+}
+
+.st-mobile-menu-item-root:not(:last-child) {
+  border-bottom: 1px solid rgb(222, 226, 230);
+}
+
+/* .st-mobile-menu-subitem:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.st-mobile-menu-subitem.activate {
+  background-color: rgba(0, 0, 0, 0.1);
+} */
+
+.st-mobile-menu-subitem>.mtuicon {
+  height: 100%;
+}
+
+.st-mobile-menu-subitem-info {
+  flex: 1;
+  padding: 0 20px 0 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.st-mobile-menu-subitem-info-title {
+  margin-bottom: 4px;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+}
+
+.st-mobile-menu-subitem-info-detail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between
+}
+
+.st-mobile-menu-subitem-info-detail>div {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.st-mobile-menu-subitem-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.st-mobile-menu-subitem-progress,
+.st-mobile-menu-subitem-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.875em;
+}
