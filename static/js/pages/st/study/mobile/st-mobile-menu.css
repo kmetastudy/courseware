@@ -140,7 +140,7 @@
   background-color: rgb(241, 243, 245);
 }
 
-.st-mobile-menu-item-root:not(:last-child) {
+.st-mobile-menu-subitem:not(:last-child) {
   border-bottom: 1px solid rgb(222, 226, 230);
 }
 
