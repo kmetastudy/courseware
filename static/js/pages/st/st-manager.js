@@ -43,18 +43,6 @@ StManager.prototype.init = function () {
   this.elThis.appendChild(this.clStudyBuilder.elThis);
 };
 
-StManager.prototype.test = function () {};
-
-function getItem(label, key, icon, children, type) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  };
-}
-
 StManager.id = 0;
 
 StManager.prototype._initEvents = function () {

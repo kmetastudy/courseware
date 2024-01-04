@@ -1,32 +1,17 @@
-/* .mtm-manager-learn {
-    padding-left : 10px;
-    padding-right : 10px;
-} */
-
-/* @media (max-width: 460px) { 
-    .mtm-testum-card-normal{width : 350px;}
-    .mtm-manager-learn{
-        padding-left : 5px;
-        padding-right : 5px;
-    }
-} */
-
-/* @media (max-width: 360px) { 
-    .mtm-manager-learn{
-        padding-left : 0px;
-        padding-right : 0px;
-    }
-} */
-
-/* @media (min-width: 500px) { 
-    .mtm-manager-learn{
-        padding-left : 10px;
-        padding-right : 10px;
-    }
-} */
 .st-manager {
     height: 100%;
     position: relative;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+    #body>.mtm-nav {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+    #body>.mtm-nav {
+        display: flex;
+    }
+}

@@ -173,7 +173,7 @@ figure.table table {
 }
 
 :root {
-  --nav-height: 64px;
+  --nav-height: 48px;
   --tablet-min-width: 1025px;
 
   --tablet-toolbar-height: 70px;

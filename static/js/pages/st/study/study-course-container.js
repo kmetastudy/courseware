@@ -1,16 +1,15 @@
 import { mtoEvents } from "../../../core/utils/mto-events";
 import { MtuSidebar } from "../../../core/mtu/sidebar/mtu-sidebar";
 import { StCourseTree } from "../st-course-tree";
-import { StudyMobileInfo } from "./mobile/study-mobile-info";
-import { TabBar } from "./mobile/tab-bar";
-import { MtuMenu } from "../../../core/ui/menu/mtu-menu";
-import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
+import { mtmTabs } from "../../../core/ui/mtm-tabs";
+import { StMobileContainer } from "./mobile/st-mobile-container";
+import { sum } from "../../../core/utils/_utils";
 /**
  *
  * Refactor mtmStudyContainer
  * @param {*} options
  */
-require("../../../../css/pages/st/study/mobile/study-mobile.css");
+require("../../../../css/pages/st/study/study-course-container.css");
 export class StudyCourseContainer {
   constructor(options = {}) {
     this.options = options;
@@ -26,31 +25,39 @@ export class StudyCourseContainer {
 
     const courseId = this.courseId;
     const studentId = this.studentId;
-    // const { courseBookData, courseData, resultData } = await this.getCourseData(courseId, studentId);
+
     const { courseData, resultData } = await this.getCourseData(courseId, studentId);
     this.courseData = courseData;
 
     this.courseData ? (document.title = this.courseData.title) : null;
     this.resultData = resultData;
-    // this.courseBookData = courseBookData;
-    this.clMobileInfo = new StudyMobileInfo({
-      headerText: this?.courseData?.title,
-      // contentText
-    });
-    this.elMobileInfo = this.clMobileInfo.getElement();
-    this.options.rootElement.append(this.elMobileInfo);
+
+    this.treeData = this.composeTreeData({ courseData, resultData });
 
     this.initCourseTree({ courseData, resultData });
 
     this.initSidebar();
 
     const initialContentId = this.getDefaultInitialContentId(resultData, courseData);
-    // console.log(initialContentId);
     if (initialContentId) {
       this.clCourseTree.activateContent(initialContentId);
     }
 
-    this.initTabBar();
+    this.clTab = new mtmTabs({
+      tabs: [{ name: "학습하기", align: "left", active: true, panel: true }],
+      eventActivateTab: this.handleLeftTabActivate.bind(this),
+    });
+    this.options.rootElement.append(this.clTab.elThis);
+
+    // this.clLeftTab.appendPanel(0, this.clStudyContainer.elThis);
+
+    this.clMobileContainer = new StMobileContainer({
+      data: this.treeData,
+      onSubItemClick: this.handleContentClick.bind(this),
+    });
+    this.clTab.appendPanel(0, this.clMobileContainer.getElement());
+    this.tabActiveIndex = 0;
+    this.clTab.showPanel(this.tabActiveIndex);
 
     this.initEvents();
   }
@@ -79,10 +86,9 @@ export class StudyCourseContainer {
     this.options.rootElement.prepend(this.elSidebar);
   }
 
-  initCourseTree({ courseBookData, courseData, resultData }) {
+  initCourseTree({ courseData, resultData }) {
     const title = "학습하기";
     this.clCourseTree = new StCourseTree({
-      courseBookData,
       courseData,
       resultData,
       title,
@@ -91,14 +97,6 @@ export class StudyCourseContainer {
 
     this.elCourseTree = this.clCourseTree.getElement();
     this.options.rootElement.appendChild(this.elCourseTree);
-  }
-
-  initTabBar() {
-    const items = [{ text: "학습하기", icon: MtuIcon("form"), onClick: this.handleTabBarLearnClick }];
-    this.clTabBar = new TabBar(items);
-
-    this.elTabBar = this.clTabBar.getElement();
-    this.options.rootElement.appendChild(this.elTabBar);
   }
 
   initEvents() {
@@ -140,6 +138,23 @@ export class StudyCourseContainer {
       this.urlUpdateResultInformation(data);
     }
   }
+
+  handleLeftTabActivate = function (index) {
+    // console.log('StManager > handleLeftTabActivate : ',index);
+
+    if (this.tabActiveIndex == index) {
+      return;
+    }
+
+    this.tabActiveIndex = index;
+
+    this.clTab.showPanel(this.tabActiveIndex);
+
+    // var title = this.clLeftTab.getTitle(index);
+    // this.clRightTab.setTitle(0, title);
+    // this.rightActiveIndex = this.tabActiveIndex;
+    // this.clRightTab.showPanel(this.rightActiveIndex);
+  };
   ////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////// URL  //////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////
@@ -230,7 +245,11 @@ export class StudyCourseContainer {
     }
   }
 
-  composeTreeData({ lists, contents, results }) {
+  composeTreeData({ courseData, resultData }) {
+    console.log(resultData);
+    const { lists, contents } = courseData.json_data;
+    const results = resultData;
+
     let treeData = [];
     let currentChapter = null;
     let chapterProgress = [];

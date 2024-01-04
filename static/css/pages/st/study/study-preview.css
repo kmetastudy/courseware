@@ -52,6 +52,10 @@ bootstrap 속성 중 몇가지가, 필요하다.
     flex: 0 0 auto;
     width: 100%;
 }
+
+.study-preview .mtm-plyr{
+  height: auto;
+}
 /*
 ```
 swiper too big width

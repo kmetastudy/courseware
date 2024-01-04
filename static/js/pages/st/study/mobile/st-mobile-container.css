@@ -1,0 +1,135 @@
+.st-mobile-container {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+/* Section */
+.st-mobile-container-section {
+  padding: 24px 16px;
+}
+
+/* Section > header */
+.st-mobile-container-section-header {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: wrap;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  gap: 0rem;
+
+  margin-bottom: 24px;
+}
+
+.st-mobile-container-section-title-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: wrap;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  gap: 0rem;
+
+  box-sizing: border-box;
+  -webkit-box-flex: 0;
+  flex-grow: 0;
+}
+
+.st-mobile-container-section-title-container>* {
+  box-sizing: border-box;
+  -webkit-box-flex: 0;
+  flex-grow: 0;
+}
+
+.st-mobile-container-section-title {
+  -webkit-tap-highlight-color: transparent;
+  color: inherit;
+  font-size: 1rem;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  line-height: 1.5;
+}
+
+.st-mobile-container-section-button-container {
+  -webkit-box-flex: 0;
+  flex-grow: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: wrap;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+
+/* Section > Progress */
+.st-mobile-container-section-progress {
+  display: flex;
+}
+
+.st-mobile-container-section-progress-icon-container {
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgb(233, 236, 239);
+  border-radius: 8px;
+  margin-right: 8px;
+}
+
+.st-mobile-container-section-progress-content-container {
+  /* flex: 1 1 auto; */
+  flex: 1;
+}
+
+.st-mobile-container-section-progress-content {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding-right: 12px;
+}
+
+.st-mobile-container-section-progress-text {
+  -webkit-tap-highlight-color: transparent;
+  color: rgb(33, 37, 41);
+  font-size: 0.875rem;
+  text-decoration: none;
+  margin-right: 0.5rem;
+  line-height: 1.5;
+}
+
+/* mtuprogress */
+.st-mobile-container-progress-container {
+  flex: 1 1 auto;
+  position: relative;
+  height: 0.1875rem;
+  display: flex;
+  align-items: center;
+  /* background-color: rgb(233, 236, 239); */
+  /* border-radius: 2rem; */
+  /* overflow: hidden; */
+}
+
+.st-mobile-container-progress {
+  margin-bottom: 0;
+}
+
+.st-mobile-container-section-progress-info-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: wrap;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  gap: 0rem;
+}
