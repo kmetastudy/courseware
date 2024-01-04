@@ -41,24 +41,15 @@ StManager.prototype.init = function () {
   // this.elThis.appendChild(this.clStudyContainer.elSidebar);
   this.elThis.appendChild(this.clStudyContainer.elThis);
   this.elThis.appendChild(this.clStudyBuilder.elThis);
+
+  this._initEvents();
 };
-
-StManager.prototype.test = function () {};
-
-function getItem(label, key, icon, children, type) {
-  return {
-    key,
-    icon,
-    children,
-    label,
-    type,
-  };
-}
 
 StManager.id = 0;
 
 StManager.prototype._initEvents = function () {
   window.addEventListener("resize", this.onResizeWindowHandler.bind(this));
+  window.addEventListener("resize", this.handleResize.bind(this));
 };
 
 StManager.prototype._init = function () {
@@ -224,6 +215,25 @@ StManager.prototype._makeTwoPanel = function () {
 
 ///////////////////////////////////////////////////////////////////////
 /////////////////////////// Handler ///////////////////////////////////
+StManager.prototype.handleResize = function (evt) {
+  const navNode = document.body.querySelector(".mtm-nav");
+  if (!navNode) {
+    return;
+  }
+
+  switch (window.matchMedia("(orientation: landscape)").matches) {
+    case true:
+      navNode.style.display = "none";
+      break;
+    case false:
+      navNode.style.display = "flex";
+      break;
+  }
+
+  if (window.matchMedia("(orientation: landscape)").matches) {
+  } else {
+  }
+};
 /**
  * @callback
  * event : 화면사이즈가 바뀔때
