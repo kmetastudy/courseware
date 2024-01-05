@@ -240,7 +240,9 @@ def cart_detail(request):
     context = {
         "context": json.dumps(context_sample),
         "formset": formset,
-        "user": user
+        "user": user,
+        "point": point,
+        "total_amount": total_amount
     }
 
     return render(request, "_main/cart_detail.html", context)
@@ -280,7 +282,9 @@ def point_charge(request):
         charge = request.POST.get('charge')
         charge_re = int(charge.replace(',', ''))
         payment = PointCharge.create(request.userId, charge_re)
-        return redirect('_main:point_pay', pk=payment.pk)
+        # return redirect('_main:point_pay', pk=payment.pk)
+        next_url = '/point/'+str(payment.pk)+'/pay/'
+        return JsonResponse({'url':next_url})
 
     context = {
         "context": json.dumps(context_sample),
