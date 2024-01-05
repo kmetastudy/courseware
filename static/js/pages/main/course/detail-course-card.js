@@ -12,7 +12,7 @@ CourseCardManager.prototype.create = function() {
   var price = this.data.price=='0'?'무료':this.data.price
 
   var $elCard = $(`<div class="flex flex-row md:flex-col border rounded-md lg:w-[300px] lg:fixed">
-                      <img class="p-2 w-1/2 h-fit md:w-full" src="../../../../static/img/${this.data.thumnail}.png">
+                      <img class="p-2 w-1/2 h-auto md:w-full" src="../../../../static/img/${this.data.thumnail}.png">
                       <div class="p-2 w-1/2 md:w-full">
                           <p class="text-base">${this.data.courseTitle}</p>
                           <div class="p-2 grid grid-cols-2 border-b">
