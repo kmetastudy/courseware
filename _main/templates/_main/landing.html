@@ -2,22 +2,20 @@
 {% load static %}
 {% block content %}
 <div class="w-full flex flex-col items-center">
-    <div class="landing-swiper w-full overflow-hidden">
+    <div class="landing-swiper w-full overflow-hidden relative">
         <div class="swiper-wrapper ">
-            <div class="swiper-slide slide5 cursor-pointer flex justify-center"><img class="xl:h-[500px] 2xl:h-[600px]" src="{% static 'img/banner5-1.png' %}"></div>
-            <div class="swiper-slide slide1 cursor-pointer flex justify-center" onclick='window.location.href="/desc/1/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="{% static 'img/banner1-1.png' %}"></div>
-            <div class="swiper-slide slide2 cursor-pointer flex justify-center" onclick='window.location.href="/desc/2/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="{% static 'img/banner2-1.png' %}"></div>
-            <div class="swiper-slide slide3 cursor-pointer flex justify-center" onclick='window.location.href="/desc/3/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="{% static 'img/banner3-1.png' %}"></div>
-            <div class="swiper-slide slide4 cursor-pointer flex justify-center" onclick='window.location.href="/desc/4/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="{% static 'img/banner4-1.png' %}"></div>
+            <div class="swiper-slide slide5 cursor-pointer flex justify-center"><img class="xl:h-[500px] 2xl:h-[600px]" src="static/img/banner5-1.png"></div>
+            <div class="swiper-slide slide1 cursor-pointer flex justify-center" onclick='window.location.href="/desc/1/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner1-1.png"></div>
+            <div class="swiper-slide slide2 cursor-pointer flex justify-center" onclick='window.location.href="/desc/2/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner2-1.png"></div>
+            <div class="swiper-slide slide3 cursor-pointer flex justify-center" onclick='window.location.href="/desc/3/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner3-1.png"></div>
+            <div class="swiper-slide slide4 cursor-pointer flex justify-center" onclick='window.location.href="/desc/4/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner4-1.png"></div>
             
         </div>
         <div class="py-2 flex justify-end items-center swiper-pagination"></div>
         
     </div>
-    <div class="flex flex-col items-center">
-        <div class="search w-full flex">
-            
-        </div>
+    <div class="w-full flex flex-col items-center">
+        
         <div class="courses_recomend w-full">
             <!-- <div class="course-swiper w-[1000px]">
                 <div class="swiper-container py-2 w-full">
@@ -42,28 +40,32 @@
                 </div>
             </div> -->
         </div>
-        <div class="w-2/3"><p class="pt-4 self-start text-lg">전체 강의<span class="text-sm text-red-400">new</span></p></div>
+        <!-- 검색  -->
+        <div class="search w-full flex">
+            
+        </div>
+        <div class="w-full p-2 sm:w-2/3"><p class="pt-4 self-start text-lg">전체 강의<span class="text-sm text-red-400">new</span></p></div>
         
-        <div class="w-2/3 courses_landing">
+        <div class="w-full p-2 sm:w-2/3 courses_landing">
             
         </div>
 
-        <div class="pt-6 w-2/3 flex items-center"><object type="image/svg+xml" data="/static/assets/Star5.svg"></object><p class="pl-2 text-[32px]">자주하는 질문 FAQ</p></div>
-        <div class="pb-6 w-2/3">
+        <div class="pt-6 px-4 w-full sm:w-2/3 flex items-center"><object type="image/svg+xml" data="/static/assets/Star5.svg"></object><p class="pl-2 text-[28px] sm:text-[32px]">자주하는 질문 FAQ</p></div>
+        <div class="pb-6 p-4 w-full sm:w-2/3">
             <div class="py-4 w-full">
-                <div class="faq-btn p-2 text-[#3884FF] border shadow">01. 회원가입 & 로그인</div>
+                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">01. 회원가입 & 로그인</div>
                 <div class="p-2 border hidden"><img src="/static/img/landing/FAQ1.png"></div>
             </div>
             <div class="py-4 w-full">
-                <div class="faq-btn p-2 text-[#3884FF] border shadow">02. 포인트 충전 방법</div>
+                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">02. 포인트 충전 방법</div>
                 <div class="p-2 border hidden"><img src="/static/img/landing/FAQ2.png"></div>
             </div>
             <div class="py-4 w-full">
-                <div class="faq-btn p-2 text-[#3884FF] border shadow">03. 영상 후 문제 (나노학습)</div>
+                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">03. 영상 후 문제 (나노학습)</div>
                 <div class="p-2 border hidden"><img src="/static/img/landing/FAQ1.png"></div>
             </div>
             <div class="py-4 w-full">
-                <div class="faq-btn p-2 text-[#3884FF] border shadow">04. 수료증</div>
+                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">04. 수료증</div>
                 <div class="p-2 border hidden"><img src="/static/img/landing/FAQ4.png"></div>
             </div>
         </div>

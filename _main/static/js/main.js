@@ -4,7 +4,7 @@ import { NavManager } from "../../../static/js/core/component/nav-manager";
 import { CourseManager } from "../../../static/js/pages/main/course/course-manager";
 import { DetailManager } from "../../../static/js/pages/main/course/detail-manager";
 import { mtmSideMenu } from "../../../static/js/core/ui/sideMenu/mtm-side-menu";
-import { CourseView } from "../../../static/js/pages/main/course/course-view"
+import { CourseView } from "../../../static/js/pages/main/course/mtv-course"
 import { CourseSwiperView } from "../../../static/js/pages/main/course/mtv-course-swiper";
 
 export function BaseOnReady(context) {
@@ -65,12 +65,23 @@ export function CourseLandingOnReady(context,courses, recommend) {
   $(".courses_recomend").append(clCourseSwiper.elThis)
 
   var slider  = new Swiper('.swiper-container', {
-    slidesPerView: 4,
-    spaceBetween:20,
+    slidesPerView: 2,
+    spaceBetween:10,
+    breakpoints: {
+      640: {
+        slidesPerView: 3,
+        spaceBetween: 20,
+      },
+      1024: {
+        slidesPerView:4 ,
+        spaceBetween: 20,
+      }
+    },
     navigation: {
       nextEl: '.prev-btn',
       prevEl: '.next-btn',
     },
+    
   });
 
 

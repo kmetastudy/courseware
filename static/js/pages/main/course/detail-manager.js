@@ -1,5 +1,5 @@
 import { StudyCourseContainer } from "../../st/study/study-course-container-past";
-import { CourseCardManager } from "./course-card-manager";
+import { CourseCardManager } from "./detail-course-card";
 import { DetailChapter } from "./detail-chapter";
 import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
 
