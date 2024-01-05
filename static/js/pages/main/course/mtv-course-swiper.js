@@ -16,10 +16,10 @@ CourseSwiperView.prototype.init = function() {
 
     keys.forEach((key, index) => {
         var elCourseSwiperCointer = $(`<div class="swiper-background${index+1} my-7 flex justify-center items-center">
-                                            <div class="swiper-container py-2 w-[1000px] overflow-hidden">
-                                                <p class="w-fit flex items-center text-[24px] font-bold"><object type="image/svg+xml" data="/static/assets/Star4.svg"></object>${this.options[key]}<span class="text-sm text-red-400">new</span></p>
+                                            <div class="swiper-container m-4 lg:w-[1000px] overflow-hidden">
+                                                <p class="w-fit flex items-center text-[20px] sm:text-[24px] font-bold"><object type="image/svg+xml" data="/static/assets/Star4.svg"></object>${this.options[key]}<span class="text-sm text-red-400">new</span></p>
                                                 <div class="pl-[60px] pb-4 flex justify-between items-center">
-                                                    <p class="text-[20px]">${this.text[key]}</p>
+                                                    <p class="text-[16px] sm:text-[20px]">${this.text[key]}</p>
                                                     <div class="flex">
                                                         <div class="next-btn px-2 w-[40px]"><img src="/static/img/landing/arrow_left.png"></div>
                                                         <div class="prev-btn px-2 w-[40px]"><img src="/static/img/landing/arrow_right.png"></div>
