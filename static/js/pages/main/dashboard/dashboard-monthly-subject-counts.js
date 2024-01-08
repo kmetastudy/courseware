@@ -3,8 +3,8 @@ import { createElement } from "../../../core/utils/dom-utils";
 import { DateStepper } from "./common/date-stepper";
 import { classNames } from "../../../core/utils/class-names";
 
-require("../../../../css/pages/main/dashboard/dashboard-category-stats.css");
-export class DashboardCategoryStats {
+require("../../../../css/pages/main/dashboard/dashboard-monthly-subject-counts.css");
+export class DashboardMonthlySubjectCounts {
   static testProgressData = [
     { name: "국어", data: [20, 30, 50, 0, 10, 20, 30, 40, 60, 70, 50, 20] },
     { name: "수학", data: [10, 40, 20, 0, 100, 100, 60, 40, 20, 70, 50, 20] },
@@ -90,7 +90,7 @@ export class DashboardCategoryStats {
 
   getData() {
     if (!this.data) {
-      this.data = DashboardCategoryStats.testProgressData;
+      this.data = DashboardMonthlySubjectCounts.testProgressData;
     }
 
     // this.series = this.composeSeries();
