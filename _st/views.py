@@ -1,7 +1,7 @@
 import json
 import uuid
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 
 from rest_framework.decorators import api_view
@@ -11,29 +11,31 @@ from .models import mStudyResult
 from _cp.models import mElement, mCourseN
 from .utils import has_course_permission, get_content_info
 from _user.utils import make_context
-from _user.decorators import jwt_login_required
+from _user.decorators import jwt_login_required, last_visited
 from _cp.constants import *
 
 
+@last_visited
 @jwt_login_required
 def index(request):
     course_id = request.GET.get("course_id")
-    user_id = request.userId
     content_id = request.GET.get("content_id")
+    user_id = request.userId
+
+    # remove after test
+    if not course_id:
+        next_url = request.session.get("next", "/")
+        del request.session['next']
+
+        return redirect(next_url)
 
     request.demo = True
     if has_course_permission(course_id, user_id):
         request.demo = False
 
     st_context = make_context(request)
-
     st_context['courseId'] = course_id
-    # remove after test
-    if not course_id:
-        st_context['courseId'] = '59005c33-84ac-4f19-9e4f-1567607611ef'
-
-    if not course_id and not content_id:
-        st_context['contentId'] = "99b17e60-c066-4f1c-9a59-7ad2b363b166"
+    st_context['contentId'] = content_id
 
     print("st_context: ", st_context)
     context = {'context': json.dumps(st_context)}

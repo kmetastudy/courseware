@@ -38,7 +38,7 @@ export class StudyCourseContainer {
 
     this.initSidebar();
 
-    const initialContentId = this.getDefaultInitialContentId(resultData, courseData);
+    const initialContentId = this.contentId ?? this.getDefaultInitialContentId(resultData, courseData);
     if (initialContentId) {
       this.clCourseTree.activateContent(initialContentId);
     }
