@@ -1,6 +1,6 @@
 import { Sidebar } from "./sidebar"
 import { FilterView } from "./mtv-filter"
-import { CourseView } from "./course-view"
+import { CourseView } from "./mtv-course"
 
 export function CourseManager(options, data) {
   this.options = options

@@ -33,3 +33,22 @@
     margin-bottom: 8px;
   }
 }
+
+@media (max-width: 640px) {
+  .mtm-study-answer-choice-number {
+    width:30px;
+    height:30px;
+    margin:4px;
+  }
+
+  .swiper-slide {
+    font-size: 16px;
+  }
+
+  #id-mtm-question-swiper-1 .swiper-container {
+    width: 100% !important;
+    height: 500px !important;
+  
+  }
+}
+

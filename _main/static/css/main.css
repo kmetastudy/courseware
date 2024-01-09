@@ -20,9 +20,12 @@
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.1/Daehan-Regular.woff') format('woff');
 }
  
- body{
+ html, body{
   font-family: 'Noto Sans KR', sans-serif;
+  max-width: 100%;
+  overflow-x: hidden;
  }
+
 
 
  .page1{
@@ -82,6 +85,8 @@
   background-repeat: no-repeat;
   background-size: cover;
  }
+
+
 
 .swiper-pagination-bullet { width: 12px; height: 12px; background: transparent; border: 1px solid white; opacity: 1; }
 .swiper-pagination-bullet-active { width: 40px; transition: width .5s; border-radius: 5px; background: white; border: 1px solid transparent; }

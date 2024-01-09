@@ -1,5 +1,5 @@
 .mtm-nav {
-  /* padding: 0.5rem 0rem; */
+  padding: 0rem 1rem;
   /* margin-bottom: 8px; */
   /* background: var(--theme-color-main); */
   background: #175CBE;
@@ -31,7 +31,7 @@
   /* padding: 8px; */
   align-items: center;
   justify-content: center;
-  margin-right: 16px;
+  /* margin-right: 16px; */
 }
 
 .mtm-nav-logo{
@@ -48,26 +48,27 @@
 .mtm-nav-body {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   flex: 1 1 auto;
   margin-right: 0;
 }
 
 .mtm-nav-left-section,
 .mtm-nav-right-section {
+  padding-left: 0.5rem;
   display: flex;
   justify-content: space-between;
   height: 100%;
   align-items: center;
 }
 
-.mtm-nav-left-section > *,
-.mtm-nav-right-section > * {
+.mtm-nav-left-section > * {
   cursor: pointer;
 }
 
-.mtm-nav-left-section {
+/* .mtm-nav-left-section {
   gap: 1rem;
-}
+} */
 
 .mtm-nav-right-section {
   gap: 24px;
@@ -87,6 +88,13 @@
 
 .mtu-nav-menu{
   font-size: 20px
+}
+
+.mtu-nav-menu1{
+  width: 84px;
+  height: 48px;
+  background-image: url("/static/assets/NavMenu1.svg");
+  background-repeat: no-repeat;
 }
 
 .mtm-nav-user-name {

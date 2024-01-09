@@ -2,33 +2,74 @@
 {% load humanize %}
 {% block content %}
 
-<form method="post" class="w-full h-screen bg-gray-100 flex flex-col justify-stretch items-center">
+<div class="w-full bg-gray-100 flex flex-col justify-stretch items-center break-keep">
     {% csrf_token %}
-    <p class="pt-4 text-[20px] text-center">포인트 충전하기</p>
-    <div class="py-6 w-1/3 h-full">
-        <div class="p-6 h-full border bg-white shadow">
-            <p class="py-4">Course-12 포인트로</p>
-            <div class="flex items-center">
-                <div class="w-full flex">
-                    <input name="charge" class="py-2 w-full border-b-2 focus:outline-none focus:border-blue-500" placeholder="충전할 금액을 입력해 주세요." onkeyup="inputNumberFormat(this);"/>
-                    <i class="ri-close-circle-fill py-2 border-b-2 text-gray-300 hover:text-red-600" onclick="$('input[name=charge-input]').val('')"></i>
+    <p class="pt-4 text-[20px] text-center">포인트 충전</p>
+    <div class="px-6 py-6 w-full lg:w-2/3 2xl:w-1/2 h-full">
+        <div class="p-6 h-full border border-[#175CBE] shadow rounded-[30px] bg-[#E0EDFF]">
+            <p class="flex items-center">
+                <svg width="22" height="22" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="22" cy="22" r="22" fill="#175CBE"/>
+                <path d="M14.276 37V10.324H23.024C28.928 10.324 33.464 12.412 33.464 18.712C33.464 24.796 28.892 27.532 23.168 27.532H19.604V37H14.276ZM19.604 23.32H22.808C26.48 23.32 28.244 21.772 28.244 18.712C28.244 15.616 26.3 14.572 22.628 14.572H19.604V23.32Z" fill="white"/>
+                </svg>
+                <span class="pl-2 font-bold">결제 충전하기</span>
+            </p>
+            <div class="flex flex-col bg-[url('/static/img/background/background_charge.png')] bg-no-repeat bg-contain bg-right-bottom">
+                <p class="py-4 pl-6 text-[12px]">충전금액을 입력하고 충전방법을 선택해주세요.</p>
+                <div class="py-2 pl-6 flex items-center">
+                    <p class="flex-none pr-4 font-bold">충전금액</p>
+                    <div class="w-full flex">
+                        <input class="charge-input w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-blue-500" autocomplete='off' placeholder="충전할 금액을 입력해 주세요." onkeyup="inputNumberFormat(this);"/>
+                        <i class="ri-close-circle-fill py-2 border-b-2 border-gray-300 text-gray-300 hover:text-red-600" onclick="$('input[name=charge-input]').val('')"></i>
+                    </div>
+                    <p class="p-2">원</p>
                 </div>
-                <p class="p-2">원</p>
+                <div class="py-2 pl-6 flex items-center">
+                    <p class="flex-none pr-4 font-bold">충전방법</p>
+                    <label><input type="radio" name="charge-type" value="card" checked/><span class="px-2">신용 카드</span></label>
+                </div>
+                
+                <button class="charge-button self-center my-2 px-6 py-2 rounded bg-gray-200 text-gray-400">충전하기</button>
+            </div>
+        </div>
+        <div class="my-6 p-6 pr-0 h-full border border-[#175CBE] shadow rounded-[30px] bg-[#E0EDFF]">
+            <div class="flex justify-between">
+                <p class="flex items-center">
+                    <svg width="22" height="22" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="22" cy="22" r="22" fill="#E70246"/>
+                    <path d="M14.276 37V10.324H23.024C28.928 10.324 33.464 12.412 33.464 18.712C33.464 24.796 28.892 27.532 23.168 27.532H19.604V37H14.276ZM19.604 23.32H22.808C26.48 23.32 28.244 21.772 28.244 18.712C28.244 15.616 26.3 14.572 22.628 14.572H19.604V23.32Z" fill="white"/>
+                    </svg>
+                    <span class="pl-2 font-bold">추가 포인트 적립 이벤트</span>
+                </p>
+                <img class="w-[200px]" src="/static/img/background/background_charge_event.png">
+            </div>
+            <div class="py-4 pr-6 flex flex-col">
+                <p class="pl-6 text-[#0019FF] text-[20px] font-bold">1. 첫번째 이벤트</p>
+                <p class="py-6 pl-6 text-[20px] font-bold">Welcome to Courseware-12</p>
+                <p class="pl-6 text-[24px] font-bold">지금 <span class="text-[#E70246]">회원가입</span> 하고</p>
+                <p class="pl-6 text-[24px] font-bold"><span class="text-[#E70246]">5000P</span> 받으세요!</p>
+                <img class="self-center w-[400px]" src="/static/img/background/background_charge_event2.png"/>
+                <div class="self-center">
+                    <div class="flex">
+                        <p class="pl-6 flex-none text-[#0019FF] text-[16px] font-bold">● 기간</p>
+                        <p class="pl-6 text-[20px] font-bold">2024.01.05 ~ 2024.08.15</p>
+                    </div>
+                    <div class="flex">
+                        <p class="pl-6 flex-none text-[#0019FF] text-[16px] font-bold">● 대상</p>
+                        <p class="pl-6 text-[20px] font-bold">기간 내 회원가입한 회원</p>
+                    </div>
+                </div>
                 
             </div>
-            <div class="flex">
-                <div class="m-2 p-2 w-1/2 border">+1천원</div>
-                <div class="m-2 p-2 w-1/2 border">+1만원</div>
+            <div class="py-8 pr-6 flex flex-col">
+                <p class="pl-6 text-[#0019FF] text-[20px] font-bold">2. 두번째 이벤트</p>
+                <p class="py-6 pl-6 text-[20px] font-bold break-keep">충전 금액의 절반을 포인트로 돌려드립니다.</p>
+                <p class="py-6 pl-6 text-[20px] font-bold break-keep">예시 : <span class="text-[#175CBE]">1000P</span> + <span class="text-[#E70246]">500P</span> <br class="block xs:hidden">(<span class="text-[#175CBE]">1000P</span> 충전시 <span class="text-[#E70246]">500P 더</span> 드립니다.)</p>
+                <img class="self-center w-[200px]" src="/static/img/background/background_charge_event3.png"/>
             </div>
-            <div>
-                <p>추가 포인트 적립 혜택</p>
-                <p>1,000원 -> 1,000P</p>
-                <p>10,000원 -> 10,000P + 1,000P 추가 = 11,000P</p>
-            </div>
-            <button class="charge-button my-2 py-2 w-full rounded bg-gray-200 text-gray-400" onclick="window.location.href='/point/charge/'">충전하기</button>
         </div>
     </div>
-</form>
+</div>
 {% endblock %}
 
 {% block extra-script %}
@@ -45,13 +86,36 @@
     
     function inputNumberFormat(obj) {
         obj.value = comma(uncomma(obj.value));
-        $('.charge-button').addClass('bg-blue-500')
+        $('.charge-button').removeClass('bg-gray-200')
+        $('.charge-button').addClass('bg-[#175CBE]')
         $('.charge-button').addClass('text-white')
         if(!obj.value){
-            $('.charge-button').removeClass('bg-blue-500')
+            $('.charge-button').addClass('bg-gray-200')
+            $('.charge-button').removeClass('bg-[#175CBE]')
             $('.charge-button').removeClass('text-white')
         }
     }
+    
+    window.addEventListener("DOMContentLoaded", function () {
+      $('.charge-button').on('click', function(){
+        let amount = document.getElementsByClassName('charge-input')
+        console.log(amount[0].value)
+        if(!amount[0].value) {
+            alert('충전 금액을 입력해주세요!')
+        } else {
+            $.ajax({
+                headers: { "X-CSRFTOKEN": csrftoken },
+                url: '/point/charge/',
+                data: {charge:amount[0].value},
+                type: 'post',
+                success: function(res){
+
+                    location.href = res.url;
+                }
+            })
+        }
+      })
+    });
 
     
 </script>
