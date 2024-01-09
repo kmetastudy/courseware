@@ -1,8 +1,8 @@
-.dashboard-category-stats {
+.dashboard-monthly-subject-counts {
   grid-column: span 8;
 }
 
-.dashboard-category-stats-header {
+.dashboard-monthly-subject-counts-header {
   display: flex;
   -webkit-box-pack: justify;
   justify-content: space-between;
@@ -11,13 +11,13 @@
   color: rgb(73, 80, 87);
 }
 
-.dashboard-category-stats-body {
+.dashboard-monthly-subject-counts-body {
   position: relative;
   padding: 0px 20px;
   height: 100%;
 }
 
-.dashboard-category-stats-chart-wrapper {
+.dashboard-monthly-subject-counts-chart-wrapper {
   width: 100%;
   display: inline-flex;
   align-items: center;
@@ -25,7 +25,7 @@
   text-align: center;
 }
 
-.dashboard-category-stats-chart-wrapper > svg {
+.dashboard-monthly-subject-counts-chart-wrapper > svg {
   
   display: inline-block;
 }

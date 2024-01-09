@@ -1,24 +1,10 @@
-/* .dashboard-recent-course {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  grid-column: span 4;
-  grid-row: unset;
-  padding: 20px 0px;
-  height: auto;
-  min-height: 260px;
-  border: 1px solid rgb(222, 226, 230);
-  border-radius: 8px;
-  background-color: white;
-} */
-
 .dashboard-recent-course-body {
   position: relative;
   padding: 0px 20px;
   height: 100%;
 }
 
-.dashboard-recent-course-body a{
+.dashboard-recent-course-body a {
   word-break: keep-all;
   margin-bottom: 8px;
   text-overflow: ellipsis;
@@ -29,14 +15,46 @@
   overflow: hidden;
 }
 
-.dashboard-recent-course-footer {
-  margin-top: auto;
-  padding: 0px 20px;
-  text-align: right;
+.dashboard-recent-course-body a:hover,
+.dashboard-recent-course-body a:active {
+  outline-width: 0px;
 }
 
-.dashboard-recent-course-footer-button-container {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
+@media (hover: hover) and (pointer: fine) {
+  .dashboard-recent-course-body a:hover {
+    text-decoration: underline;
+  }
+}
+
+.dashboard-recent-course-body a:focus {
+  outline-offset: 0.125rem;
+}
+
+.dashboard-recent-course-body a:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.dashboard-recent-course-item-progress-text-wrapper {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.dashboard-recent-course-item-progress-text {
+  -webkit-tap-highlight-color: transparent;
+  color: rgb(73, 80, 87);
+  font-size: 0.75rem;
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.dashboard-recent-course-item-study-date {
+  -webkit-tap-highlight-color: transparent;
+  color: rgb(173, 181, 189);
+  font-size: 0.75rem;
+  text-decoration: none;
+  font-weight: 500;
+  line-height: 1.5;
+  flex-shrink: 0;
 }
