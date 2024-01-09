@@ -1,108 +1,123 @@
 import { createElement } from "../../../core/utils/dom-utils";
-import { MtuButton } from "../../../core/mtu/button/mtu-button";
 import { dashboardHeader } from "./common/dashboard-header";
 import { classNames } from "../../../core/utils/class-names";
+import isString from "../../../core/utils/type/isString";
+import { MtuProgress } from "../../../core/mtu/progress/mtu-progress";
+import { removeChildNodes } from "../../../core/utils/remove-child-nodes";
 
 require("../../../../css/pages/main/dashboard/dashboard-recent-course.css");
 export class DashboardRecentCourse {
-  constructor({ className, courseTitle, progressText } = {}) {
-    const props = {
-      courseTitle: typeof courseTitle === "string" ? courseTitle : "중 3-1",
-      progressText: typeof progressText === "string" ? progressText : "",
-      className: typeof className === "string" ? className : null,
-    };
+  constructor({ prefixCls } = {}) {
+    this.prefixCls = isString(prefixCls) ? prefixCls : null;
 
-    this.props = props;
     this.init();
   }
 
   async init() {
     this.initVariables();
-    this.prepareData();
-    this.render();
+
+    this.create();
   }
 
   initVariables() {
     this.title = "최근 학습 강의";
-    this.prefixCls = "dashboard-recent-course";
+    this.rootCls = "dashboard-recent-course";
   }
 
-  async prepareData() {
-    // const recentCourse = this.getRecentCourses();
-
-    this.courseTitle = "중 3-1";
-    this.courseUrl = "#";
-    this.progressText = null;
-    this.progressPrecent = null;
-    this.recentTime = null;
-  }
-
-  render() {
-    this.elThis = createElement("div", { className: classNames(this.props.className, this.prefixCls) });
+  create() {
+    this.elThis = createElement("div", { className: classNames(this.prefixCls, this.rootCls) });
 
     this.elHeader = this.createHeader();
     this.elBody = this.createBody();
-    this.elFooter = this.createFooter();
 
-    this.elThis.append(this.elHeader, this.elBody, this.elFooter);
+    this.elThis.append(this.elHeader, this.elBody);
   }
 
   createHeader() {
-    // const elHeader = createElement("div", { className: `${this.prefixCls}-header` });
-
-    // const elTitle = dashboardTitle({ title: this.title, className: `${this.prefixCls}-title` });
-    // const elAnchor = dashboardAnchor({ className: `${this.prefixCls}-anchor` });
-
-    // elHeader.append(elTitle, elAnchor);
     const elHeader = dashboardHeader({
-      className: `${this.prefixCls}-header`,
+      className: `${this.rootCls}-header`,
       title: {
         title: this.title,
-        className: `${this.prefixCls}-title`,
+        className: `${this.rootCls}-title`,
       },
       anchor: {
-        className: `${this.prefixCls}-anchor`,
+        className: `${this.rootCls}-anchor`,
       },
     });
     return elHeader;
   }
 
   createBody() {
-    const elBody = createElement("div", { className: `${this.prefixCls}-body` });
+    const elBody = createElement("div", { className: `${this.rootCls}-body` });
 
-    const elCourseTitle = createElement("a", {
-      className: `${this.prefixCls}-course-title`,
-      attributes: { href: this.courseUrl },
-    });
-    elCourseTitle.textContent = this.courseTitle;
-
-    // const elProgress = this.createProgress();
-    // const elProgressBar = this.createProgressBar();
-
-    elBody.append(elCourseTitle);
-    // elBody.append(elCourseTitle, elProgress, elProgressBar);
     return elBody;
   }
 
-  createFooter() {
-    const elFooter = createElement("div", { className: `${this.prefixCls}-footer` });
+  setData(data) {
+    // var d = [{ id, title, progress, lectureCount, completedLectureCount, information, link }];
+    removeChildNodes.removeAll(this.elBody);
 
-    const elWrapper = createElement("div", { className: `${this.prefixCls}-footer-button-container` });
-
-    const studyButton = new MtuButton({
-      text: "바로 학습",
-      size: "large",
-      onClick: () => (window.location.href = this.courseUrl),
+    this.elItems = data.map((item) => {
+      return this.createCourseItem({ ...item });
     });
-    const elStudyButton = studyButton.getElement();
 
-    elFooter.appendChild(elWrapper);
-    elWrapper.appendChild(elStudyButton);
+    this.elBody.append(...this.elItems);
+  }
 
-    return elFooter;
+  createCourseItem({ id, title, progress, lectureCount, completedLectureCount, information, link }) {
+    const elItem = createElement("div", { className: `${this.rootCls}-item` });
+
+    // 1. title
+    const elTitle = createElement("a", {
+      className: `${this.rootCls}-item-title`,
+      attributes: {
+        href: link,
+      },
+      text: title,
+    });
+
+    // 2. progress text
+    const elProgressTextWrapper = createElement("div", {
+      className: `${this.rootCls}-item-progress-text-wrapper`,
+    });
+
+    const elProgressText = createElement("p", {
+      className: `${this.rootCls}-item-progress-text`,
+      text: this.formatProgressText(completedLectureCount, lectureCount, progress),
+    });
+
+    const elStudyDate = createElement("time", {
+      className: `${this.rootCls}-item-study-date`,
+      text: this.compareDates(information.recent_timestamp, new Date()),
+    });
+
+    elProgressTextWrapper.append(elProgressText, elStudyDate);
+
+    // 3. progressbar
+    const clProgressBar = new MtuProgress({
+      prefixCls: `${this.rootCls}-progressbar`,
+      type: "line",
+      percent: progress,
+    });
+
+    const elProgressBar = clProgressBar.getElement();
+
+    elItem.append(elTitle, elProgressTextWrapper, elProgressBar);
+
+    return elItem;
   }
 
   getElement() {
     return this.elThis;
+  }
+
+  // ============ Utils ============
+  formatProgressText(completedLectureCount, lectureCount, progress) {
+    return `진도율: ${completedLectureCount}강/${lectureCount}강 (${progress}%)`;
+  }
+
+  compareDates(date1, date2, withoutSuffix = false) {
+    // return date2 ? dayjs(date1).from(dayjs(date2), withoutSuffix) : dayjs(date1).fromNow(withoutSuffix);
+    return dayjs(date1).from(dayjs(date2), withoutSuffix);
   }
 }

@@ -6,28 +6,22 @@ import { classNames } from "../../../core/utils/class-names";
 
 require("../../../../css/pages/main/dashboard/dashboard-total-stats.css");
 export class DashboardTotalStats {
-  constructor({ progress, questionCorrectRate, videoCorrectRate, className } = {}) {
-    this.progress = typeof progress === "number" ? progress : 0;
-    this.questionCorrectRate = typeof questionCorrectRate === "number" ? questionCorrectRate : 0;
-    this.videoCorrectRate = typeof videoCorrectRate === "number" ? videoCorrectRate : 0;
-    this.className = typeof className === "string" ? className : null;
+  constructor({ prefixCls } = {}) {
+    this.prefixCls = prefixCls;
     this.init();
   }
+
   init() {
     this.initVariables();
     this.create();
   }
 
   initVariables() {
-    this.prefixCls = `dashboard-total-stats`;
-
-    this.stringProgress = `${Math.round(this.progress)}%`;
-    this.stringQuestionCorrectRate = `${Math.round(this.questionCorrectRate)}%`;
-    this.stringVideoCorrectRate = `${Math.round(this.videoCorrectRate)}%`;
+    this.rootCls = `dashboard-total-stats`;
   }
 
   create() {
-    this.elThis = createElement("div", { className: classNames(this.className, this.prefixCls) });
+    this.elThis = createElement("div", { className: classNames(this.prefixCls, this.rootCls) });
 
     this.elHeader = this.createHeader();
     this.elBody = this.createBody();
@@ -37,71 +31,107 @@ export class DashboardTotalStats {
 
   createHeader() {
     const elHeader = dashboardHeader({
-      className: `${this.prefixCls}-header`,
-      title: { title: this.title, className: `${this.prefixCls}-title` },
-      anchor: { className: `${this.prefixCls}-anchor` },
+      className: `${this.rootCls}-header`,
+      title: { title: this.title, className: `${this.rootCls}-title` },
+      anchor: { className: `${this.rootCls}-anchor` },
     });
 
     return elHeader;
   }
 
   createBody() {
-    //
-    const elBody = createElement("div", { className: `${this.prefixCls}-body` });
-    const elStatInfoBoxContainer = this.createStatInfoBoxContainer();
-    const elProgress = this.createProgress(this.progress);
+    const elBody = createElement("div", { className: `${this.rootCls}-body` });
 
-    elBody.append(elStatInfoBoxContainer, elProgress);
-    // elBody.append(elStatInfoBoxContainer);
+    const elStatInfoBoxContainer = createElement("div", { className: `${this.rootCls}-body-info-box-container` });
+    elBody.append(elStatInfoBoxContainer);
+
+    this.elCourseCount = this.createCourseCountInfo();
+    this.elQuestionAccuracy = this.createQuestionAccuracyInfo();
+    elStatInfoBoxContainer.append(this.elCourseCount, this.elQuestionAccuracy);
 
     return elBody;
   }
 
-  createStatInfoBoxContainer() {
-    const elContainer = createElement("div", { className: `${this.prefixCls}-body-info-box-container` });
-    //
-    const elVideoCorrectRate = this.createInfoBox("playCircleFilled", "영상 문제 정답률", this.stringVideoCorrectRate);
-    const elQuestionCorrectRate = this.createInfoBox("form", "테스트 정답률", this.stringQuestionCorrectRate);
-
-    elContainer.append(elVideoCorrectRate, elQuestionCorrectRate);
-
-    return elContainer;
-  }
-
-  // 왼쪽에는 아이콘, 오른쪽에는 text가 있는 ui
-  createInfoBox(icon, title, info) {
+  createCourseCountInfo(courseCount) {
     const prefixCls = "dashboard-stat-info-box";
     const elInfoBox = createElement("div", { className: prefixCls });
 
     const elIconWrapper = createElement("div", { className: `${prefixCls}-icon-wrapper` });
-    const elIcon = MtuIcon(icon, { style: { fontSize: "32px" } });
+    const elIcon = MtuIcon("book", { style: { fontSize: "24px" } });
     elIconWrapper.appendChild(elIcon);
 
     const elTextWrapper = createElement("div", { className: `${prefixCls}-text-wrapper` });
 
     const elTitle = createElement("p", { className: `${prefixCls}-title` });
-    elTitle.textContent = title;
+    elTitle.textContent = "강의 수";
 
-    const elInfo = createElement("p", { className: `${prefixCls}-info` });
-    elInfo.textContent = info;
+    this.elCourseCountText = createElement("p", { className: `${prefixCls}-info` });
+    courseCount ? (this.elCourseCountText.textContent = `${courseCount} 개`) : null;
 
-    elTextWrapper.append(elTitle, elInfo);
+    elTextWrapper.append(elTitle, this.elCourseCountText);
 
     elInfoBox.append(elIconWrapper, elTextWrapper);
     return elInfoBox;
   }
 
-  createProgress(progress = 0) {
-    const elWrapper = createElement("div", { className: `${this.prefixCls}-progress` });
+  createQuestionAccuracyInfo(questionAccuracy) {
+    const prefixCls = "dashboard-stat-info-box";
+    const elInfoBox = createElement("div", { className: prefixCls });
 
-    const clProgress = new MtuProgress({ type: "circle", percent: progress });
-    const elProgress = clProgress.getElement();
+    const elIconWrapper = createElement("div", { className: `${prefixCls}-icon-wrapper` });
+    const elIcon = MtuIcon("form", { style: { fontSize: "24px" } });
+    elIconWrapper.appendChild(elIcon);
 
-    elWrapper.appendChild(elProgress);
+    const elTextWrapper = createElement("div", { className: `${prefixCls}-text-wrapper` });
+
+    const elTitle = createElement("p", { className: `${prefixCls}-title` });
+    elTitle.textContent = "테스트 정답률";
+
+    this.elQuestionAccuracyText = createElement("p", { className: `${prefixCls}-info` });
+    questionAccuracy ? (this.elQuestionAccuracyText.textContent = `${questionAccuracy} %`) : null;
+
+    elTextWrapper.append(elTitle, this.elQuestionAccuracyText);
+
+    elInfoBox.append(elIconWrapper, elTextWrapper);
+    return elInfoBox;
+  }
+
+  createProgressCircle(progress = 0) {
+    const elWrapper = createElement("div", { className: `${this.rootCls}-progress-wrapper` });
+
+    this.clProgress = new MtuProgress({ prefixCls: `${this.rootCls}-progress`, type: "circle", percent: progress });
+    const elProgress = this.clProgress.getElement();
+
+    elWrapper.append(elProgress);
     return elWrapper;
   }
 
+  // ============ API ============
   getElement() {
     return this.elThis;
+  }
+
+  setData({ courseCount, questionAccuracy, progress }) {
+    courseCount && this.setCourseCount(courseCount);
+    questionAccuracy && this.setQuestionAccuracy(questionAccuracy);
+
+    if (progress) {
+      this.setProgressCircle(progress);
+    }
+  }
+
+  setCourseCount(courseCount) {
+    this.elCourseCountText.textContent = `${courseCount} 개`;
+  }
+
+  setQuestionAccuracy(questionAccuracy) {
+    this.elQuestionAccuracyText.textContent = `${questionAccuracy}%`;
+  }
+
+  setProgressCircle(progress) {
+    const nextProgressCircle = this.createProgressCircle(progress);
+    this.elProgress ? this.elProgress.replaceWith(nextProgressCircle) : this.elBody.append(nextProgressCircle);
+
+    this.elProgress = nextProgressCircle;
   }
 }

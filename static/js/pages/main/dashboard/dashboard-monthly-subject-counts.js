@@ -5,21 +5,9 @@ import { classNames } from "../../../core/utils/class-names";
 
 require("../../../../css/pages/main/dashboard/dashboard-monthly-subject-counts.css");
 export class DashboardMonthlySubjectCounts {
-  static testProgressData = [
-    { name: "국어", data: [20, 30, 50, 0, 10, 20, 30, 40, 60, 70, 50, 20] },
-    { name: "수학", data: [10, 40, 20, 0, 100, 100, 60, 40, 20, 70, 50, 20] },
-    { name: "영어", data: [100, 100, 100, 100, 10, 20, 30, 40, 20, 50, 60, 50] },
-    { name: "과학", data: [100, 100, 100, 100, 100, 100, 30, 50, 60, 20, 50, 20] },
-  ];
-  static testAccuracyRateData = [
-    { name: "국어", data: [100, 100, 100, 100, 100, 100, 30, 50, 60, 20, 50, 20] },
-    { name: "수학", data: [20, 30, 50, 0, 10, 20, 30, 40, 60, 70, 50, 20] },
-    { name: "영어", data: [10, 40, 20, 0, 100, 100, 60, 40, 20, 70, 50, 20] },
-    { name: "과학", data: [100, 100, 100, 100, 10, 20, 30, 40, 20, 50, 60, 50] },
-  ];
-
-  constructor({ data, className } = {}) {
+  constructor({ className } = {}) {
     this.className = typeof className === "string" || Array.isArray(className) ? className : null;
+    this.data = null;
     this.init();
   }
 
@@ -28,24 +16,35 @@ export class DashboardMonthlySubjectCounts {
     this.create();
 
     this.renderChart();
-
-    this.getData();
   }
 
   initVariables() {
-    this.prefixCls = "dashboard-category-stats";
-    this.title = "과목별 상세 통계";
-    this.yaxis = "성취도 (%)";
+    this.prefixCls = "dashboard-monthly-subject-counts";
+    this.title = "월별 수강 강의";
+    this.yaxis = "개수";
     this.tooltip = {
       y: {
         formatter: function (val) {
-          return "$ " + val + " thousands";
+          return val + " 개";
         },
       },
     };
 
     this.chartOptions = {
       series: [],
+      xaxis: {
+        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      },
+      yaxis: {
+        title: {
+          text: this.yaxis,
+        },
+        min: 0,
+        max: 10,
+      },
+      noData: {
+        text: "통계를 계산중입니다...",
+      },
       chart: {
         type: "bar",
         height: 350,
@@ -68,35 +67,12 @@ export class DashboardMonthlySubjectCounts {
         width: 2,
         colors: ["transparent"],
       },
-      xaxis: {
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-      },
-      yaxis: {
-        title: {
-          text: this.yaxis,
-        },
-        min: 0,
-        max: 100,
-      },
+
       fill: {
         opacity: 1,
       },
       tooltip: this.tooltip,
-      noData: {
-        text: "통계를 계산중입니다...",
-      },
     };
-  }
-
-  getData() {
-    if (!this.data) {
-      this.data = DashboardMonthlySubjectCounts.testProgressData;
-    }
-
-    // this.series = this.composeSeries();
-    setTimeout(() => {
-      this.updateChartData(this.data);
-    }, 3000);
   }
 
   create() {
@@ -104,9 +80,7 @@ export class DashboardMonthlySubjectCounts {
 
     this.elHeader = this.createHeader();
     this.elBody = this.createBody();
-    this.elFooter = this.createFooter();
 
-    // this.elThis.append(this.elHeader, this.elBody, this.elFooter);
     this.elThis.append(this.elHeader, this.elBody);
   }
 
@@ -131,29 +105,61 @@ export class DashboardMonthlySubjectCounts {
     return elBody;
   }
 
-  createFooter() {}
-
-  //////////// API ////////////
-  changeDateFormat(data) {
-    return data.forEach((data) => (data.month = `${data.month}월`));
-  }
-
-  getElement() {
-    return this.elThis;
-  }
-
+  // FIXME: rendering issue 2023.01.08
+  // 차트가 rendering될 때, 아주 초반에 0.2초 정도, text가 이상하게 잡혀있다.
+  // noData의 text가 왼쪽에 가있고, yaxis의 title이 중앙 위쪽에 가있다.
+  // 가로 줄 또한 없다.
   renderChart() {
     this.clChart = new ApexCharts(this.elChart, this.chartOptions);
 
     this.clChart.render();
   }
+  //////////// API ////////////
+  getElement() {
+    return this.elThis;
+  }
 
-  updateChartData(series) {
-    if (!this.clChart || !series) {
+  // Series format
+  // const series = [
+  //   { name: "국어", data: [20, 30, 50, 0, 10, 20, 30, 40, 60, 70, 50, 20] },
+  //   { name: "수학", data: [10, 40, 20, 0, 100, 100, 60, 40, 20, 70, 50, 20] },
+  //   { name: "영어", data: [100, 100, 100, 100, 10, 20, 30, 40, 20, 50, 60, 50] },
+  //   { name: "과학", data: [100, 100, 100, 100, 100, 100, 30, 50, 60, 20, 50, 20] },
+  // ];
+  setData(data) {
+    if (data && data === this.data) {
       return;
     }
 
-    console.log(series);
-    this.clChart.updateSeries(series);
+    if (data && data.length > 0) {
+      this.data = data;
+      this.updateChartData(data);
+    } else {
+      this.setEmptyData();
+    }
+  }
+
+  updateChartData(series) {
+    setTimeout(() => {
+      this.clChart.updateSeries(series);
+    }, 300);
+  }
+
+  setEmptyData() {
+    this.data = [];
+    setTimeout(() => {
+      this.clChart.updateOptions({
+        noData: {
+          text: "데이터가 없습니다.",
+        },
+      });
+    });
+  }
+
+  getMaxY(series) {
+    return series?.reduce((maxValue, item) => {
+      const maxInItem = Math.max(...item.data);
+      return Math.max(maxValue, maxInItem);
+    }, 0);
   }
 }
