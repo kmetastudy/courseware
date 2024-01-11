@@ -4,6 +4,7 @@ import { mtoElementBuilder } from "../../../core/utils/mto-element-builder.js";
 // 1) Lesson - 이어 하기, 확인
 
 // 제출, 오답 하기, 다음 하기 , 확인
+require("../../../../css/pages/st/study/mtm-study-submit-action.css");
 export var mtmStudySubmitAction = function (options) {
   this.id = "id-mtm-study-submit-action-" + mtmStudySubmitAction.id++;
   this.options = options;
@@ -20,12 +21,11 @@ mtmStudySubmitAction.id = 0;
 
 mtmStudySubmitAction.staticBody = [
   { level: 0, tag: "div" },
-  { level: 1, tag: "hr", class: "mb-1" },
+  { level: 1, tag: "hr", class: "mtm-study-submit-action-hr" },
   {
     level: 1,
     tag: "div",
-    class: "d-flex justify-content-center px-1 py-1 my-0",
-    attr: { style: "overflow-y:auto; overflow-x:hidden;" },
+    class: "mtm-study-submit-action-button-container",
   },
 ];
 

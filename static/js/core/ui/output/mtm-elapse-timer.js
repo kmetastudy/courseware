@@ -24,7 +24,7 @@ export var mtmElapseTimer = function (options) {
 
 mtmElapseTimer.id = 0;
 mtmElapseTimer.staticBody = [
-  { level: 0, tag: "button", class: "ml-0 px-3 py-1 mtm-elapse-timer", attr: { type: "button" } },
+  { level: 0, tag: "button", class: "mtm-elapse-timer", attr: { type: "button" } },
   { level: 1, tag: "i", class: "fa fa-magic" },
   { level: 1, text: " 새로 만들기" },
 ];

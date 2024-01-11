@@ -1,3 +1,17 @@
+.mtm-player-testum-indicator-flexbox {
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem 0;
+}
+
+.mtm-player-testum-indicator-swiper {
+    justify-content: center;
+    width: 100%;
+    overflow-x: hidden;
+    height: 30px;
+    border-radius: 20px;
+}
+
 .mtm-player-testum-indicator .swiper-slide{
     
     font-size: 18px;

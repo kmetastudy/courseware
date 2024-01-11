@@ -1,6 +1,7 @@
 import { mtoVideoTime } from "../../../core/utils/mto-video-time.js";
 import { mtmPlyr } from "../../../core/component/mtm-plyr.js";
 
+require("../../../../css/pages/st/lesson/mtm-player-video-content.css");
 export var mtmPlayerVideoContent = function (options) {
   this.id = "id-mtm-player-video-content-" + mtmPlayerVideoContent.id++;
 

@@ -1,3 +1,44 @@
+
+.cl-yt-solution-video-header-divider {
+    background-color: rgba(170, 170, 170, 0.3);
+    margin-top: 0;
+    width: 100%;
+    margin-bottom: 4px;
+    height: 2px;
+}
+
+.cl-solution-list-header {
+    /* background-color: rgb(199, 251, 177); */
+    background-color:  var(--theme-color-v2-c0-rgb);
+    color:  var(--theme-color-v2-c0-rgb);
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 0.25rem;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.cl-solution-list-header:hover {
+    /* background-color: rgb(241, 251, 172); */
+    background-color:  var(--theme-color-v2-c1-rgb);
+}
+
+.cl-solution-list-btn {
+    border: 2px solid white;
+    color: white;
+    padding: 0 0.5rem;
+}
+
+/* Solution Text List */
+.cl-solution-text-header-divider {
+    background-color: rgba(170, 170, 170, 0.3);
+    margin-top: 0;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    height: 2px;
+}
+
 /* 화면 전체를 감싸는 박스 */
 .cl-study-solution-list-wrap {
     position:relative;

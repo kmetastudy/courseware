@@ -1,0 +1,50 @@
+.mtm-player-lesson-question-flexbox {
+  --bs-gutter-x: 1.5rem;
+  --bs-gutter-y: 0;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: calc(-1 * var(--bs-gutter-y));
+  margin-right: calc(-.5 * var(--bs-gutter-x));
+  margin-left: calc(-.5 * var(--bs-gutter-x));
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+
+.mtm-player-lesson-question-flexbox>* {
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * .5);
+  padding-left: calc(var(--bs-gutter-x) * .5);
+  margin-top: var(--bs-gutter-y);
+}
+
+.mtm-player-lesson-question-wrapper {
+  flex: 0 0 auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+}
+
+@media (min-width: 768px) {
+  .mtm-player-lesson-question-wrapper {
+    flex: 0 0 auto;
+    width: 83.333%;
+  }
+}
+
+@media (min-width: 992px) {
+  .mtm-player-lesson-question-wrapper {
+    flex: 0 0 auto;
+    width: 75%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .mtm-player-lesson-question-wrapper {
+    flex: 0 0 auto;
+    width: 66.666%;
+  }
+}

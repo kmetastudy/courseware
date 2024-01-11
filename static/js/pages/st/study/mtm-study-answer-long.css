@@ -1,0 +1,10 @@
+.answer-type-long {
+  flex: 0 0 auto;
+  width: 100%;
+  margin-top: 0.25rem;
+  margin-left: 0.25rem;
+}
+
+.long-answer-input > i {
+  margin-right: 0.5rem;
+}

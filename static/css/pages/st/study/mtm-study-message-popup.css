@@ -47,6 +47,38 @@
     -webkit-transition-duration: 0.3s;
     -moz-transition-duration: 0.3s;
     transition-duration: 0.3s;
+    
+    display: flex;
+    justify-content: center;
+}
+
+/* card-normal */
+.mtm-study-message-popup-card {
+    margin: 0.25rem;
+}
+
+.mtm-study-message-popup-card-body {
+    padding: 0.25rem;
+}
+
+.mtm-study-message-popup-card-body-title {
+    display: flex;
+    justify-content: center;
+    padding: 0.25rem;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.mtm-study-message-popup-card-divider {
+    margin-top: 0.25rem;
+}
+
+.mtm-study-message-popup-card-body-message {
+    display: flex;
+    justify-content: center;
+    padding: 0.25rem;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .img-replace {
