@@ -8,8 +8,8 @@ export class StudyPreview extends StudyCourseBuilder {
     super(options);
   }
 
-  _init() {
-    super._init();
+  initialize() {
+    super.initialize();
 
     this.clColor = new mtmInputColorSwitcher();
     this.elThis.classList.add("study-preview");
@@ -26,12 +26,13 @@ export class StudyPreview extends StudyCourseBuilder {
     // this.mtmPlyrTestumTitle = this.elThis.querySelector("#" + `id-mtm-player-testum-title-0`);
     // this.mtmPlyrTestumTitle.textContent = this.options.courseTitle;
 
-    const clSubmitButton = this.elThis.querySelector(".mtm-input-button-hover-theme");
+    const clSubmitButton = this.elThis.querySelector(".testum-grading-button");
     clSubmitButton.style.background = "var(--theme-color-v2-c0-rgb)";
   }
 
   async startDemoStudy(course_id) {
     try {
+      console.log(course_id);
       const courseData = await this.urlGetCourse(course_id);
 
       if (!courseData) {
@@ -60,7 +61,7 @@ export class StudyPreview extends StudyCourseBuilder {
       }
 
       if (content_id) {
-        this.onChangeCourseContentHandler({
+        this.handleChangeContent({
           student_id: this.options.studentId,
           course_id,
           content_id,
