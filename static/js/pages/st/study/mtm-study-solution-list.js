@@ -24,18 +24,209 @@ import { mtmStudySolutionTextList } from "./mtm-study-solution-text-list.js";
 
 require("./mtm-study-solution-list.css");
 
-export var mtmStudySolutionList = function (options) {
-  this.id = "mtm-study-solution-list-" + mtmStudySolutionList.id++;
-  this.options = options;
-  this.elThis = null;
+export class mtmStudySolutionList {
+  constructor(options) {
+    this.id = "mtm-study-solution-list-" + mtmStudySolutionList.id++;
+    this.options = options;
+    this.elThis = null;
 
-  this.clSolutionVideoList = [];
-  this.clSolutionTextList = [];
+    this.clSolutionVideoList = [];
+    this.clSolutionTextList = [];
 
-  // this.checkInput = 0;
-  // this.elCheckInput = [];
-  this._init();
-};
+    // this.checkInput = 0;
+    // this.elCheckInput = [];
+    this._init();
+  }
+  ////////////////////////// Handler //////////////////////////
+  _onVideoClickHandler(eData) {
+    console.log("mtmStudySolutionList > _onVideoClickHandler : ", eData, this.options);
+    // var eData = {};
+    // eData.id = videoId;
+    // eData.type = this.options.type;
+    // mtvEvents.emit('OnPlayerVideo',eData);
+    if (this.options && this.options.eventSolutionHandler) this.options.eventSolutionHandler(eData);
+  }
+
+  _onTextClickHandler(textId) {
+    console.log("mtmStudySolutionList > _onTextClickHandler : ", textId);
+  }
+
+  _onSolutionClickHandler(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("mtmStudySolutionList > _onSolutionClickHandler :", this.elSolutionGroup.style.display);
+    if (this.elSolutionGroup.style.display == "none") this.elSolutionGroup.style.display = "";
+    else this.elSolutionGroup.style.display = "none";
+
+    return false;
+  }
+
+  _onSolutionButtonClickHandler(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("mtmStudySolutionList > _onSolutionButtonClickHandler :", this.elSolutionGroup.style.display);
+    if (this.elSolutionGroup.style.display == "none") this.elSolutionGroup.style.display = "";
+    else this.elSolutionGroup.style.display = "none";
+
+    return false;
+  }
+
+  _testPreCreate() {
+    //
+    this.options.sol_video = mtmStudySolutionList.datum.sol_video;
+    this.options.sol_text = mtmStudySolutionList.datum.sol_text;
+  }
+
+  _create() {
+    if (!this.options.sol_video) {
+      this.options.sol_video = [];
+    }
+
+    if (!this.options.sol_text) {
+      this.options.sol_text = [];
+    }
+
+    // 무조건 만든다.
+    // if( this.options.sol_video.length + this.options.sol_text.length > 0)
+    {
+      var elDivider = document.createElement("div");
+      elDivider.setAttribute("class", "cl-yt-solution-video-header-divider");
+      if (this.options.bMarginTop) elDivider.style.marginTop = "10px";
+
+      this.elThis.appendChild(elDivider);
+
+      this.elCompList = mtoElementBuilder.buildComponent(mtmStudySolutionList.staticHeader, true);
+      // Component List Matching
+      // this.elThis = this.elCompList[0];
+      this.elsArray = ["elHeader", "elButton", "elTitle"];
+      this.elsObject = {};
+      for (var i = 0; i < this.elsArray.length; i++) {
+        if (this.elsArray[i]) {
+          this.elsObject[this.elsArray[i]] = this.elCompList[i];
+        }
+      }
+
+      this.elsObject.elTitle.innerHTML = "해설 없음";
+      this.elsObject.elHeader.addEventListener("click", this._onSolutionClickHandler.bind(this));
+      this.elsObject.elButton.addEventListener("click", this._onSolutionButtonClickHandler.bind(this));
+      // this.elsObject.elTitle.addEventListener('click',this._onSolutionClickHandler.bind(this));
+      this.elThis.appendChild(this.elsObject.elHeader);
+    }
+
+    this.elSolutionGroup = document.createElement("div");
+    this.elThis.appendChild(this.elSolutionGroup);
+
+    for (var i = 0; i < this.options.sol_video.length; i++) {
+      var options = this.options.sol_video[i];
+      options.eventClickHandler = this._onVideoClickHandler.bind(this);
+      var clSoutionVideo = new mtmStudySolutionVideoList(options);
+      this.clSolutionVideoList.push(clSoutionVideo);
+
+      this.elSolutionGroup.appendChild(clSoutionVideo.elThis);
+
+      this.elsObject.elTitle.innerHTML = "해설 보기";
+      console.log("mtmStudySolutionList.>._create : 비디오 해설 :", i, this.id);
+    }
+
+    // Text Solution
+    if (this.options.sol_text.length > 0) {
+      var elDivider = document.createElement("div");
+      elDivider.setAttribute("class", "cl-solution-text-header-divider");
+      this.elSolutionGroup.appendChild(elDivider);
+    }
+
+    var text_no = 0;
+    if (this.options.sol_text.length > 1) text_no = 1;
+
+    for (var i = 0; i < this.options.sol_text.length; i++) {
+      var options = this.options.sol_text[i];
+      options.no = text_no++;
+      options.eventClickHandler = this._onTextClickHandler.bind(this);
+      var clSoutionText = new mtmStudySolutionTextList(options);
+      this.clSolutionTextList.push(clSoutionText);
+
+      this.elSolutionGroup.appendChild(clSoutionText.elThis);
+
+      this.elsObject.elTitle.innerHTML = "해설 보기";
+      console.log("mtmStudySolutionList.>._create : 텍스트 해설 :", i, this.id);
+    }
+
+    // if(this.elSolutionGroup)
+    this.elSolutionGroup.style.display = "none";
+  }
+
+  _init() {
+    this.elThis = document.createElement("div");
+    this.elThis.setAttribute("id", this.id);
+    // Fixed. Jstar : 이것 때문에 처음에 이상한 jpg 가 딸려 왔구만.
+    // for test
+    // this._testPreCreate();
+    this._create();
+  }
+
+  _setSolution(items) {}
+  ////////////////////////////////// API ///////////////////////////////
+  show(bShow) {
+    if (bShow) this.elThis.style.display = "block";
+    else this.elThis.style.display = "none";
+  }
+
+  setSolution(items) {
+    // for test
+    // return;
+    this.elsObject.elTitle.innerHTML = "해설 없음";
+
+    if (items) {
+      // console.log('mtmStudySolutionList > setSolution :', items.sol_video,items.sol_text);
+      this.options.sol_video = items.sol_video;
+      this.options.sol_text = items.sol_text;
+
+      if (!this.options.sol_video) this.options.sol_video = [];
+
+      if (!this.options.sol_text) this.options.sol_text = [];
+
+      this.clSolutionVideoList = [];
+      while (this.elSolutionGroup.firstChild) this.elSolutionGroup.removeChild(this.elSolutionGroup.firstChild);
+
+      for (var i = 0; i < this.options.sol_video.length; i++) {
+        var options = this.options.sol_video[i];
+        console.log("mtmStudySolutionList.>.setSolution : Video : ", options);
+        options.eventClickHandler = this._onVideoClickHandler.bind(this);
+        var clSoutionVideo = new mtmStudySolutionVideoList(options);
+        this.clSolutionVideoList.push(clSoutionVideo);
+        this.elSolutionGroup.appendChild(clSoutionVideo.elThis);
+
+        this.elsObject.elTitle.innerHTML = "해설 보기";
+      }
+
+      // Text Solution
+      if (this.options.sol_text.length > 0) {
+        var elDivider = document.createElement("div");
+        elDivider.setAttribute("class", "cl-solution-text-header-divider");
+        this.elSolutionGroup.appendChild(elDivider);
+
+        this.elsObject.elTitle.innerHTML = "해설 보기";
+      }
+
+      var text_no = 0;
+      if (this.options.sol_text.length > 1) text_no = 1;
+
+      for (var i = 0; i < this.options.sol_text.length; i++) {
+        var options = this.options.sol_text[i];
+        console.log("mtmStudySolutionList.>.setSolution : Text : ", options);
+
+        options.no = text_no++;
+        options.eventClickHandler = this._onTextClickHandler.bind(this);
+        var clSoutionText = new mtmStudySolutionTextList(options);
+        this.clSolutionTextList.push(clSoutionText);
+
+        this.elSolutionGroup.appendChild(clSoutionText.elThis);
+      }
+    }
+    // default hide
+    this.elSolutionGroup.style.display = "none";
+  }
+}
 
 mtmStudySolutionList.id = 0;
 
@@ -137,202 +328,16 @@ mtmStudySolutionList.staticHeader = [
   {
     step: 0,
     tag: "div",
-    class: "px-1 py-1 my-0 cl-solution-list-header",
+    class: "cl-solution-list-header",
     attr: { style: "overflow-y:hidden; overflow-x:hidden;" },
   },
   {
     step: 1,
     tag: "div",
-    class: "btn cl-solution-list-btn py-0 px-2",
+    class: "btn cl-solution-list-btn",
     // 'attr' : {
     //         'style':'cursor:pointer;background-color:transparent;border:2px solid dodgerblue;color:dodgerblue;',
     //     },
   },
   { step: 1, tag: "span", class: "font-weight-bold", text: "해설" },
 ];
-////////////////////////// Handler //////////////////////////
-mtmStudySolutionList.prototype._onVideoClickHandler = function (eData) {
-  console.log("mtmStudySolutionList > _onVideoClickHandler : ", eData, this.options);
-  // var eData = {};
-  // eData.id = videoId;
-  // eData.type = this.options.type;
-  // mtvEvents.emit('OnPlayerVideo',eData);
-  if (this.options && this.options.eventSolutionHandler) this.options.eventSolutionHandler(eData);
-};
-
-mtmStudySolutionList.prototype._onTextClickHandler = function (textId) {
-  console.log("mtmStudySolutionList > _onTextClickHandler : ", textId);
-};
-
-mtmStudySolutionList.prototype._onSolutionClickHandler = function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  console.log("mtmStudySolutionList > _onSolutionClickHandler :", this.elSolutionGroup.style.display);
-  if (this.elSolutionGroup.style.display == "none") this.elSolutionGroup.style.display = "";
-  else this.elSolutionGroup.style.display = "none";
-
-  return false;
-};
-
-mtmStudySolutionList.prototype._onSolutionButtonClickHandler = function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-  console.log("mtmStudySolutionList > _onSolutionButtonClickHandler :", this.elSolutionGroup.style.display);
-  if (this.elSolutionGroup.style.display == "none") this.elSolutionGroup.style.display = "";
-  else this.elSolutionGroup.style.display = "none";
-
-  return false;
-};
-
-mtmStudySolutionList.prototype._testPreCreate = function () {
-  //
-  this.options.sol_video = mtmStudySolutionList.datum.sol_video;
-  this.options.sol_text = mtmStudySolutionList.datum.sol_text;
-};
-
-mtmStudySolutionList.prototype._create = function () {
-  if (!this.options.sol_video) this.options.sol_video = [];
-
-  if (!this.options.sol_text) this.options.sol_text = [];
-
-  // 무조건 만든다.
-  // if( this.options.sol_video.length + this.options.sol_text.length > 0)
-  {
-    var elDivider = document.createElement("div");
-    elDivider.setAttribute("class", "cl-yt-solution-video-header-divider");
-    if (this.options.bMarginTop) elDivider.style.marginTop = "10px";
-
-    this.elThis.appendChild(elDivider);
-
-    this.elCompList = mtoElementBuilder.buildComponent(mtmStudySolutionList.staticHeader, true);
-    // Component List Matching
-    // this.elThis = this.elCompList[0];
-    this.elsArray = ["elHeader", "elButton", "elTitle"];
-    this.elsObject = {};
-    for (var i = 0; i < this.elsArray.length; i++) {
-      if (this.elsArray[i]) this.elsObject[this.elsArray[i]] = this.elCompList[i];
-    }
-
-    this.elsObject.elTitle.innerHTML = "해설 없음";
-    this.elsObject.elHeader.addEventListener("click", this._onSolutionClickHandler.bind(this));
-    this.elsObject.elButton.addEventListener("click", this._onSolutionButtonClickHandler.bind(this));
-    // this.elsObject.elTitle.addEventListener('click',this._onSolutionClickHandler.bind(this));
-
-    this.elThis.appendChild(this.elsObject.elHeader);
-  }
-
-  this.elSolutionGroup = document.createElement("div");
-  this.elThis.appendChild(this.elSolutionGroup);
-
-  for (var i = 0; i < this.options.sol_video.length; i++) {
-    var options = this.options.sol_video[i];
-    options.eventClickHandler = this._onVideoClickHandler.bind(this);
-    var clSoutionVideo = new mtmStudySolutionVideoList(options);
-    this.clSolutionVideoList.push(clSoutionVideo);
-
-    this.elSolutionGroup.appendChild(clSoutionVideo.elThis);
-
-    this.elsObject.elTitle.innerHTML = "해설 보기";
-    console.log("mtmStudySolutionList.>._create : 비디오 해설 :", i, this.id);
-  }
-
-  // Text Solution
-  if (this.options.sol_text.length > 0) {
-    var elDivider = document.createElement("div");
-    elDivider.setAttribute("class", "cl-solution-text-header-divider");
-    this.elSolutionGroup.appendChild(elDivider);
-  }
-
-  var text_no = 0;
-  if (this.options.sol_text.length > 1) text_no = 1;
-
-  for (var i = 0; i < this.options.sol_text.length; i++) {
-    var options = this.options.sol_text[i];
-    options.no = text_no++;
-    options.eventClickHandler = this._onTextClickHandler.bind(this);
-    var clSoutionText = new mtmStudySolutionTextList(options);
-    this.clSolutionTextList.push(clSoutionText);
-
-    this.elSolutionGroup.appendChild(clSoutionText.elThis);
-
-    this.elsObject.elTitle.innerHTML = "해설 보기";
-    console.log("mtmStudySolutionList.>._create : 텍스트 해설 :", i, this.id);
-  }
-
-  // if(this.elSolutionGroup)
-  this.elSolutionGroup.style.display = "none";
-};
-
-mtmStudySolutionList.prototype._init = function () {
-  this.elThis = document.createElement("div");
-  this.elThis.setAttribute("id", this.id);
-  // Fixed. Jstar : 이것 때문에 처음에 이상한 jpg 가 딸려 왔구만.
-  // for test
-  // this._testPreCreate();
-  this._create();
-};
-
-mtmStudySolutionList.prototype._setSolution = function (items) {};
-
-////////////////////////////////// API ///////////////////////////////
-mtmStudySolutionList.prototype.show = function (bShow) {
-  if (bShow) this.elThis.style.display = "block";
-  else this.elThis.style.display = "none";
-};
-
-mtmStudySolutionList.prototype.setSolution = function (items) {
-  // for test
-  // return;
-
-  this.elsObject.elTitle.innerHTML = "해설 없음";
-
-  if (items) {
-    // console.log('mtmStudySolutionList > setSolution :', items.sol_video,items.sol_text);
-    this.options.sol_video = items.sol_video;
-    this.options.sol_text = items.sol_text;
-
-    if (!this.options.sol_video) this.options.sol_video = [];
-
-    if (!this.options.sol_text) this.options.sol_text = [];
-
-    this.clSolutionVideoList = [];
-    while (this.elSolutionGroup.firstChild) this.elSolutionGroup.removeChild(this.elSolutionGroup.firstChild);
-
-    for (var i = 0; i < this.options.sol_video.length; i++) {
-      var options = this.options.sol_video[i];
-      console.log("mtmStudySolutionList.>.setSolution : Video : ", options);
-      options.eventClickHandler = this._onVideoClickHandler.bind(this);
-      var clSoutionVideo = new mtmStudySolutionVideoList(options);
-      this.clSolutionVideoList.push(clSoutionVideo);
-      this.elSolutionGroup.appendChild(clSoutionVideo.elThis);
-
-      this.elsObject.elTitle.innerHTML = "해설 보기";
-    }
-
-    // Text Solution
-    if (this.options.sol_text.length > 0) {
-      var elDivider = document.createElement("div");
-      elDivider.setAttribute("class", "cl-solution-text-header-divider");
-      this.elSolutionGroup.appendChild(elDivider);
-
-      this.elsObject.elTitle.innerHTML = "해설 보기";
-    }
-
-    var text_no = 0;
-    if (this.options.sol_text.length > 1) text_no = 1;
-
-    for (var i = 0; i < this.options.sol_text.length; i++) {
-      var options = this.options.sol_text[i];
-      console.log("mtmStudySolutionList.>.setSolution : Text : ", options);
-
-      options.no = text_no++;
-      options.eventClickHandler = this._onTextClickHandler.bind(this);
-      var clSoutionText = new mtmStudySolutionTextList(options);
-      this.clSolutionTextList.push(clSoutionText);
-
-      this.elSolutionGroup.appendChild(clSoutionText.elThis);
-    }
-  }
-  // default hide
-  this.elSolutionGroup.style.display = "none";
-};

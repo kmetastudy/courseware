@@ -1,0 +1,42 @@
+.testum-grading-button {
+  padding: 6px 1.5rem;
+  margin: 0 8px;
+  border-radius: 20px;
+  box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%),
+    0 4px 15px 0 rgb(0 0 0 / 15%);
+  outline: 0px;
+  user-select: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease 0s;
+
+  color: #fff;
+  background: var(--theme-color-v2-c0-rgb);
+  border: 2px solid var(--theme-color-v2-c0-rgb);
+
+  z-index: 10;
+  position: absolute;
+  bottom: 40px;
+  right: 0px;
+  font-weight: 600;
+  font-size: 14px;
+  display: block;
+}
+
+.testum-grading-button:not(:disabled) {
+  cursor: pointer;
+}
+
+.testum-grading-button:hover:not(:disabled) {
+  cursor: pointer;
+  color: #fff;
+  background: var(--theme-color-v2-c1-rgb);
+  border: 1px solid var(--theme-color-v2-c1-rgb);
+}
+
+.testum-grading-button:active:not(:disabled) {
+  color: #fff;
+  background-color: white;
+  color: var(--theme-color-v2-c1-rgb);
+  transform: translateY(1px);
+  outline: 0px;
+}

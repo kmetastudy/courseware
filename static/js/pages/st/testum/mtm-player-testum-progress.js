@@ -98,11 +98,12 @@ mtmPlayerTestumProgress.prototype._create = function () {
   this.elThis.classList.add("mtm-player-testum-progress");
 
   this.elFlex = document.createElement("div");
-  this.elFlex.setAttribute("class", "d-flex justify-content-center my-2");
+  this.elFlex.setAttribute("class", "mtm-player-testum-progress-flexbox");
 
   this.elSwiper = document.createElement("div");
 
-  this.elSwiper.setAttribute("class", "justify-content-center swiper-container");
+  // this.elSwiper.setAttribute("class", "justify-content-center swiper-container");
+  this.elSwiper.setAttribute("class", "swiper-container");
   // Todo. 폭 조정
   this.elSwiper.style.width = "100%";
   this.elSwiper.style.overflowX = "hidden";

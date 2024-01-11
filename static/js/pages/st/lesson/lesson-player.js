@@ -32,7 +32,6 @@ import { mtmPlayerVideoContent } from "./mtm-player-video-content.js";
 import { mtmStudySubmitAction } from "../study/mtm-study-submit-action.js";
 import { mtmPlayerLessonProgress } from "./mtm-player-lesson-progress.js";
 import { mtmStudyMessagePopup } from "../study/mtm-study-message-popup.js";
-import { StudyResultTable } from "../study/study-result-table.js";
 
 // clinic content 와 normal content 를 왜 굳이 구별했을까?
 // playMode == contentKind  :    0 --> normal Class Content
@@ -885,12 +884,6 @@ export class LessonPlayer {
       this.elThis.removeChild(this.clPlayerVideo.elThis);
       this.clPlayerVideo = null;
     }
-  }
-  // 기능이 없네....
-  requestPlayerVideo() {
-    if (this.options && this.options.requestPlayerVideo) return this.options.requestPlayerVideo();
-
-    return null;
   }
   setOptionInfo(data) {
     this.player.student_id = data.student_id;

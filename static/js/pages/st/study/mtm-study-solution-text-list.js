@@ -50,10 +50,10 @@ mtmStudySolutionTextList.staticBody = [
   {
     step: 1,
     tag: "div",
-    class: "px-1 py-1 my-0 cl-solution-text-header",
+    class: "cl-solution-text-header",
     attr: { style: "overflow-y:hidden; overflow-x:hidden;" },
   },
-  { step: 1, tag: "div", class: "btn cl-solution-text-list-btn py-0 px-2" },
+  { step: 1, tag: "div", class: "btn cl-solution-text-list-btn" },
   // {'step':1,'tag':'button','class':'btn btn-outline-primary py-0',
   //     'attr' : {'type':"button",'style':'cursor:pointer;background-color:transparent;border:2px solid dodgerblue;',},
   //     'prop': {'disabled':'true'},},
@@ -64,10 +64,10 @@ mtmStudySolutionTextList.staticBody = [
   {
     step: 0,
     tag: "div",
-    class: "px-0 py-0 my-0 cl-solution-text-content",
+    class: "cl-solution-text-content",
     attr: { style: "overflow-y:auto; overflow-x:hidden;" },
   },
-  { step: 1, tag: "div", class: "px-0 py-0 my-0", attr: { style: "width:100%;" } },
+  { step: 1, tag: "div", class: "cl-solution-text-content-child", attr: { style: "width:100%;" } },
   { step: -1, tag: "div", class: "cl-solution-text-item-divider" },
 ];
 

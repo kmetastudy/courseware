@@ -65,7 +65,7 @@ mtmStudyQuestionCard.staticNumberArea = [
   {
     level: 0,
     tag: "div",
-    class: "mtv-testum-card-normal-number-area px-1 py-1 my-0",
+    class: "mtv-testum-card-normal-number-area",
     attr: { style: "overflow-y:auto; overflow-x:hidden;" },
   },
 ];
@@ -74,7 +74,7 @@ mtmStudyQuestionCard.staticNumberItself = [
   {
     level: 0,
     tag: "button",
-    class: "mtm-study-question-number-btn mtm-study-question-number py-0",
+    class: "mtm-study-question-number-btn mtm-study-question-number",
     attr: { type: "button" },
     prop: { disabled: "true" },
   },
@@ -85,7 +85,7 @@ mtmStudyQuestionCard.staticAnswerArea = [
   {
     level: 0,
     tag: "div",
-    class: "row d-flex justify-content-center px-1 py-1 my-0",
+    class: "mtm-testum-card-answer-area",
     attr: { style: "overflow-y:auto; overflow-x:hidden;" },
   },
 ];
@@ -109,15 +109,12 @@ mtmStudyQuestionCard.staticContentArea = [
   {
     level: 0,
     tag: "div",
-    class: "mtm-testum-card-normal-container px-0 py-0 my-0",
-    attr: { style: "overflow-y:hidden; overflow-x:hidden;" },
+    class: "mtm-testum-card-normal-container",
   },
 ];
 
 // 문제 padding 장조
-mtmStudyQuestionCard.staticContentItself = [
-  { level: 0, tag: "div", class: "px-3 py-0 my-0 mtm-testum-card-normal-normal", attr: { style: "width:100%;" } },
-];
+mtmStudyQuestionCard.staticContentItself = [{ level: 0, tag: "div", class: "mtm-testum-card-normal-normal" }];
 
 // mtvPlayerTestumCard 와 다른 부분
 mtmStudyQuestionCard.staticSubmitArea = [
@@ -129,7 +126,7 @@ mtmStudyQuestionCard.staticBody = [
   {
     level: 0,
     tag: "div",
-    class: "mtm-testum-card-normal mx-1",
+    class: "mtm-testum-card-normal",
     attr: {
       "data-index": "",
       "data-uid": "",
@@ -137,17 +134,17 @@ mtmStudyQuestionCard.staticBody = [
     },
   },
 
-  { level: 1, tag: "div", class: "mtm-testum-card-normal-body px-1 py-1" },
+  { level: 1, tag: "div", class: "mtm-testum-card-normal-body" },
   // 번호 영역
   { level: 2, comp: "number-area" },
   { level: 3, comp: "number-itself" },
-  { level: 2, tag: "hr", class: "mt-1" },
+  { level: 2, tag: "hr", class: "mtm-study-question-divider divider-top" },
 
   // 문제 영역
   { level: 2, comp: "content-area" },
   { level: 3, comp: "content-itself" },
 
-  { level: 2, tag: "hr", class: "mb-1" },
+  { level: 2, tag: "hr", class: "mtm-study-question-divider divider-bottom" },
   // 정답 영역
   { level: 2, comp: "answer-area" },
   // 객관식

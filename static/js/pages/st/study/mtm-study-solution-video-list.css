@@ -180,15 +180,6 @@
     margin: 0 4px;
 }
 
-.cl-yt-solution-video-header-divider {
-    background-color: rgba(170, 170, 170, 0.3);
-    margin-top: 0;
-    width: 100%;
-    /* margin-top : 10px; */
-    margin-bottom: 4px;
-    height: 2px;
-}
-
 .cl-yt-solution-video-item-divider {
     background-color: rgba(170, 170, 170, 0.3);
     margin-top: 0;
