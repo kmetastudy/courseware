@@ -4,60 +4,32 @@ import { StCourseTree } from "../st-course-tree";
 import { mtmTabs } from "../../../core/ui/mtm-tabs";
 import { StMobileContainer } from "./mobile/st-mobile-container";
 import { sum } from "../../../core/utils/_utils";
-/**
- *
- * Refactor mtmStudyContainer
- * @param {*} options
- */
+
 require("../../../../css/pages/st/study/study-course-container.css");
 export class StudyCourseContainer {
+  /**
+   *
+   * Refactor mtmStudyContainer
+   * @param {*} options
+   * @param {HTMLElement} options.rootElement
+   */
   constructor(options = {}) {
     this.options = options;
-    this.elThis = null;
+    this.rootElement = this.options.rootElement;
 
     this._init();
   }
 
   async _init() {
-    this.elThis = document.createElement("div");
-
     this._initVariables();
 
-    const courseId = this.courseId;
-    const studentId = this.studentId;
+    await this.initializeData();
 
-    const { courseData, resultData } = await this.getCourseData(courseId, studentId);
-    this.courseData = courseData;
+    this.initializeCourseTree({ courseData: this.courseData, resultData: this.resultData });
 
-    this.courseData ? (document.title = this.courseData.title) : null;
-    this.resultData = resultData;
+    this.initializeSidebar();
 
-    this.treeData = this.composeTreeData({ courseData, resultData });
-
-    this.initCourseTree({ courseData, resultData });
-
-    this.initSidebar();
-
-    const initialContentId = this.contentId ?? this.getDefaultInitialContentId(resultData, courseData);
-    if (initialContentId) {
-      this.clCourseTree.activateContent(initialContentId);
-    }
-
-    this.clTab = new mtmTabs({
-      tabs: [{ name: "학습하기", align: "left", active: true, panel: true }],
-      eventActivateTab: this.handleLeftTabActivate.bind(this),
-    });
-    this.options.rootElement.append(this.clTab.elThis);
-
-    // this.clLeftTab.appendPanel(0, this.clStudyContainer.elThis);
-
-    this.clMobileContainer = new StMobileContainer({
-      data: this.treeData,
-      onSubItemClick: this.handleContentClick.bind(this),
-    });
-    this.clTab.appendPanel(0, this.clMobileContainer.getElement());
-    this.tabActiveIndex = 0;
-    this.clTab.showPanel(this.tabActiveIndex);
+    this.initializeMobileContainer();
 
     this.initEvents();
   }
@@ -68,25 +40,38 @@ export class StudyCourseContainer {
     this.userType = this.options.userType ?? null;
     this.studentId = this.options.studentId ?? null;
     this.isLogin = this.options.userLogin ?? false;
-    //
     this.contentId = this.options.contentId ?? null;
   }
 
-  initSidebar() {
+  async initializeData() {
+    const courseId = this.courseId;
+    const studentId = this.studentId;
+
+    const { courseData, resultData } = await this.getCourseData(courseId, studentId);
+    this.courseData = courseData;
+    this.resultData = resultData;
+
+    this.treeData = this.composeTreeData({ courseData, resultData });
+
+    this.courseData ? (document.title = this.courseData.title) : null;
+  }
+
+  initializeSidebar() {
     const learnTarget = this.elCourseTree;
 
     this.clSidebar = new MtuSidebar({
-      position: "right",
+      position: "left",
       items: [
         { title: "학습하기", icon: "stCategory", aside: learnTarget },
         // { title: "통계", icon: "barChart" },
       ],
     });
     this.elSidebar = this.clSidebar.getElement();
-    this.options.rootElement.prepend(this.elSidebar);
+
+    this.rootElement.prepend(this.elSidebar);
   }
 
-  initCourseTree({ courseData, resultData }) {
+  initializeCourseTree({ courseData, resultData }) {
     const title = "학습하기";
     this.clCourseTree = new StCourseTree({
       courseData,
@@ -96,7 +81,28 @@ export class StudyCourseContainer {
     });
 
     this.elCourseTree = this.clCourseTree.getElement();
-    this.options.rootElement.appendChild(this.elCourseTree);
+    this.rootElement.prepend(this.elCourseTree);
+
+    const initialContentId = this.contentId ?? this.getDefaultInitialContentId(resultData, courseData);
+    if (initialContentId) {
+      this.clCourseTree.activateContent(initialContentId);
+    }
+  }
+
+  initializeMobileContainer() {
+    this.clTab = new mtmTabs({
+      tabs: [{ name: "학습하기", align: "left", active: true, panel: true }],
+      eventActivateTab: this.handleLeftTabActivate.bind(this),
+    });
+    this.rootElement.append(this.clTab.elThis);
+
+    this.clMobileContainer = new StMobileContainer({
+      data: this.treeData,
+      onSubItemClick: this.handleContentClick.bind(this),
+    });
+    this.clTab.appendPanel(0, this.clMobileContainer.getElement());
+    this.tabActiveIndex = 0;
+    this.clTab.showPanel(this.tabActiveIndex);
   }
 
   initEvents() {
@@ -140,8 +146,6 @@ export class StudyCourseContainer {
   }
 
   handleLeftTabActivate = function (index) {
-    // console.log('StManager > handleLeftTabActivate : ',index);
-
     if (this.tabActiveIndex == index) {
       return;
     }
@@ -149,11 +153,6 @@ export class StudyCourseContainer {
     this.tabActiveIndex = index;
 
     this.clTab.showPanel(this.tabActiveIndex);
-
-    // var title = this.clLeftTab.getTitle(index);
-    // this.clRightTab.setTitle(0, title);
-    // this.rightActiveIndex = this.tabActiveIndex;
-    // this.clRightTab.showPanel(this.rightActiveIndex);
   };
   ////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////// URL  //////////////////////////////////////////

@@ -4,6 +4,7 @@ import { mtoEvents } from "../../core/utils/mto-events.js";
 // https://stove99.github.io/javascript/2019/04/16/plyr-lms-example/
 
 //
+require("../../../css/core/component/mtm-plyr.css");
 export var mtmPlyr = function (options) {
   this.id = "id-mtm-plyr-" + mtmPlyr.id++;
   this.options = options;
@@ -149,7 +150,11 @@ mtmPlyr.prototype._init = function () {
   // this.elThis.setAttribute('id' ,this.id);
 
   this._initVariables();
-  if (!this.videoId) this.videoId = "bTqVqk7FSmY";
+
+  if (!this.videoId) {
+    this.videoId = "bTqVqk7FSmY";
+  }
+
   this._initProgressive();
 
   console.log("mtmPlyr _init:");
@@ -324,6 +329,10 @@ mtmPlyr.prototype.onReady = function (e) {
   // this.player.duration = 10;
 
   // this.elIFrame.setAttribute('allow','');
+  console.log(e);
+  console.log("source : ", e.detail.plyr.source);
+  console.log("ratio : ", e.detail.plyr.ratio);
+
   if (this.stopped) {
     console.log("mtmPlyr.>.onReady : but stopped");
     this.player.stop();
@@ -341,6 +350,8 @@ mtmPlyr.prototype.onReady = function (e) {
   // this.player.play();
   this.stopped = false;
   this.player.muted = false;
+
+  this.resize();
   return;
 
   if (this.bAutoPlay && this.videoId) {
@@ -534,3 +545,39 @@ mtmPlyr.prototype.stopVideo = function () {
 // speed : 1
 // stopped : false
 // volume : 0.5
+
+mtmPlyr.prototype.resize = function () {
+  return;
+  // List of Video Vendors embeds you want to support
+  // var players = ['iframe[src*="youtube.com"]', 'iframe[src*="vimeo.com"]'];
+  let players = ['iframe[src*="youtube.com"]'];
+
+  // Select videos
+  let fitVids = document.querySelectorAll(players.join(","));
+  console.log("resizig video... fitVids: ", fitVids);
+
+  // If there are videos on the page...
+  if (fitVids.length) {
+    // Loop through videos
+    for (let i = 0; i < fitVids.length; i++) {
+      // Get Video Information
+      let fitVid = fitVids[i];
+      let width = fitVid.getAttribute("width");
+      let height = fitVid.getAttribute("height");
+      let aspectRatio = height / width;
+      let parentDiv = fitVid.parentNode;
+
+      // Wrap it in a DIV
+      let div = document.createElement("div");
+      div.className = "fitVids-wrapper";
+      div.style.paddingBottom = aspectRatio * 100 + "%";
+      parentDiv.insertBefore(div, fitVid);
+      fitVid.remove();
+      div.appendChild(fitVid);
+
+      // Clear height/width from fitVid
+      fitVid.removeAttribute("height");
+      fitVid.removeAttribute("width");
+    }
+  }
+};

@@ -52,25 +52,17 @@ mtmPlayerVideoContent.prototype._init = function () {
   this.elThis = document.createElement("div");
 
   this.elFlex = document.createElement("div");
-  this.elFlex.setAttribute("class", "row d-flex justify-content-center mt-2");
-
-  // {'level':1,'tag':'div', 'class':'card-body px-0 py-0 my-0', },
-  //         // <div class="col-12 mb-4" style="position:relative;padding-top:56.25%;border-radius:10px;border:3px solid rgba(0,123,255,255);" id="div_id_yt_root">
-  //         {'level':2 , 'tag':'div', 'class':'col-12 px-0', 'attr' : {'style' : 'position:relative;padding-top:56.25%;border-radius:10px;border:3px solid rgba(0,123,255,255);',},},
+  this.elFlex.setAttribute("class", "mtm-player-video-content-flexbox");
 
   this.elWrapper = document.createElement("div");
-  // this.elWrapper.setAttribute('class','col-12 col-md-10 col-lg-9 col-xl-8 justify-content-center');
-  // 나중에 매우 작은 width 에서는 px-0 을 추가 하자.
-  this.elWrapper.setAttribute("class", "col-12 px-4 py-2 justify-content-center");
+  this.elWrapper.setAttribute("class", "mtm-player-video-content-wrapper");
 
   this.elFlex.appendChild(this.elWrapper);
   this.elThis.appendChild(this.elFlex);
 
   this.elVideoWrapper = document.createElement("div");
-  // this.elVideoWrapper.setAttribute('class','col-12');
-  // 'position:relative;padding-top:56.25%;border-radius:10px;border:3px solid rgba(0,123,255,255);'
+  this.elVideoWrapper.classList.add("mtm-player-video-wrapper");
 
-  // this.elVideoWrapper.setAttribute('style','position:relative;padding-top:56.25%;border-radius:10px;border:0px solid rgba(0,123,255,255);');
   this.elWrapper.appendChild(this.elVideoWrapper);
 
   var options = {
@@ -85,9 +77,15 @@ mtmPlayerVideoContent.prototype._init = function () {
 
   this.clPlayerVideo.show(true);
 
-  // this.elVideoWrapper.appendChild(this.clPlayerVideo.elThis);
-  this.elThis.appendChild(this.clPlayerVideo.elThis);
+  this.elVideoWrapper.appendChild(this.clPlayerVideo.elThis);
   // 816 504
+  // console.log(this.elThis.getBoundingClientRect());
+  setTimeout(() => {
+    // console.log(this.elThis.getBoundingClientRect());
+    // const offsetTop = this.elThis.getBoundingClientRect()?.top;
+    // const windowHeight = window.innerHeight;
+    // this.elThis.setAttribute("style", `height:${windowHeight - offsetTop}px`);
+  });
 };
 
 ////////////////////// API //////////////////////////////

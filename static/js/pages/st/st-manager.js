@@ -25,7 +25,6 @@ export class StManager {
     this.clStudyContainer = new StudyCourseContainer(this.options);
     this.clStudyBuilder = new StudyCourseBuilder(this.options);
 
-    this.elThis.appendChild(this.clStudyContainer.elThis);
     this.elThis.appendChild(this.clStudyBuilder.elThis);
   }
 }

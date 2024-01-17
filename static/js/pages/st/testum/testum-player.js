@@ -83,11 +83,9 @@ export class TestumPlayer {
 
   _createTestumProgress(parent) {
     this.clPlayerTestumProgress = new mtmPlayerTestumProgress({ items: [] });
-    parent.appendChild(this.clPlayerTestumProgress.elThis);
+    // parent.appendChild(this.clPlayerTestumProgress.elThis);
   }
 
-  // 이벤트들도 다들 비어있다.
-  // eventStatusHandler은 동작이 없는거같다.
   _createTestumSubmitAction(parent) {
     this.clTestumSubmitAction = new mtmPlayerTestumSubmitAction({
       eventTimerHandler: this.onElapseTimer.bind(this),
@@ -95,7 +93,14 @@ export class TestumPlayer {
       eventNextStepHandler: this.onNextStepHandler.bind(this),
       eventStatusHandler: this.onTableStatusHandler.bind(this),
     });
-    parent.appendChild(this.clTestumSubmitAction.elThis);
+
+    /**
+     * Deprecated
+     * 오답하기/이어하기/전체보기
+     * 이미 mtm-study-question-card 파일에 있다.
+     * 즉, 여기 있는 submibAction은 현재 courseware의 ST에서 사용하지 않는다.
+     */
+    // parent.appendChild(this.clTestumSubmitAction.elThis);
   }
 
   _createTestumIndicator(parent) {
@@ -198,6 +203,7 @@ export class TestumPlayer {
   }
 
   _showResult() {
+    console.log("submit action activated");
     if (this.clTestumNavi) this.clTestumNavi.show(false);
     this.clTestumIndicator.show(false);
 
@@ -850,9 +856,16 @@ export class TestumPlayer {
       this.clPlayerVideoContent.show(false);
     }
   }
+
   show(bShow) {
-    if (bShow) this.elThis.style.display = "block";
-    else this.elThis.style.display = "none";
+    // if (bShow) this.elThis.style.display = "block";
+    if (bShow) {
+      // this.elThis.style.display = "flex";
+      this.elThis.classList.add("activate");
+    } else {
+      // this.elThis.style.display = "none";
+      this.elThis.classList.remove("activate");
+    }
   }
   // 테스트를 처음 진행? -> 우리가 아는 테스트창
   // 테스트 본 적 있음? -> 결과창

@@ -1,20 +1,13 @@
 .st-course-builder {
+  flex: 1 1 auto;
   transition: margin-left 0.2s ease 0s, margin-right 0.2s ease 0s;
-  padding: 0 72px;
   padding-bottom: 12px;
   display: flex;
   justify-content: center;
 }
 
-/*  */
-
-.st-manager {
-  height: calc(var(--vh, 1vh)*100 - 64px) !important;
-  /* overflow: hidden; */
-}
-
 .st-course-builder>div {
-  max-width: 100%;
+  max-width: 90%;
   height: 100%;
   min-width: 70%;
   margin: 0 auto;
@@ -29,7 +22,6 @@
     /* display: flex;
     flex-direction: column; */
     transition: height 0.3s ease 0s;
-    padding: 0 24px;
     margin-bottom: 8px;
   }
 }
@@ -41,14 +33,15 @@
     margin:4px;
   }
 
-  .swiper-slide {
+  .study-preview .swiper-slide {
     font-size: 16px;
   }
 
-  #id-mtm-question-swiper-1 .swiper-container {
+  .study-preview #id-mtm-question-swiper-1 .swiper-container {
     width: 100% !important;
     height: 500px !important;
-  
+    
   }
 }
+
 

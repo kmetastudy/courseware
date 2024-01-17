@@ -1,3 +1,27 @@
+.mtm-player-testum {
+  display: none;
+}
+
+.mtm-player-testum.activate {
+  display: block;
+}
+
+@media screen and (min-width: 1025px) {
+  .mtm-player-testum.activate {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.mtm-player-testum > .mtm-player-testum-indicator {
+  display: flex;
+  justify-content: center;
+}
+
+.mtm-player-testum > .mtm-player-testum-indicator > .mtm-player-testum-indicator-flexbox {
+  width: 70%;
+}
+
 .testum-grading-button {
   padding: 6px 1.5rem;
   margin: 0 8px;
@@ -16,7 +40,8 @@
   z-index: 10;
   position: absolute;
   bottom: 40px;
-  right: 0px;
+  /* right: 0px; */
+  right: 16px;
   font-weight: 600;
   font-size: 14px;
   display: block;
@@ -39,4 +64,32 @@
   color: var(--theme-color-v2-c1-rgb);
   transform: translateY(1px);
   outline: 0px;
+}
+
+@media screen and (max-width: 1024px) {
+  .testum-grading-button {
+    position: sticky;
+    /* margin-top: auto; */
+    /* top: 0; */
+    bottom: 8px;
+    right: 8px;
+    /*  */
+    align-self: flex-end;
+  }
+}
+@media screen and (max-width: 480px) {
+  .testum-grading-button {
+    position: sticky;
+    background-color: #1163ff;
+    border-radius: 0.75rem;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+
+    width: 80%;
+    border: none;
+    align-self: center;
+    bottom: 16px;
+    /* align-self: flex-end; */
+  }
 }
