@@ -153,6 +153,8 @@ export class TestumPlayer {
   }
 
   _createGradeButton(parent) {
+    this.buttonWrapper = createElement("div", { className: "grading-button-wrapper" });
+
     this.elGradingButton = createElement("button", {
       className: "testum-grading-button",
       attributes: {
@@ -175,7 +177,9 @@ export class TestumPlayer {
     });
     this.elGradingButton.append(elText);
 
-    parent.appendChild(this.elGradingButton);
+    this.buttonWrapper.append(this.elGradingButton);
+    // parent.appendChild(this.elGradingButton);
+    parent.appendChild(this.buttonWrapper);
   }
 
   _showPlayer(bShow) {
