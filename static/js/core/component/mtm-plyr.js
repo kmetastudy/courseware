@@ -210,6 +210,7 @@ mtmPlyr.prototype._init = function () {
         //     //return false;
         // }
       },
+      ratio: "16:9",
     },
   );
 

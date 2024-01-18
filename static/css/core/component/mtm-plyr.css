@@ -1,36 +1,41 @@
 /* set Plyr size */
 /* https://stackoverflow.com/questions/47184146/resize-video-proportionally-to-its-container */
 .mtm-plyr {
-    /* height: calc(var(--vh, 1vh)*100 - 64px - 64px - 32px);
-    display: flex;
-    justify-content: center; */
-    /* width: 100%; */
+    /* height: calc(var(--vh, 1vh)*100 - 64px - 64px - 32px); */
+    /* height: calc(var(--vh, 1vh)*100 - 64px - 64px - 32px); */
+    max-height: calc(100vh - var(--video-offset-top, 128px) - 30px);
+    /* display: flex;
+    border: transparent;
+    justify-content: center;
+    max-width: 100%; */
 }
 
-@media (max-width: 1024px) {
+@media screen and (max-width: 1024px) and (orientation: landscape)  {
     .mtm-plyr {
-        height: 334px;
+        height: calc(var(--vh, 1vh) * 100 - var(--video-offset-top, 78px) - 16px);
+    }
+}
+
+@media screen and (max-width: 1024px) and (orientation: portrait)  {
+    .mtm-plyr {
+        height: auto;
+        max-width: 100%;
     }
 }
 
 .plyr {
-    /* max-height: 334px; */
-    max-width: 100%;
-    /* height: 100%; */
-    /* width: 100%; */
+    height: 100%;
+    width: 100%;
 }
 
 .plyr__video-wrapper {
     position: relative;
-    padding-bottom: 56.25%;
-    /* padding-bottom: 75%; */
-    height: 0;
+    /* padding-bottom: 75% */
 }
-
 .plyr__video-wrapper iframe {
     position: absolute;
-    top: 0;
-    left: 0;
     height: 100%;
     width: 100%;
+    top: 0;
+    left: 0;
 }
