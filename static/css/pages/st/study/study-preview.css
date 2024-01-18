@@ -52,6 +52,28 @@ bootstrap 속성 중 몇가지가, 필요하다.
     flex: 0 0 auto;
     width: 100%;
 }
+/* @media (min-width: 1200px) {
+  .study-preview .swiper-container {
+      flex: 0 0 auto;
+      width: 66.66666667%;
+  }
+}
+@media (min-width: 992px) {
+  .study-preview .col-lg-9 {
+      flex: 0 0 auto;
+      width: 75%;
+  }
+}
+@media (min-width: 768px) {
+  .study-preview .col-md-10 {
+      flex: 0 0 auto;
+      width: 83.33333333%;
+  }
+}
+.col-12 {
+    flex: 0 0 auto;
+    width: 100%;
+} */
 
 .study-preview .mtm-plyr{
   height: auto;
@@ -84,9 +106,20 @@ https://github.com/nolimits4web/swiper/issues/3599#issuecomment-1290283431
   }
 
   #id-mtm-question-swiper-1 .swiper-container {
-    width: 100% !important;
-    height: 500px !important;
+    /* width: 100% !important; */
+    /* height: 500px !important; */
   
   }
 }
 
+/* https://github.com/nolimits4web/swiper/issues/3599 */
+.swiper-container {
+  min-width: 0;
+  width: 100%;
+  display: grid;
+  overflow: hidden;
+}
+
+.swiper-wrapper {
+  min-width: 0;
+}
