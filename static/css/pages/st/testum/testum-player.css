@@ -115,7 +115,7 @@
 
   .testum-grading-button {
     position: sticky;
-    background-color: #1163ff;
+    /* background-color: #1163ff; */
     border-radius: 0.75rem;
     font-size: 20px;
     font-weight: 500;

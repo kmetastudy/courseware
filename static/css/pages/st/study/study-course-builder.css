@@ -39,8 +39,8 @@
   }
 
   .study-preview #id-mtm-question-swiper-1 .swiper-container {
-    width: 100% !important;
-    height: 500px !important;
+    /* width: 100% !important;
+    height: 500px !important; */
     
   }
 }
