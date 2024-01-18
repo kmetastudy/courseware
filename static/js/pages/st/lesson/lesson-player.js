@@ -41,7 +41,7 @@ import { mtmStudyMessagePopup } from "../study/mtm-study-message-popup.js";
 // playMode == contentKind  :    0 --> normal Class Content
 //                              1 --> clinic content
 // playMode == action_request (DB)
-require("../../../../css/core/component/mtm-plyr.css");
+
 export class LessonPlayer {
   constructor(options) {
     this.id = "id-mtm-player-lesson-" + LessonPlayer.id++;

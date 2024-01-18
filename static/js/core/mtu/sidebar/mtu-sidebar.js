@@ -160,14 +160,14 @@ export class MtuSidebar {
 
     if (aside) {
       aside.classList.add("activate");
-      this.setAsidePosition(aside);
+      // this.setAsidePosition(aside);
     }
   }
 
   closeAside(aside) {
     if (aside) {
       aside.classList.remove("activate");
-      this.setAsidePosition(aside);
+      // this.setAsidePosition(aside);
     }
   }
 

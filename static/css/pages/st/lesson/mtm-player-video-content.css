@@ -23,5 +23,27 @@
   justify-content: center;
   flex: 0 0 auto;
   width: 100%;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 1.5rem;
+}
+
+
+@media (min-width: 768px) {
+  .mtm-player-video-content-wrapper {
+    flex: 0 0 auto;
+    /* width: 83.333%; */
+  }
+}
+
+@media (min-width: 992px) {
+  .mtm-player-video-content-wrapper {
+    flex: 0 0 auto;
+    /* width: 75%; */
+  }
+}
+
+@media (min-width: 1200px) {
+  .mtm-player-video-content-wrapper {
+    flex: 0 0 auto;
+    /* width: 66.666%; */
+  }
 }

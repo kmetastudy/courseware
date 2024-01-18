@@ -155,6 +155,8 @@ export class mtmPlayerTestumViewer {
   }
   _initQuestion() {
     this.elQuestionViewer = document.createElement("div");
+    this.elQuestionViewer.classList.add("mtm-player-testum-viewer-question");
+
     this.elThis.appendChild(this.elQuestionViewer);
 
     this.elFlexbox = document.createElement("div");
@@ -178,7 +180,8 @@ export class mtmPlayerTestumViewer {
   _init() {
     this.elThis = document.createElement("div");
     this.elThis.setAttribute("id", this.id);
-    this.elThis.style.position = "relative";
+    // this.elThis.style.position = "relative";
+    this.elThis.classList.add("mtm-player-testum-viewer");
 
     this._initQuestion();
     this._initInformation();
@@ -192,16 +195,17 @@ export class mtmPlayerTestumViewer {
       // eventTimeOutHandler:this.options.eventTimeOutHandler.bind(this),
       eventTimeOutHandler: this.options.eventTimeOutHandler,
       position: {
-        position: "absolute",
-        top: "24px",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: "10",
+        // position: "absolute",
+        // top: "24px",
+        // left: "50%",
+        // transform: "translateX(-50%)",
+        // zIndex: "10",
       },
     };
 
     this.clElapseTimer = new mtmElapseTimer(timer_options);
-    this.elThis.appendChild(this.clElapseTimer.elThis);
+    this.elThis.prepend(this.clElapseTimer.elThis);
+    this.elElapseTimer = this.clElapseTimer.elThis;
   }
 
   _timeBeforeDate() {
@@ -348,9 +352,13 @@ export class mtmPlayerTestumViewer {
   }
   ///////////////////// API ///////////////////////////////////////
   show(bShow) {
-    if (bShow) this.elThis.style.display = "block";
-    else this.elThis.style.display = "none";
+    if (bShow) {
+      this.elThis.classList.add("activate");
+    } else {
+      this.elThis.classList.remove("activate");
+    }
   }
+
   setTestumContent(items) {
     this._clearSwiperQuestion();
     this.options.items = items;

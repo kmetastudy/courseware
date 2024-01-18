@@ -26,6 +26,10 @@
   line-height: 1.5; 
 }
 
+.st-course-tree-header > .mtuicon {
+  cursor: pointer;
+}
+
 
 .st-course-tree-info {
   display: block;
