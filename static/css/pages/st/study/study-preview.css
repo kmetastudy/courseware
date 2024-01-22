@@ -164,3 +164,23 @@ https://github.com/nolimits4web/swiper/issues/3599#issuecomment-1290283431
     align-self: flex-end;
   }
 }
+
+.study-preview p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.study-preview figure {
+  margin: 0 0 1rem;
+}
+
+.study-preview table {
+  caption-side: bottom;
+  border-collapse: collapse;
+}
+
+.study-preview tbody, td, tfoot, th, thead, tr {
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+}
