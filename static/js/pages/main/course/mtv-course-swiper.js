@@ -1,8 +1,8 @@
 import { CourseSwiperUnit } from "./mtu-course-swiper"
 
 export function CourseSwiperView(data) {
-    this.options = {kor:'국어 추천 코스', eng:'영어 추천 코스', math:'수학 추천 코스', etc:'학교별 강의'}
-    this.text = {kor:'내신 국어의 논리정석 추천 코스! ', eng:'야 너도 할 수 있어 영어 추천 코스! ', math:'수직적 과목의 특화 쉽게 배울수있는 수학 추천 코스!', etc:''}
+    this.options = {kor:'초등 추천 코스', eng:'중등 추천 코스', math:'고등 추천 코스', etc:'학교별 강의'}
+    this.text = {kor:'', eng:'', math:'', etc:''}
     this.data = data
     this.elThis = null
     this.init()

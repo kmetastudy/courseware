@@ -16,9 +16,9 @@ CourseSwiperUnit.prototype.create = function() {
     this.data.forEach(content => {
         
         if (this.options.key == 'etc') {
-            var $elCourseUnit = $(`<div class="swiper-slide p-4 flex flex-col justify-center items-center lg:w-[250px] lg:h-[225px] rounded-[30px] bg-[#ADD9CB] cursor-pointer">
+            var $elCourseUnit = $(`<div class="swiper-slide p-4 flex flex-col justify-center items-center lg:w-[250px] h-auto lg:h-[225px] rounded-[30px] bg-[#ADD9CB] cursor-pointer">
                                     <div class="flex flex-col items-center">
-                                        <img class="w-full" src="/static/img/${content.thumnail}.png">
+                                        <img class="w-full" src="/static/img/thumnail/${content.thumnail}.png">
                                         <div class="mt-4 w-full flex justify-center items-center rounded-full bg-[#059669]">
                                             <p class="pl-2 text-[24px] text-center text-white">${this.options.name[cnt]}</p>
                                         </div>
@@ -26,17 +26,31 @@ CourseSwiperUnit.prototype.create = function() {
                                 </div>`)
             cnt++
         } else {
-            var $elCourseUnit = $(`<div class="swiper-slide p-4 flex flex-col justify-center items-center lg:w-[250px] lg:h-[225px] rounded-[30px] bg-[#ADD9CB] cursor-pointer">
+            if(content.grade == '0'){
+                var $elCourseUnit = $(`<div class="swiper-slide p-4 flex flex-col justify-center items-center lg:w-[250px] h-auto lg:h-[225px] rounded-[30px] bg-[#ADD9CB] cursor-pointer">
                                     <div class="flex flex-col items-center">
-                                        <img class="w-full" src="/static/img/${content.thumnail}.png">
+                                        <img class="w-full" src="/static/img/thumnail/${content.thumnail}.png">
                                         <div class="pt-2 w-full flex justify-between items-center">
-                                            <div class="flex-none w-[40px] lg:w-[48px] h-[40px] lg:h-[48px] flex justify-center items-center border-2 border-[#FE5BC3] rounded-full text-[20px] md:text-[24px] font-bold"><span class="align-middle">${this.options.school[content.school]}${content.grade}</span></div>
+                                            <div class="flex-none w-[44px] lg:w-[48px] h-[44px] lg:h-[48px] flex justify-center items-center border-2 border-[#FE5BC3] rounded-full text-[16px] md:text-[20px] font-bold"><span class="align-middle">공통</span></div>
                                             <div class="flex-1">
                                                 <p class="pl-2 text-[12px] md:text-[16px] text-center break-keep">${content.courseTitle}</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>`)
+            } else {
+                var $elCourseUnit = $(`<div class="swiper-slide p-4 flex flex-col justify-center items-center lg:w-[250px] h-auto lg:h-[225px] rounded-[30px] bg-[#ADD9CB] cursor-pointer">
+                                    <div class="flex flex-col items-center">
+                                        <img class="w-full" src="/static/img/thumnail/${content.thumnail}.png">
+                                        <div class="pt-2 w-full flex justify-between items-center">
+                                            <div class="flex-none w-[44px] lg:w-[48px] h-[44px] lg:h-[48px] flex justify-center items-center border-2 border-[#FE5BC3] rounded-full text-[20px] md:text-[24px] font-bold"><span class="align-middle">${this.options.school[content.school]}${content.grade}</span></div>
+                                            <div class="flex-1">
+                                                <p class="pl-2 text-[12px] md:text-[16px] text-center break-keep">${content.courseTitle}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`)
+            }
         }
 
         $elCourseUnit.on("click", function(){

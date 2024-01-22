@@ -26,12 +26,15 @@ def index(request):
     course_recomend = courseLanding.objects.all().values()
     # print(list(course_recomend))
     recommend = {'kor': [], 'eng': [], 'math': [], 'etc': []}
+    options = ['kor','eng','math','etc']
     for content in course_recomend:
-        course = courseDetail.objects.filter(courseId=content['courseId']).values(
-            'courseId', 'courseTitle', 'thumnail', 'school', 'grade')[0]
-        # course['type'] = content['subject']
-        # print(course)
-        recommend[content['subject']].append(course)
+        # print(content)
+        if content['subject'] in options:
+            course = courseDetail.objects.filter(courseId=content['courseId']).values(
+                'courseId', 'courseTitle', 'thumnail', 'school', 'grade', 'subject')[0]
+            # course['type'] = content['subject']
+            # print(course)
+            recommend[content['subject']].append(course)
     print(recommend)
     context = {"context": json.dumps(context_sample),
                "courses": courses,
@@ -331,6 +334,7 @@ def point_check(request, payment_pk):
     # return redirect("_main:order_detail", order_pk)
     # return redirect("_main:order_list")
     return redirect("_main:point_history")
+# TODO:결제 완료 처리하는 화면 만들기(지금은 결제 검증만하고 바로 넘어감)
 
 
 @jwt_login_required
