@@ -126,7 +126,7 @@ DetailManager.prototype.init = function () {
     // <img class="p-2 w-1/2 h-fit md:w-full" src="../../../../static/img/${this.data.thumnail}.png">
     const previewThumbnail = document.createElement("img");
     previewThumbnail.className = "p-2 max-w-full h-auto md:w-full";
-    previewThumbnail.setAttribute("src", `../../../../static/img/${thumbnail}.png`);
+    previewThumbnail.setAttribute("src", `../../../../static/img/thumnail/${thumbnail}.png`);
     $(".desc_preview_thumbnail").append(previewThumbnail);
   }
   const previewOptions = {
