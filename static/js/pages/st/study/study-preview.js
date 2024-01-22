@@ -1,7 +1,8 @@
 import { StudyCourseBuilder } from "./study-course-builder";
 import { mtmInputColorSwitcher } from "../../../core/ui/input/mtm-input-color-switcher";
-
 require("../../../../css/css-reset.css");
+require("../../../../css/core/component/mtm-common.css");
+require("../../../../../_st/static/css/st.css");
 require("../../../../css/pages/st/study/study-preview.css");
 export class StudyPreview extends StudyCourseBuilder {
   constructor(options) {
