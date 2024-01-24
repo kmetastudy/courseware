@@ -1,0 +1,61 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>클래스</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="{% static 'img/mdb-favicon.ico' %}" type="image/x-icon" />
+
+    <link rel="stylesheet" href="{% static '_dist/katex@0.12.0/dist/katex.min.css' %}" />
+
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="{% static '_dist/swiper/swiper-bundle.min.css' %}" />
+
+    <link rel="stylesheet" href="{% static '_dist/plyr/3.7.2/plyr.css' %}" />
+    <!-- font(NotoSansKr) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet" />
+
+    <!-- Tabulator -->
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+
+    <!-- apexcharts -->
+    <script type="text/javascript" src="{% static '_dist/apexcharts/apexcharts.min.js' %}"></script>
+
+    <script src="{% static '_dist/katex@0.12.0/dist/katex.min.js' %}"></script>
+    <script src="{% static '_dist/katex@0.12.0/dist/contrib/auto-render.min.js' %}"></script>
+    <script src="{% static '_dist/katex@0.12.0/dist/contrib/mhchem.min.js' %}"></script>
+
+    <script type="text/javascript" src="{% static '_dist/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- Plyr -->
+    <script type="text/javascript" src="{% static '_dist/plyr/3.7.2/plyr.min.js' %}"></script>
+
+    <!-- axios -->
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <div id="body"></div>
+
+    <link rel="stylesheet" href="{% static '_bundle/class/class-bundle.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/class/class-bundle.js' %}"></script>
+  </body>
+
+  <script>
+    {% comment %} var csrftoken = "{{csrf_token}}"; {% endcomment %}
+
+    {% comment %} const defaultAxiosConfig = {
+      headers: { "X-CSRFTOKEN": "{{csrf_token}}" },
+    };
+    axios.defaults.headers = defaultAxiosConfig.headers; {% endcomment %}
+    window.addEventListener("DOMContentLoaded", function () {
+      classlibrary.start_class("{{ context|escapejs }}", "{{csrf_token}}");
+    });
+  </script>
+</html>
