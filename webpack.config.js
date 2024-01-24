@@ -198,6 +198,27 @@ var configStatsDetail = Object.assign({}, config, {
   ],
 });
 
+var configClass = Object.assign({}, config, {
+  name: "configClass",
+
+  entry: {
+    class: path.resolve(__dirname, "_class/static/js/class.js"),
+  },
+  output: {
+    path: path.resolve(__dirname, "static/_bundle/class"),
+    library: "classlibrary",
+    filename: "class-bundle.js",
+    libraryTarget: "var",
+    clean: true,
+    // assetModuleFilename: '[name][ext]',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "class-bundle.css",
+    }),
+  ],
+});
+
 // Return Array of Configurations
 module.exports = [
   configMain,
@@ -208,4 +229,5 @@ module.exports = [
   configDashboard,
   configStats,
   configStatsDetail,
+  configClass,
 ];
