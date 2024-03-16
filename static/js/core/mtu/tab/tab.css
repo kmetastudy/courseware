@@ -1,0 +1,9 @@
+[role="tab"],
+[role="tab"]:focus,
+[role="tab"]:hover {
+  cursor: pointer;
+}
+
+[role="tabpanel"][data-state="inactive"] {
+  display: none;
+}
