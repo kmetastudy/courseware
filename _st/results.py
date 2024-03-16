@@ -33,7 +33,11 @@ def create_property(course_id):
             "level": list_data["level"],
         }
 
-        if list_data["type"] != CP_TYPE_TESTUM and list_data["type"] != CP_TYPE_LESSON and list_data["type"] != CP_TYPE_EXAM:
+        if (
+            list_data["type"] != CP_TYPE_TESTUM
+            and list_data["type"] != CP_TYPE_LESSON
+            and list_data["type"] != CP_TYPE_EXAM
+        ):
             empty_property.append(data)
             continue
 
@@ -56,7 +60,7 @@ def create_study_result(course_id, student_id, *args, **kwargs):
         id_student=id_student,
         id_course=id_course,
         # total result?
-        type=1
+        type=1,
     )
 
     default_property = create_property(course_id=id_course)
@@ -66,9 +70,7 @@ def create_study_result(course_id, student_id, *args, **kwargs):
         study_result.save()
         return study_result
 
-    properties = {
-        "property": default_property
-    }
+    properties = {"property": default_property}
 
     study_result.properties = json.dumps(properties, ensure_ascii=False)
 
@@ -86,13 +88,11 @@ def get_study_result(course_id, student_id):
     id_student = uuid.UUID(str(student_id))
 
     study_result = mStudyResult.objects.filter(
-        id_course=id_course,
-        id_student=id_student
+        id_course=id_course, id_student=id_student
     ).first()
 
     if not study_result:
-        study_result = create_study_result(
-            course_id=course_id, student_id=student_id)
+        study_result = create_study_result(course_id=course_id, student_id=student_id)
 
     return study_result
 
@@ -115,13 +115,13 @@ def update_study_result(*args, **kwargs):
 
     try:
         study_result = mStudyResult.objects.filter(
-            id_student=student_id,
-            id_course=course_id
+            id_student=student_id, id_course=course_id
         ).first()
 
         if not study_result:
             study_result = create_study_result(
-                course_id=course_id, student_id=student_id)
+                course_id=course_id, student_id=student_id
+            )
 
         json_properties = json.loads(study_result.properties)
 
@@ -135,10 +135,9 @@ def update_study_result(*args, **kwargs):
                 data["results"] = json.loads(results)
                 data["progress"] = progress
                 data["point"] = point
-                data['updated_date'] = updated_date
+                data["updated_date"] = updated_date
 
-        study_result.properties = json.dumps(
-            json_properties, ensure_ascii=False)
+        study_result.properties = json.dumps(json_properties, ensure_ascii=False)
         study_result.save()
 
         return study_result, None
@@ -167,7 +166,7 @@ def create_demo_study_result(course_id, student_id, *args, **kwargs):
         id_course=id_course,
         id_student=id_student,
         # total result?
-        type=1
+        type=1,
     )
 
     default_property = create_property(course_id=id_course)
@@ -177,9 +176,7 @@ def create_demo_study_result(course_id, student_id, *args, **kwargs):
         demo_study_result.save()
         return demo_study_result
 
-    properties = {
-        "property": default_property
-    }
+    properties = {"property": default_property}
 
     demo_study_result.properties = json.dumps(properties, ensure_ascii=False)
 
@@ -197,13 +194,13 @@ def get_demo_study_result(course_id, student_id):
     id_student = uuid.UUID(str(student_id))
 
     demo_study_result = mDemoStudyResult.objects.filter(
-        id_course=id_course,
-        id_student=id_student
+        id_course=id_course, id_student=id_student
     ).first()
 
     if not demo_study_result:
         demo_study_result = create_demo_study_result(
-            course_id=id_course, student_id=id_student)
+            course_id=id_course, student_id=id_student
+        )
 
     return demo_study_result
 
@@ -226,13 +223,13 @@ def update_demo_study_result(*args, **kwargs):
 
     try:
         demo_study_result = mDemoStudyResult.objects.filter(
-            id_student=student_id,
-            id_course=course_id
+            id_student=student_id, id_course=course_id
         ).first()
 
         if not demo_study_result:
             demo_study_result = create_demo_study_result(
-                course_id=course_id, student_id=student_id)
+                course_id=course_id, student_id=student_id
+            )
 
         json_properties = json.loads(demo_study_result.properties)
 
@@ -246,10 +243,9 @@ def update_demo_study_result(*args, **kwargs):
                 data["results"] = json.loads(results)
                 data["progress"] = progress
                 data["point"] = point
-                data['updated_date'] = updated_date
+                data["updated_date"] = updated_date
 
-        demo_study_result.properties = json.dumps(
-            json_properties, ensure_ascii=False)
+        demo_study_result.properties = json.dumps(json_properties, ensure_ascii=False)
 
         demo_study_result.save()
 
@@ -266,9 +262,9 @@ def get_information(instance):
     except json.JSONDecodeError:
         print("update_timestamp > JSONDecodeError", type(properties))
         return None
-    properties.setdefault('information', {})
+    properties.setdefault("information", {})
 
-    return properties['information']
+    return properties["information"]
 
 
 def update_information(instance, data):
@@ -278,12 +274,12 @@ def update_information(instance, data):
         print("update_timestamp > JSONDecodeError", type(properties))
         return None
 
-    properties.setdefault('information', {})
+    properties.setdefault("information", {})
 
-    properties['information'].update(data)
-    updated_properties = json.dumps(properties)
+    properties["information"].update(data)
+    updated_properties = json.dumps(properties, ensure_ascii=False)
 
     instance.properties = updated_properties
     instance.save()
 
-    return properties['information']
+    return properties["information"]
