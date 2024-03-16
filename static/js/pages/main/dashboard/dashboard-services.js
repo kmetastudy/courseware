@@ -1,6 +1,6 @@
 import urlStudyResult from "../../../core/api/st/urlStudyResult";
 import urlCourseDetail from "../../../core/api/cm/urlCourseDetail";
-import { isString, isNumber } from "../../../core/utils/type/index";
+import { isString, isNumber, isArray } from "../../../core/utils/type";
 import { sum, pipe } from "../../../core/utils/_utils";
 
 export const dashboardServices = (function () {
@@ -29,7 +29,19 @@ export const dashboardServices = (function () {
   }
 
   function getResults(studentId) {
-    return urlStudyResult.filter({ id_student: studentId }).then((res) => (res.data ? parseAll(res.data) : []));
+    return urlStudyResult.filter({ id_student: studentId }).then((res) => {
+      if (!res.data) {
+        return [];
+      }
+
+      if (!isArray(res.data)) {
+        const emptyArray = [];
+        emptyArray.push(res.data);
+        return emptyArray;
+      }
+
+      return res.data;
+    });
   }
 
   function getDetails(courseIds) {
