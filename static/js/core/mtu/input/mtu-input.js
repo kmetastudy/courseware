@@ -63,6 +63,14 @@ export class MtuInput {
       this.input.setAttribute("name", this.options.name);
     }
 
+    if (this.options.required) {
+      this.input.setAttribute("required", this.options.required);
+    }
+
+    if (this.options.autocomplete) {
+      this.input.setAttribute("autocomplete", this.options.autocomplete);
+    }
+
     const hasAffix = this.options.prefix || this.options.suffix;
     if (hasAffix) {
       const size = this.options.size;

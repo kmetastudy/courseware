@@ -62,4 +62,13 @@ export const config = {
     defaultValue: null,
     validate: (value) => typeof value === "function",
   },
+
+  required: {
+    defaultValue: false,
+    validate: (value) => typeof value === "boolean",
+  },
+  autocomplete: {
+    defaultValue: null,
+    validate: (value) => typeof value === "string",
+  },
 };
