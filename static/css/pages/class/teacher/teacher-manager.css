@@ -1,0 +1,15 @@
+.teacher-manager {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  margin: 0 auto;
+  gap: 1.5rem;
+}
+
+.class-manager-left {
+  
+}
+
+
+.class-manager-right {
+  
+}

@@ -1,0 +1,72 @@
+{% load static %}
+<!doctype html>
+<html data-theme="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ClassRoom</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="{% static 'img/mdb-favicon.ico' %}" type="image/x-icon" />
+
+    <!-- font(NotoSansKr) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet" />
+
+    <!-- Vanilla Calendar -->
+    <link href="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.css" rel="stylesheet" />
+
+    <!-- Daisy UI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Katex -->
+    <link rel="stylesheet" href="{% static '_dist/katex@0.12.0/dist/katex.min.css' %}" />
+
+    <!-- Vanilla Calendar -->
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js" defer></script>
+
+    <!-- dayjs -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/ko.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/utc.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/timezone.js"></script>
+
+    <!-- apexcharts -->
+    <script type="text/javascript" src="{% static '_dist/apexcharts/apexcharts.min.js' %}"></script>
+
+    <!-- Katex -->
+    <script src="{% static '_dist/katex@0.12.0/dist/katex.min.js' %}"></script>
+    <script src="{% static '_dist/katex@0.12.0/dist/contrib/auto-render.min.js' %}"></script>
+    <script src="{% static '_dist/katex@0.12.0/dist/contrib/mhchem.min.js' %}"></script>
+
+    <!-- axios -->
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
+    <!-- floatingUI -->
+    <script src="https://cdn.jsdelivr.net/npm/@floating-ui/core@1.6.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@floating-ui/dom@1.6.3"></script>
+
+    <!-- fullCalendar -->
+    <script type="text/javascript" src="{% static '_dist/fullCalendar/core/index.global.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '_dist/fullCalendar/daygrid/index.global.min.js' %}"></script>
+    <script type="text/javascript" src="{% static '_dist/fullCalendar/interaction/index.global.min.js' %}"></script>
+
+    <!-- TanStack Table -->
+    <script src="https://unpkg.com/@tanstack/table-core@8.11.6/build/umd/index.development.js"></script>
+  </head>
+
+  <body>
+    <div id="body"></div>
+
+    <link rel="stylesheet" href="{% static '_bundle/classroom/teacher/classroom-teacher-bundle.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/classroom/teacher/classroom-teacher-bundle.js' %}"></script>
+  </body>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      classroomTeacherLibrary.start_classroom("{{ context|escapejs }}", "{{csrf_token}}");
+    });
+  </script>
+</html>

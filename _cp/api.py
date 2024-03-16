@@ -120,6 +120,12 @@ class CourseNViewSet(viewsets.ModelViewSet):
     # serializer_class = CourseNSerializer
     serializer_class = MyModelSerializer
 
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
+    filterset_fields = {
+        'id': ["in", "exact"],
+        'type': ["in", "exact"],
+    }
+
     @action(detail=True, methods=['get'])
     def get_json_field(self, request, pk=None):
         obj = self.get_object()

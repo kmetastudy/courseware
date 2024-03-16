@@ -2,6 +2,7 @@ import { StudyCourseContainer } from "../../st/study/study-course-container-past
 import { CourseCardManager } from "./detail-course-card";
 import { DetailChapter } from "./detail-chapter";
 import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
+import { ClassRegistrationModal } from "./class-registration-modal";
 
 import { StudyPreview } from "../../st/study/study-preview";
 
@@ -50,9 +51,17 @@ export function DetailManager(context, data) {
 }
 
 DetailManager.prototype.init = function () {
+  const clClassRegistrationModal = new ClassRegistrationModal({
+    courseId: this.data.courseId,
+    userId: this.context.userId,
+    userType: this.context.userType,
+  });
+  const elClassRegistrationModal = clClassRegistrationModal.getElement();
+  document.body.appendChild(elClassRegistrationModal);
+
   var $elHeader = $(`<div class="w-[1200px] p-6 xl:p-10 text-white">
                         <p class="text-[20px] md:text-[24px] text-white">${this.data.courseTitle}</p>
-                        ${this.data.courseSummary?this.data.courseSummary:''}
+                        ${this.data.courseSummary ? this.data.courseSummary : ""}
                     </div>`);
   $(".course_header").append($elHeader);
   console.log(this.data.publisher == "null");
@@ -117,7 +126,7 @@ DetailManager.prototype.init = function () {
                         </div>`);
   $(".desc_category").append($elCategory);
 
-  $(".desc_content").append(`${this.data.desc?this.data.desc:''}`);
+  $(".desc_content").append(`${this.data.desc ? this.data.desc : ""}`);
 
   /**
    * 미리보기
@@ -150,6 +159,6 @@ DetailManager.prototype.init = function () {
   // var clChapter = new StudyCourseContainer(parsedOptions);
   var clChapter = new DetailChapter(this.data.courseId);
 
-  var clCard = new CourseCardManager(this.options, this.data);
+  var clCard = new CourseCardManager(this.options, this.data, this.context);
   $(".container-right").append(clCard.elThis);
 };

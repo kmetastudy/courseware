@@ -7,7 +7,8 @@ export function dashboard_run(context) {
   dayjs.locale("ko");
 
   const parsedContext = JSON.parse(context);
-  const { usertype, userId, userLogin } = parsedContext;
+  console.log(parsedContext);
+  const { userType, userId, userLogin } = parsedContext;
 
   if (!userLogin) {
     window.location.href = "../user/";
@@ -18,7 +19,7 @@ export function dashboard_run(context) {
   const main = document.querySelector("#main");
 
   const clNav = new NavManager(parsedContext);
-  const clManager = new AppDashboard({ usertype, studentId: userId, userLogin });
+  const clManager = new AppDashboard({ userType, userId, userLogin });
 
   main.append(clNav.getElement(), clManager.getElement());
 }

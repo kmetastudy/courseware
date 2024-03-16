@@ -1,4 +1,4 @@
-import { SignInForm } from "./signin-form";
+import { SignInForm } from "./SignInForm";
 
 require("./signin-manager.css");
 export class SignInManager {
@@ -8,8 +8,8 @@ export class SignInManager {
   }
 
   #init() {
-    this.elThis = document.createElement("div");
-    this.elThis.classList.add("sign-in-manager");
+    // this.elThis = document.createElement("div");
+    // this.elThis.classList.add("sign-in-manager");
     // this.elThis.setAttribute("style", "width:450px;margin:200px 400px;");
 
     this.clSignInForm = new SignInForm({
@@ -18,7 +18,8 @@ export class SignInManager {
       onClickRenderSignup: this.handleRenderSignup.bind(this),
     });
 
-    this.elThis.appendChild(this.clSignInForm.getElement());
+    this.elSignInForm = this.clSignInForm.getElement();
+    // this.elThis.appendChild(this.clSignInForm.getElement());
   }
   //////////////// HANDLER ////////////////
 
@@ -84,6 +85,6 @@ export class SignInManager {
 
   //////////////// API ////////////////
   getElement() {
-    return this.elThis;
+    return this.elSignInForm;
   }
 }

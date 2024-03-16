@@ -34,7 +34,9 @@ function elem(element, config) {
       } else if (isFunction(attribute)) {
         element[key] = attribute;
       } else {
-        element.setAttribute(key, attribute);
+        if (attribute !== false && attribute !== undefined && attribute !== null) {
+          element.setAttribute(key, attribute);
+        }
       }
     }
   }
@@ -42,8 +44,11 @@ function elem(element, config) {
   for (; index < args.length; index++) {
     addChild(element, args[index]);
   }
+
+  return element;
 }
 
+elem.attrMap = {};
 elem.isElement = (object) => object instanceof Element;
 elem["isNode"] = (object) => object instanceof Node;
 
@@ -55,5 +60,11 @@ if (typeof Proxy != "undefined") {
     },
   });
 }
+
+elem.attrMap["on"] = (element, value) => {
+  for (let eventName in value) {
+    element.addEventListener(eventName, value[eventName]);
+  }
+};
 
 export default elem;

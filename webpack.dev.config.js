@@ -75,12 +75,11 @@ var configST = Object.assign({}, config, {
   ],
 });
 
-// bundle for test(dev)
 var configUser = Object.assign({}, config, {
   name: "configUser",
 
   entry: {
-    st: path.resolve(__dirname, "_user/static/js/user.js"),
+    class: path.resolve(__dirname, "_user/static/js/user.js"),
   },
   output: {
     path: path.resolve(__dirname, "static/_bundle/user"),
@@ -222,15 +221,80 @@ var configClass = Object.assign({}, config, {
     }),
   ],
 });
+
+var configClassLaunch = Object.assign({}, config, {
+  name: "configClassLaunch",
+
+  entry: {
+    class: path.resolve(__dirname, "_class/static/js/class_launch.js"),
+  },
+  output: {
+    path: path.resolve(__dirname, "static/_bundle/class_launch"),
+    library: "classLaunchLibrary",
+    filename: "class_launch-bundle.js",
+    libraryTarget: "var",
+    clean: true,
+    // assetModuleFilename: '[name][ext]',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "class_launch-bundle.css",
+    }),
+  ],
+});
+
+var configClassRoomTeacher = Object.assign({}, config, {
+  name: "configClassRoomTeacher",
+
+  entry: {
+    classroomTeacher: path.resolve(__dirname, "_class/static/js/classroom-teacher.js"),
+  },
+  output: {
+    path: path.resolve(__dirname, "static/_bundle/classroom/teacher"),
+    library: "classroomTeacherLibrary",
+    filename: "classroom-teacher-bundle.js",
+    libraryTarget: "var",
+    clean: true,
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "classroom-teacher-bundle.css",
+    }),
+  ],
+});
+
+var configClassroomStudent = Object.assign({}, config, {
+  name: "configClassroomStudent",
+
+  entry: {
+    classroomStudent: path.resolve(__dirname, "_class/static/js/classroom-student.js"),
+  },
+  output: {
+    path: path.resolve(__dirname, "static/_bundle/classroom/student"),
+    library: "classroomStudentLibrary",
+    filename: `classroom-student-bundle.js`,
+    libraryTarget: "var",
+    clean: true,
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: `classroom-student-bundle.css`,
+    }),
+  ],
+});
+
 // Return Array of Configurations
 module.exports = [
   configMain,
-  configUser,
   configCP,
   configCM,
   configST,
+  configUser,
   configDashboard,
   configStats,
   configStatsDetail,
   configClass,
+  configClassLaunch,
+  configClassRoomTeacher,
+  configClassroomStudent,
 ];

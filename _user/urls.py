@@ -1,10 +1,12 @@
 from django.urls import path, include
-from .views import index, LoginView, SignUpView, logout
+from .views import index, LoginView, SignUpView, logout, SignUp
 from .social_login import *
+from .routers import router
 app_name = '_user'
 
 urlpatterns = [
     path('', index, name='index'),
+    path('signup/', SignUp.as_view(), name='signup'),
 
     path('api/login/', LoginView.as_view(), name='login'),
     path('api/sign-up/', SignUpView.as_view(), name='signup'),
@@ -35,5 +37,7 @@ urlpatterns = [
     path('signin/facebook/', FaceBookSignInView.as_view(), name='facebook_signin'),
     path('signin/facebook/callback/', FaceBookSignInCallbackView.as_view(),
          name='facebook_signin_callback'),
+
+    path('api/', include(router.urls)),
 
 ]

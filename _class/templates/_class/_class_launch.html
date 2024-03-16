@@ -1,0 +1,45 @@
+{% load static %}
+<!doctype html>
+<html data-theme="winter">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>클래스</title>
+    <!-- MDB icon -->
+    <!-- font(NotoSansKr) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet" />
+
+    <link rel="icon" href="{% static 'img/mdb-favicon.ico' %}" type="image/x-icon" />
+
+    <!-- Daisy UI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.1/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <!-- Vanilla Calendar -->
+    <link href="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.css" rel="stylesheet" />
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Vanilla Calendar -->
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js" defer></script>
+    <!-- dayjs -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/ko.js"></script>
+
+    <!-- axios -->
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+  </head>
+
+  <body>
+    <div id="body"></div>
+
+    <link rel="stylesheet" href="{% static '_bundle/class_launch/class_launch-bundle.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/class_launch/class_launch-bundle.js' %}"></script>
+  </body>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+      classLaunchLibrary.start_launch("{{ context|escapejs }}", "{{csrf_token}}");
+    });
+  </script>
+</html>

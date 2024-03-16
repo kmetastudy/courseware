@@ -1,0 +1,29 @@
+.mtm-class-card {
+  position: relative;
+  height: auto;
+  margin-bottom: 8px;
+}
+
+.mtm-class-card-wrapper {
+  position: relative;
+  background-color: #fff;
+  padding: 1.5rem;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  border: 1px solid rgba(247, 249, 251);
+}
+
+.mtm-class-card-header {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mtm-class-card-header-title {
+  white-space:nowrap;
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.3;
+}
+

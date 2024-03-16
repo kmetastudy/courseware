@@ -1,36 +1,34 @@
-import { mtoEvents } from "../../../static/js/core/utils/mto-events";
 import { UserManager } from "../../../static/js/pages/user/user-manager";
-import { axiosManager } from "../../../static/js/core/utils/axios-manager";
-import { NavManager } from "../../../static/js/core/component/nav-manager";
-// require("../../../static/css/core/component/mtm-common.css");
+
 require("../../../static/css/css-reset.css");
-function activate(context) {
-  const body = document.getElementById("body");
-  console.log(context);
-  // const contextStructure = {
-  //   nextUrl: '../some_path/'
-  // };
+require("../css/user.css");
+export function start_user(context, csrf_token) {
+  setConfig(csrf_token);
 
-  const clUserManager = new UserManager({
-    context: context,
-  });
-
-  body.appendChild(clUserManager.elThis);
+  initUser(context);
 }
 
-mtoEvents.on("onReady", activate);
+function setConfig(csrf_token) {
+  const defaultAxiosConfig = {
+    headers: { "X-CSRFTOKEN": csrf_token },
+  };
 
-export function user_run(context, csrf_token) {
+  axios.defaults.headers = defaultAxiosConfig.headers;
+}
+
+function initUser(context) {
   const parsedContext = JSON.parse(context);
 
-  mtoEvents.emit("setDefaultAxios", parsedContext);
-  mtoEvents.emit("onReady", parsedContext);
-}
+  const body = document.getElementById("body");
 
-function setAxiosDefault(context) {
-  if (context.access_token) {
-    axios.defaults.headers["Authorization"] = `Bearer ${context.access_token}`;
-  }
-}
+  // const options = {
+  //   userType: parsedContext.userType,
+  //   userId: parsedContext.userId,
+  //   parent: body,
+  //   classId: parsedContext.classId,
+  // };
 
-mtoEvents.on("setDefaultAxios", setAxiosDefault);
+  const clUserManager = new UserManager();
+  const elUserManager = clUserManager.getElement();
+  body.append(elUserManager);
+}

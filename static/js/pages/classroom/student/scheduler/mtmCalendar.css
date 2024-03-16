@@ -1,0 +1,27 @@
+/* How to fit calendar width 100% */
+/* https://github.com/fullcalendar/fullcalendar-angular/issues/319#issuecomment-1345843030 */
+
+.fc .content {
+  height: 100% !important;
+}
+
+.fc-col-header,
+.fc-timegrid-body {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.fc-scrollgrid-sync-table {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.fc-daygrid-body {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.fc-daygrid-body-balanced {
+  width: 100% !important;
+  height: 100% !important;
+}
