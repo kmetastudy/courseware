@@ -1,7 +1,9 @@
-import { AppClass } from "../../../static/js/pages/class/AppClass";
+import { AppClassroomTeacher } from "../../../static/js/pages/classroom/teacher/App";
+
 require("../../../static/css/css-reset.css");
-require("../css/class.css");
-export function start_class(context, csrf_token) {
+require("../css/classroom-teacher.css");
+
+export function start_classroom(context, csrf_token) {
   setConfig(csrf_token);
 
   initClass(context);
@@ -16,19 +18,19 @@ function setConfig(csrf_token) {
 }
 
 function initClass(context) {
+  dayjs.extend(window.dayjs_plugin_utc);
+  dayjs.extend(window.dayjs_plugin_timezone);
+  dayjs.locale("ko");
+
   const parsedContext = JSON.parse(context);
 
   const options = {
     userType: parsedContext.userType,
     userId: parsedContext.userId,
-    userLogin: parsedContext.userLogin,
+    classId: parsedContext.classId,
   };
+
   console.log(options);
 
-  const body = document.getElementById("body");
-
-  const clAppClass = new AppClass(options);
-  const element = clAppClass.getElement();
-
-  body.append(element);
+  const clClassroom = new AppClassroomTeacher(options);
 }
