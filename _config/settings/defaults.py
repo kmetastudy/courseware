@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "_st",
     "_class",
     "core",
-    "auth",
+    "auth.apps.AuthConfig",
     "rest_framework",
     "corsheaders",
     "django_filters",

@@ -1,4 +1,4 @@
-from django.urls import path, inlclude
+from django.urls import path, include
 
 app_name = "auth"
 
