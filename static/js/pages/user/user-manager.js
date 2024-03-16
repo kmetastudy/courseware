@@ -1,6 +1,6 @@
 import { SignInManager } from "./signin/signin-manager";
 import { SignUpManager } from "./signup/signup-manager";
-
+import elem from "../../core/utils/elem/elem";
 // require("./mtm-manager-learn.css");
 export class UserManager {
   constructor(options) {
@@ -10,8 +10,7 @@ export class UserManager {
   }
 
   #init() {
-    this.elThis = document.createElement("div");
-    this.elThis.classList.add("user-app");
+    this.elThis = elem("div", { class: "h-screen bg-base-200 flex justify-center item-center" });
 
     this.SignInManager = new SignInManager({
       onClickRenderSignup: this.activateSignup.bind(this),
@@ -29,12 +28,18 @@ export class UserManager {
   }
 
   activateSignup() {
-    this.elSignInManager.classList.remove("activate");
-    this.elSignUpManager.classList.add("activate");
+    this.elSignInManager.classList.add("hidden");
+    // this.elSignUpManager.classList.add("activate");
+    this.elSignUpManager.classList.remove("hidden");
   }
 
   activateSignIn() {
-    this.elSignUpManager.classList.remove("activate");
-    this.elSignInManager.classList.add("activate");
+    // this.elSignUpManager.classList.remove("activate");
+    this.elSignUpManager.classList.add("hidden");
+    this.elSignInManager.classList.remove("hidden");
+  }
+
+  getElement() {
+    return this.elThis;
   }
 }

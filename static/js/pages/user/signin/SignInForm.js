@@ -4,12 +4,11 @@ import { MtuButton } from "../../../core/mtu/button/mtu-button";
 
 import { InputPassword } from "../../../core/mtu/input/mtu-input-password";
 import elem from "../../../core/utils/elem/elem";
-require("../../../../css/pages/user/signin/signin-form.css");
-// require("../../../../css/core/ui/form/mtu-signup-form.css");
+
 export class SignInForm {
   constructor(options = {}) {
     this.options = options;
-    //
+    this.title = "로그인";
     this.#init();
   }
 
@@ -19,92 +18,105 @@ export class SignInForm {
   }
 
   create() {
-    this.elThis = document.createElement("form");
-    this.elThis.classList.add("mtu-form");
-    this.elThis.classList.add("mtu-signin-form");
+    this.elThis = elem("sectoin", {
+      class: "card rounded-3xl m-auto bg-base-100 py-4 px-8 w-max sm:px-24 sm:w-[540px] hidden",
+    });
 
-    this.elEmailLabel = document.createElement("div");
-    this.elEmailLabel.classList.add("mtu-form-label");
-    this.elEmailLabel.textContent = "이메일";
-    this.elThis.appendChild(this.elEmailLabel);
+    this.elForm = elem("form", { class: "card-body text-center" });
+    this.elThis.append(this.elForm);
 
-    // Email
-    this.clEmail = new MtuInput({
+    this.elTitleWrapper = elem("div", { class: "self-center mb-4" });
+    this.elTitle = elem("h1", { class: "text-xl card-title" }, this.title);
+    this.elTitleWrapper.append(this.elTitle);
+
+    // 이메일
+    this.elEmailWrapper = elem("div", { class: "form-control" });
+    this.elEmailLabel = elem("label", { class: "label" });
+    this.elEmailLabelText = elem("span", { class: "label-text" }, "이메일");
+    this.clEmailInput = new MtuInput({
       type: "email",
       size: "large",
-      prefix: "mail",
-      placeholder: "이메일을 입력해주세요",
+      prefix: "smile",
       name: "email",
+      placeholder: "abc@abc.com",
+      required: true,
     });
-    this.elThis.appendChild(this.clEmail.getElement());
 
-    this.elPasswordLabel = document.createElement("div");
-    this.elPasswordLabel.textContent = "비밀번호";
-    this.elPasswordLabel.classList.add("mtu-form-label");
-    this.elThis.appendChild(this.elPasswordLabel);
+    this.elEmailInput = this.clEmailInput.getElement();
 
-    this.elPasswordForget = document.createElement("a");
-    this.elPasswordForget.setAttribute("href", "");
-    this.elPasswordForget.textContent = "비밀번호 재설정";
-    this.elPasswordLabel.appendChild(this.elPasswordForget);
+    this.elEmailWrapper.append(this.elEmailLabel);
+    this.elEmailLabel.append(this.elEmailLabelText);
+    this.elEmailWrapper.append(this.elEmailInput);
 
     // Password
-    this.clPassword = new InputPassword({
+    this.elPasswordWrapper = elem("div", { class: "form-control mb-8" });
+    this.elPasswordLabel = elem("label", { class: "label" });
+    this.elPasswordLabelText = elem("span", { class: "label-text" }, "비밀번호");
+    this.clPasswordInput = new InputPassword({
       type: "password",
       size: "large",
       prefix: "lock",
       suffix: "eyeInvisible",
-      placeholder: "비밀번호를 입력해주세요",
+      placeholder: "영문자, 소문자, 특수문자 포함 최소 8~20자",
       name: "password",
-      autocomplete: "",
+      autocomplete: "on",
+      required: true,
     });
+    this.elPasswordInput = this.clPasswordInput.getElement();
 
-    this.elThis.appendChild(this.clPassword.getElement());
+    this.elPasswordWrapper.append(this.elPasswordLabel);
+    this.elPasswordLabel.append(this.elPasswordLabelText);
+    this.elPasswordWrapper.append(this.elPasswordInput);
 
-    // Submit
-    this.clSubmitButton = new MtuButton({
-      text: "로그인",
-      type: "primary",
-      size: "large",
-      htmlType: "submit",
-      onSubmit: this.handleSubmit.bind(this),
-    });
-    this.elThis.appendChild(this.clSubmitButton.getElement());
+    // submit
+    this.elSubmitWrapper = elem("div", { class: "form-control mt-4" });
+    this.elButtonWrapper = elem("div", { class: "flex items-end py-4" });
+    this.elSubmitButton = elem("button", { class: "btn btn-primary grow rounded-lg" }, "로그인");
+    this.elSubmitWrapper.append(this.elButtonWrapper);
+    this.elButtonWrapper.append(this.elSubmitButton);
 
     // Sinup
     this.clSignupButton = new MtuButton({
-      text: "course-12가 처음이신가요? 가입하기",
+      text: "course-12가 처음이신가요?",
       type: "text",
       size: "default",
       // htmlType: "button",
       onClick: this.handleSignupClick.bind(this),
     });
-    this.elThis.appendChild(this.clSignupButton.getElement());
+    this.elSignupButton = this.clSignupButton.getElement();
 
     // Social Login
-    this.socialLogin = document.createElement("div");
+    this.socialLogin = elem("div");
     this.socialLogin.classList.add("social-login");
     // TODO
     // 임시로 socail login은 막아둔다.
-    // this.elThis.appendChild(this.socialLogin);
+    // this.elForm.appendChild(this.socialLogin);
 
-    this.socialLoginTitle = document.createElement("div");
+    this.socialLoginTitle = elem("div");
     this.socialLoginTitle.classList.add("social-login-title");
     this.socialLoginTitle.textContent = "다른 계정으로 로그인하기";
     this.socialLogin.appendChild(this.socialLoginTitle);
 
     // Social Login Buttons
-    this.socialLoginButtons = document.createElement("div");
+    this.socialLoginButtons = elem("div");
     this.socialLoginButtons.classList.add("social-login-buttons");
     this.socialLogin.appendChild(this.socialLoginButtons);
 
     this.socialLoginButtons.appendChild(this.createSocialLoginButton("google"));
     this.socialLoginButtons.appendChild(this.createSocialLoginButton("kakao"));
     this.socialLoginButtons.appendChild(this.createSocialLoginButton("naver"));
+
+    this.elForm.append(
+      this.elTitleWrapper,
+      this.elEmailWrapper,
+      this.elPasswordWrapper,
+      this.elSubmitWrapper,
+      this.elSignupButton,
+    );
   }
 
   createSocialLoginButton(name) {
-    const wrapper = document.createElement("div");
+    const wrapper = elem("div");
     wrapper.classList.add("social-login-button-wrapper");
 
     const clButton = new MtuButton({
@@ -117,7 +129,7 @@ export class SignInForm {
     button.classList.add("social-login-button");
     wrapper.appendChild(button);
 
-    const buttonName = document.createElement("div");
+    const buttonName = elem("div");
     buttonName.classList.add("social-login-button-name");
     buttonName.textContent = this.capitalize(name);
     wrapper.appendChild(buttonName);
@@ -131,7 +143,7 @@ export class SignInForm {
 
   setEvents() {
     if (this.options.onSubmit) {
-      this.elThis.addEventListener("submit", this.handleSubmit.bind(this));
+      this.elForm.addEventListener("submit", this.handleSubmit.bind(this));
     }
   }
 
@@ -139,7 +151,7 @@ export class SignInForm {
   handleSubmit(evt) {
     evt.preventDefault();
 
-    const data = new FormData(this.elThis);
+    const data = new FormData(this.elForm);
     this.options.onSubmit(data);
   }
 

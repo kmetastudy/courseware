@@ -1,6 +1,6 @@
-import { SignUpForm } from "./signup-form";
-
-require("./signup-manager.css");
+import { SignUpForm } from "./SignupForm";
+import elem from "../../../core/utils/elem/elem";
+// require("./signup-manager.css");
 export class SignUpManager {
   constructor(options = {}) {
     this.options = options;
@@ -9,27 +9,29 @@ export class SignUpManager {
   }
 
   #init() {
-    this.elThis = document.createElement("div");
-    this.elThis.classList.add("sign-up-manager");
-    // this.elThis.setAttribute("style", "width:450px;margin:200px 400px;");
-
     const options = {
       onSubmit: this.handleSignUp.bind(this),
       onSocialLogin: this.handleSocialLogin.bind(this),
       onClickRenderSignIn: this.handleRenderSignin.bind(this),
     };
     this.clSignUpForm = new SignUpForm(options);
-    this.elThis.appendChild(this.clSignUpForm.getElement());
+    this.elSignupForm = this.clSignUpForm.getElement();
   }
-  //////////////// HANDLER ////////////////
-  async handleSignUp(data) {
+  // ============ Handler ============
+  async handleSignUp(evt, data) {
     try {
-      const res = await this.urlSignUp(data);
-      if (res.success && res.next_url) {
-        this.redirect(res.next_url);
-      } else {
-        this.handleSignUpFail(res);
-      }
+      const res = await axios
+        // .post("../user/api/sign-up/", data)
+        .post("../user/signup/", data)
+        .then((res) => {
+          if (res.data?.next_url) {
+            this.redirect(res.data.next_url);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          console.error("urlSignUp error: ", err.response.data);
+        });
     } catch (err) {
       console.log(err);
     }
@@ -52,19 +54,6 @@ export class SignUpManager {
     if (this.options.onClickRenderSignIn) {
       this.options.onClickRenderSignIn();
     }
-  }
-
-  //////////////// URL ////////////////
-  urlSignUp(data) {
-    return axios
-      .post("../user/api/sign-up/", data)
-      .then((res) => {
-        console.log(res);
-        if (res?.data.result) {
-          return res.data.result;
-        }
-      })
-      .catch((err) => console.error("urlSignUp error: ", err.response.data));
   }
 
   urlGetAuthCode(name) {
@@ -92,7 +81,7 @@ export class SignUpManager {
 
   //////////////// API ////////////////
   getElement() {
-    return this.elThis;
+    return this.elSignupForm;
   }
 
   redirect(redirect_uri) {
