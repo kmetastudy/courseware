@@ -1,6 +1,6 @@
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from .authenticate import BaseJWTAuthentication, AdministratorAuthentication
+from ..auth.authenticate import BaseJWTAuthentication, AdministratorAuthentication
 
 
 class ApiAuthMixin:

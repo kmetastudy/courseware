@@ -11,8 +11,6 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-from .models import mUser
-
 # https://hyeo-noo.tistory.com/301
 # https://hyeo-noo.tistory.com/258
 

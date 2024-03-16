@@ -25,7 +25,7 @@ from .decorators import last_visited
 from .utils import JWTGenerator
 from .models import mUser, mCoursePurchases
 from .constants import *
-from .authenticate import generate_access_token
+from auth.authenticate import generate_access_token
 from .serializers import UserSerializer, SignUpSerializer, CoursePurchasesSerializer
 
 from core.mixins import CreateListModelMixin
@@ -216,49 +216,6 @@ def logout(request):
     response.delete_cookie("refresh_token")
 
     return response
-
-
-@method_decorator(csrf_protect, name="dispatch")
-class RefreshJWTtoken(APIView):
-    """ """
-
-    def post(self, request, *args, **kwargs):
-        refresh_token = request.COOKIES.get("refreshtoken")
-
-        if refresh_token is None:
-            return Response(
-                {"message": "Authentication credentials were not provided."},
-                status=status.HTTP_403_FORBIDDEN,
-            )
-
-        try:
-            payload = jwt.decode(
-                refresh_token, config("JWT_REFRESH_KEY"), algorithms=["HS256"]
-            )
-        except:
-            return Response(
-                {"message": "expired refresh token, please login again."},
-                status=status.HTTP_403_FORBIDDEN,
-            )
-
-        user = mUser.objects.filter(id=payload["user_id"]).first()
-
-        if user is None:
-            return Response(
-                {"message": "user not found"}, status=status.HTTP_400_BAD_REQUEST
-            )
-        if not user.is_active:
-            return Response(
-                {"message": "user is inactive"}, status=status.HTTP_400_BAD_REQUEST
-            )
-
-        access_token = generate_access_token(user)
-
-        return Response(
-            {
-                "access_token": access_token,
-            }
-        )
 
 
 class UserViewSet(viewsets.ModelViewSet):
