@@ -1,0 +1,6 @@
+.student-manager {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  margin: auto;
+  gap: 1.5rem;
+}
