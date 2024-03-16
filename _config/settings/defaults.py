@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     "_class",
     "core",
     "auth.apps.AuthConfig",
+    "api.apps.ApiConfig",
     "rest_framework",
     "corsheaders",
     "django_filters",
