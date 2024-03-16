@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     '_cm',
     '_st',
     '_class',
+    'core',
     'rest_framework',
     'corsheaders',
     'django_filters',
@@ -131,6 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "_user.mUser"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
@@ -172,39 +174,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-# CORS_ALLOW_CREDENTIALS = True
-
-# CSRF_COOKIE_NAME = 'XSRF-TOKEN'
-
-# CSRF_HEADER_NAME = 'X-XSRF-TOKEN'
-
-# CSRF_TRUSTED_ORIGINS = (
-#     'http://localhost:8000',
-#     'http://127.0.0.1:8000',
-# )
-
-# CORS_ORIGIN_WHITELIST = (
-#     'http://localhost:8000',
-#     'http://127.0.0.1:8000',
-# )
-
-# CORS_ALLOW_HEADERS = (
-#     'access-control-allow-credentials',
-#     'access-control-allow-origin',
-#     'access-control-request-method',
-#     'access-control-request-headers',
-#     'accept',
-#     'accept-encoding',
-#     'accept-language',
-#     'authorization',
-#     'connection',
-#     'content-type',
-#     'dnt',
-#     'credentials',
-#     'host',
-#     'origin',
-#     'user-agent',
-#     'X-CSRFToken',
-#     'csrftoken',
-#     'x-requested-with',
-# )
+# DRF
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'EXCEPTION_HANDLER': 'core.exceptions.exception_handlers.custom_exception_handler'
+}
