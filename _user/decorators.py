@@ -24,7 +24,7 @@ def jwt_login_required(func):
                     'JWT_KEY'), algorithms='HS256')
                 request.userType = payload['type']
                 request.userId = payload['user']
-                request.userName = payload['name']
+                request.userName = payload['full_name']
 
                 if token_type == 'refresh':
                     new_access_token = token_generator.generate_token(
@@ -69,7 +69,8 @@ def jwt_login_required(func):
 def last_visited(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        if request.method == 'GET':
-            request.session['next'] = request.META.get('HTTP_REFERER')
+        last_visited_url = request.META.get("HTTP_REFERER")
+        if request.method == 'GET' and last_visited_url:
+            request.session['next'] = last_visited_url
         return view_func(request, *args, **kwargs)
     return wrapper

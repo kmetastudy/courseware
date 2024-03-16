@@ -273,19 +273,6 @@ def get_or_create_social_user(email, **extra_data):
     return social_user_create(email=email, **extra_data), True
 
 
-def get_next_url(request, delete=False):
-    """
-    Get next url
-
-    """
-    next_url = request.session.get("next", "/")
-
-    if delete:
-        del request.session['next']
-
-    return next_url
-
-
 def demo_student_id(request):
     """
     Get or create demo student(user) id, using session
