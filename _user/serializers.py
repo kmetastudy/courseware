@@ -8,7 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = mUser
-        fields = ["id", "full_name", "email", "json_data"]
+        fields = ["id", "full_name", "type", "email", "json_data"]
 
 
 class CoursePurchasesSerializer(serializers.ModelSerializer):
