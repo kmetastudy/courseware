@@ -1,11 +1,10 @@
 import elem from "../../../../core/utils/elem/elem.js";
 import { mtoEvents } from "../../../../core/utils/mto-events.js";
+import { store } from "../Store.js";
 
 import { SideMain } from "../SideMain.js";
 
-import { store } from "../Store.js";
-import { courseAssignManager } from "./course-assign-manager.js";
-
+import { courseStudyManager } from "./course-study-manager.js";
 require("./SideManager.css");
 export class SideManager {
   constructor() {
@@ -33,13 +32,13 @@ export class SideManager {
     this.elSideMain = this.clSideMain.getElement();
     this.elThis.append(this.elSideMain);
 
-    this.clSideCourseAssign = courseAssignManager;
-    this.elSideCourseAssign = this.clSideCourseAssign.getSide();
-    this.elThis.append(this.elSideCourseAssign);
+    this.clSideStudy = courseStudyManager;
+    this.elSideStudy = courseStudyManager.getSide();
+    this.elThis.append(this.elSideStudy);
 
     this.sideMapper = {
       main: this.clSideMain,
-      courseAssign: this.clSideCourseAssign,
+      courseStudy: this.courseStudy,
     };
   }
 
