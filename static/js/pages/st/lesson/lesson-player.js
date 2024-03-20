@@ -957,9 +957,10 @@ export class LessonPlayer {
   }
 
   urlUpdateLessonResult() {
+    const origin = window.location.origin;
     const url = this.player.student_id
-      ? "../st/api/study_result/properties/"
-      : "../st/api/demo_study_result/properties/";
+      ? `${origin}/st/api/study_result/properties/`
+      : `${origin}/st/api/demo_study_result/properties/`;
 
     const eData = {};
     eData.content_id = this.player.content_id;

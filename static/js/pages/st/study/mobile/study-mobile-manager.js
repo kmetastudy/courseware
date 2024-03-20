@@ -130,9 +130,10 @@ export class StudyMobileManager {
         course_id: courseId,
         content_id: courseId,
       };
+      const origin = window.location.origin;
 
       return axios
-        .get("../st/api/study_result/properties/", {
+        .get(`${origin}/st/api/study_result/properties/`, {
           params: param,
         })
         .then((res) => {
