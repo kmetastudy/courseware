@@ -44,7 +44,7 @@ export class AppClassLaunch {
       if (response.data) {
         const { id } = response.data;
         const rootUrl = window.location.origin;
-        window.location.href = `${rootUrl}/class/classroom/teacher/?id=${id}`;
+        window.location.href = `${rootUrl}/class/classroom/teacher/${id}/`;
       }
     } catch (error) {
       console.log(error);

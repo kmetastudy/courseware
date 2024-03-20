@@ -131,7 +131,7 @@ export class ClassRegistrationModal {
       const classMemberData = response.data;
       const classId = classMemberData.id_class;
 
-      window.location.href = `${baseUrl}/class/classroom/student/?id=${classId}`;
+      window.location.href = `${baseUrl}/class/classroom/student/${classId}/`;
     } catch (error) {
       console.log(error);
     }
