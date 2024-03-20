@@ -131,7 +131,7 @@ class ClassStudyResultService:
         self,
         id_student: uuid.UUID,
         id_course: uuid.UUID,
-        id_class: Optional[uuid.UUID] = None,
+        id_class: uuid.UUID,
     ) -> None:
         self.id_student = id_student
         self.id_course = id_course
