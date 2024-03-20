@@ -1,0 +1,10 @@
+export const TYPE_CONTENT = {
+  // CHAPTER: 0,
+  TESTUM: 11,
+  LESSON: 12,
+  EXAM: 13,
+
+  COURSE_NORMAL: 0,
+  COURSE_CLINIC: 1,
+  COURSE_EXAM: 2,
+};

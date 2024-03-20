@@ -53,7 +53,7 @@ def jwt_login(response, user):
 
     response.data = data
     response.set_cookie(
-        key="refreshtoken",
+        key="refresh_token",
         value=refresh_token,
         httponly=True,
         samesite="Strict",
@@ -81,17 +81,18 @@ class BaseJWTAuthentication(BaseAuthentication):
                 raise exceptions.AuthenticationFailed("Token is not jwt")
 
             access_token = authorization_header.split(" ")[1]
-            payload = jwt.decode(
-                access_token, settings.SECRET_KEY, algorithms=["HS256"]
-            )
+            payload = jwt.decode(access_token, config("JWT_KEY"), algorithms=["HS256"])
         except jwt.ExpiredSignatureError:
             raise exceptions.AuthenticationFailed("access_token expired")
         except IndexError:
             raise exceptions.AuthenticationFailed("Token prefix missing")
 
-        return self.authenticate_credentials(request, payload["user"])
+        return self.authenticate_credentials(request, payload["user_id"])
 
     def authenticate_credentials(self, request, key):
+        """
+        user instance would be set at request.user
+        """
         user = User.objects.filter(id=key).first()
 
         if user is None:
