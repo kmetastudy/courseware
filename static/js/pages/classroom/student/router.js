@@ -4,9 +4,8 @@
  */
 
 import { mtoEvents } from "../../../core/utils/mto-events";
-import { createRouter } from "../../../core/utils/router/create-router";
 
-function routerManager() {
+export function studentRouter(classId) {
   const pages = {
     home: () => {
       mtoEvents.emit("activateContent", { key: "home" });
@@ -36,26 +35,26 @@ function routerManager() {
       mtoEvents.emit("activateContent", { key: "setting" });
       mtoEvents.emit("activateSide", { key: "main" });
     },
-    courseAssign: (params) => {
-      mtoEvents.emit("activateContent", { key: "courseAssign", courseId: params.courseId });
-      mtoEvents.emit("activateSide", { key: "courseAssign", courseId: params.courseId });
+    courseStudy: () => {
+      mtoEvents.emit("activateContent", { key: "courseStudy" });
+      mtoEvents.emit("activateSide", { key: "courseStudy" });
     },
   };
 
-  const router = createRouter();
-  router
-    .addRoute("#/", pages.home)
-    .addRoute("#/notification", pages.notification)
-    .addRoute("#/community", pages.community)
-    .addRoute("#/course", pages.course)
-    .addRoute("#/scheduler", pages.scheduler)
-    .addRoute("#/member", pages.member)
-    .addRoute("#/setting", pages.setting)
-    .addRoute("#/course/assign/:courseId", pages.courseAssign)
+  const rootUrl = `class/classroom/student/${classId}/`;
+  console.log(rootUrl);
 
-    .start();
+  const router = new Navigo(rootUrl);
+  router.on("", pages.home);
+  router.on("notification", pages.notification);
+  router.on("community", pages.community);
+  router.on("course", pages.course);
+  router.on("scheduler", pages.scheduler);
+  router.on("member", pages.member);
+  router.on("setting", pages.setting);
+  router.on("course/study", pages.courseStudy);
+
+  router.resolve();
 
   return router;
 }
-
-export const router = routerManager();

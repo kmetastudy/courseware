@@ -5,7 +5,6 @@ import { apiCp } from "../../../../../core/api/cp";
 import { apiStudent } from "../../../../../core/api/st";
 import { apiUser } from "../../../../../core/api/user";
 
-import { router } from "../../router";
 import { store } from "../../Store";
 
 import { createTabs } from "../../../../../core/mtu/tab/create-tabs";
@@ -21,6 +20,7 @@ export class CourseDetail {
     this.isActive = false;
 
     this.classId = store.getState("classId");
+    this.router = store.getState("router");
 
     this.title = "코스";
     this.elTabMap = {};
@@ -80,15 +80,15 @@ export class CourseDetail {
     this.elCourseButtonContainer = elem("div", { class: "flex justify-content gap-2" });
     this.elCourseTitleSection.append(this.elCourseButtonContainer);
 
-    this.elAssignButton = elem(
+    this.elStudyButton = elem(
       "button",
       {
         class: "btn btn-sm btn-outline",
-        on: { click: this.handleClickAssignButton.bind(this) },
+        on: { click: this.handleClickStudyButton.bind(this) },
       },
-      "Assign",
+      "학습하기",
     );
-    this.elCourseButtonContainer.append(this.elAssignButton);
+    this.elCourseButtonContainer.append(this.elStudyButton);
 
     //
 
@@ -171,10 +171,12 @@ export class CourseDetail {
     }
   }
 
-  handleClickAssignButton(evt) {
+  handleClickStudyButton(evt) {
     evt.stopPropagation();
 
-    router.navigate(`#/course/assign/${this.courseId}`);
+    console.log(this.courseId);
+    store.setState("courseId", this.courseId);
+    this.router.navigate(`/course/study`);
   }
 
   activate({ courseId: nextCourseId } = {}) {

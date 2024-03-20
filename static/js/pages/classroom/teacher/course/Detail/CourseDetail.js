@@ -5,7 +5,6 @@ import { apiCp } from "../../../../../core/api/cp";
 import { apiStudent } from "../../../../../core/api/st";
 import { apiUser } from "../../../../../core/api/user";
 
-import { router } from "../../router";
 import { store } from "../../Store";
 
 import { createTabs } from "../../../../../core/mtu/tab/create-tabs";
@@ -21,6 +20,7 @@ export class CourseDetail {
     this.isActive = false;
 
     this.classId = store.getState("classId");
+    this.router = store.getState("router");
 
     this.title = "코스";
     this.elTabMap = {};
@@ -174,7 +174,7 @@ export class CourseDetail {
   handleClickAssignButton(evt) {
     evt.stopPropagation();
 
-    router.navigate(`#/course/assign/${this.courseId}`);
+    this.router.navigate(`/course/assign/${this.courseId}`);
   }
 
   activate({ courseId: nextCourseId } = {}) {

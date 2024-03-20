@@ -74,7 +74,7 @@ export class TeacherClassManager {
 
   handleClick(classId) {
     const baseUrl = window.location.origin;
-    window.location.href = `${baseUrl}/class/classroom/teacher/?id=${classId}`;
+    window.location.href = `${baseUrl}/class/classroom/teacher/${classId}/`;
   }
 
   getElement() {

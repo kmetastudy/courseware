@@ -96,7 +96,8 @@ export class StudentClassManager {
 
   handleClick(classId) {
     const baseUrl = window.location.origin;
-    window.location.href = `${baseUrl}/class/classroom/student/?id=${classId}`;
+
+    window.location.href = `${baseUrl}/class/classroom/student/${classId}/`;
   }
 
   getElement() {

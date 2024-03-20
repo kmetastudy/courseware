@@ -4,7 +4,7 @@ import { mtoEvents } from "../../../../core/utils/mto-events.js";
 import { Scheduler } from "../scheduler/Scheduler.js";
 import { Member } from "../member/Member.js";
 import { CourseDetail } from "../course/Detail/CourseDetail.js";
-import { courseAssignManager } from "./course-assign-manager.js";
+import { courseStudyManager } from "./course-study-manager.js";
 
 export class ContentManager {
   constructor() {
@@ -38,15 +38,15 @@ export class ContentManager {
     this.elCourseDetail = this.clCourseDetail.getElement();
     this.elThis.append(this.elCourseDetail);
 
-    this.clCourseAssign = courseAssignManager;
-    this.elCourseAssign = this.clCourseAssign.getContent();
-    this.elThis.append(this.elCourseAssign);
+    this.clCourseStudy = courseStudyManager;
+    this.elCourseStudy = this.clCourseStudy.getContent();
+    this.elThis.append(this.elCourseStudy);
 
     this.contentMapper = {
       notification: null,
       community: null,
       course: this.clCourseDetail,
-      courseAssign: this.clCourseAssign,
+      courseStudy: this.clCourseStudy,
       scheduler: this.clScheduler,
       stats: null,
       member: this.clMember,

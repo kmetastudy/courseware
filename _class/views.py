@@ -99,11 +99,10 @@ def index_classroom(request):
 
 @last_visited
 @jwt_login_required
-def page_classroom_teacher(request):
-    id_class = request.GET.get("id", None)
+def page_classroom_teacher(request, id_class):
 
     context = make_context(request)
-    context["classId"] = id_class
+    context["classId"] = str(id_class)
 
     dumped_context = {"context": json.dumps(context)}
 
@@ -112,11 +111,9 @@ def page_classroom_teacher(request):
 
 @last_visited
 @jwt_login_required
-def page_classroom_student(request):
-    id_class = request.GET.get("id", None)
-
+def page_classroom_student(request, id_class):
     context = make_context(request)
-    context["classId"] = id_class
+    context["classId"] = str(id_class)
 
     dumped_context = {"context": json.dumps(context)}
 

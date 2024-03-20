@@ -4,6 +4,7 @@ import elem from "../../../core/utils/elem/elem";
 import { apiClass } from "../../../core/api/class";
 
 import { mtoEvents } from "../../../core/utils/mto-events";
+import { studentRouter } from "./router";
 
 import { SideManager } from "./manager/SideManager";
 import { ContentManager } from "./manager/ContentManager";
@@ -28,6 +29,8 @@ export class AppClassroomStudent {
     this.classData = await this.urlGetClass(this.classId);
     this.courseId = this.classData.id_course;
 
+    this.router = this.createRouter(this.classId);
+
     this.storeStates();
 
     this.create();
@@ -35,7 +38,13 @@ export class AppClassroomStudent {
     const body = document.getElementById("body");
     body.append(this.elThis);
 
-    this.activateInitial();
+    // this.activateInitial();
+    this.router.navigate("/");
+  }
+
+  createRouter(classId) {
+    const router = studentRouter(classId);
+    return router;
   }
 
   storeStates() {
@@ -44,6 +53,7 @@ export class AppClassroomStudent {
     store.setState("classId", this.classId);
     store.setState("courseId", this.courseId);
     store.setState("classData", this.classData);
+    store.setState("router", this.router);
   }
 
   create() {

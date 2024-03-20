@@ -1,5 +1,5 @@
 import { store } from "./Store";
-import { router } from "./router";
+
 import { createItem } from "../components/menu";
 
 import elem from "../../../core/utils/elem/elem";
@@ -23,6 +23,7 @@ export class SideMain {
   getState() {
     this.classData = store.getState("classData");
     this.joinedClasses = store.getState("joinedClasses");
+    this.router = store.getState("router");
     this.title = this.classData?.title;
   }
 
@@ -109,7 +110,7 @@ export class SideMain {
     const clickedElement = evt.currentTarget.firstChild;
     this.toggleActive(clickedElement);
 
-    router.navigate(`#/${key}`);
+    this.router.navigate(`/${key}`);
   }
 
   toggleActive(clickedElement) {

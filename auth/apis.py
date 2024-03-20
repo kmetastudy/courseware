@@ -15,11 +15,11 @@ mUser = get_user_model()
 
 
 @method_decorator(csrf_protect, name="dispatch")
-class RefreshJWTtoken(APIView):
+class RefreshAccessToken(APIView):
     """ """
 
     def post(self, request, *args, **kwargs):
-        refresh_token = request.COOKIES.get("refreshtoken")
+        refresh_token = request.COOKIES.get("refresh_token")
 
         if refresh_token is None:
             return Response(
@@ -55,3 +55,15 @@ class RefreshJWTtoken(APIView):
                 "access_token": access_token,
             }
         )
+
+
+@method_decorator(csrf_protect, name="dispatch")
+class LogoutApi(APIView):
+    def post(self, request):
+        response = Response(
+            {"message": "Logout success"}, status=status.HTTP_202_ACCEPTED
+        )
+
+        response.delete_cookie("refresh_token")
+
+        return response
