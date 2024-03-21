@@ -41,6 +41,97 @@ def index(request):
                "recommend": json.dumps(recommend)}
     return render(request, "_main/landing.html", context)
 
+@jwt_login_required
+def school(request):
+    context_sample = make_context(request)
+    courses = getCourses(request, 'all', 'all')
+
+    course_recomend = courseLanding.objects.all().values()
+    # print(list(course_recomend))
+    recommend = {'kor': [], 'eng': [], 'math': [], 'etc': [], 'basic': []}
+    options = ['kor','eng','math','etc', 'basic']
+    for content in course_recomend:
+        # print(content)
+        if content['subject'] in options:
+            course = courseDetail.objects.filter(courseId=content['courseId']).values(
+                'courseId', 'courseTitle', 'thumnail', 'school', 'grade', 'subject')[0]
+            # course['type'] = content['subject']
+            # print(course)
+            recommend[content['subject']].append(course)
+    print(recommend)
+    context = {"context": json.dumps(context_sample),
+               "courses": courses,
+               "recommend": json.dumps(recommend)}
+    return render(request, "_main/landing_school.html", context)
+
+@jwt_login_required
+def edu(request):
+    context_sample = make_context(request)
+    courses = getCourses(request, 'all', 'all')
+
+    course_recomend = courseLanding.objects.all().values()
+    # print(list(course_recomend))
+    recommend = {'kor': [], 'eng': [], 'math': [], 'etc': []}
+    options = ['kor','eng','math','etc']
+    for content in course_recomend:
+        # print(content)
+        if content['subject'] in options:
+            course = courseDetail.objects.filter(courseId=content['courseId']).values(
+                'courseId', 'courseTitle', 'thumnail', 'school', 'grade', 'subject')[0]
+            # course['type'] = content['subject']
+            # print(course)
+            recommend[content['subject']].append(course)
+    print(recommend)
+    context = {"context": json.dumps(context_sample),
+               "courses": courses,
+               "recommend": json.dumps(recommend)}
+    return render(request, "_main/landing_edu.html", context)
+
+@jwt_login_required
+def namdo(request):
+    context_sample = make_context(request)
+    courses = getCourses(request, 'all', 'all')
+
+    course_recomend = courseLanding.objects.all().values()
+    # print(list(course_recomend))
+    recommend = {'kor': [], 'eng': [], 'math': [], 'etc': [], 'basic': []}
+    options = ['kor','eng','math','etc', 'basic']
+    for content in course_recomend:
+        # print(content)
+        if content['subject'] in options:
+            course = courseDetail.objects.filter(courseId=content['courseId']).values(
+                'courseId', 'courseTitle', 'thumnail', 'school', 'grade', 'subject')[0]
+            # course['type'] = content['subject']
+            # print(course)
+            recommend[content['subject']].append(course)
+    print(recommend)
+    context = {"context": json.dumps(context_sample),
+               "courses": courses,
+               "recommend": json.dumps(recommend)}
+    return render(request, "_main/landing_namdo.html", context)
+
+@jwt_login_required
+def teacher(request):
+    context_sample = make_context(request)
+    courses = getCourses(request, 'all', 'all')
+
+    course_recomend = courseLanding.objects.all().values()
+    # print(list(course_recomend))
+    recommend = {'kor': [], 'eng': [], 'math': [], 'etc': [], 'basic': []}
+    options = ['kor','eng','math','etc', 'basic']
+    for content in course_recomend:
+        # print(content)
+        if content['subject'] in options:
+            course = courseDetail.objects.filter(courseId=content['courseId']).values(
+                'courseId', 'courseTitle', 'thumnail', 'school', 'grade', 'subject')[0]
+            # course['type'] = content['subject']
+            # print(course)
+            recommend[content['subject']].append(course)
+    print(recommend)
+    context = {"context": json.dumps(context_sample),
+               "courses": courses,
+               "recommend": json.dumps(recommend)}
+    return render(request, "_main/landing_teacher.html", context)
 
 @jwt_login_required
 def descView(request, page):
