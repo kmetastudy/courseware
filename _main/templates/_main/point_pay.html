@@ -1,7 +1,7 @@
 {% extends "_main/base.html" %}
 
 {% block content %}
-    <h2>결제</h2>
+    <h2 class="h-screen">결제</h2>
 {% endblock %}
 
 {% block extra-script %}
@@ -20,7 +20,7 @@
         console.log(next_url)
         IMP.request_pay(props, function (res) {
             console.log(res)
-            location.href = next_url;
+            // location.href = next_url;
         });
     })();
     
