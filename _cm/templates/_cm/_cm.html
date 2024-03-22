@@ -31,9 +31,10 @@
 
     <link rel="stylesheet" href="{% static '_bundle/cm/cm-bundle.css' %}" />
     <script type="text/javascript" src="{% static '_bundle/cm/cm-bundle.js' %}"></script>
+ 
   </head>
 
-  <body>
+  <body class="flex">
     <div class="sidebar w-64 h-screen border-r">
       <header class="border-b">
         <img  class="p-4 w-1/2" src="{% static '/img/Course12Logo.png' %}">
@@ -42,15 +43,25 @@
 
       </nav>
     </div>
-
+    <button onclick="hello()">클릭</button>
+    <div class="w-full">
+      <iframe id="test" src="https://wikidocs.net/" width="100%" height="100%"></iframe>
+    </div>
     {% block content %}
     {% endblock %}
-    
+
   </body>
 
   <script>
     var csrftoken = "{{csrf_token}}";
     var context = "{{ context|escapejs }}";
+  
+    function hello() {
+        console.log('hihi')
+        // $('#kw').val('hihi')
+        var content = document.getElementById('test').contentWindow.document.getElementById("kw")
+        console.log(content)
+      }
 
     window.addEventListener("DOMContentLoaded", function () {
       console.log("cmlibrary: ", cmlibrary);

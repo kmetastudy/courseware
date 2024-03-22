@@ -38,7 +38,7 @@ export class NavManager {
       ]
     } else {
       logout = [
-        { text: "포인트 충전", onClick: () => (window.location.href = "/point/charge/"), icon:"Point.svg" },
+        { text: "포인트충전", onClick: () => (window.location.href = "/point/charge/"), icon:"Point.svg" },
         { text: "마이페이지", onClick: () => (window.location.href = "/dashboard/"), icon:"Dashboard.svg" },
         { text: "최근학습", onClick: () => (window.location.href = "#"), icon:"RecentStudy.svg", display:"close" },
         { text: "장바구니", onClick: () => (window.location.href = "/cart/"), icon:"Cart.svg", display:"close" },

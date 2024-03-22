@@ -7,7 +7,7 @@ from django.urls import reverse
 
 from decouple import config
 
-from _cm.models import courseDetail, courseLanding
+from _cm.models import CourseReset, courseDetail, courseLanding
 from _cp.nmodels import mCourseN
 from _main.forms import CartCourseForm, PaymentForm
 from _main.models import CartCourse, Order, OrderPayment, OrderedProduct, Payment, PointCharge, PointUse, Points
@@ -30,6 +30,29 @@ def index(request):
     for content in course_recomend:
         # print(content)
         if content['subject'] in options:
+            course = courseDetail.objects.filter(courseId=content['id_course']).values(
+                'courseId', 'courseTitle', 'thumnail', 'school', 'grade', 'subject')[0]
+            # course['type'] = content['subject']
+            # print(course['courseId'])
+            recommend[content['subject']].append(course)
+    print(recommend)
+    context = {"context": json.dumps(context_sample),
+               "courses": json.dumps(courses, default=str),
+               "recommend": json.dumps(recommend, default=str)}
+    return render(request, "_main/landing.html", context)
+
+@jwt_login_required
+def school(request):
+    context_sample = make_context(request)
+    courses = getCourses(request, 'all', 'all')
+
+    course_recomend = courseLanding.objects.all().values()
+    # print(list(course_recomend))
+    recommend = {'kor': [], 'eng': [], 'math': [], 'etc': [], 'basic': []}
+    options = ['kor','eng','math','etc', 'basic']
+    for content in course_recomend:
+        # print(content)
+        if content['subject'] in options:
             course = courseDetail.objects.filter(courseId=content['courseId']).values(
                 'courseId', 'courseTitle', 'thumnail', 'school', 'grade', 'subject')[0]
             # course['type'] = content['subject']
@@ -39,8 +62,76 @@ def index(request):
     context = {"context": json.dumps(context_sample),
                "courses": courses,
                "recommend": json.dumps(recommend)}
-    return render(request, "_main/landing.html", context)
+    return render(request, "_main/landing_school.html", context)
 
+@jwt_login_required
+def edu(request):
+    context_sample = make_context(request)
+    courses = getCourses(request, 'all', 'all')
+
+    course_recomend = courseLanding.objects.all().values()
+    # print(list(course_recomend))
+    recommend = {'kor': [], 'eng': [], 'math': [], 'etc': []}
+    options = ['kor','eng','math','etc']
+    for content in course_recomend:
+        # print(content)
+        if content['subject'] in options:
+            course = courseDetail.objects.filter(courseId=content['courseId']).values(
+                'courseId', 'courseTitle', 'thumnail', 'school', 'grade', 'subject')[0]
+            # course['type'] = content['subject']
+            # print(course)
+            recommend[content['subject']].append(course)
+    print(recommend)
+    context = {"context": json.dumps(context_sample),
+               "courses": courses,
+               "recommend": json.dumps(recommend)}
+    return render(request, "_main/landing_edu.html", context)
+
+@jwt_login_required
+def namdo(request):
+    context_sample = make_context(request)
+    courses = getCourses(request, 'all', 'all')
+
+    course_recomend = courseLanding.objects.all().values()
+    # print(list(course_recomend))
+    recommend = {'kor': [], 'eng': [], 'math': [], 'etc': [], 'basic': []}
+    options = ['kor','eng','math','etc', 'basic']
+    for content in course_recomend:
+        # print(content)
+        if content['subject'] in options:
+            course = courseDetail.objects.filter(courseId=content['courseId']).values(
+                'courseId', 'courseTitle', 'thumnail', 'school', 'grade', 'subject')[0]
+            # course['type'] = content['subject']
+            # print(course)
+            recommend[content['subject']].append(course)
+    print(recommend)
+    context = {"context": json.dumps(context_sample),
+               "courses": courses,
+               "recommend": json.dumps(recommend)}
+    return render(request, "_main/landing_namdo.html", context)
+
+@jwt_login_required
+def teacher(request):
+    context_sample = make_context(request)
+    courses = getCourses(request, 'all', 'all')
+
+    course_recomend = courseLanding.objects.all().values()
+    # print(list(course_recomend))
+    recommend = {'kor': [], 'eng': [], 'math': [], 'etc': [], 'basic': []}
+    options = ['kor','eng','math','etc', 'basic']
+    for content in course_recomend:
+        # print(content)
+        if content['subject'] in options:
+            course = courseDetail.objects.filter(courseId=content['courseId']).values(
+                'courseId', 'courseTitle', 'thumnail', 'school', 'grade', 'subject')[0]
+            # course['type'] = content['subject']
+            # print(course)
+            recommend[content['subject']].append(course)
+    print(recommend)
+    context = {"context": json.dumps(context_sample),
+               "courses": courses,
+               "recommend": json.dumps(recommend)}
+    return render(request, "_main/landing_teacher.html", context)
 
 @jwt_login_required
 def descView(request, page):
@@ -136,7 +227,7 @@ def getCourses(request, school, subject):
     courses = courseDetail.objects.filter(q).values(
         'courseId', 'courseTitle', 'school', 'subject', 'price', 'thumnail')
 
-    courseList = json.dumps(list(courses))
+    courseList = list(courses)
 
     print(courseList)
     print('--------------------')
@@ -149,7 +240,7 @@ def detailView(request, school, subject, id):
     context_sample = make_context(request)
 
     courses = courseDetail.objects.filter(courseId=id).values(
-        'courseId', 'courseTitle', 'courseSummary', 'desc', 'thumnail',
+        'courseId', 'courseTitle', 'courseSummary', 'descript', 'thumnail',
         'year', 'school', 'grade', 'semester', 'subject', 'publisher', 'difficulty',
         'producer', 'duration', 'price')
 

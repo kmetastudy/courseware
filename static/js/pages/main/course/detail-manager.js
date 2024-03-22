@@ -108,7 +108,7 @@ DetailManager.prototype.init = function () {
                             <p class="w-[100px] md:w-[150px] text-[12px] md:text-[16px] flex items-center">${
                               MtuIcon("publisher").innerHTML
                             }<span class="px-2">출판사</span></p>
-                            <p class="text-[12px] md:text-[16px]">${pub}</p>
+                            <p class="text-[12px] md:text-[16px]">${pub?pub:''}</p>
                         </div>
                         <div class="px-2 md:px-4 py-3 w-full flex items-center border bg-gray-100">
                             <p class="w-[100px] md:w-[150px] text-[12px] md:text-[16px] flex items-center">${

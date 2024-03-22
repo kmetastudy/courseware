@@ -2,6 +2,7 @@ require("../css/cm.css");
 import { ContentsManager } from "../../../static/js/pages/cm/contents-manager";
 import { Accordion } from "../../../static/js/pages/cm/accordion";
 
+
 export function BaseOnReady(context) {
     var navOptions = [
         {title:'대시보드', url:'banner/', icon:'ri-dashboard-fill', submenu:false},

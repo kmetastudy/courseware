@@ -5,6 +5,10 @@ app_name = '_main'
 
 urlpatterns = [
     path('', index, name='index'),
+    path('school/', school, name='school'),
+    path('edu/', edu, name='edu'),
+    path('namdo/', namdo, name='namdo'),
+    path('teacher/', teacher, name='teacher'),
     path('desc/<str:page>/', descView, name='descView'),
 
     # path('courses/<str:school>/', getSubject, name='getSubject'),
