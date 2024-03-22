@@ -50,7 +50,7 @@ export class CourseDetail {
     this.elLabel = elem(
       "label",
       {
-        for: "drawer-course-assign",
+        for: "drawer-classroom",
         class: "btn btn-square btn-ghost drawer-button lg:hidden",
       },
       MtuIcon("menu"),
@@ -71,10 +71,10 @@ export class CourseDetail {
     this.elCoverSection.append(this.elCoverSkeleton);
 
     // Course Title
-    this.elCourseTitleSection = elem("div", { class: "col-span-12 flex items-center justify-content gap-2" });
+    this.elCourseTitleSection = elem("div", { class: "col-span-12 flex items-center justify-content gap-8" });
     this.elThis.append(this.elCourseTitleSection);
 
-    this.elCourseTitle = elem("h3", { class: "text-xl font-light grow" });
+    this.elCourseTitle = elem("h3", { class: "text-xl font-light" });
     this.elCourseTitleSection.append(this.elCourseTitle);
 
     this.elCourseButtonContainer = elem("div", { class: "flex justify-content gap-2" });
@@ -97,7 +97,9 @@ export class CourseDetail {
     this.elThis.append(this.elTabSection);
 
     // 1. Overview
-    this.elCourseOverview = elem("section", { class: "card overflow-hidden bg-base-100 mt-8 shadow-sm" });
+    this.elCourseOverview = elem("section", {
+      class: "card overflow-hidden bg-base-100 mt-8 shadow-sm col-span-12 xl:col-span-6",
+    });
     this.elCourseOverviewCardBody = elem("div", { class: "card-body grow-0" });
     this.elCourseOverviewTitleWrapper = elem("div", { class: "flex justify-between gap-2" });
     this.elCourseOverviewTitle = elem("h3", { class: "card-title grow" }, "강좌 소개");
@@ -105,7 +107,7 @@ export class CourseDetail {
     this.elCourseOverviewCardBody.append(this.elCourseOverviewTitleWrapper);
     this.elCourseOverviewTitleWrapper.append(this.elCourseOverviewTitle);
 
-    this.elOverviewWrapper = elem("div", { class: "overflow-x-auto" });
+    this.elOverviewWrapper = elem("div", { class: "overflow-x-auto px-4" });
     this.elCourseOverview.append(this.elOverviewWrapper);
 
     this.elOverviewTable = elem("table", { class: "table" });
@@ -115,7 +117,9 @@ export class CourseDetail {
     this.elOverviewTable.append(this.elOverviewTableHead, this.elOverviewTableBody);
 
     // 2. Curriculum
-    this.elCourseCurriculum = elem("section", { class: "card overflow-hidden bg-base-100 mt-8 shadow-sm" });
+    this.elCourseCurriculum = elem("section", {
+      class: "card overflow-hidden bg-base-100 mt-8 shadow-sm col-span-12 xl:col-span-8",
+    });
     this.elCourseCurriculumBody = elem("div", { class: "card-body grow-0" });
     this.elCourseCurriculum.append(this.elCourseCurriculumBody);
 
@@ -127,14 +131,28 @@ export class CourseDetail {
     this.elCurriculumWrapper = elem("div", { class: "overflow-x-auto" });
     this.elCourseCurriculum.append(this.elCurriculumWrapper);
 
-    this.elCurriculumMenu = elem("ul", { class: "menu" });
+    this.elCurriculumMenu = elem("ul", { class: "menu pt-0" });
     this.elCurriculumWrapper.append(this.elCurriculumMenu);
 
     // 3. Learner
-    this.elClassLearner = elem("section", { class: "col-span-12 mt-8" });
+    this.elClassLearner = elem("section", {
+      class: "card overflow-hidden bg-base-100 mt-8 shadow-sm col-span-12 xl:col-span-8",
+    });
+    this.elClassLearnerBody = elem("div", { class: "card-body grow-0" });
+    this.elClassLearner.append(this.elClassLearnerBody);
+
+    this.elClassLearnerTitleWrapper = elem("div", { class: "flex justify-between gap-2" });
+    this.elClassLearnerBody.append(this.elClassLearnerTitleWrapper);
+
+    this.elClassLearnerTitle = elem("h3", { class: "card-title grow" }, "멤버");
+    this.elClassLearnerTitleWrapper.append(this.elClassLearnerTitle);
+
+    this.elCLassLearnerTableWrapper = elem("div", { class: "overflow-x-auto px-4" });
+    this.elClassLearner.append(this.elCLassLearnerTableWrapper);
+
     this.clClassLearnerTable = new CourseDetailStudentTable();
     this.elClassLearnerTable = this.clClassLearnerTable.getElement();
-    this.elClassLearner.append(this.elClassLearnerTable);
+    this.elCLassLearnerTableWrapper.append(this.elClassLearnerTable);
 
     // Tabs
     this.tabs = createTabs();
@@ -149,9 +167,17 @@ export class CourseDetail {
     this.elTabMap["curriculum"] = this.elTabCurriculum;
     this.elTabMap["member"] = this.elTabMember;
 
-    this.elPanelContent = this.tabs.Panel({ value: "overview", child: this.elCourseOverview });
-    this.elPanelCurriculum = this.tabs.Panel({ value: "curriculum", child: this.elCourseCurriculum });
-    this.elPanelMember = this.tabs.Panel({ value: "member", child: this.elClassLearner });
+    this.elPanelContent = this.tabs.Panel({
+      value: "overview",
+      child: this.elCourseOverview,
+      class: "grid grid-cols-12",
+    });
+    this.elPanelCurriculum = this.tabs.Panel({
+      value: "curriculum",
+      child: this.elCourseCurriculum,
+      class: "grid grid-cols-12",
+    });
+    this.elPanelMember = this.tabs.Panel({ value: "member", child: this.elClassLearner, class: "grid grid-cols-12" });
 
     this.elTabList.append(this.elTabOverview, this.elTabCurriculum, this.elTabMember);
     this.elTabRoot.append(this.elTabList, this.elPanelContent, this.elPanelCurriculum, this.elPanelMember);

@@ -27,7 +27,7 @@ export class Member {
 
     this.elListSkeleton = elem(
       "section",
-      { class: "col-span-12" },
+      { class: "col-span-12 lg:col-span-8" },
       elem("div", { class: "skeleton mb-4 w-full h-4" }), // toolbar
       elem(
         "div",

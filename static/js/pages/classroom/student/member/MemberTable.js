@@ -26,7 +26,7 @@ export class MemberTable {
   }
 
   create() {
-    this.elThis = elem("section", { class: "col-span-12 bg-base-200" });
+    this.elThis = elem("section", { class: "col-span-12 bg-base-200 lg:col-span-8" });
 
     // Table Toolbar
     this.elToolbar = elem("header", {
