@@ -2,6 +2,9 @@ import { store } from "./Store";
 
 import elem from "../../../core/utils/elem/elem";
 import { apiClass } from "../../../core/api/class";
+import { apiCp } from "../../../core/api/cp";
+import { apiUser } from "../../../core/api/user";
+import { apiStudent } from "../../../core/api/st";
 
 import { mtoEvents } from "../../../core/utils/mto-events";
 import { studentRouter } from "./router";
@@ -26,8 +29,7 @@ export class AppClassroomStudent {
   }
 
   async init() {
-    this.classData = await this.urlGetClass(this.classId);
-    this.courseId = this.classData.id_course;
+    await this.prepareData();
 
     this.router = this.createRouter(this.classId);
 
@@ -42,6 +44,30 @@ export class AppClassroomStudent {
     this.router.navigate("/");
   }
 
+  async prepareData() {
+    try {
+      this.classData = await this.urlGetClass(this.classId);
+
+      this.classContentAssignData = await this.urlGetClassContentAssign(this.classId);
+
+      this.courseId = this.classData.id_course;
+
+      this.courseData = await this.urlGetCourse(this.courseId);
+
+      this.studyResultData = await this.urlFilterStudyResult({
+        courseId: this.courseId,
+        userId: this.userId,
+        classId: this.classId,
+      });
+
+      this.userData = await this.urlGetUser(this.userId);
+
+      return;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   createRouter(classId) {
     const router = studentRouter(classId);
     return router;
@@ -52,8 +78,13 @@ export class AppClassroomStudent {
     store.setState("userType", this.userType);
     store.setState("classId", this.classId);
     store.setState("courseId", this.courseId);
-    store.setState("classData", this.classData);
     store.setState("router", this.router);
+
+    store.setState("classData", this.classData);
+    store.setState("courseData", this.courseData);
+    store.setState("userData", this.userData);
+    store.setState("studyResultData", this.studyResultData);
+    store.setState("classContentAssignData", this.classContentAssignData);
   }
 
   create() {
@@ -78,6 +109,42 @@ export class AppClassroomStudent {
   async urlGetClass(classId) {
     try {
       const response = await apiClass.singleCourseClass.get(classId);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async urlGetClassContentAssign(classId) {
+    try {
+      const response = await apiClass.classContentAssign.filter({ id_class: classId });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async urlGetCourse(courseId) {
+    try {
+      const response = await apiCp.course.get(courseId);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async urlFilterStudyResult({ courseId: id_course, userId: id_student, classId: id_class }) {
+    try {
+      const response = await apiStudent.studyResult.filter({ id_course, id_student, id_class });
+      return response.data[0];
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async urlGetUser(userId) {
+    try {
+      const response = await apiUser.user.get(userId);
       return response.data;
     } catch (error) {
       console.log(error);

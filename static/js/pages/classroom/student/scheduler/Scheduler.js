@@ -1,8 +1,8 @@
 import elem from "../../../../core/utils/elem/elem";
 
 import { ContentHeader } from "../../components/ContentHeader";
-import { MtmCalendar } from "./mtmCalendar";
-
+import { SchedulerCalendar } from "./SchedulerCalendar";
+import { store } from "../Store";
 export class Scheduler {
   constructor() {
     this.isActive = false;
@@ -11,9 +11,15 @@ export class Scheduler {
   }
 
   init() {
+    this.getData();
+
     this.create();
 
     this.initCalendar();
+  }
+
+  getData() {
+    this.studyResultData = store.getState("studyResultData");
   }
 
   create() {
@@ -25,29 +31,31 @@ export class Scheduler {
     this.elMembers = elem("section", {
       class: "scheduler-member card col-span-12 overflow-hidden bg-base-100 shadow-sm xl:col-span-3",
     });
+    this.elThis.append(this.elMembers);
 
-    this.elCalendarCard = elem("section", {
+    this.elCard = elem("section", {
       class: "card col-span-12 overflow-hidden bg-base-100 shadow-sm xl:col-span-9",
     });
+    this.elThis.append(this.elCard);
 
-    this.elCalendarCardBody = elem(
+    this.elCardBody = elem(
       "div",
       { class: "card-body grow-0" },
       elem("h2", { class: "card-title" }, "일정관리"),
       elem("a", { class: "link-hover link text-xs" }, "자세히보기"),
     );
+    this.elCard.append(this.elCardBody);
 
-    this.elCalendar = elem("div", { class: "scheduler-calendar p-4", id: "scheduler-calendar" });
-    this.elCalendarCardBody.append(this.elCalendar);
+    // Calendar
+    this.elCalendarWrapper = elem("div", { class: "overflow-x-auto grid grid-cols-12 grid-rows-[min-content]" });
+    this.elCard.append(this.elCalendarWrapper);
 
-    this.elCalendarCard.append(this.elCalendarCardBody);
-
-    this.elThis.append(this.elMembers, this.elCalendarCard);
-    // this.elThis.append(this.elCalendarCard);
+    this.elCalendar = elem("div", { class: "col-span-12", id: "scheduler-calendar" });
+    this.elCalendarWrapper.append(this.elCalendar);
   }
 
   initCalendar() {
-    this.clCalendar = new MtmCalendar(this.elCalendar);
+    this.clCalendar = new SchedulerCalendar(this.elCalendar);
   }
 
   activate(context = {}) {

@@ -1,4 +1,4 @@
-import { isHTMLNode } from "../../utils/type";
+import { isHTMLNode, isString } from "../../utils/type";
 import { removeChildNodes } from "../../utils/dom/";
 
 const flexRender = (comp, props) => {
@@ -34,7 +34,13 @@ export function renderTable({ tableElement, table, previousButton, nextButton })
     const tr = document.createElement("tr");
     row.getVisibleCells().forEach((cell) => {
       const td = document.createElement("td");
-      td.innerHTML = flexRender(cell.column.columnDef.cell, cell.getContext());
+      const cellValue = flexRender(cell.column.columnDef.cell, cell.getContext());
+      if (isHTMLNode(cellValue)) {
+        td.append(cellValue);
+      } else if (isString(cellValue)) {
+        td.textContent = cellValue;
+      }
+      // td.innerHTML = flexRender(cell.column.columnDef.cell, cell.getContext());
       tr.appendChild(td);
     });
     tbodyElement.appendChild(tr);
