@@ -5,6 +5,7 @@ import { Scheduler } from "../scheduler/Scheduler.js";
 import { Member } from "../member/Member.js";
 import { CourseDetail } from "../course/Detail/CourseDetail.js";
 import { courseAssignManager } from "./course-assign-manager.js";
+import { StatConverter } from "../stat/StatConverter.js";
 
 export class ContentManager {
   constructor() {
@@ -42,13 +43,17 @@ export class ContentManager {
     this.elCourseAssign = this.clCourseAssign.getContent();
     this.elThis.append(this.elCourseAssign);
 
+    this.clStat = new StatConverter();
+    this.elStat = this.clStat.getElement();
+    this.elThis.append(this.elStat);
+
     this.contentMapper = {
       notification: null,
       community: null,
       course: this.clCourseDetail,
       courseAssign: this.clCourseAssign,
       scheduler: this.clScheduler,
-      stats: null,
+      stats: this.clStat,
       member: this.clMember,
       setting: null,
     };
