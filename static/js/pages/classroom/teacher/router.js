@@ -31,6 +31,10 @@ export function teacherRouter(classId) {
       mtoEvents.emit("activateContent", { key: "member" });
       mtoEvents.emit("activateSide", { key: "main" });
     },
+    stats: () => {
+      mtoEvents.emit("activateContent", { key: "stats" });
+      mtoEvents.emit("activateSide", { key: "main" });
+    },
     setting: () => {
       mtoEvents.emit("activateContent", { key: "setting" });
       mtoEvents.emit("activateSide", { key: "main" });
@@ -50,6 +54,7 @@ export function teacherRouter(classId) {
   router.on("course", pages.course);
   router.on("scheduler", pages.scheduler);
   router.on("member", pages.member);
+  router.on("stats", pages.stats);
   router.on("setting", pages.setting);
   router.on("course/assign/:courseId", pages.courseAssign);
 
