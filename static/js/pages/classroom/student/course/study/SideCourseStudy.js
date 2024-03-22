@@ -26,6 +26,9 @@ export class SideCourseStudy {
     this.isActive = false;
     this.headerTitle = "뒤로가기";
 
+    this.elItems = null;
+    this.elContentItems = [];
+
     this.create();
   }
 
@@ -163,6 +166,8 @@ export class SideCourseStudy {
     elTextContainer.append(elContentTitle, elContentInfo);
     // elContainer.append(elContentTitle, elContentInfo);
 
+    this.elContentItems.push(elContentItem);
+
     return elContentItem;
 
     //
@@ -207,6 +212,7 @@ export class SideCourseStudy {
 
   changeItemFocus(selectedItem) {
     this.elItems.forEach((elItem) => elItem.firstElementChild.classList.remove("focus"));
+    this.elContentItems.forEach((elItem) => elItem.firstElementChild.classList.remove("focus"));
 
     selectedItem.firstElementChild.classList.add("focus");
   }

@@ -1,6 +1,7 @@
 import elem from "../../../../core/utils/elem/elem.js";
 import { mtoEvents } from "../../../../core/utils/mto-events.js";
 
+import { ClassHome } from "../home/ClassHome.js";
 import { Scheduler } from "../scheduler/Scheduler.js";
 import { Member } from "../member/Member.js";
 import { CourseDetail } from "../course/Detail/CourseDetail.js";
@@ -26,6 +27,10 @@ export class ContentManager {
   }
 
   initContents() {
+    this.clHome = new ClassHome();
+    this.elHome = this.clHome.getElement();
+    this.elThis.append(this.elHome);
+
     this.clScheduler = new Scheduler();
     this.elScheduler = this.clScheduler.getElement();
     this.elThis.append(this.elScheduler);
@@ -43,6 +48,7 @@ export class ContentManager {
     this.elThis.append(this.elCourseStudy);
 
     this.contentMapper = {
+      home: this.clHome,
       notification: null,
       community: null,
       course: this.clCourseDetail,
@@ -65,6 +71,7 @@ export class ContentManager {
   }
 
   activateContent({ key, ...rest }) {
+    console.log(key);
     if (!this.contentMapper.hasOwnProperty(key) || this.currentContent === this.contentMapper[key]) {
       return;
     }

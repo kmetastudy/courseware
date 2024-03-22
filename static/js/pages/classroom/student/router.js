@@ -41,18 +41,17 @@ export function studentRouter(classId) {
     },
   };
 
-  const rootUrl = `class/classroom/student/${classId}/`;
-  console.log(rootUrl);
+  const rootUrl = `class/classroom/student/${classId}`;
 
   const router = new Navigo(rootUrl);
-  router.on("", pages.home);
-  router.on("notification", pages.notification);
-  router.on("community", pages.community);
-  router.on("course", pages.course);
-  router.on("scheduler", pages.scheduler);
-  router.on("member", pages.member);
-  router.on("setting", pages.setting);
-  router.on("course/study", pages.courseStudy);
+  router.on("/", pages.home);
+  router.on("/notification", pages.notification);
+  router.on("/community", pages.community);
+  router.on("/course", pages.course);
+  router.on("/scheduler", pages.scheduler);
+  router.on("/member", pages.member);
+  router.on("/setting", pages.setting);
+  router.on("/course/study", pages.courseStudy);
 
   router.resolve();
 

@@ -258,13 +258,15 @@ class ClassContentAssignViewSet(viewsets.ModelViewSet):
     }
 
     def list(self, request, *args, **kwargs):
-        course_id = uuid.UUID(request.query_params.get("id_course"), None)
-        class_id = uuid.UUID(request.query_params.get("id_class"), None)
+        queryset = self.get_queryset()
+        contents = self.filter_queryset(queryset)
 
-        contents = self.queryset.filter(id_class=class_id, id_course=course_id)
         if not contents.exists():
-            self.create_empty_content(class_id, course_id)
-            contents = self.queryset.filter(id_class=class_id, id_course=course_id)
+            id_course = request.query_params.get("id_course", None)
+            id_class = request.query_params.get("id_class", None)
+            if id_course and id_class:
+                self.create_empty_content(id_class, id_course)
+                contents = self.queryset.filter(id_class=id_class, id_course=id_course)
 
         content = contents.first()
         serializer = self.get_serializer(content)

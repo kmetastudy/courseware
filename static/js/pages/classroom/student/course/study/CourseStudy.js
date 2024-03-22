@@ -89,6 +89,7 @@ export class CourseStudy {
     console.log(this.playerConfig);
     const { TESTUM, LESSON, EXAM } = TYPE_CONTENT;
 
+    console.log(TYPE_CONTENT.TESTUM);
     switch (content_type) {
       case TESTUM:
       case EXAM:
@@ -96,6 +97,7 @@ export class CourseStudy {
         break;
       case LESSON:
         this.studyLesson(this.playerConfig);
+        break;
       default:
         console.log(`Wrong Content Type: ${content_type}`);
         break;

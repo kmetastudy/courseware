@@ -334,7 +334,7 @@ mtmStudySolutionList.staticHeader = [
   {
     step: 1,
     tag: "div",
-    class: "btn cl-solution-list-btn",
+    class: "cl-solution-list-btn",
     // 'attr' : {
     //         'style':'cursor:pointer;background-color:transparent;border:2px solid dodgerblue;color:dodgerblue;',
     //     },
