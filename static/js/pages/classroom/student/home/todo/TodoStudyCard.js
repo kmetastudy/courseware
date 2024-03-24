@@ -1,4 +1,5 @@
 import elem from "../../../../../core/utils/elem/elem";
+import { MtuButton } from "../../../../../core/mtu/button/mtu-button";
 import { createTable, renderTable } from "../../../../../core/component/TanStackTable";
 export class TodoStudyCard {
   constructor() {
@@ -117,13 +118,15 @@ export class TodoStudyCard {
             return "";
           }
 
-          const elButton = elem(
-            "button",
-            { class: "btn btn-sm btn-ghost", on: { click: this.handleButtonClick.bind(this, branchId) } },
-            "바로가기",
-          );
+          const clButton = new MtuButton({
+            type: "text",
+            size: "small",
+            onClick: this.handleButtonClick.bind(this.branchId),
+            text: "바로가기",
+          });
 
-          console.log(elButton);
+          const elButton = clButton.getElement();
+
           return elButton;
         },
       }),

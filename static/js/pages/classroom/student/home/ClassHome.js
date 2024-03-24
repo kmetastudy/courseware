@@ -59,7 +59,7 @@ export class ClassHome {
     this.elLabel = elem(
       "label",
       {
-        for: "drawer-course-assign",
+        for: "drawer-classroom",
         class: "btn btn-square btn-ghost drawer-button lg:hidden",
       },
       MtuIcon("menu"),

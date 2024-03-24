@@ -4,6 +4,7 @@ import { createItem } from "../components/menu";
 
 import elem from "../../../core/utils/elem/elem";
 import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
+import { MtuButton } from "../../../core/mtu/button/mtu-button";
 
 export class SideMain {
   constructor() {
@@ -24,13 +25,24 @@ export class SideMain {
     this.classData = store.getState("classData");
     this.joinedClasses = store.getState("joinedClasses");
     this.router = store.getState("router");
-    this.title = this.classData?.title;
+    this.title = this.classData?.title ?? "클래스";
   }
 
   create() {
     this.elThis = elem("nav", { class: "min-h-screen w-72 flex-col gap-2 overflow-y-auto bg-base-100 px-6 py-10" });
-    this.elHeader = elem("div", { class: "mx-4 flex items-center gap-2 font-black", value: this.title }, this.title);
+
+    this.elHeader = elem("div", { class: "mx-4 flex items-center gap-2 font-black" });
     this.elThis.append(this.elHeader);
+
+    this.clHeaderButton = new MtuButton({
+      type: "text",
+      size: "large",
+      text: this.title,
+      onClick: this.handleClickSide.bind(this, ""),
+      styles: { fontWeight: 900 },
+    });
+    this.elHeaderButton = this.clHeaderButton.getElement();
+    this.elHeader.append(this.elHeaderButton);
 
     this.elMenu = elem("div", { class: "menu" });
     this.elThis.append(this.elMenu);
