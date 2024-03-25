@@ -30,7 +30,6 @@ export class ProgressLine {
     this.props = props;
     Object.assign(this, props);
 
-    console.log(props);
     this.init();
   }
 
@@ -151,7 +150,6 @@ export class ProgressLine {
   }
 
   render() {
-    console.log(this.outerStyle, this.trailStyle, this.percentStyle);
     // this.elWrapper = this.createDivElement();
 
     this.elOuter = this.createDivElement(`${this.prefixCls}-outer`, this.outerStyle);
