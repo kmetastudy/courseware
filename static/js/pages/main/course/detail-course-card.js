@@ -58,7 +58,7 @@ CourseCardManager.prototype.create = function () {
     }); // end of ajax
   });
 
-  $elCard.children("div").children("div:eq(1)").append($elCart);
+  // $elCard.children("div").children("div:eq(1)").append($elCart);
   $elCard.children("div").children("div:eq(1)").append($elButton);
 
   // Class
