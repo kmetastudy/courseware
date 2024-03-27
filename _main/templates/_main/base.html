@@ -155,7 +155,9 @@
         </div>
       </div>
     </div>
+    {% block extra-script %} {% endblock %}
   </body>
+  
   <script>
     var csrftoken = "{{csrf_token}}";
 
@@ -165,5 +167,5 @@
       mainlibrary.BaseOnReady(context);
     });
   </script>
-  {% block extra-script %} {% endblock %}
+  
 </html>
