@@ -10,6 +10,7 @@
   right: 0;
   z-index: 72;
 
+  width:100%;
   /* box-shadow: 0 2px 4px 0 hsla(0, 0%, 80.8%, .5); */
   height: 48px;
   /* height: var(--nav-height); */

@@ -33,17 +33,19 @@ export class NavManager {
         // { text: "포인트 충전", onClick: () => (window.location.href = "/point/charge/"), icon:"Point.svg", display:"close" },
         // { text: "최근학습", onClick: () => (window.location.href = "#"), icon:"RecentStudy.svg", display:"close" },
         // { text: "장바구니", onClick: () => (window.location.href = "/cart/"), icon:"Cart.svg", display:"close" },
+        { text: "문의하기", onClick: () => (window.location.href = "/contact/"), icon:"" },
         { text: "로그인", onClick: () => (window.location.href = "/user/"), icon:"Login.svg" },
         { text: "회원가입", onClick: () => (window.location.href = "/user/"), type: "text", icon:"Signup.svg" }
       ]
     } else {
       logout = [
-        { text: "포인트충전", onClick: () => (window.location.href = "/point/charge/"), icon:"Point.svg" },
+        // { text: "포인트충전", onClick: () => (window.location.href = "/point/charge/"), icon:"Point.svg" },
+        { text: "문의하기", onClick: () => (window.location.href = "/contact/"), icon:"" },
         { text: "마이페이지", onClick: () => (window.location.href = "/dashboard/"), icon:"Dashboard.svg" },
-        { text: "최근학습", onClick: () => (window.location.href = "#"), icon:"RecentStudy.svg", display:"close" },
-        { text: "장바구니", onClick: () => (window.location.href = "/cart/"), icon:"Cart.svg", display:"close" },
+        { text: "최근학습", onClick: () => (window.location.href = "#"), icon:"RecentStudy.svg" },
+        // { text: "장바구니", onClick: () => (window.location.href = "/cart/"), icon:"Cart.svg", display:"close" },
         
-        // { text: "로그아웃", onClick: () => (window.location.href = "/user/api/logout/"), type: "text", icon:"Signup.svg" }
+        { text: "로그아웃", onClick: () => (window.location.href = "/user/api/logout/"), type: "text", icon:"Signup.svg", display:"close" }
       ]
     }
 
