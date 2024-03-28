@@ -58,7 +58,7 @@ export function createCourseAssignManager() {
 
   async function urlFilterStudyResult(classId) {
     try {
-      const response = await apiStudent.studyResult.filter({ id_class: classId });
+      const response = await apiClass.studyResult.filter({ id_class: classId });
       return response.data;
     } catch (error) {
       return response;

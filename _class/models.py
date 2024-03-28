@@ -33,6 +33,57 @@ class mClass(BaseModel):
     institution_type = models.IntegerField(
         choices=INSTITUTION_TYPE_CHOICES, default=NO_INSTITUTION
     )
+
+    json_data = models.TextField(blank=True)
+    """
+    json_data = {
+        course: [
+            {
+                exstudent: [],
+                exteacher: [],
+                id: "863003fc-e283-48e3-88a2-b8fdf9650815",
+                // auto_created when set course in class
+                instance_id: "82e294d2-6fd8-4c5f-8554-c6d2036b06a4",
+                instudent: [],
+                inteacher: [],
+                title: "24 새 코스",
+                closed: false,
+            },
+            {
+                id: "9fd0957a-75ca-415f-845f-62d150879760",
+                title: "24 배치 코스",
+                instance_id: "4ba06c63-3dfa-4b7c-87aa-a70d40de6299",
+                exstudent: [],
+                instudent: [],
+                exteacher: [],
+                inteacher: [],
+            },
+        ],
+        grade: "1",
+        # total students
+        student: [
+            {
+                code: "24010101",
+                id: "43910e91-1fb0-4da6-916e-11ec4704e4d2",
+                name: "김일일",
+            },
+            {
+                code: "24010102",
+                id: "9c5c6f87-93c4-46b9-973f-1bbdc505dd48",
+                name: "이일일",
+            },
+        ],
+        # total teachers
+        teacher: [
+            {
+                code: "tc0010",
+                id: "48bc69d4-1eec-4bc7-bd3c-398b711d44bf",
+                json_data: '{"subject":"수학","note":"1-1"}',
+                name: "김선생",
+            },
+        ],
+    }
+    """
     active = models.BooleanField(default=True, verbose_name="활성화 여부")
 
     def __str__(self) -> str:
@@ -231,9 +282,52 @@ class mClassContentAssign(BaseModel):
     id_course = models.UUIDField(null=True, blank=True)
     id_teacher = models.UUIDField(null=True, blank=True)  # unused
     id_student = models.UUIDField(null=True, blank=True)  # unused
+    id_instance = models.UUIDField(null=True, blank=True)
 
     json_data = models.TextField(blank=True)
     show_off = models.BooleanField(default=False)
+
+
+class mClassStudyResult(BaseModel):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    type = models.IntegerField(default=0)
+    subtype = models.IntegerField(default=0)
+    title = models.CharField(max_length=300, null=True, blank=True)
+
+    order = models.IntegerField(default=0)
+    index = models.IntegerField(default=0)
+
+    progress = models.IntegerField(default=0)
+    point = models.IntegerField(default=0)
+
+    properties = models.TextField(null=True, blank=True)
+    # 위의 properties 가 아래의 json_data 로 대체
+    json_data = models.TextField(null=True, blank=True)
+
+    id_student = models.UUIDField(null=True, blank=False)
+    # 클래스 uuid
+    id_class = models.UUIDField(null=False, blank=False)
+    # 코스 uuid
+    id_course = models.UUIDField(null=False, blank=False)
+
+    # 컨텐츠 uuid
+    # id_content changed to id_instance
+    # This is for identifying the course in class
+    # It makes one class has multiple same courses
+    id_instance = models.UUIDField(null=True, blank=True)
+
+    # 추가
+    id_base_course = models.UUIDField(null=True, blank=True)
+    id_ref_course = models.UUIDField(null=True, blank=True)
+    id_clinic_course = models.UUIDField(null=True, blank=True)
+
+    invalid = models.BooleanField(default=False)
+
+    version = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.title if self.title else "mClassStudyResult"
 
 
 class ClassInvitationQuerySet(models.QuerySet):

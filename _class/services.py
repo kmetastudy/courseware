@@ -4,13 +4,168 @@ import copy
 from typing import List, Dict, Optional
 from datetime import timedelta, datetime
 
+from django.db import transaction
 from django.utils import timezone, dateparse
 
-from .models import mClassContentAssign, mClassMember
+from .models import mClass, mClassContentAssign, mClassStudyResult, mClassMember
+from .selectors import get_class_course
 from _cp.models import mCourseN
 from _cp.constants import CP_TYPE_TESTUM, CP_TYPE_LESSON, CP_TYPE_EXAM
 from _st.models import mStudyResult
 from core.utils.object_helpers import get_object
+from core.services import model_update
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+
+class ClassService:
+    def __init__(
+        self,
+    ) -> None:
+        pass
+
+    def _create_course_info(self, id: uuid.UUID, title: str):
+        return {
+            "id": id,
+            "instance_id": uuid.uuid4,
+            "title": title,
+            "closed": False,
+        }
+
+    def create_course_info(self, instance: mClass, course: mCourseN):
+        course_id = course.id
+        course_title = course.title
+
+        json_data = json.loads(instance.json_data)
+
+        courses = json_data["course"]
+        course_info = self._create_course_info(id=course_id, title=course_title)
+        courses.append(course_info)
+
+        updated_instance = self.update(
+            instance=instance, data={"json_data": json.dumps(json_data)}
+        )
+
+        return updated_instance
+
+    @transaction.atomic
+    def create(
+        self,
+        id_course: uuid.UUID,
+        id_user: uuid.UUID,
+        **kwargs,
+    ):
+        obj = mClass(
+            id_course=id_course,
+            id_owner=id_user,
+            **kwargs,
+        )
+
+        obj.full_clean()
+        obj.save()
+
+        return obj
+
+    @transaction.atomic
+    def update(self, instance: mClass, data):
+        instance = get_object(mClass, id=id)
+
+        allowed_fields = [
+            "id_owner",
+            "title",
+            "description",
+            "institution",
+            "institution_type",
+            "start_date",
+            "end_date",
+            "status",
+            "json_data",
+            "active",
+        ]
+
+        if instance:
+            updated_instance, has_updated = model_update(
+                instance=instance, fields=allowed_fields, data=data
+            )
+
+        return updated_instance
+
+
+# class ClassContentAssignService
+class ClassStudyResultServiceV2:
+    def __init__(self):
+        pass
+
+    def _create_property(self, scheduler_list):
+        for data in scheduler_list:
+            data["progress"] = 0
+            data["point"] = 0
+            data["results"] = []
+
+        return scheduler_list
+
+    @transaction.atomic
+    def create_study_result(self, scheduler_list):
+        prop = self._create_property(scheduler_list)
+        properties = json.dumps({"property": prop}, ensure_ascii=False)
+
+        obj = mStudyResult(
+            id_student=self.id_student,
+            id_course=self.id_course,
+            id_class=self.id_class,
+            type=1,
+            properties=properties,
+        )
+
+        obj.full_clean()
+        obj.save()
+
+        return obj
+
+    @transaction.atomic
+    def create(
+        self,
+        id_class: uuid.UUID,
+        id_student: uuid.UUID,
+        id_course: uuid.UUID,
+        **data,
+    ):
+        obj = mClassStudyResult(
+            id_class=id_class,
+            id_student=id_student,
+            id_course=id_course,
+            **data,
+        )
+
+        obj.full_clean()
+
+        obj.save()
+
+        return obj
+
+    @transaction.atomic
+    def update(self, instance: mClassStudyResult, data):
+        instance = get_object(mClassStudyResult, id=id)
+
+        allowed_fields = [
+            "type",
+            "subtype",
+            "title",
+            "oreder",
+            "index",
+            "progress",
+            "point",
+            "json_data",
+            "invalid",
+            "version",
+        ]
+
+        if instance:
+            updated_instance, has_updated = model_update(
+                instance=instance, fields=allowed_fields, data=data
+            )
+
+        return updated_instance
 
 
 class ClassContentAssignService:
@@ -147,14 +302,14 @@ class ClassStudyResultService:
 
     def create_study_result(self, scheduler_list):
         prop = self._create_property(scheduler_list)
-        properties = json.dumps({"property": prop}, ensure_ascii=False)
+        json_data = json.dumps({"property": prop}, ensure_ascii=False)
 
-        obj = mStudyResult(
+        obj = mClassStudyResult(
             id_student=self.id_student,
             id_course=self.id_course,
             id_class=self.id_class,
             type=1,
-            properties=properties,
+            json_data=json_data,
         )
 
         obj.full_clean()

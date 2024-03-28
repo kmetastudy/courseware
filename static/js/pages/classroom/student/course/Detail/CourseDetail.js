@@ -295,7 +295,7 @@ export class CourseDetail {
 
   async urlFilterStudyResult(classId) {
     try {
-      const response = await apiStudent.studyResult.filter({ id_class: classId });
+      const response = await apiClass.studyResult.filter({ id_class: classId });
       return response.data;
     } catch (err) {
       console.log(err);
@@ -401,9 +401,9 @@ export class CourseDetail {
 
     let tableData = [];
     for (let i = 0; i < length; i++) {
-      const { properties } = studyResults[i];
-      const { property: results } = properties;
-      const information = properties?.information;
+      const { json_data } = studyResults[i];
+      const { property: results } = json_data;
+      const information = json_data?.information;
 
       const row = {
         name: users[i].full_name,

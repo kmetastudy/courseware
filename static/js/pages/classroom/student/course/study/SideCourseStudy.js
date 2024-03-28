@@ -68,7 +68,7 @@ export class SideCourseStudy {
     const courseTitle = course.title;
     const schedulers = this.composeSchedulers(studyResult);
     const {
-      properties: { property },
+      json_data: { property },
     } = studyResult;
 
     this.setTitle(courseTitle);
@@ -82,7 +82,7 @@ export class SideCourseStudy {
 
   composeSchedulers(studyResult) {
     const {
-      properties: { property: schedulerList },
+      json_data: { property: schedulerList },
     } = studyResult;
 
     const schedulers = extracts(schedulerList, ["period", "date"]);

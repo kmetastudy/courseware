@@ -69,7 +69,7 @@ export function createCourseStudyManager() {
   // Requests
   async function urlFilterStudyResult({ classId, studentId, courseId }) {
     try {
-      const response = await apiStudent.studyResult.filter({
+      const response = await apiClass.studyResult.filter({
         id_class: classId,
         id_student: studentId,
         id_course: courseId,

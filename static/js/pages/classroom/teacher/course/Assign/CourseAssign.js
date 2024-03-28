@@ -92,7 +92,7 @@ export class CourseAssign {
       const { id: userId } = user;
 
       const studyResult = studyResults.find((res) => res.id_student === userId);
-      const property = studyResult.properties.property;
+      const property = studyResult.json_data.property;
 
       return {
         user: user,

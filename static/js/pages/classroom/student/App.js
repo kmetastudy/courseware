@@ -135,7 +135,7 @@ export class AppClassroomStudent {
 
   async urlFilterStudyResult({ courseId: id_course, userId: id_student, classId: id_class }) {
     try {
-      const response = await apiStudent.studyResult.filter({ id_course, id_student, id_class });
+      const response = await apiClass.studyResult.filter({ id_course, id_student, id_class });
       return response.data[0];
     } catch (error) {
       console.log(error);

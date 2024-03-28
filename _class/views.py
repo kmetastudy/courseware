@@ -31,6 +31,7 @@ from .models import (
     mClassContentAssign,
     mClassInvitation,
     mClassCourse,
+    mClassStudyResult,
 )
 from .serializers import (
     ClassSerializer,
@@ -41,6 +42,7 @@ from .serializers import (
     ReactionSerializer,
     ClassContentAssignSerializer,
     ClassInvitationSerializer,
+    ClassStudyResultSerializer,
 )
 
 from .services import ClassContentAssignService, ClassStudyResultService
@@ -391,3 +393,18 @@ class SingleCourseClassRegistrationView(APIView):
         output_serializer = self.OutputSerializer(member)
 
         return Response(data=output_serializer.data, status=status.HTTP_201_CREATED)
+
+
+class ClassStudyResultViewSet(viewsets.ModelViewSet):
+    queryset = mClassStudyResult.objects.all()
+    serializer_class = ClassStudyResultSerializer
+
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
+    # filterset_fields = ['id', 'id_owner']
+    filterset_fields = {
+        "id": ["in", "exact"],
+        "id_student": ["in", "exact"],
+        "id_course": ["in", "exact"],
+        "id_class": ["in", "exact"],
+        "id_instance": ["in", "exact"],
+    }
