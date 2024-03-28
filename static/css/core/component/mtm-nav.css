@@ -21,6 +21,12 @@
   /* box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.30), 0px 1px 3px 1px rgba(0, 0, 0, 0.15); */
 }
 
+@media screen and (max-width: 420px){
+  .mtm-nav {
+    padding: 0rem;
+  }
+}
+
 .mtm-nav.sticky {
   position: fixed;
   /* background: var(--theme-color-main); */
