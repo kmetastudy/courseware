@@ -282,15 +282,8 @@ class ClassContentAssignService:
 
 
 class ClassStudyResultService:
-    def __init__(
-        self,
-        id_student: uuid.UUID,
-        id_course: uuid.UUID,
-        id_class: uuid.UUID,
-    ) -> None:
-        self.id_student = id_student
-        self.id_course = id_course
-        self.id_class = id_class
+    def __init__(self) -> None:
+        pass
 
     def _create_property(self, scheduler_list):
         for data in scheduler_list:
@@ -300,14 +293,14 @@ class ClassStudyResultService:
 
         return scheduler_list
 
-    def create_study_result(self, scheduler_list):
+    def create_study_result(self, id_class, id_student, id_course, scheduler_list):
         prop = self._create_property(scheduler_list)
         json_data = json.dumps({"property": prop}, ensure_ascii=False)
 
         obj = mClassStudyResult(
-            id_student=self.id_student,
-            id_course=self.id_course,
-            id_class=self.id_class,
+            id_student=id_student,
+            id_course=id_course,
+            id_class=id_class,
             type=1,
             json_data=json_data,
         )
@@ -316,3 +309,30 @@ class ClassStudyResultService:
         obj.save()
 
         return obj
+
+    def update_study_result(self, instance: mClassStudyResult, **kwargs):
+        content_id = uuid.UUID(str(kwargs.get("id_content", None)))
+
+        results = kwargs.get("properties", None)
+        point = kwargs.get("point", None)
+        progress = kwargs.get("progress", None)
+
+        json_data = json.loads(instance.json_data)
+
+        properties = json_data["property"]
+
+        now_utc = timezone.now()
+        updated_date = now_utc.isoformat()
+
+        for data in properties:
+            if data["id"] == str(content_id):
+                data["results"] = json.loads(results)
+                data["progress"] = progress
+                data["point"] = point
+                data["updated_date"] = updated_date
+
+        instance.json_data = json.dumps(json_data, ensure_ascii=False)
+        instance.full_clean()
+        instance.save()
+
+        return instance
