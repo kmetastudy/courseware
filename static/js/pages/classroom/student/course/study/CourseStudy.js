@@ -3,8 +3,9 @@ import { store } from "../../Store";
 
 import elem from "../../../../../core/utils/elem/elem";
 
-import { TestumPlayer } from "../../../../st/testum/testum-player";
-import { LessonPlayer } from "../../../../st/lesson/lesson-player";
+// import { TestumPlayer } from "../../../../st/testum/testum-player";
+import { ClassTestumPlayer } from "../../../common/testum/ClassTestumPlayer";
+import { ClassLessonPlayer } from "../../../common/lesson/ClassLessonPlayer";
 
 require("../../../../../../css/pages/st/study/study-course-builder.css");
 export class CourseStudy {
@@ -34,13 +35,15 @@ export class CourseStudy {
       units: null,
       results: null,
     };
+
+    this.classId = store.getState("classId");
   }
 
   initPlayers() {
-    this.clTestumPlayer = new TestumPlayer({ modeStudent: true });
+    this.clTestumPlayer = new ClassTestumPlayer({ modeStudent: true, classId: this.classId });
     this.elTestumPlayer = this.clTestumPlayer.elThis;
 
-    this.clLessonPlayer = new LessonPlayer({ modeStudent: true });
+    this.clLessonPlayer = new ClassLessonPlayer({ modeStudent: true, classId: this.classId });
     this.elLessonPlayer = this.clLessonPlayer.elThis;
 
     this.clTestumPlayer.show(false);
@@ -70,6 +73,9 @@ export class CourseStudy {
 
   updateData({ studyResult } = {}) {
     this.studyResult = studyResult;
+    this.id = this.studyResult.id;
+    this.clTestumPlayer.setStudyResultId(this.id);
+    this.clLessonPlayer.setStudyResultId(this.id);
   }
 
   async changeContent({ content, studyResultProperty } = {}) {
