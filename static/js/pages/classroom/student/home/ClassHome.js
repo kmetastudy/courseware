@@ -20,7 +20,9 @@ export class ClassHome {
 
     this.create();
 
-    this.updateTodoStudyCard(this.studyResultData);
+    if (this.studyResultData) {
+      this.updateTodoStudyCard(this.studyResultData);
+    }
   }
 
   getStates() {
@@ -96,8 +98,9 @@ export class ClassHome {
   }
 
   updateTodoStudyCard(studyResult) {
+    console.log(studyResult);
     const {
-      properties: { property: propertyList },
+      json_data: { property: propertyList },
     } = studyResult;
 
     const porpertyToday = propertyList.filter((property) => property.show && dayjs(property.date).isToday());

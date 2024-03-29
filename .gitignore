@@ -19,6 +19,7 @@ perttierrc
 *.zip
 *.json
 _bundle/
+scripts.py
 
 
 ### dev settings

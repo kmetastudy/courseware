@@ -38,8 +38,8 @@ export class AppClassroomTeacher {
     const body = document.getElementById("body");
     body.append(this.elThis);
 
-    // this.activateInitial();
-    this.router.navigate("/");
+    this.router.resolve();
+    // this.router.navigate("/");
   }
 
   createRouter(classId) {
@@ -69,10 +69,6 @@ export class AppClassroomTeacher {
     this.clContentManager = new ContentManager();
     this.elContentManager = this.clContentManager.getElement();
     this.elThis.append(this.elContentManager);
-  }
-
-  activateInitial() {
-    mtoEvents.emit("activateSide", { key: "main" });
   }
 
   async urlGetClass(classId) {

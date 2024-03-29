@@ -6,59 +6,101 @@
 import { mtoEvents } from "../../../core/utils/mto-events";
 
 export function teacherRouter(classId) {
+  let currentRoute;
   const pages = {
     home: () => {
+      // if (currentRoute === "home") {
+      //   return;
+      // }
+      currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "home" });
       mtoEvents.emit("activateSide", { key: "main" });
     },
     notification: () => {
+      // if (currentRoute === "notification") {
+      //   return;
+      // }
+      currentRoute = "notification";
       mtoEvents.emit("activateContent", { key: "notification" });
       mtoEvents.emit("activateSide", { key: "main" });
     },
     community: () => {
+      // if (currentRoute === "home") {
+      //   return;
+      // }
+      currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "community" });
       mtoEvents.emit("activateSide", { key: "main" });
     },
     course: () => {
+      // if (currentRoute === "home") {
+      //   return;
+      // }
+      currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "course" });
       mtoEvents.emit("activateSide", { key: "main" });
     },
     scheduler: () => {
+      // if (currentRoute === "home") {
+      //   return;
+      // }
+      currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "scheduler" });
       mtoEvents.emit("activateSide", { key: "main" });
     },
     member: () => {
+      // if (currentRoute === "home") {
+      //   return;
+      // }
+      currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "member" });
       mtoEvents.emit("activateSide", { key: "main" });
     },
     stats: () => {
+      // if (currentRoute === "home") {
+      //   return;
+      // }
+      currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "stats" });
       mtoEvents.emit("activateSide", { key: "main" });
     },
     setting: () => {
+      // if (currentRoute === "home") {
+      //   return;
+      // }
+      currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "setting" });
       mtoEvents.emit("activateSide", { key: "main" });
     },
     courseAssign: ({ data }) => {
+      // if (currentRoute === "home") {
+      //   return;
+      // }
+      currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "courseAssign", courseId: data.courseId });
       mtoEvents.emit("activateSide", { key: "courseAssign", courseId: data.courseId });
     },
   };
 
-  const rootUrl = `class/classroom/teacher/${classId}/`;
+  const rootUrl = `class/classroom/teacher/${classId}`;
 
   const router = new Navigo(rootUrl);
-  router.on("", pages.home);
-  router.on("notification", pages.notification);
-  router.on("community", pages.community);
-  router.on("course", pages.course);
-  router.on("scheduler", pages.scheduler);
-  router.on("member", pages.member);
-  router.on("stats", pages.stats);
-  router.on("setting", pages.setting);
-  router.on("course/assign/:courseId", pages.courseAssign);
+  router
+    .on("/", pages.home)
+    .on("/notification", pages.notification)
+    .on("/community", pages.community)
+    .on("/course", pages.course)
+    .on("/scheduler", pages.scheduler)
+    .on("/member", pages.member)
+    .on("/stats", pages.stats)
+    .on("/setting", pages.setting)
+    .on("/course/assign/:courseId", pages.courseAssign);
 
-  router.resolve();
+  router.hooks({
+    before: (done, params) => {
+      console.log(params.url);
+    },
+  });
 
   return router;
 }

@@ -3,8 +3,10 @@ import { store } from "./Store";
 import { createItem } from "../components/menu";
 
 import elem from "../../../core/utils/elem/elem";
+
 import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
 import { MtuButton } from "../../../core/mtu/button/mtu-button";
+import { Dropdown } from "../components/Dropdown";
 
 export class SideMain {
   constructor() {
@@ -22,6 +24,7 @@ export class SideMain {
   }
 
   getState() {
+    this.classId = store.getState("classId");
     this.classData = store.getState("classData");
     this.joinedClasses = store.getState("joinedClasses");
     this.router = store.getState("router");
@@ -34,11 +37,13 @@ export class SideMain {
     this.elHeader = elem("div", { class: "mx-4 flex items-center gap-2 font-black" });
     this.elThis.append(this.elHeader);
 
+    this.clDropdown = new Dropdown({});
+
     this.clHeaderButton = new MtuButton({
       type: "text",
       size: "large",
       text: this.title,
-      onClick: this.handleClickSide.bind(this, ""),
+      onClick: this.handleClickHome.bind(this),
       styles: { fontWeight: 900 },
     });
     this.elHeaderButton = this.clHeaderButton.getElement();
@@ -122,12 +127,25 @@ export class SideMain {
     const clickedElement = evt.currentTarget.firstChild;
     this.toggleActive(clickedElement);
 
-    this.router.navigate(`/${key}`);
+    this.router.navigate(`${key}`);
+  }
+
+  handleClickHome(evt) {
+    console.log("click home");
+    evt.stopPropagation();
+
+    this.toggleDeactivateAll();
+
+    this.router.navigate(`/`);
   }
 
   toggleActive(clickedElement) {
     this.elSides.forEach((element) => element.firstChild.classList.remove("focus"));
-    clickedElement.classList.add("focus");
+    clickedElement ?? clickedElement.classList.add("focus");
+  }
+
+  toggleDeactivateAll() {
+    this.elSides.forEach((element) => element.firstChild.classList.remove("focus"));
   }
 
   activate(context = {}) {

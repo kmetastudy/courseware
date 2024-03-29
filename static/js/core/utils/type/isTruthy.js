@@ -4,7 +4,7 @@
 
 "use strict";
 
-var isExisty = require("./isExisty");
+import isExisty from "./isExisty";
 
 /**
  * Check whether the given variable is truthy or not.

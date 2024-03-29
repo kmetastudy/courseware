@@ -31,6 +31,7 @@ from .models import (
     mClassContentAssign,
     mClassInvitation,
     mClassCourse,
+    mClassStudyResult,
 )
 from .serializers import (
     ClassSerializer,
@@ -41,6 +42,7 @@ from .serializers import (
     ReactionSerializer,
     ClassContentAssignSerializer,
     ClassInvitationSerializer,
+    ClassStudyResultSerializer,
 )
 
 from .services import ClassContentAssignService, ClassStudyResultService
@@ -376,18 +378,34 @@ class SingleCourseClassRegistrationView(APIView):
 
         member = mClassMember.custom_objects.create_member(**validated_data)
 
-        study_result_service = ClassStudyResultService(
-            id_student=member.id_user,
-            id_course=single_course_class.id_course,
-            id_class=single_course_class.id,
-        )
+        study_result_service = ClassStudyResultService()
 
         queryset = mClassContentAssign.objects.filter(id_class=single_course_class.id)
         if queryset.exists():
             content_assign = queryset.first()
             scheduler_list = json.loads(content_assign.json_data).get("scheduler_list")
-            study_result_service.create_study_result(scheduler_list=scheduler_list)
+            study_result_service.create_study_result(
+                id_class=single_course_class.id,
+                id_student=member.id_user,
+                id_course=single_course_class.id_course,
+                scheduler_list=scheduler_list,
+            )
 
         output_serializer = self.OutputSerializer(member)
 
         return Response(data=output_serializer.data, status=status.HTTP_201_CREATED)
+
+
+class ClassStudyResultViewSet(viewsets.ModelViewSet):
+    queryset = mClassStudyResult.objects.all()
+    serializer_class = ClassStudyResultSerializer
+
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
+    # filterset_fields = ['id', 'id_owner']
+    filterset_fields = {
+        "id": ["in", "exact"],
+        "id_student": ["in", "exact"],
+        "id_course": ["in", "exact"],
+        "id_class": ["in", "exact"],
+        "id_instance": ["in", "exact"],
+    }

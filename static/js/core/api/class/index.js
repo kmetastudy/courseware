@@ -9,4 +9,6 @@ export const apiClass = {
   reaction: new BaseApi("/class/api/reaction/"),
   classContentAssign: new BaseApi("/class/api/class-content-assign/"),
   classInvitation: new BaseApi("/class/api/class-invitation/"),
+  studyResult: new BaseApi("/class/api/study-result/"),
+  studyResultProperty: new BaseApi("/class/api/study-result-property/"),
 };
