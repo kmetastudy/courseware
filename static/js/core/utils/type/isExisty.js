@@ -4,8 +4,8 @@
 
 "use strict";
 
-var isUndefined = require("./isUndefined");
-var isNull = require("./isNull");
+import isUndefined from "./isUndefined";
+import isNull from "./isNull";
 
 /**
  * Check whether the given variable is existing or not.
