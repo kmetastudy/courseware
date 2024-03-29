@@ -12,7 +12,7 @@ export default class Component {
         this._props = props;
 
         this.setup();
-        // this.setEvent();
+        this.setEvent();
         // this.render(this._props);
     }
 
@@ -21,7 +21,6 @@ export default class Component {
         observe(() => { // state가 변결될 경우, 함수가 실행된다.
             console.log(this)
             this.render(this._props);
-            this.setEvent();
             this.mounted();
         })
     }

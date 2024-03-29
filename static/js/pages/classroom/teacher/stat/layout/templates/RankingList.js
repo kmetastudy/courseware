@@ -1,6 +1,6 @@
 import LessonQuestion from "../organisms/LessonQuestion.js"
 
-const LankingList = props => {
+const RankingList = props => {
 
     return `
         <ul>
@@ -11,4 +11,4 @@ const LankingList = props => {
     `
 }
 
-export default LankingList
+export default RankingList
