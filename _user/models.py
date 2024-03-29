@@ -7,16 +7,23 @@ from core.models import BaseModel
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import BaseUserManager as BUM
 from django.contrib.auth.models import PermissionsMixin
+
 # Create your models here.
 
 
 class BaseUserManager(BUM):
-    def create_user(self, email, is_active=True, is_admin=False, password=None, **extra_fields):
+    def create_user(
+        self, email, is_active=True, is_admin=False, password=None, **extra_fields
+    ):
         if not email:
             raise ValueError("Users must have an email address")
 
-        user = self.model(email=self.normalize_email(
-            email.lower()), is_active=is_active, is_admin=is_admin, **extra_fields)
+        user = self.model(
+            email=self.normalize_email(email.lower()),
+            is_active=is_active,
+            is_admin=is_admin,
+            **extra_fields
+        )
 
         if password is not None:
             user.set_password(password)
@@ -45,14 +52,14 @@ class BaseUserManager(BUM):
 
 class mUser(BaseModel, AbstractBaseUser, PermissionsMixin):
     TYPE_ANNONYMOUS = 0
-    TYPE_ADMIN = 1          # aa
-    TYPE_OPERATOR = 2       # op
-    TYPE_PRODUCER = 4       # cp
-    TYPE_TEACHER = 8        # tc
-    TYPE_STUDENT = 16       # NNNNNNNN (8 digit)
-    TYPE_PARENT = 32        # NNNNNNNNp (8 digit + p)
-    TYPE_USER = 64          # Default
-    TYPE_MANAGER = 128      # rm
+    TYPE_ADMIN = 1  # aa
+    TYPE_OPERATOR = 2  # op
+    TYPE_PRODUCER = 4  # cp
+    TYPE_TEACHER = 8  # tc
+    TYPE_STUDENT = 16  # NNNNNNNN (8 digit)
+    TYPE_PARENT = 32  # NNNNNNNNp (8 digit + p)
+    TYPE_USER = 64  # Default
+    TYPE_MANAGER = 128  # rm
 
     USER_TYPES = [
         (TYPE_ANNONYMOUS, "Annonymous"),
@@ -67,8 +74,7 @@ class mUser(BaseModel, AbstractBaseUser, PermissionsMixin):
     ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    email = models.EmailField(
-        verbose_name="email address", max_length=255, unique=True)
+    email = models.EmailField(verbose_name="email address", max_length=255, unique=True)
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -76,8 +82,7 @@ class mUser(BaseModel, AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
 
     # profiles
-    full_name = models.CharField(
-        max_length=256, null=True, blank=True)  # name of user
+    full_name = models.CharField(max_length=256, null=True, blank=True)  # name of user
     nickname = models.CharField(max_length=256, null=True, blank=True)
     type = models.IntegerField(choices=USER_TYPES, default=TYPE_USER)
     grade = models.CharField(max_length=16, null=True, blank=True)
@@ -93,6 +98,12 @@ class mUser(BaseModel, AbstractBaseUser, PermissionsMixin):
     def is_staff(self):
         return self.is_admin
 
+    def is_teacher(self):
+        return self.type == self.TYPE_TEACHER
+
+    def is_student(self):
+        return self.type == self.TYPE_STUDENT
+
 
 class mCoursePurchases(BaseModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -103,4 +114,8 @@ class mCoursePurchases(BaseModel):
     expiration_date = models.DateTimeField(null=True, blank=True)
 
     def is_expired(self):
-        return False if not self.expiration_date else django.utils.timezone.now() >= self.expiration_date
+        return (
+            False
+            if not self.expiration_date
+            else django.utils.timezone.now() >= self.expiration_date
+        )
