@@ -11,7 +11,7 @@ export default class DashboardTodayView extends View {
         const {scheduledCourse} = state
         let date = 0
 
-        console.log(scheduledCourse[date])
+        // console.log(scheduledCourse[date])
 
         return `
             <div class="card-body grow-0">
