@@ -9,10 +9,18 @@ export class MtuExpandingButton {
     create() {
         var $elButtonList = $(`<div class="btn-expand-list"></div>`)
         this.options.forEach(element => {
-            var $elButton = $(`<div class="btn-expand ${element.display}">
+            var $elButton = ``
+            if(!element.icon) {
+                $elButton = $(`<div class="btn-expand ${element.display}">
+                                <p class="">${element.text}</p>
+                            </div>`)
+            } else {
+                $elButton = $(`<div class="btn-expand ${element.display}">
                                 <img src="/static/assets/${element.icon}"/>
                                 <p class="">${element.text}</p>
                             </div>`)
+            }
+            
 
             $elButton.on("click", element.onClick)
 

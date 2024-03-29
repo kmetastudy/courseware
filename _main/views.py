@@ -55,6 +55,15 @@ def index(request):
 
 
 @jwt_login_required
+def new_contact(request):
+    context_sample = make_context(request)
+    context = {
+        "context": json.dumps(context_sample),
+    }
+    return render(request, "_main/contact.html", context)
+
+
+@jwt_login_required
 def school(request):
     context_sample = make_context(request)
     courses = getCourses(request, "all", "all")
@@ -66,7 +75,7 @@ def school(request):
     for content in course_recomend:
         # print(content)
         if content["subject"] in options:
-            course = courseDetail.objects.filter(courseId=content["courseId"]).values(
+            course = courseDetail.objects.filter(courseId=content["id_course"]).values(
                 "courseId", "courseTitle", "thumnail", "school", "grade", "subject"
             )[0]
             # course['type'] = content['subject']
@@ -75,8 +84,8 @@ def school(request):
     print(recommend)
     context = {
         "context": json.dumps(context_sample),
-        "courses": courses,
-        "recommend": json.dumps(recommend),
+        "courses": json.dumps(courses, default=str),
+        "recommend": json.dumps(recommend, default=str),
     }
     return render(request, "_main/landing_school.html", context)
 
@@ -93,7 +102,7 @@ def edu(request):
     for content in course_recomend:
         # print(content)
         if content["subject"] in options:
-            course = courseDetail.objects.filter(courseId=content["courseId"]).values(
+            course = courseDetail.objects.filter(courseId=content["id_course"]).values(
                 "courseId", "courseTitle", "thumnail", "school", "grade", "subject"
             )[0]
             # course['type'] = content['subject']
@@ -102,8 +111,8 @@ def edu(request):
     print(recommend)
     context = {
         "context": json.dumps(context_sample),
-        "courses": courses,
-        "recommend": json.dumps(recommend),
+        "courses": json.dumps(courses, default=str),
+        "recommend": json.dumps(recommend, default=str),
     }
     return render(request, "_main/landing_edu.html", context)
 
@@ -120,7 +129,7 @@ def namdo(request):
     for content in course_recomend:
         # print(content)
         if content["subject"] in options:
-            course = courseDetail.objects.filter(courseId=content["courseId"]).values(
+            course = courseDetail.objects.filter(courseId=content["id_course"]).values(
                 "courseId", "courseTitle", "thumnail", "school", "grade", "subject"
             )[0]
             # course['type'] = content['subject']
@@ -129,8 +138,8 @@ def namdo(request):
     print(recommend)
     context = {
         "context": json.dumps(context_sample),
-        "courses": courses,
-        "recommend": json.dumps(recommend),
+        "courses": json.dumps(courses, default=str),
+        "recommend": json.dumps(recommend, default=str),
     }
     return render(request, "_main/landing_namdo.html", context)
 
@@ -147,7 +156,7 @@ def teacher(request):
     for content in course_recomend:
         # print(content)
         if content["subject"] in options:
-            course = courseDetail.objects.filter(courseId=content["courseId"]).values(
+            course = courseDetail.objects.filter(courseId=content["id_course"]).values(
                 "courseId", "courseTitle", "thumnail", "school", "grade", "subject"
             )[0]
             # course['type'] = content['subject']
@@ -156,8 +165,8 @@ def teacher(request):
     print(recommend)
     context = {
         "context": json.dumps(context_sample),
-        "courses": courses,
-        "recommend": json.dumps(recommend),
+        "courses": json.dumps(courses, default=str),
+        "recommend": json.dumps(recommend, default=str),
     }
     return render(request, "_main/landing_teacher.html", context)
 
@@ -233,7 +242,7 @@ def mainView(request, school, subject):
         context = {
             "context": json.dumps(context_sample),
             "options": json.dumps(main_context),
-            "courses": courses,
+            "courses": json.dumps(courses, default=str),
         }
 
         print(context)
@@ -243,7 +252,9 @@ def mainView(request, school, subject):
 
         courses = getCourses(request, schoolOption2[school], subject)
 
-        return JsonResponse({"message": subject, "courses": courses})
+        return JsonResponse(
+            {"message": subject, "courses": json.dumps(courses, default=str)}
+        )
 
 
 def getCourses(request, school, subject):
