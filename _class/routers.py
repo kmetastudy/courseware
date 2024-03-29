@@ -9,6 +9,8 @@ from .views import (
     ClassInvitationViewSet,
     ClassStudyResultViewSet,
 )
+
+
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()

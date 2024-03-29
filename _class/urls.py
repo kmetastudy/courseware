@@ -9,6 +9,8 @@ from .views import (
     class_join,
     SingleCourseClassRegistrationView,
 )
+
+from .apis import ClassStudyResultUpdatePropertyApi
 from .routers import router
 
 app_name = "_class"
@@ -42,4 +44,9 @@ urlpatterns = [
         name="single_course_class_registration",
     ),
     path("api/", include(router.urls)),
+    path(
+        "api/study-result-property/<uuid:pk>/",
+        ClassStudyResultUpdatePropertyApi.as_view(),
+        name="study_result_property",
+    ),
 ]
