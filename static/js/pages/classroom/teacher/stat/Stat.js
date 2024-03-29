@@ -33,12 +33,11 @@ export default class Stat extends Component {
 
     mounted() {
         const { studentStat } = this._model.getAllStatByResult()
-        const { studentsResult } = this._model.get()
         const { totalProgress, totalPoint } = this.totalAverage(studentStat)
+        const { todayLessonResult } = this._model.getTodayLessonResult()
         const { scheduledCourse, selectedStudent, selectedClass, selectStudentListener } = this
         const selectClassListener = this.selectClass.bind(this)
 
-        // console.log(studentsResult)
 
         // const $dashboardInfo = this.$target.querySelector('[data-component="dashboard-info"]');
         const $dashboardStat = this.$target.querySelector('[data-component="dashboard-stat"]');
@@ -52,9 +51,9 @@ export default class Stat extends Component {
         // new DashboardInfo($dashboardInfo, {})
         new DashboardStat($dashboardStat, { totalProgress, totalPoint, selectedClass, selectClassListener})
         new DashboardToday($dashboardToday, {scheduledCourse})
-        new DashboardLesson($dashboardLesson, {scheduledCourse, studentsResult})
-        new DashboardEvery($dashboardEvery, { studentStat, selectStudentListener })
-        new DashboardEach($dashboardEach, { selectedStudent })
+        new DashboardLesson($dashboardLesson, {todayLessonResult})
+        // new DashboardEvery($dashboardEvery, { studentStat, selectStudentListener })
+        // new DashboardEach($dashboardEach, { selectedStudent })
 
     }
 

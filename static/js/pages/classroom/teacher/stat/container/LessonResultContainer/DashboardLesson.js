@@ -2,6 +2,7 @@ import Component from "../../core/Component.js";
 import { store } from "../../core/Store.js";
 
 import DashboardLessonView from "./DashboardLessonView.js"
+import SectionChange from "../../layout/organisms/SectionChange.js";
 
 export default class DashboardLesson extends Component{
     constructor(target, props) {
@@ -9,14 +10,14 @@ export default class DashboardLesson extends Component{
     }
 
     mounted() {
-        const {selectedLessonResult} = this
+        const {selectedSection} = this
         
-        const $lessonResult = this.$target.querySelector('[data-component="lesson-result"]')
+        const $sectionChange = this.$target.querySelector('[data-component="section-change"]')
+        const $sectionResult = this.$target.querySelector('[data-component="section-result"]')
 
-        const correct = selectedLessonResult[0].result.map((x) => {return x[0]})
-        const wrong = selectedLessonResult[0].result.map((x) => {return x[1]})
-        const etc = selectedLessonResult[0].result.map((x) => {return x[2]})
-        
+        const {seq, todayLessonResult, correct, wrong, etc} = selectedSection
+
+        $sectionChange.innerHTML = SectionChange({seq, todayLessonResult})
 
         var options = {
             series: [{
@@ -31,16 +32,20 @@ export default class DashboardLesson extends Component{
             }],
                 chart: {
                 type: 'bar',
-                width: 400,
-                height: 250,
+                height: 350,
                 stacked: true,
+                toolbar: {
+                    tools: {
+                        download: false
+                    }
+                }
             },
             responsive: [{
                 breakpoint: 480,
                 options: {
                 legend: {
-                    position: 'bottom',
-                    offsetX: -10,
+                    position: 'left',
+                    offsetX: 0,
                     offsetY: 0
                 }
                 }
@@ -70,20 +75,48 @@ export default class DashboardLesson extends Component{
                 opacity: 1
             },
             legend: {
-                position: 'right',
+                position: 'top',
+                horizontalAlign: 'right',
                 offsetX: 0,
-                offsetY: 50
+                offsetY: 0
             },
             theme: {
                 palette: 'palette2' // upto palette10
-            }
+            },
         };
   
-        var chart = new ApexCharts($lessonResult, options);
+        var chart = new ApexCharts($sectionResult, options);
         chart.render();
 
         // new LessonResult($lessonResult, {})
 
+    }
+
+    setEvent() {
+        this.addEvent('click', '.selectSection', ({target}) => {
+            // console.log(target.closest('[data-seq]').dataset.seq)
+            this.selectSectionListener(target.closest('[data-seq]').dataset.seq)
+        })
+    }
+
+    get selectedSection() {
+        const {selectedSection} = store.state
+        const {todayLessonResult} = this._props
+
+        const correct = todayLessonResult[selectedSection].result.map((x) => {return x[0]})
+        const wrong = todayLessonResult[selectedSection].result.map((x) => {return x[1]})
+        const etc = todayLessonResult[selectedSection].result.map((x) => {return x[2]})
+
+        return {seq:selectedSection, todayLessonResult, correct, wrong, etc}
+    }
+
+    selectSectionListener(seq) {
+        // console.log(seq)
+        store.setState({ selectedSection: seq })
+    }
+
+    selectLessonListener(seq) {
+        store.setState({ selectedLesson: seq })
     }
 
     get selectedLessonResult() {
@@ -128,7 +161,7 @@ export default class DashboardLesson extends Component{
             lessonResultList = []
         })
 
-        // console.log(selectedLessonResult)
+        console.log(selectedLessonResult)
         
         return selectedLessonResult
     }

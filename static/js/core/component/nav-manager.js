@@ -45,7 +45,7 @@ export class NavManager {
         { text: "최근학습", onClick: () => (window.location.href = "#"), icon:"RecentStudy.svg" },
         // { text: "장바구니", onClick: () => (window.location.href = "/cart/"), icon:"Cart.svg", display:"close" },
         
-        { text: "로그아웃", onClick: () => (window.location.href = "/user/api/logout/"), type: "text", icon:"Signup.svg", display:"close" }
+        { text: "로그아웃", onClick: () => (window.location.href = "/user/api/logout/"), type: "text", icon:"Signup.svg" }
       ]
     }
 

@@ -16,7 +16,7 @@ export class StatConverter {
 
   create() {
     this.elThis = elem("div", {
-      class: "classroom-content grid grid-cols-12 grid-rows-[min-content] gap-y-8 p-4 lg:gap-x-8 lg:p-10 hidden",
+      class: "classroom-content grid grid-cols-12 grid-rows-[min-content] gap-y-4 p-4 lg:gap-x-4 lg:p-10 hidden",
     });
 
     new Stat(this.elThis)

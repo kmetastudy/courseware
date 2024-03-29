@@ -14,8 +14,8 @@ export default class StatView extends View {
                 <div class="grow"><h1 class="lg:text-2xl lg:font-light">통계</h1></div>
             </header>
             <section class="stats stats-vertical xl:stats-horizontal col-span-12 w-full shadow-sm" data-component="dashboard-stat"></section>
-            <section class="card col-span-12 xl:col-span-3 overflow-hidden bg-base-100 shadow-sm" data-component="dashboard-today"></section>
-            <section class="card col-span-12 xl:col-span-9 overflow-hidden bg-base-100 shadow-sm" data-component="dashboard-lesson"></section>
+            <section class="card col-span-12 xl:col-span-3 2xl:col-span-4 overflow-hidden bg-base-100 shadow-sm" data-component="dashboard-today"></section>
+            <section class="card col-span-12 xl:col-span-9 2xl:col-span-8 overflow-hidden bg-base-100 shadow-sm" data-component="dashboard-lesson"></section>
             <section class="card col-span-12 xl:col-span-4 overflow-hidden bg-base-100 shadow-sm" data-component="dashboard-every"></section>
             <section class="card col-span-12 xl:col-span-8 overflow-hidden bg-base-100 shadow-sm" data-component="dashboard-each"></section>
         `

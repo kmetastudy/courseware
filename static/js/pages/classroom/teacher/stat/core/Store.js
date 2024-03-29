@@ -4,7 +4,8 @@ export const store = {
     state: observable({
         selectedStudent: 0,
         selectedLesson: 0,
-        selectedClass: 0
+        selectedClass: 0,
+        selectedSection: 0
 
     }),
 

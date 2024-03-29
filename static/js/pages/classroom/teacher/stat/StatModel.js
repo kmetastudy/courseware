@@ -8,6 +8,62 @@ export default class StatModel extends Model {
         super(state)
     }
 
+    getTodayLessonResult() {
+        const selectedLesson = 0
+        const scheduledCourse = this.getScheduledCourse()
+        const {studentsResult} = this.get()
+        console.log(scheduledCourse[0].courses)
+
+        let lessonResult = []
+        let lessonResultList = []
+        let todayLessonResult = []
+
+
+        scheduledCourse[selectedLesson].courses.forEach((course) => {
+            studentsResult.forEach((obj) => {
+                let results = obj.result.filter((value) => value.id == course.id)
+                // console.log(results)
+                results[0].results.forEach((r)=>{
+                    lessonResult.push(r.result)
+                })
+                let lessonResultVec = lessonResult.flat().map((x)=>{
+                    if(x == 'O') {
+                        return [1,0,0]
+                    } else if(x == 'X') {
+                        return [0,1,0]
+                    } else {
+                        return [0,0,1]
+                    }
+                })
+                lessonResultList.push(lessonResultVec)
+                lessonResult = []
+            })
+            // console.log(lessonResultList)
+            const result = lessonResultList.reduce((acc, cur) => {
+                if(acc.length == 0) {
+                    acc = cur
+                    return acc
+                }
+                acc = this.matrixAdition(acc, cur)
+                return acc
+            }, [])
+            todayLessonResult.push({result, ...course})
+            lessonResultList = []
+        })
+
+        console.log(todayLessonResult)
+        
+        return {todayLessonResult}
+    }
+
+    matrixAdition(a, b){
+        let resultArr = [];
+        for(let i = 0; i < a.length; i += 1){
+          resultArr.push(a[i].map((x, y) => a[i][y] + b[i][y]));
+        }
+        return resultArr; // [[3, 6, 8,], [5, 7, 12,]]
+    }
+
     getAllStatByResult() {
         const {studentsResult} = this.get()
         const studentStat = []
@@ -123,5 +179,13 @@ export default class StatModel extends Model {
             
         })
         return schedule
+    }
+
+    getAllChapter() {
+        const {course} = this.get()
+        
+        const allChapter = course.filter(({type}) => type == 0)
+
+        return {allChapter}
     }
 }
