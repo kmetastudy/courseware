@@ -5,6 +5,7 @@ import { mtmSideMenu } from "../../../core/ui/sideMenu/mtm-side-menu";
 import { MtmDashboardManager } from "./mtm-dashboard-manager";
 import { TeacherClassManager } from "../class/TeacherClassManager";
 import { StudentClassManager } from "../class/StudentClassManager";
+import { InactiveClassManager } from "../class/InactiveClassManager";
 require("../../../../css/pages/main/dashboard/app-dashboard.css");
 export class AppDashboard {
   /**usertype, userId, userLogin
@@ -58,43 +59,34 @@ export class AppDashboard {
       case TYPE_MEMBER.TEACHER:
         this.clClassManager = new TeacherClassManager({ userId: this.config.userId });
         this.elClassManager = this.clClassManager.getElement();
+        this.elDashboard.append(this.elClassManager);
+
+        this.clInactiveClassManager = new InactiveClassManager({ userId: this.config.userId });
+        this.elInactiveClassManager = this.clInactiveClassManager.getElement();
+        this.elDashboard.append(this.elInactiveClassManager);
         break;
       default:
         this.clClassManager = new StudentClassManager({ userId: this.config.userId });
         this.elClassManager = this.clClassManager.getElement();
+        this.elDashboard.append(this.elClassManager);
         break;
     }
 
-    // this.clTeacherClassManager = new TeacherClassManager({ userId: this.config.userId });
-    // this.elTeacherClassManager = this.clTeacherClassManager.getElement();
     this.handleSideClick("dashboard");
-    // this.elDashboard.append(this.elTeacherClassManager);
-    this.elDashboard.append(this.elClassManager);
 
     this.elThis.append(this.elSide, this.elDashboard);
   }
 
-  //
   createTeacherSideItems() {
     const sideItems = [
-      { title: "대시보드", onClick: this.handleSideClick.bind(this, "dashboard") },
-      { title: "프로필", onClick: () => (window.location.href = "/"), icon: "user" },
-      { title: "통계", onClick: () => (window.location.href = "../stats/"), icon: "barChart" },
       {
         title: "클래스",
-        children: [{ title: "내 클래스", onClick: this.handleSideClick.bind(this, "class") }, { title: "수강전 문의" }],
-      },
-      {
-        title: "수강신청 관리",
         children: [
-          { title: "수강바구니", onClick: () => (window.location.href = "../cart/") },
-          { title: "좋아요" },
-          { title: "쿠폰함" },
-          { title: "포인트" },
-          { title: "구매내역", onClick: () => (window.location.href = "../orders/") },
+          { title: "내 클래스", onClick: this.handleSideClick.bind(this, "class") },
+          { title: "종료된 클래스", onClick: this.handleSideClick.bind(this, "inactiveClass") },
         ],
       },
-      { title: "설정", children: [{ title: "계정 정보" }, { title: "알림 설정" }] },
+      // { title: "설정", children: [{ title: "계정 정보" }, { title: "알림 설정" }] },
     ];
 
     return sideItems;
@@ -130,7 +122,7 @@ export class AppDashboard {
   }
 
   handleSideClick(key, evt) {
-    if (this.currentSideKey && this.currentSideKey === key) {
+    if (!key || (this.currentSideKey && this.currentSideKey === key)) {
       return;
     }
 
@@ -145,6 +137,11 @@ export class AppDashboard {
       case "class":
         this.elClassManager.classList.remove("hidden");
         this.currentContent = this.elClassManager;
+        break;
+
+      case "inactiveClass":
+        this.elInactiveClassManager?.classList.remove("hidden");
+        this.currentContent = this?.elInactiveClassManager;
         break;
 
       default:
