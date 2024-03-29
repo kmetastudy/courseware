@@ -310,12 +310,12 @@ class ClassStudyResultService:
 
         return obj
 
-    def update_study_result(self, instance: mClassStudyResult, **kwargs):
-        content_id = uuid.UUID(str(kwargs.get("id_content", None)))
+    def update_study_result(self, instance: mClassStudyResult, data):
+        content_id = uuid.UUID(str(data.get("id_content", None)))
 
-        results = kwargs.get("properties", None)
-        point = kwargs.get("point", None)
-        progress = kwargs.get("progress", None)
+        results = data.get("results", None)
+        point = data.get("point", None)
+        progress = data.get("progress", None)
 
         json_data = json.loads(instance.json_data)
 

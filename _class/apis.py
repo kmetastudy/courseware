@@ -38,21 +38,16 @@ class ClassStudyResultUpdatePropertyApi(APIView):
     class OutputSerializer(serializers.ModelSerializer):
         class Meta:
             model = mClassStudyResult
+            fields = "__all__"
 
     def patch(self, request, pk):
         data = request.data
 
-        id_class = uuid.UUID(str(data.get("id_class", None)))
-        id_student = uuid.UUID(str(data.get("id_student", None)))
-        id_course = uuid.UUID(str(data.get("id_course", None)))
-
-        class_study_result = get_object(
-            id_class=id_class, id_student=id_student, id_course=id_course
-        )
+        class_study_result = get_object(mClassStudyResult, id=pk)
 
         service = ClassStudyResultService()
         updated_class_study_result = service.update_study_result(
-            instance=class_study_result, **data
+            instance=class_study_result, data=data
         )
 
         serializer = self.OutputSerializer(updated_class_study_result)
