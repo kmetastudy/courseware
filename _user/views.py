@@ -130,7 +130,12 @@ class SignUpView(View):
             type=type,
         )
 
-        next_url = request.session.get("next", "/")
+        next_url = "/"
+        if user.is_teacher() or user.is_staff():
+            next_url = "/dashboard/"
+            delete_session(request, "next")
+        else:
+            next_url = get_next_url(request=request, delete=True)
         result["next_url"] = next_url
         result["success"] = True
 
