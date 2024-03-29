@@ -10,6 +10,10 @@ export class mtmSideMenu {
     this.prefixCls = "mtm-side-menu";
 
     this.items = item;
+
+    this.elItems = []; // [HTMLLIElement]
+    this.elItemMap = new Map(); // (key, HTMLLIElement)
+
     this.init();
   }
 
@@ -22,10 +26,9 @@ export class mtmSideMenu {
       className: classNames(this.prefixCls, `${this.prefixCls}-root`),
     });
 
-    this.elItems = this.createItems(this.items);
+    const itemNodes = this.createItems(this.items);
 
-    console.log(this.elItems);
-    this.elThis.append(...this.elItems);
+    this.elThis.append(...itemNodes);
   }
 
   createItems(items) {
@@ -40,6 +43,10 @@ export class mtmSideMenu {
         itemNodes.push(elItemGroup);
       } else {
         const elItem = this.createItem(item);
+
+        this.elItems.push(elItem);
+        item.key && this.elItemMap.set(item.key, elItem);
+
         itemNodes.push(elItem);
       }
     });
@@ -88,6 +95,14 @@ export class mtmSideMenu {
     }
 
     return elItem;
+  }
+
+  activate(key) {
+    this.elItems.forEach((elItem) => elItem.classList.remove("active"));
+
+    if (this.elItemMap.has(key)) {
+      this.elItemMap.get(key).classList.add("active");
+    }
   }
 
   getElement() {

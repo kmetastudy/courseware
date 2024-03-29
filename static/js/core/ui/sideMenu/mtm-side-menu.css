@@ -21,7 +21,7 @@
   padding: 8px 16px;
   font-size: 0.875em;
   line-height: 1.5;
-  transition: all .3s;
+  transition: all 0.3s;
   color: rgba(0, 0, 0, 0.45);
   box-sizing: border-box;
 }
@@ -50,9 +50,20 @@
   display: flex;
   gap: 4px;
   align-items: center;
-  transition: border-color .3s, background .3s, padding .2s cubic-bezier(.215,.61,.355,1);
+  transition:
+    border-color 0.3s,
+    background 0.3s,
+    padding 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
   position: relative;
   padding-inline: 28px 16px;
 
   padding-left: 32px;
+}
+
+.mtm-side-menu-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.mtm-side-menu-item.active {
+  background: rgba(0, 0, 0, 0.08);
 }
