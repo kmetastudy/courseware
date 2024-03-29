@@ -1,8 +1,6 @@
 import { store } from "../Store";
 
 import { apiClass } from "../../../../core/api/class";
-import { apiStudent } from "../../../../core/api/st";
-import { apiUser } from "../../../../core/api/user";
 import { apiCp } from "../../../../core/api/cp";
 
 import { CourseStudy } from "../course/study/CourseStudy";
@@ -99,7 +97,6 @@ export function createCourseStudyManager() {
     },
 
     async activate() {
-      console.log(store.getState("courseId"));
       if (isActive === true) {
         return;
       }
@@ -155,4 +152,4 @@ export function createCourseStudyManager() {
 }
 
 export const courseStudyManager = createCourseStudyManager();
-courseStudyManager.start();
+store.subscribe("classId", () => courseStudyManager.start());
