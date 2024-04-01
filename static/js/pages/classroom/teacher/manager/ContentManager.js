@@ -1,7 +1,7 @@
 import elem from "../../../../core/utils/elem/elem.js";
 import { mtoEvents } from "../../../../core/utils/mto-events.js";
 
-import { ClassroomHome } from "../home/ClassroomHome.js";
+import { Dashboard } from "../dashboard/Dashboard.js";
 import { Scheduler } from "../scheduler/Scheduler.js";
 import { Member } from "../member/Member.js";
 import { CourseDetail } from "../course/Detail/CourseDetail.js";
@@ -28,7 +28,7 @@ export class ContentManager {
   }
 
   initContents() {
-    this.clHome = new ClassroomHome();
+    this.clHome = new Dashboard();
     this.elHome = this.clHome.getElement();
     this.elThis.append(this.elHome);
 
