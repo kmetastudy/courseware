@@ -43,28 +43,37 @@ export class AppDashboard {
   }
 
   create() {
-    this.elThis = createElement("main", { className: "app-dashboard" });
-
-    this.clSide = new mtmSideMenu({ item: this.sideItems });
-    this.elSide = this.clSide.getElement();
-
-    this.elBody = createElement("div", { className: "dashboard-wrapper" });
-
     const { userType, userId: studentId, userLogin } = this.config;
 
     switch (this.config.userType) {
       case TYPE_MEMBER.TEACHER:
+        this.elThis = createElement("main", { className: "flex px-4 py-8 mx-auto md:px-8 xl:px-16" });
+
+        this.clSide = new mtmSideMenu({ item: this.sideItems });
+        this.elSide = this.clSide.getElement();
+        this.elThis.append(this.elSide);
+
         this.clClassManager = new TeacherClassManager({ userId: this.config.userId });
         this.elClassManager = this.clClassManager.getElement();
-        this.elBody.append(this.elClassManager);
+        this.elThis.append(this.elClassManager);
 
         this.clInactiveClassManager = new InactiveClassManager({ userId: this.config.userId });
         this.elInactiveClassManager = this.clInactiveClassManager.getElement();
-        this.elBody.append(this.elInactiveClassManager);
+        this.elThis.append(this.elInactiveClassManager);
 
         this.handleSideClick("class");
         break;
+
       default:
+        this.elThis = createElement("main", { className: "app-dashboard" });
+
+        this.clSide = new mtmSideMenu({ item: this.sideItems });
+        this.elSide = this.clSide.getElement();
+        this.elThis.append(this.elSide);
+
+        this.elBody = createElement("div", { className: "dashboard-wrapper" });
+        this.elThis.append(this.elBody);
+
         this.clDashboardManager = new MtmDashboardManager({ userType, studentId, userLogin });
         this.elDashboardManager = this.clDashboardManager.getElement();
         this.elBody.append(this.elDashboardManager);
@@ -76,8 +85,6 @@ export class AppDashboard {
         this.handleSideClick("dashboard");
         break;
     }
-
-    this.elThis.append(this.elSide, this.elBody);
   }
 
   createTeacherSideItems() {
