@@ -4,6 +4,8 @@ import { AppDashboard } from "../../../static/js/pages/main/dashboard/app-dashbo
 require("../../../static/css/css-reset.css");
 export function dashboard_run(context) {
   dayjs.extend(window.dayjs_plugin_relativeTime);
+  dayjs.extend(window.dayjs_plugin_utc);
+  dayjs.extend(window.dayjs_plugin_timezone);
   dayjs.locale("ko");
 
   const parsedContext = JSON.parse(context);
