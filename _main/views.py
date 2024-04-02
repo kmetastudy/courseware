@@ -122,10 +122,17 @@ def namdo(request):
     context_sample = make_context(request)
     courses = getCourses(request, "all", "all")
 
-    course_recomend = courseLanding.objects.all().values()
+    course_recomend = courseLanding.objects.filter(id_page="namdo").values()
     # print(list(course_recomend))
     recommend = {"kor": [], "eng": [], "math": [], "etc": [], "basic": []}
     options = ["kor", "eng", "math", "etc", "basic"]
+    title = {
+        "kor": "기초학력 국어 코스",
+        "eng": "기초학력 영어 코스",
+        "math": "기초학력 수학 코스",
+        "etc": "학교별 강의",
+        "basic": "기초수학 추천 코스",
+    }
     for content in course_recomend:
         # print(content)
         if content["subject"] in options:
@@ -139,6 +146,7 @@ def namdo(request):
     context = {
         "context": json.dumps(context_sample),
         "courses": json.dumps(courses, default=str),
+        "title": json.dumps(title, default=str),
         "recommend": json.dumps(recommend, default=str),
     }
     return render(request, "_main/landing_namdo.html", context)
@@ -282,7 +290,7 @@ def getCourses(request, school, subject):
         q.add(Q(difficulty__in=difficulty), q.AND)
 
     courses = courseDetail.objects.filter(q).values(
-        "courseId", "courseTitle", "school", "subject", "price", "thumnail"
+        "courseId", "courseTitle", "school", "subject", "price", "thumnail", "deliver"
     )
 
     courseList = list(courses)
@@ -313,6 +321,7 @@ def detailView(request, school, subject, id):
         "producer",
         "duration",
         "price",
+        "deliver",
     )
 
     detail_context = json.dumps(list(courses), default=str)
