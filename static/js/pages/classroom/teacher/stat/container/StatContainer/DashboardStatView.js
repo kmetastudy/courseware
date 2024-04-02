@@ -1,38 +1,30 @@
-import View from "../../core/View.js"
+import View from "../../core/View.js";
 
 export default class DashboardStatView extends View {
-    constructor(target) {
-        super(target);
-    }
+  constructor(target) {
+    super(target);
+  }
 
-    template(state) {
-        let {totalProgress, totalPoint} = state
+  template(state) {
+    let { totalProgress, totalPoint } = state;
 
-        return `
-            <div class="stat">
-                <div class="stat-title">반 선택</div>
-                <div class="stat-value">
-                    <select name="class" class="select select-lg w-full max-w-xs">
-                        <option value="0">3학년 1반</option>
-                        <option value="1">3학년 2반</option>
-                        <option value="2">3학년 3반</option>
-                        <option value="3">3학년 4반</option>
-                    </select>
-                </div>
-                <div class="stat-desc">수학 (30명)</div>
-            </div>
+    return `
             <div class="stat">
                 <div class="stat-title">학급 평균 성취율</div>
                 <div class="flex justify-around items-center">
                     <p>성취율</p>
-                    <div class="radial-progress bg-base-200 border-4 border-base-200" style="--value:${parseInt(totalProgress)};" role="progressbar">${parseInt(totalProgress)}%</div>
+                    <div class="radial-progress bg-base-200 border-4 border-base-200" style="--value:${parseInt(
+                      totalProgress,
+                    )};" role="progressbar">${parseInt(totalProgress)}%</div>
                 </div>
             </div>
             <div class="stat">
                 <div class="stat-title">학급 평균 정답률</div>
                 <div class="flex justify-around items-center">
                     <p>정답률</p>
-                    <div class="radial-progress bg-base-200 border-4 border-base-200" style="--value:${parseInt(totalPoint)};" role="progressbar">${parseInt(totalPoint)}%</div>
+                    <div class="radial-progress bg-base-200 border-4 border-base-200" style="--value:${parseInt(
+                      totalPoint,
+                    )};" role="progressbar">${parseInt(totalPoint)}%</div>
                 </div>
             </div>
             <div class="stat">
@@ -52,6 +44,6 @@ export default class DashboardStatView extends View {
                     </div>
                 </div>
             </div> 
-        `
-    }
+        `;
+  }
 }

@@ -4,7 +4,6 @@ import store from "../../../common/Store";
 import { extract, extracts } from "../../../../../core/utils/array";
 
 import { apiClass } from "../../../../../core/api/class";
-import { apiStudent } from "../../../../../core/api/st";
 import { apiUser } from "../../../../../core/api/user";
 import { apiCp } from "../../../../../core/api/cp";
 
@@ -60,7 +59,7 @@ export function createCourseAssignManager() {
 
   async function urlFilterStudyResult(classId) {
     try {
-      const response = await apiStudent.studyResult.filter({ id_class: classId });
+      const response = await apiClass.studyResult.filter({ id_class: classId });
       return response.data;
     } catch (error) {
       return response;

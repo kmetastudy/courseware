@@ -255,7 +255,10 @@ export class ClassTestumPlayer {
       }
 
       for (var j = 0; j < this.player.testum_result_new[i].result.length; j++) {
-        this.player.study_item_num++;
+        if (this.player.testum_result_new[i].result[j] === "O" || this.player.testum_result_new[i].result[j] === "X") {
+          this.player.study_item_num++;
+        }
+        // this.player.study_item_num++;
         if (this.player.testum_unit_new[i].types[j] == "q" && this.player.testum_result_new[i].result[j] == "O")
           this.player.correct_question_num++;
       }
@@ -271,6 +274,8 @@ export class ClassTestumPlayer {
       this.player.total_item_num,
       ", study_item_num =  ",
       this.player.study_item_num,
+      ", total_completed_num =",
+      this.player.completedNum,
       ", total_question_num = ",
       this.player.total_question_num,
       ", correct_question_num = ",

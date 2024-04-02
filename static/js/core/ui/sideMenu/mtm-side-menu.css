@@ -60,10 +60,15 @@
   padding-left: 32px;
 }
 
-.mtm-side-menu-item:hover {
+.mtm-side-menu-item.disabled {
+  cursor: not-allowed;
+  color: rgba(0, 0, 0, 0.45);
+}
+
+.mtm-side-menu-item:not(.disabled):hover {
   background: rgba(0, 0, 0, 0.04);
 }
 
-.mtm-side-menu-item.active {
+.mtm-side-menu-item:not(.disabled).active {
   background: rgba(0, 0, 0, 0.08);
 }

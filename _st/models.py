@@ -85,8 +85,6 @@ class mStudyResult(models.Model):
     json_data = models.TextField(null=True, blank=True)
 
     id_student = models.UUIDField(null=True, blank=True)
-    # 클래스 uuid
-    id_class = models.UUIDField(null=True, blank=True)
     # 코스 uuid
     id_course = models.UUIDField(null=True, blank=True)
     # 컨텐츠 uuid
@@ -173,6 +171,7 @@ class mTestumResult(models.Model):
     def __str__(self):
         return "{}-{}".format(self.student_id, self.testum_id)
 
+
 # mTestumFinalResult (+)
 # 위의 mTestumResult 의 마지막 Record 를 저장
 # 위의 mTestumResult 는 마치 Log 처럼 사용
@@ -257,11 +256,11 @@ class mTestumQuestionResults(models.Model):
     # (추가) 문제 번호(number order)
     question_no = models.IntegerField(default=0)
 
-    answer = models.CharField(max_length=300, default='')
+    answer = models.CharField(max_length=300, default="")
 
     # jstar add
-    choice = models.CharField(max_length=10, default='')
-    long_answer = models.TextField(default='')
+    choice = models.CharField(max_length=10, default="")
+    long_answer = models.TextField(default="")
     # 문제 유형 - 객관식, 단답식, 서술
     style = models.CharField(max_length=10)
     # 문제 점수
@@ -358,6 +357,7 @@ class mLessonResult(models.Model):
     def __str__(self):
         return "{}-{}".format(self.student_id, self.lesson_id)
 
+
 # 위의 mLessonResult 의 마지막 Record 를 저장
 # 위의 mLessonResult 는 마치 Log 처럼 사용
 # mLessonProgress 와 mLessonFinalResult 를 합칠 수도 있다.
@@ -438,10 +438,10 @@ class mLessonQuestionResults(models.Model):
     # (추가) 문제 번호(number order)
     question_no = models.IntegerField(default=0)
 
-    answer = models.CharField(max_length=300, default='')
+    answer = models.CharField(max_length=300, default="")
     # jstar add
-    choice = models.CharField(max_length=10, default='')
-    long_answer = models.TextField(default='')
+    choice = models.CharField(max_length=10, default="")
+    long_answer = models.TextField(default="")
     # 문제 유형 - 객관식, 단답식, 서술
     style = models.CharField(max_length=10)
     # 문제 점수

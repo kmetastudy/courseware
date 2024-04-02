@@ -30,6 +30,29 @@ var config = {
   // ]
 };
 
+const tailwindModuleConfig = {
+  rules: [
+    {
+      test: /\.css$/i,
+      use: [
+        MiniCssExtractPlugin.loader,
+        { loader: "css-loader", options: { importLoaders: 1 } },
+        { loader: "postcss-loader" },
+      ],
+    },
+    {
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: "babel-loader",
+        options: {
+          presets: ["@babel/preset-env"],
+        },
+      },
+    },
+  ],
+};
+
 var configCP = Object.assign({}, config, {
   name: "configCP",
 
@@ -91,6 +114,7 @@ var configUser = Object.assign({}, config, {
       filename: "user-bundle.css",
     }),
   ],
+  module: tailwindModuleConfig,
 });
 
 var configCM = Object.assign({}, config, {
@@ -112,6 +136,7 @@ var configCM = Object.assign({}, config, {
       filename: "cm-bundle.css",
     }),
   ],
+  module: tailwindModuleConfig,
 });
 
 var configMain = Object.assign({}, config, {
@@ -133,6 +158,7 @@ var configMain = Object.assign({}, config, {
       filename: "main-bundle.css",
     }),
   ],
+  module: tailwindModuleConfig,
 });
 
 var configDashboard = Object.assign({}, config, {
@@ -154,6 +180,7 @@ var configDashboard = Object.assign({}, config, {
       filename: "dashboard-bundle.css",
     }),
   ],
+  module: tailwindModuleConfig,
 });
 
 var configStats = Object.assign({}, config, {
@@ -175,6 +202,7 @@ var configStats = Object.assign({}, config, {
       filename: "stats-bundle.css",
     }),
   ],
+  module: tailwindModuleConfig,
 });
 
 var configStatsDetail = Object.assign({}, config, {
@@ -196,6 +224,7 @@ var configStatsDetail = Object.assign({}, config, {
       filename: "stats-detail-bundle.css",
     }),
   ],
+  module: tailwindModuleConfig,
 });
 
 var configClass = Object.assign({}, config, {
@@ -217,6 +246,7 @@ var configClass = Object.assign({}, config, {
       filename: "class-bundle.css",
     }),
   ],
+  module: tailwindModuleConfig,
 });
 
 var configClassLaunch = Object.assign({}, config, {
@@ -238,6 +268,7 @@ var configClassLaunch = Object.assign({}, config, {
       filename: "class_launch-bundle.css",
     }),
   ],
+  module: tailwindModuleConfig,
 });
 
 var configClassRoomTeacher = Object.assign({}, config, {
@@ -258,6 +289,7 @@ var configClassRoomTeacher = Object.assign({}, config, {
       filename: "classroom-teacher-bundle.css",
     }),
   ],
+  module: tailwindModuleConfig,
 });
 
 var configClassroomStudent = Object.assign({}, config, {
@@ -278,6 +310,7 @@ var configClassroomStudent = Object.assign({}, config, {
       filename: `classroom-student-bundle.css`,
     }),
   ],
+  module: tailwindModuleConfig,
 });
 
 // Return Array of Configurations

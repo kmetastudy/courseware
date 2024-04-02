@@ -1,6 +1,7 @@
 import { NavManager } from "../../../static/js/core/component/nav-manager";
 import { AppStats } from "../../../static/js/pages/main/stats/app-stats";
 
+require("../css/tailwind.css");
 require("../../../static/css/css-reset.css");
 export function stats_run(context) {
   const parsedContext = JSON.parse(context);

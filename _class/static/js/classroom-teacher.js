@@ -20,6 +20,8 @@ function setConfig(csrf_token) {
 function initClass(context) {
   dayjs.extend(window.dayjs_plugin_utc);
   dayjs.extend(window.dayjs_plugin_timezone);
+  dayjs.extend(window.dayjs_plugin_isToday);
+
   dayjs.locale("ko");
 
   const parsedContext = JSON.parse(context);

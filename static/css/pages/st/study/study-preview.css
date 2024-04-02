@@ -32,25 +32,25 @@ bootstrap 속성 중 몇가지가, 필요하다.
 
 @media (min-width: 1200px) {
   .st-course-builder.study-preview .col-xl-8 {
-      flex: 0 0 auto;
-      width: 66.66666667%;
+    flex: 0 0 auto;
+    width: 66.66666667%;
   }
 }
 @media (min-width: 992px) {
   .st-course-builder.study-preview .col-lg-9 {
-      flex: 0 0 auto;
-      width: 75%;
+    flex: 0 0 auto;
+    width: 75%;
   }
 }
 @media (min-width: 768px) {
   .st-course-builder.study-preview .col-md-10 {
-      flex: 0 0 auto;
-      width: 83.33333333%;
+    flex: 0 0 auto;
+    width: 83.33333333%;
   }
 }
 .col-12 {
-    flex: 0 0 auto;
-    width: 100%;
+  flex: 0 0 auto;
+  width: 100%;
 }
 /* @media (min-width: 1200px) {
   .study-preview .swiper-container {
@@ -75,7 +75,7 @@ bootstrap 속성 중 몇가지가, 필요하다.
     width: 100%;
 } */
 
-.study-preview .mtm-plyr{
+.study-preview .mtm-plyr {
   height: auto;
 }
 /*
@@ -90,7 +90,9 @@ https://github.com/nolimits4web/swiper/issues/3599#issuecomment-1290283431
   justify-content: stretch;
 
   flex: 1 1 auto;
-  transition: margin-left 0.2s ease 0s, margin-right 0.2s ease 0s;
+  transition:
+    margin-left 0.2s ease 0s,
+    margin-right 0.2s ease 0s;
   padding-bottom: 12px;
   display: flex;
   justify-content: center;
@@ -101,16 +103,15 @@ https://github.com/nolimits4web/swiper/issues/3599#issuecomment-1290283431
   max-height: none;
 }
 
-
 .st-course-builder.study-preview .swiper {
   max-width: 100%;
 }
 
 @media (max-width: 640px) {
   .mtm-study-answer-choice-number {
-    width:30px;
-    height:30px;
-    margin:4px;
+    width: 30px;
+    height: 30px;
+    margin: 4px;
   }
 
   .swiper-slide {
@@ -120,7 +121,6 @@ https://github.com/nolimits4web/swiper/issues/3599#issuecomment-1290283431
   #id-mtm-question-swiper-1 .swiper-container {
     /* width: 100% !important; */
     /* height: 500px !important; */
-  
   }
 }
 
@@ -132,7 +132,12 @@ https://github.com/nolimits4web/swiper/issues/3599#issuecomment-1290283431
   overflow: hidden;
 }
 
-.swiper-wrapper {
+/* @media (min-width: 1024px) {
+  .swiper-container {
+    width: 1000px !important;
+  }
+} */
+.swiper-container .swiper-wrapper {
   min-width: 0;
 }
 
@@ -179,7 +184,12 @@ https://github.com/nolimits4web/swiper/issues/3599#issuecomment-1290283431
   border-collapse: collapse;
 }
 
-.study-preview tbody, td, tfoot, th, thead, tr {
+.study-preview tbody,
+td,
+tfoot,
+th,
+thead,
+tr {
   border-color: inherit;
   border-style: solid;
   border-width: 0;
