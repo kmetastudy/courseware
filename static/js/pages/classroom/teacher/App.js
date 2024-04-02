@@ -86,9 +86,6 @@ export class AppClassroomTeacher {
   async urlFilterClass(userId) {
     try {
       const response = await apiClass.singleCourseClass.filter({ id_owner__in: userId });
-      console.log(response);
-      console.log(response.data);
-      console.log(Array.isArray(response.data));
       return response.data;
     } catch (error) {
       return;

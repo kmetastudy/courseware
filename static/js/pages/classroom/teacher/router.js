@@ -58,6 +58,7 @@ export function teacherRouter(classId) {
       currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "member" });
       mtoEvents.emit("activateSide", { key: "main" });
+      mtoEvents.emit("focusSide", { key: "member" });
     },
     stats: () => {
       // if (currentRoute === "home") {
