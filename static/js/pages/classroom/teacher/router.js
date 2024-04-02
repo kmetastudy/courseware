@@ -15,6 +15,7 @@ export function teacherRouter(classId) {
       currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "home" });
       mtoEvents.emit("activateSide", { key: "main" });
+      mtoEvents.emit("focusSide", { key: "home" });
     },
     notification: () => {
       // if (currentRoute === "notification") {
@@ -39,6 +40,7 @@ export function teacherRouter(classId) {
       currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "course" });
       mtoEvents.emit("activateSide", { key: "main" });
+      mtoEvents.emit("focusSide", { key: "course" });
     },
     scheduler: () => {
       // if (currentRoute === "home") {
@@ -47,6 +49,7 @@ export function teacherRouter(classId) {
       currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "scheduler" });
       mtoEvents.emit("activateSide", { key: "main" });
+      mtoEvents.emit("focusSide", { key: "scheduler" });
     },
     member: () => {
       // if (currentRoute === "home") {
@@ -63,6 +66,7 @@ export function teacherRouter(classId) {
       currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "stats" });
       mtoEvents.emit("activateSide", { key: "main" });
+      mtoEvents.emit("focusSide", { key: "stats" });
     },
     setting: () => {
       // if (currentRoute === "home") {
@@ -71,6 +75,7 @@ export function teacherRouter(classId) {
       currentRoute = "home";
       mtoEvents.emit("activateContent", { key: "setting" });
       mtoEvents.emit("activateSide", { key: "main" });
+      mtoEvents.emit("focusSide", { key: "setting" });
     },
     courseAssign: ({ data }) => {
       // if (currentRoute === "home") {

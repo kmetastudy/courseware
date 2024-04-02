@@ -65,7 +65,7 @@ export class ClassCard {
     this.elThis.append(this.elBody);
   }
 
-  createBadges({ thumbnail, school, grade, semester, subject }) {
+  createBadges({ school, grade, semester, subject }) {
     const elBadges = [];
     for (let [key, value] of Object.entries({ school, grade, semester, subject })) {
       if (value) {

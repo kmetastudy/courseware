@@ -86,7 +86,7 @@ export class CourseDetail {
         class: "btn btn-sm btn-outline",
         on: { click: this.handleClickAssignButton.bind(this) },
       },
-      "Assign",
+      "할당하기",
     );
     this.elCourseButtonContainer.append(this.elAssignButton);
 
@@ -159,13 +159,13 @@ export class CourseDetail {
     this.elTabRoot = this.tabs.Root({ defaultValue: "overview", onValueChange: this.handleTabValueChange.bind(this) });
     this.elTabList = this.tabs.List({ class: "tabs-bordered" });
 
-    this.elTabOverview = this.tabs.Tab({ value: "overview", child: "Overview", class: "tab" });
-    this.elTabCurriculum = this.tabs.Tab({ value: "curriculum", child: "Curriculum", class: "tab" });
-    this.elTabMember = this.tabs.Tab({ value: "member", child: "Member", class: "tab" });
+    this.elTabOverview = this.tabs.Tab({ value: "overview", child: "개요", class: "tab" });
+    this.elTabCurriculum = this.tabs.Tab({ value: "curriculum", child: "차시", class: "tab" });
+    // this.elTabMember = this.tabs.Tab({ value: "member", child: "Member", class: "tab" });
 
     this.elTabMap["overview"] = this.elTabOverview;
     this.elTabMap["curriculum"] = this.elTabCurriculum;
-    this.elTabMap["member"] = this.elTabMember;
+    // this.elTabMap["member"] = this.elTabMember;
 
     this.elPanelContent = this.tabs.Panel({
       value: "overview",
@@ -177,10 +177,12 @@ export class CourseDetail {
       child: this.elCourseCurriculum,
       class: "grid grid-cols-12",
     });
-    this.elPanelMember = this.tabs.Panel({ value: "member", child: this.elClassLearner, class: "grid grid-cols-12" });
+    // this.elPanelMember = this.tabs.Panel({ value: "member", child: this.elClassLearner, class: "grid grid-cols-12" });
 
-    this.elTabList.append(this.elTabOverview, this.elTabCurriculum, this.elTabMember);
-    this.elTabRoot.append(this.elTabList, this.elPanelContent, this.elPanelCurriculum, this.elPanelMember);
+    // this.elTabList.append(this.elTabOverview, this.elTabCurriculum, this.elTabMember);
+    this.elTabList.append(this.elTabOverview, this.elTabCurriculum);
+    // this.elTabRoot.append(this.elTabList, this.elPanelContent, this.elPanelCurriculum, this.elPanelMember);
+    this.elTabRoot.append(this.elTabList, this.elPanelContent, this.elPanelCurriculum);
 
     this.tabs.init();
 
@@ -229,18 +231,18 @@ export class CourseDetail {
 
       const courseDetail = await this.urlGetCourseDetail(courseId);
       const course = await this.urlGetCourse(courseId);
-      const studyResults = await this.urlFilterStudyResult(this.classId);
+      // const studyResults = await this.urlFilterStudyResult(this.classId);
 
-      const studentIds = extract(studyResults, ["id_student"]);
+      // const studentIds = extract(studyResults, ["id_student"]);
 
-      const classMembers = await this.urlBulkFilterClassMember(studentIds.join(","));
-      const users = await this.urlBulkFilterUser(studentIds.join(","));
+      // const classMembers = await this.urlBulkFilterClassMember(studentIds.join(","));
+      // const users = await this.urlBulkFilterUser(studentIds.join(","));
 
       this.setCover(courseDetail);
       this.setTitle(courseDetail);
       this.setOverviewTable(courseDetail);
       this.setCurriculum(course);
-      this.setLearnerTable({ users, studyResults, classMembers });
+      // this.setLearnerTable({ users, studyResults, classMembers });
     } catch (err) {
       console.log(err);
     }

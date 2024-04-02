@@ -104,37 +104,44 @@ export class AppDashboard {
 
   createDefaultSideItems() {
     const sideItems = [
-      { title: "대시보드", key: "dashboard" },
-      { title: "프로필", onClick: () => (window.location.href = "/"), icon: "user", key: "profile" },
-      { title: "통계", onClick: () => (window.location.href = "../stats/"), icon: "barChart", key: "stats" },
+      { title: "대시보드", key: "dashboard", onClick: this.handleSideClick.bind(this, "dashboard"), icon: "dashboard" },
+      { title: "프로필", onClick: () => (window.location.href = "/"), icon: "user", key: "profile", disabled: true },
+      {
+        title: "통계",
+        onClick: () => (window.location.href = "../stats/"),
+        icon: "barChart",
+        key: "stats",
+        disabled: true,
+      },
       {
         title: "클래스",
         children: [{ title: "내 클래스", onClick: this.handleSideClick.bind(this, "class"), key: "class" }],
       },
-      {
-        title: "학습 관리",
-        children: [{ title: "내 학습", onClick: () => (window.location.href = "../mycourse/"), key: "mycourse" }],
-      },
-      {
-        title: "수강신청 관리",
-        children: [
-          { title: "수강바구니", onClick: () => (window.location.href = "../cart/"), key: "cart" },
-          { title: "구매내역", onClick: () => (window.location.href = "../orders/"), key: "orders" },
-        ],
-      },
-      {
-        title: "설정",
-        children: [
-          { title: "계정 정보", key: "accountSetting" },
-          { title: "알림 설정", key: "notificationSetting" },
-        ],
-      },
+      // {
+      //   title: "학습 관리",
+      //   children: [{ title: "내 학습", onClick: () => (window.location.href = "../mycourse/"), key: "mycourse" }],
+      // },
+      // {
+      //   title: "수강신청 관리",
+      //   children: [
+      //     { title: "수강바구니", onClick: () => (window.location.href = "../cart/"), key: "cart" },
+      //     { title: "구매내역", onClick: () => (window.location.href = "../orders/"), key: "orders" },
+      //   ],
+      // },
+      // {
+      //   title: "설정",
+      //   children: [
+      //     { title: "계정 정보", key: "accountSetting" },
+      //     { title: "알림 설정", key: "notificationSetting" },
+      //   ],
+      // },
     ];
 
     return sideItems;
   }
 
   handleSideClick(key, evt) {
+    console.log(key);
     if (!key || (this.currentSideKey && this.currentSideKey === key)) {
       return;
     }

@@ -1,19 +1,38 @@
+import { extract } from "../../../../../core/utils/array";
+
+import { store } from "../../Store.js";
+import { apiClass } from "../../../../../core/api/class";
+import { apiUser } from "../../../../../core/api/user";
+import { apiCp } from "../../../../../core/api/cp";
+
 import Component from "./core/Component.js";
-import { store } from "./core/Store.js";
+import { statStore } from "./StatStore.js";
 import StatView from "./StatView.js";
 import StatModel from "./StatModel.js";
+import { StatModelNew } from "./StatModelNew.js";
 
 import DashboardStat from "./container/StatContainer/DashboardStat.js";
 import DashboardToday from "./container/TodayContainer/DashboardToday.js";
 import DashboardLesson from "./container/LessonResultContainer/DashboardLesson.js";
+
 export default class Stat extends Component {
   constructor(target) {
     super(target, new StatView(target));
-    this._model = new StatModel();
+    // this._model = new StatModel();
+    this._model = new StatModelNew();
+    store.subscribe("classId", this.initState.bind(this));
+    store.subscribe("courseId", this.initState.bind(this));
   }
 
   async initState() {
-    await loadData(0)
+    if (!store.hasState("classId") || !store.hasState("courseId")) {
+      return;
+    }
+
+    const classId = store.getState("classId");
+    const courseId = store.getState("courseId");
+
+    await loadData({ classId, courseId })
       .then((result) => {
         this._model.setState(result);
       })
@@ -23,24 +42,47 @@ export default class Stat extends Component {
       .finally(() => {});
   }
 
-  mounted() {
-    const { studentStat } = this._model.getAllStatByResult();
-    const { totalProgress, totalPoint } = this.totalAverage(studentStat);
-    const { todayLessonResult } = this._model.getTodayLessonResult();
-    const { scheduledCourse, selectedStudent, selectedClass, selectStudentListener } = this;
-    const selectClassListener = this.selectClass.bind(this);
+  //   mounted() {
+  //     const { studentStat } = this._model.getAllStatByResult();
+  //     const { totalProgress, totalPoint } = this.totalAverage(studentStat);
+  //     const { todayLessonResult } = this._model.getTodayLessonResult();
+  //     const { scheduledCourse, selectedStudent, selectedClass, selectStudentListener } = this;
+  //     const selectClassListener = this.selectClass.bind(this);
 
-    // const $dashboardInfo = this.$target.querySelector('[data-component="dashboard-info"]');
+  //     const $dashboardStat = this.$target.querySelector('[data-component="dashboard-stat"]');
+  //     const $dashboardToday = this.$target.querySelector('[data-component="dashboard-today"]');
+  //     const $dashboardLesson = this.$target.querySelector('[data-component="dashboard-lesson"]');
+
+  //     new DashboardStat($dashboardStat, { totalProgress, totalPoint, selectedClass, selectClassListener });
+  //     new DashboardToday($dashboardToday, { scheduledCourse });
+  //     new DashboardLesson($dashboardLesson, { todayLessonResult });
+  //   }
+  mounted() {
+    // const { totalProgress, totalPoint } = this._model.totalAverage(studentStat);
+    const totalProgress = this._model.getClassAverage("progress");
+    const totalPoint = this._model.getClassAverage("point");
+
+    const progressLow = this._model.countStudentsBetween(30, "progress");
+    const progressMiddle = this._model.countStudentsBetween(50, "progress");
+    const progressHigh = this._model.countStudentsBetween(70, "progress");
+
+    const todayScheduler = this._model.getTodayScheduler();
+
+    console.log(todayScheduler);
+    console.log(progressLow);
+    console.log(progressMiddle);
+    console.log(progressHigh);
+
+    const todayStudyResults = this._model.getTodayResults();
+    console.log(todayStudyResults);
+
     const $dashboardStat = this.$target.querySelector('[data-component="dashboard-stat"]');
     const $dashboardToday = this.$target.querySelector('[data-component="dashboard-today"]');
     const $dashboardLesson = this.$target.querySelector('[data-component="dashboard-lesson"]');
 
-    // this.clHeader = new ContentHeader({ parent: this.elThis, title: this.title });
-
-    // new DashboardInfo($dashboardInfo, {})
-    new DashboardStat($dashboardStat, { totalProgress, totalPoint, selectedClass, selectClassListener });
-    new DashboardToday($dashboardToday, { scheduledCourse });
-    new DashboardLesson($dashboardLesson, { todayLessonResult });
+    new DashboardStat($dashboardStat, { totalProgress, totalPoint, progressLow, progressMiddle, progressHigh });
+    new DashboardToday($dashboardToday, { todayScheduler });
+    new DashboardLesson($dashboardLesson, { todayLessonResult: todayStudyResults });
   }
 
   totalAverage(studentStat) {
@@ -61,12 +103,12 @@ export default class Stat extends Component {
 
   selectStudentListener(seq) {
     // console.log( seq )
-    store.setState({ selectedStudent: seq });
+    statStore.setState({ selectedStudent: seq });
   }
 
   get selectedStudent() {
     const { studentStat } = this._model.getAllStatByResult();
-    const { selectedStudent } = store.state;
+    const { selectedStudent } = statStore.state;
 
     // console.log(selectedStudent)
 
@@ -79,99 +121,48 @@ export default class Stat extends Component {
         this._model.setState(result);
       })
       .then(() => {
-        store.setState({ selectedClass: seq });
+        statStore.setState({ selectedClass: seq });
       });
   }
 
   get selectedClass() {
-    const { selectedClass } = store.state;
+    const { selectedClass } = statStore.state;
 
     return selectedClass;
   }
 }
 
-//--------------url---------------
-async function urlGetCourse() {
-  try {
-    const data = await fetch("/static/js/pages/classroom/teacher/stat/data/data.json");
-    const result = await data.json();
-
-    return result;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function urlGetStudentResult() {
-  try {
-    let studentsResult = [];
-    let studentName = [
-      "강우석",
-      "윤상아",
-      "김예훈",
-      "정혜미",
-      "전신혜",
-      "서영호",
-      "임성희",
-      "강지영",
-      "문영빈",
-      "정기용",
-      "남궁지윤",
-      "백현기",
-      "복희아",
-      "조규환",
-      "황진수",
-      "강상식",
-      "이대성",
-      "송은혁",
-      "정영숙",
-      "백채영",
-      "설윤석",
-      "임민선",
-      "박연희",
-      "송용현",
-      "오주아",
-      "최희훈",
-      "홍선우",
-      "심창민",
-      "강승재",
-      "홍기하",
-    ];
-    for (let i = 0; i < 30; i++) {
-      const data = await fetch(`../../data/student${i + 1}.json`);
-      const result = await data.json();
-
-      studentsResult.push({ id: i, name: studentName[i], result: result });
-    }
-
-    return studentsResult;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function urlGetClassResult(seq) {
-  try {
-    // const { selectedClass } = store.state
-    const data = await fetch(`/static/js/pages/classroom/teacher/stat/data/class${seq}.json`);
-    const result = await data.json();
-
-    return result;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 // -------------api---------------
-async function loadData(seq) {
+async function loadData({ classId, courseId }) {
   try {
-    let getCoursePromise = urlGetCourse();
-    let getClassResultPromise = urlGetClassResult(seq);
+    const course = apiCp.course.get(courseId);
+    const classContentAssign = apiClass.classContentAssign.filter({ id_class: classId, id_course: courseId });
+    const classStudyResults = apiClass.studyResult.filter({ id_class: classId, id_course: courseId });
 
-    let course = await getCoursePromise;
-    let studentsResult = await getClassResultPromise;
+    const promises = [course, classContentAssign, classStudyResults];
 
-    return { course, studentsResult };
+    const promiseNames = ["course", "classContentAssign", "studyResults"];
+
+    const data = {};
+
+    await Promise.allSettled(promises).then((results) => {
+      results.forEach((result, index) => {
+        if (result.status === "fulfilled" && result.value.data) {
+          data[promiseNames[index]] = result.value.data;
+        } else {
+          data[promiseNames[index]] = [];
+        }
+      });
+    });
+
+    const studentIds = extract(data.studyResults, "id_student");
+    console.log(studentIds);
+
+    const usersResponse = await apiUser.user.filter({ id__in: studentIds.join(",") });
+    data["users"] = usersResponse.data;
+    console.log(data);
+
+    return data;
   } catch (error) {
     console.log(error);
   }

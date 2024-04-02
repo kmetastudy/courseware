@@ -90,8 +90,12 @@ export class mtmSideMenu {
     elTitleContent.textContent = item.title;
     elItem.append(elTitleContent);
 
-    if (item.onClick && typeof item.onClick === "function") {
+    if (item.onClick && typeof item.onClick === "function" && item.disabled !== true) {
       elItem.addEventListener("click", item.onClick);
+    }
+
+    if (item.disabled) {
+      elItem.classList.add("disabled");
     }
 
     return elItem;
