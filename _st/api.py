@@ -37,7 +37,6 @@ class StudyResultViewSet(viewsets.ModelViewSet):
         "id_student": ["in", "exact"],
         "id_course": ["in", "exact"],
         "id_content": ["in", "exact"],
-        "id_class": ["in", "exact"],
     }
 
     @action(detail=False, methods=["get", "post", "patch", "delete"])

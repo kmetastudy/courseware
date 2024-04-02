@@ -1,7 +1,6 @@
 import elem from "../../../../../core/utils/elem/elem";
 import { apiClass } from "../../../../../core/api/class";
 import { apiCp } from "../../../../../core/api/cp";
-import { apiStudent } from "../../../../../core/api/st";
 import { apiUser } from "../../../../../core/api/user";
 import store from "../../../common/Store";
 import { AbstractContent } from "../../AbstractContent";
@@ -262,7 +261,7 @@ export class CourseDetail extends AbstractContent {
 
   async urlFilterStudyResult(classId) {
     try {
-      const response = await apiStudent.studyResult.filter({ id_class: classId });
+      const response = await apiClass.studyResult.filter({ id_class: classId });
       return response.data;
     } catch (err) {
       console.log(err);
