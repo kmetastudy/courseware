@@ -1,5 +1,6 @@
 import { UserManager } from "../../../static/js/pages/user/user-manager";
 
+require("../css/tailwind.css");
 require("../../../static/css/css-reset.css");
 require("../css/user.css");
 export function start_user(context, csrf_token) {
