@@ -45,14 +45,14 @@ export class AppDashboard {
   create() {
     const { userType, userId: studentId, userLogin } = this.config;
 
+    this.elThis = createElement("main", { className: "flex px-4 py-8 mx-auto md:px-8 xl:px-16" });
+
+    this.clSide = new mtmSideMenu({ item: this.sideItems });
+    this.elSide = this.clSide.getElement();
+    this.elThis.append(this.elSide);
+
     switch (this.config.userType) {
       case TYPE_MEMBER.TEACHER:
-        this.elThis = createElement("main", { className: "flex px-4 py-8 mx-auto md:px-8 xl:px-16" });
-
-        this.clSide = new mtmSideMenu({ item: this.sideItems });
-        this.elSide = this.clSide.getElement();
-        this.elThis.append(this.elSide);
-
         this.clClassManager = new TeacherClassManager({ userId: this.config.userId });
         this.elClassManager = this.clClassManager.getElement();
         this.elThis.append(this.elClassManager);
@@ -65,22 +65,13 @@ export class AppDashboard {
         break;
 
       default:
-        this.elThis = createElement("main", { className: "app-dashboard" });
-
-        this.clSide = new mtmSideMenu({ item: this.sideItems });
-        this.elSide = this.clSide.getElement();
-        this.elThis.append(this.elSide);
-
-        this.elBody = createElement("div", { className: "dashboard-wrapper" });
-        this.elThis.append(this.elBody);
-
         this.clDashboardManager = new MtmDashboardManager({ userType, studentId, userLogin });
         this.elDashboardManager = this.clDashboardManager.getElement();
-        this.elBody.append(this.elDashboardManager);
+        this.elThis.append(this.elDashboardManager);
 
         this.clClassManager = new StudentClassManager({ userId: this.config.userId });
         this.elClassManager = this.clClassManager.getElement();
-        this.elBody.append(this.elClassManager);
+        this.elThis.append(this.elClassManager);
 
         this.handleSideClick("dashboard");
         break;

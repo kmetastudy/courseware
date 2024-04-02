@@ -33,7 +33,7 @@ export class DashboardTotalStats {
     const elHeader = dashboardHeader({
       className: `${this.rootCls}-header`,
       title: { title: this.title, className: `${this.rootCls}-title` },
-      anchor: { className: `${this.rootCls}-anchor` },
+      // anchor: { className: `${this.rootCls}-anchor` },
     });
 
     return elHeader;

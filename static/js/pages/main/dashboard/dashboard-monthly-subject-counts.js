@@ -91,6 +91,10 @@ export class DashboardMonthlySubjectCounts {
     const clDateStepper = new DateStepper({ format: "year" });
     const elDateStepper = clDateStepper.getElement();
 
+    // TODO
+    // 기능이 작동하지 않아, 임시로 hidden
+    elDateStepper.classList.add("hidden");
+
     elHeader.append(elTitle, elDateStepper);
 
     return elHeader;
