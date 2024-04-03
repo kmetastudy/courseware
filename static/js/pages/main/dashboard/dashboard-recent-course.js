@@ -40,9 +40,9 @@ export class DashboardRecentCourse {
         title: this.title,
         className: `${this.rootCls}-title`,
       },
-      anchor: {
-        className: `${this.rootCls}-anchor`,
-      },
+      // anchor: {
+      //   className: `${this.rootCls}-anchor`,
+      // },
     });
     return elHeader;
   }

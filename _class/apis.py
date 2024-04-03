@@ -8,6 +8,7 @@ from rest_framework import serializers
 from core.utils.object_helpers import get_object
 from .services import ClassStudyResultService
 from .models import mClass, mClassStudyResult
+from core.custom_fields import JSONTextField
 
 
 class ClassCreateAPI(APIView):
@@ -36,6 +37,8 @@ class ClassDeleteAPI(APIView):
 
 class ClassStudyResultUpdatePropertyApi(APIView):
     class OutputSerializer(serializers.ModelSerializer):
+        json_data = JSONTextField()
+
         class Meta:
             model = mClassStudyResult
             fields = "__all__"

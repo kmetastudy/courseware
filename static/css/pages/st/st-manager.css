@@ -1,24 +1,32 @@
 .st-manager {
-    height: 100%;
-    position: relative;
-    display: block;
+  height: 100%;
+  position: relative;
+  display: block;
 }
 
 @media screen and (min-width: 1025px) {
-    .st-manager {
-        height: calc(var(--vh, 1vh)*100 - 48px);
-        display: flex;
-    }
+  .st-manager {
+    height: calc(var(--vh, 1vh) * 100 - 48px);
+    display: flex;
+  }
 }
 
 @media screen and (max-width: 1024px) and (orientation: landscape) {
-    #body>.mtm-nav {
-        display: none;
-    }
+  #body > .mtm-nav {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 1024px) and (orientation: portrait) {
-    #body>.mtm-nav {
-        display: flex;
-    }
+  #body > .mtm-nav {
+    display: flex;
+  }
+}
+
+/* TODO */
+/* css-reset에서, p태그의 margin속성을 제거했다.*/
+/* 그래서, p태그의 margin속성을 다시 설정해준다. */
+.st-manager .mtm-testum-card-normal-normal p {
+  margin-top: 0;
+  margin-bottom: 1rem;
 }

@@ -1,5 +1,9 @@
 import urlStudyResult from "../../../core/api/st/urlStudyResult";
 import urlCourseDetail from "../../../core/api/cm/urlCourseDetail";
+
+import { apiClass } from "../../../core/api/class";
+import { apiStudent } from "../../../core/api/st";
+
 import { isString, isNumber, isArray } from "../../../core/utils/type";
 import { sum, pipe } from "../../../core/utils/_utils";
 
@@ -23,25 +27,95 @@ export const dashboardServices = (function () {
 
   // fetch
   async function setData(studentId) {
-    results = await getResults(studentId);
+    const studyResults = await getResults(studentId);
+    const classStudyResults = await getClassResults(studentId);
+
+    // TODO
+    // 임시로 classStudyResult와 studyResult의 포맷을 일치시킴
+    // classStudyResult에는 없는 information 정보도 제공해야함
+    const temporaryClassStudyResults = classStudyResults.map((result) => {
+      result.properties = result.json_data; // change key name to properties
+      delete result.json_data;
+
+      const recentProperty =
+        result.properties.property.filter((property) => property.type !== 0 && property.progress !== 0).at(-1) ??
+        result.properties.property.find((property) => property.type !== 0);
+
+      const now = dayjs();
+
+      let randomMinutes = Math.floor(Math.random() * 301);
+
+      let randomRecentTimestamp = now.subtract(randomMinutes, "minutes");
+
+      result.properties.information = {
+        recent_timestamp: randomRecentTimestamp.toISOString(),
+        recent_content: recentProperty.id,
+      };
+
+      return result;
+    });
+
+    results = [...studyResults, ...temporaryClassStudyResults];
+
     courseIds = composeIds(results);
     details = await getDetails(courseIds);
   }
 
-  function getResults(studentId) {
-    return urlStudyResult.filter({ id_student: studentId }).then((res) => {
-      if (!res.data) {
+  async function getResults(studentId) {
+    try {
+      const response = await apiStudent.studyResult.filter({ id_student: studentId });
+      const result = response.data;
+
+      if (!result) {
         return [];
       }
 
-      if (!isArray(res.data)) {
+      if (!isArray(result)) {
         const emptyArray = [];
-        emptyArray.push(res.data);
+        emptyArray.push(result);
         return emptyArray;
       }
 
-      return res.data;
-    });
+      return result;
+    } catch (error) {
+      return [];
+    }
+
+    // return urlStudyResult.filter({ id_student: studentId }).then((res) => {
+    //   if (!res.data) {
+    //     return [];
+    //   }
+
+    //   if (!isArray(res.data)) {
+    //     const emptyArray = [];
+    //     emptyArray.push(res.data);
+    //     return emptyArray;
+    //   }
+
+    //   return res.data;
+    // });
+  }
+
+  async function getClassResults(studentId) {
+    try {
+      const response = await apiClass.studyResult.filter({ id_student: studentId });
+      const result = response.data;
+
+      if (!result) {
+        return [];
+      }
+
+      if (!isArray(result)) {
+        const emptyArray = [];
+        emptyArray.push(result);
+
+        return emptyArray;
+      }
+
+      return result;
+    } catch (error) {
+      return [];
+    }
   }
 
   function getDetails(courseIds) {
@@ -233,7 +307,10 @@ export const dashboardServices = (function () {
     getRecentCourses(num, digits = 0) {
       const end = isNumber(num) && num > 0 ? num : 1;
 
-      const sortedResults = pipe(filterResultsHavingYear, sortResultsByStudyDate)(results);
+      let sortedResults = pipe(filterResultsHavingYear, sortResultsByStudyDate)(results);
+      if (sortedResults.length === 0) {
+        sortedResults = results.slice(0, end);
+      }
       const slicedResults = sortedResults.slice(0, end);
 
       return slicedResults.map((result) => composeRecentResultsData(result, digits));

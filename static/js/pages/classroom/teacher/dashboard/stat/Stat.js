@@ -16,8 +16,8 @@ import DashboardToday from "./container/TodayContainer/DashboardToday.js";
 import DashboardLesson from "./container/LessonResultContainer/DashboardLesson.js";
 
 export default class Stat extends Component {
-  constructor(target) {
-    super(target, new StatView(target));
+  constructor(target, props) {
+    super(target, new StatView(target), props);
     // this._model = new StatModel();
     this._model = new StatModelNew();
     store.subscribe("classId", this.initState.bind(this));
@@ -82,7 +82,7 @@ export default class Stat extends Component {
 
     new DashboardStat($dashboardStat, { totalProgress, totalPoint, progressLow, progressMiddle, progressHigh });
     new DashboardToday($dashboardToday, { todayScheduler });
-    new DashboardLesson($dashboardLesson, { todayLessonResult: todayStudyResults });
+    // new DashboardLesson($dashboardLesson, { todayLessonResult: todayStudyResults });
   }
 
   totalAverage(studentStat) {

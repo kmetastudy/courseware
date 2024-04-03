@@ -10,6 +10,7 @@ export function studentRouter(classId) {
     home: () => {
       mtoEvents.emit("activateContent", { key: "home" });
       mtoEvents.emit("activateSide", { key: "main" });
+      mtoEvents.emit("focusSide", { key: "home" });
     },
     notification: () => {
       mtoEvents.emit("activateContent", { key: "notification" });
@@ -22,22 +23,27 @@ export function studentRouter(classId) {
     course: () => {
       mtoEvents.emit("activateContent", { key: "course" });
       mtoEvents.emit("activateSide", { key: "main" });
+      mtoEvents.emit("focusSide", { key: "course" });
     },
     scheduler: () => {
       mtoEvents.emit("activateContent", { key: "scheduler" });
       mtoEvents.emit("activateSide", { key: "main" });
+      mtoEvents.emit("focusSide", { key: "scheduler" });
     },
     member: () => {
       mtoEvents.emit("activateContent", { key: "member" });
       mtoEvents.emit("activateSide", { key: "main" });
+      mtoEvents.emit("focusSide", { key: "member" });
     },
     setting: () => {
       mtoEvents.emit("activateContent", { key: "setting" });
       mtoEvents.emit("activateSide", { key: "main" });
+      mtoEvents.emit("focusSide", { key: "member" });
     },
     courseStudy: () => {
       mtoEvents.emit("activateContent", { key: "courseStudy" });
       mtoEvents.emit("activateSide", { key: "courseStudy" });
+      // mtoEvents.emit("focusSide", { key: "" });
     },
   };
 
@@ -52,8 +58,6 @@ export function studentRouter(classId) {
   router.on("/member", pages.member);
   router.on("/setting", pages.setting);
   router.on("/course/study", pages.courseStudy);
-
-  router.resolve();
 
   return router;
 }

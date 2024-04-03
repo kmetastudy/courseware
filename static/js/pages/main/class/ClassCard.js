@@ -22,7 +22,7 @@ export class ClassCard {
 
     if (this.data?.thumbnail) {
       const thumbnail = this.data.thumbnail;
-      this.elFigure = elem("figure");
+      this.elFigure = elem("figure", { class: "mb-8" });
       this.elThis.append(this.elFigure);
 
       this.elThumbnail = elem("img", { src: `/static/img/thumnail/${thumbnail}.png` });

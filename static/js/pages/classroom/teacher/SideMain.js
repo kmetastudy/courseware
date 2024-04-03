@@ -3,6 +3,7 @@ import { store } from "./Store";
 import elem from "../../../core/utils/elem/elem";
 import { mtoEvents } from "../../../core/utils/mto-events";
 
+import { HomeButton } from "../components/HomeButton";
 import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
 import { Dropdown } from "../components/Dropdown";
 
@@ -49,7 +50,14 @@ export class SideMain {
   }
 
   create() {
-    this.elThis = elem("nav", { class: "min-h-screen w-72 flex-col gap-2 overflow-y-auto bg-base-100 px-6 py-10" });
+    this.elThis = elem("nav", {
+      class: "min-h-screen w-72 flex-col gap-2 overflow-y-auto bg-base-100 px-6 pb-10 pt-4",
+    });
+
+    // home
+    this.clHomeButton = new HomeButton({ onClick: () => (window.location.href = "/dashboard/") });
+    this.elHomeButton = this.clHomeButton.getElement();
+    this.elThis.append(this.elHomeButton);
 
     this.elHeader = elem("div", { class: "mx-4 flex items-center gap-2 font-black" });
     this.elThis.append(this.elHeader);
@@ -92,12 +100,12 @@ export class SideMain {
       key: "course",
     });
 
-    this.elScheduler = this.createItem({
-      title: "일정",
-      icon: MtuIcon("calendar", { style: { fontSize: "20px" } }),
-      on: { click: this.handleClickSide.bind(this, "scheduler") },
-      key: "scheduler",
-    });
+    // this.elScheduler = this.createItem({
+    //   title: "일정",
+    //   icon: MtuIcon("calendar", { style: { fontSize: "20px" } }),
+    //   on: { click: this.handleClickSide.bind(this, "scheduler") },
+    //   key: "scheduler",
+    // });
 
     this.elStats = this.createItem({
       title: "통계",
@@ -113,22 +121,22 @@ export class SideMain {
       key: "member",
     });
 
-    this.elSetting = this.createItem({
-      title: "설정",
-      icon: MtuIcon("setting", { style: { fontSize: "20px" } }),
-      on: { click: this.handleClickSide.bind(this, "setting") },
-      key: "setting",
-    });
+    // this.elSetting = this.createItem({
+    //   title: "설정",
+    //   icon: MtuIcon("setting", { style: { fontSize: "20px" } }),
+    //   on: { click: this.handleClickSide.bind(this, "setting") },
+    //   key: "setting",
+    // });
 
     this.elMenu.append(
       this.elDashboard,
       // this.elNotification,
       // this.elCommunityGroup,
       this.elCourseGroup,
-      this.elScheduler,
+      // this.elScheduler,
       this.elStats,
       this.elMember,
-      this.elSetting,
+      // this.elSetting,
     );
 
     this.elSides.push(
@@ -136,10 +144,10 @@ export class SideMain {
       // this.elNotification,
       // this.elCommunityGroup,
       this.elCourseGroup,
-      this.elScheduler,
+      // this.elScheduler,
       this.elStats,
       this.elMember,
-      this.elSetting,
+      // this.elSetting,
     );
   }
 

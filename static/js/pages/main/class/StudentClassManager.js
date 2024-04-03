@@ -57,8 +57,6 @@ export class StudentClassManager {
       formData.append("course_ids", JSON.stringify(courseIds));
 
       const detailList = await this.urlGetDetailList(formData);
-      console.log(courseIds);
-      console.log(detailList);
 
       classes.map((data) => {
         const membersOfClass = classMembers.filter((item) => item.id_class === data.id);
@@ -69,8 +67,6 @@ export class StudentClassManager {
 
         return data;
       });
-
-      console.log(classes);
 
       this.createClassCards(classes);
     } catch (error) {
@@ -120,7 +116,6 @@ export class StudentClassManager {
   createClassCards(classes) {
     classes.forEach((data) => {
       const cardData = this.composeCardData(data);
-      console.log(cardData);
       const clClassCard = new ClassCard({ onClick: this.handleClick.bind(this), data: cardData });
       const elClassCard = clClassCard.getElement();
 

@@ -1,10 +1,11 @@
 import { store } from "./Store";
 
 import elem from "../../../core/utils/elem/elem";
+import { extract } from "../../../core/utils/array";
+
 import { apiClass } from "../../../core/api/class";
 import { apiCp } from "../../../core/api/cp";
 import { apiUser } from "../../../core/api/user";
-import { apiStudent } from "../../../core/api/st";
 
 import { mtoEvents } from "../../../core/utils/mto-events";
 import { studentRouter } from "./router";
@@ -40,13 +41,18 @@ export class AppClassroomStudent {
     const body = document.getElementById("body");
     body.append(this.elThis);
 
-    // this.activateInitial();
-    this.router.navigate("/");
+    this.router.resolve();
   }
 
   async prepareData() {
     try {
       this.classData = await this.urlGetClass(this.classId);
+      this.classMemberData = await this.urlFilterClassMember(this.userId);
+
+      this.classIds = extract(this.classMemberData, "id_class");
+      this.courseId = this.classData.id_course;
+
+      this.classesData = await this.urlFilterClass(this.classIds.join(","));
 
       this.classContentAssignData = await this.urlGetClassContentAssign(this.classId);
 
@@ -81,6 +87,7 @@ export class AppClassroomStudent {
     store.setState("router", this.router);
 
     store.setState("classData", this.classData);
+    store.setState("classesData", this.classesData);
     store.setState("courseData", this.courseData);
     store.setState("userData", this.userData);
     store.setState("studyResultData", this.studyResultData);
@@ -102,13 +109,18 @@ export class AppClassroomStudent {
     this.elThis.append(this.elContentManager);
   }
 
-  activateInitial() {
-    mtoEvents.emit("activateSide", { key: "main" });
-  }
-
   async urlGetClass(classId) {
     try {
       const response = await apiClass.singleCourseClass.get(classId);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async urlFilterClassMember(userId) {
+    try {
+      const response = await apiClass.classMember.filter({ id_user: userId });
       return response.data;
     } catch (error) {
       console.log(error);
@@ -148,6 +160,15 @@ export class AppClassroomStudent {
       return response.data;
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async urlFilterClass(classIds) {
+    try {
+      const response = await apiClass.singleCourseClass.filter({ id__in: classIds });
+      return response.data;
+    } catch (error) {
+      return;
     }
   }
 
