@@ -1,16 +1,15 @@
 import { CourseSwiperUnit } from "./mtu-course-swiper"
 
-export function CourseSwiperView(data) {
-    this.options = {
-                    kor:'초등 추천 코스', 
-                    eng:'중등 추천 코스', 
-                    math:'고등 추천 코스', 
-                    etc:'학교별 강의',
-                    basic:'기초수학 추천 코스'
-                }
+export function CourseSwiperView(data, title={kor: "초등 추천 코스",
+                                                eng: "중등 추천 코스",
+                                                math: "고등 추천 코스",
+                                                etc: "학교별 강의",
+                                                basic: "기초수학 추천 코스"}) {
+    this.options = title
     this.text = {kor:'', eng:'', math:'', etc:'', basic:''}
     this.data = data
     this.elThis = null
+    console.log(data, title)
     this.init()
   
 }

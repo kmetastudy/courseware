@@ -43,7 +43,7 @@ CourseView.prototype.getTotalPageCount = function() {
 
 
 CourseView.prototype.pageHandler = function(el) {
-  console.log(el.target.innerText)
+  // console.log(el.target.innerText)
   this.currentPage = el.target.innerText
 
   let courseOptions = {currentPage:this.currentPage, countPerPage:COUNT_PER_PAGE}

@@ -61,6 +61,42 @@ CourseManager.prototype.prepareSidebarOptions = function(subjects) {
 }
 
 CourseManager.prototype.prepareFilterOptions = function() {
+  if(this.options.school == 'element') {
+    return {
+      grade:[
+        {text:'공통', type:0, onClick:this.onFilterHandler.bind(this)},
+        {text:'3학년', type:3, onClick:this.onFilterHandler.bind(this)},
+        {text:'4학년', type:4, onClick:this.onFilterHandler.bind(this)},
+        {text:'5학년', type:5, onClick:this.onFilterHandler.bind(this)},
+        {text:'6학년', type:6, onClick:this.onFilterHandler.bind(this)}
+      ],
+      semester:[
+        {text:'전체 학기', type:0, onClick:this.onFilterHandler.bind(this)},
+        {text:'1학기', type:1, onClick:this.onFilterHandler.bind(this)},
+        // {text:'1학기 기말', type:2, onClick:this.onFilterHandler.bind(this)},
+        {text:'2학기', type:2, onClick:this.onFilterHandler.bind(this)},
+        // {text:'2학기 기말', type:4, onClick:this.onFilterHandler.bind(this)},
+      ],
+      publisher:[
+        {text:'아이스크림', type:'icecream', onClick:this.onFilterHandler.bind(this)},
+        {text:'미래엔', type:'miraen', onClick:this.onFilterHandler.bind(this)},
+        {text:'비상', type:'visang', onClick:this.onFilterHandler.bind(this)},
+        {text:'천재', type:'chunjae', onClick:this.onFilterHandler.bind(this)},
+        {text:'능률', type:'neungyule', onClick:this.onFilterHandler.bind(this)},
+        {text:'씨마스', type:'cmass', onClick:this.onFilterHandler.bind(this)},
+        {text:'동아', type:'donga', onClick:this.onFilterHandler.bind(this)},
+        {text:'지학사', type:'gihaksa', onClick:this.onFilterHandler.bind(this)},
+        {text:'에스덕', type:'sduck', onClick:this.onFilterHandler.bind(this)},
+        {text:'하와이', type:'howhy', onClick:this.onFilterHandler.bind(this)},
+        {text:'다락', type:'darak', onClick:this.onFilterHandler.bind(this)}
+      ],
+      difficulty:[
+        {text:'개념과 기초', type:0, onClick:this.onFilterHandler.bind(this)},
+        {text:'실력향상', type:1, onClick:this.onFilterHandler.bind(this)},
+        {text:'심화', type:2, onClick:this.onFilterHandler.bind(this)},
+      ]
+    }
+  }
   return {
     grade:[
       {text:'공통', type:0, onClick:this.onFilterHandler.bind(this)},
@@ -76,12 +112,17 @@ CourseManager.prototype.prepareFilterOptions = function() {
       // {text:'2학기 기말', type:4, onClick:this.onFilterHandler.bind(this)},
     ],
     publisher:[
-      {text:'메가코스', type:'megacourse', onClick:this.onFilterHandler.bind(this)},
+      {text:'아이스크림', type:'icecream', onClick:this.onFilterHandler.bind(this)},
       {text:'미래엔', type:'miraen', onClick:this.onFilterHandler.bind(this)},
       {text:'비상', type:'visang', onClick:this.onFilterHandler.bind(this)},
       {text:'천재', type:'chunjae', onClick:this.onFilterHandler.bind(this)},
       {text:'능률', type:'neungyule', onClick:this.onFilterHandler.bind(this)},
-      {text:'씨마스', type:'cmass', onClick:this.onFilterHandler.bind(this)}
+      {text:'씨마스', type:'cmass', onClick:this.onFilterHandler.bind(this)},
+      {text:'동아', type:'donga', onClick:this.onFilterHandler.bind(this)},
+      {text:'지학사', type:'gihaksa', onClick:this.onFilterHandler.bind(this)},
+      {text:'에스덕', type:'sduck', onClick:this.onFilterHandler.bind(this)},
+      {text:'하와이', type:'howhy', onClick:this.onFilterHandler.bind(this)},
+      {text:'다락', type:'darak', onClick:this.onFilterHandler.bind(this)}
     ],
     difficulty:[
       {text:'개념과 기초', type:0, onClick:this.onFilterHandler.bind(this)},
