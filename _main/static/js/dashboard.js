@@ -1,9 +1,12 @@
 import { NavManager } from "../../../static/js/core/component/nav-manager";
 import { AppDashboard } from "../../../static/js/pages/main/dashboard/app-dashboard";
 
+require("../css/tailwind.css");
 require("../../../static/css/css-reset.css");
 export function dashboard_run(context) {
   dayjs.extend(window.dayjs_plugin_relativeTime);
+  dayjs.extend(window.dayjs_plugin_utc);
+  dayjs.extend(window.dayjs_plugin_timezone);
   dayjs.locale("ko");
 
   const parsedContext = JSON.parse(context);

@@ -1,6 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   /* font-family: 'Noto Sans KR', sans-serif; */
-  font-family: 'Noto Sans KR';
+  font-family: "Noto Sans KR";
   font-weight: 500;
 }
 

@@ -1,13 +1,15 @@
 import elem from "../../../core/utils/elem/elem";
 import { omit } from "../../../core/utils/objects";
-
+import { removeChildNodes } from "../../../core/utils/dom";
 /**
  * https://daisyui.com/components/dropdown/
  */
 export class Dropdown {
-  constructor({ items, placeholder = "Select" }) {
+  constructor({ items, placeholder = "Select", defaultKey } = {}) {
     this.items = items;
     this.placeholder = placeholder;
+    this.defaultKey = defaultKey;
+
     this.elItems = [];
     this.init();
   }
@@ -15,26 +17,44 @@ export class Dropdown {
   init() {
     this.create();
 
-    this.items?.forEach((item) => {
-      const elItem = this.createItem(item);
-      this.elItems.push(elItem);
-      this.elContentWrapper.append(elItem);
-    });
+    // this.items?.forEach((item) => {
+    //   const elItem = this.createItem(item);
+    //   this.elItems.push(elItem);
+    //   this.elContentWrapper.append(elItem);
+    // });
+    if (this.items) {
+      this.render(this.items);
+    }
   }
 
   create() {
     this.elThis = elem("div", { class: "dropdown" });
-    this.elButton = elem(
-      "div",
-      { class: "btn m-1 btn-outline btn-sm w-28", tabIndex: "0", role: "button" },
-      this.placeholder,
-    );
+    this.elButton = elem("div", { class: "w-28", tabIndex: "0", role: "button" }, this.placeholder);
     this.elContentWrapper = elem("div", {
       class: "dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-36",
       tabIndex: "0",
     });
 
     this.elThis.append(this.elButton, this.elContentWrapper);
+  }
+
+  render(items, defaultKey) {
+    if (!items) {
+      return;
+    }
+
+    this.items = items;
+    this.elItems = items.map((item) => this.createItem(item));
+
+    removeChildNodes(this.elContentWrapper);
+
+    this.elContentWrapper.append(...this.elItems);
+
+    if (defaultKey) {
+      this.defaultKey = defaultKey;
+    }
+
+    this.defaultKey && this.select(this.defaultKey);
   }
 
   createItem(item) {
@@ -59,6 +79,10 @@ export class Dropdown {
     if (label) {
       this.elButton.textContent = label;
     }
+  }
+
+  addItems(items) {
+    //
   }
 
   getElement() {

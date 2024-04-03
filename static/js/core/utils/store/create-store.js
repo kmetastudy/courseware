@@ -38,13 +38,14 @@ export function createStore() {
      * @param {*} newState - The new state value.
      */
     setState(key, newState) {
-      if (typeof newState === "object" && newState !== null) {
-        const currentState = state.get(key) || {};
-        const updatedState = { ...currentState, ...newState };
-        state.set(key, updatedState);
-      } else {
-        state.set(key, newState);
-      }
+      // if (typeof newState === "object" && newState !== null) {
+      //   const currentState = state.get(key) || {};
+      //   const updatedState = { ...currentState, ...newState };
+      //   state.set(key, updatedState);
+      // } else {
+      //   state.set(key, newState);
+      // }
+      state.set(key, newState);
 
       this.notify(key);
     },
@@ -114,6 +115,10 @@ export function createStore() {
           console.error("Failed to execute async action:", error);
           // Handle error or set error state here
         });
+    },
+
+    hasState(key) {
+      return state.has(key);
     },
   };
 

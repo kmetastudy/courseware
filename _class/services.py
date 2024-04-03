@@ -181,6 +181,23 @@ class ClassContentAssignService:
         self.start_date = start_date
         self.end_date = end_date
 
+    def _find_min_index_greater_than_current(self, data: List, current_index):
+        """
+        현재 인덱스보다 큰 인덱스를 가진 요소들 중에서 최소값을 찾습니다.
+        해당값의 index를 반환합니다.
+        """
+        candidates = [
+            (index, value) for index, value in enumerate(data) if index > current_index
+        ]
+
+        # candidates가 비어있지 않다면, 최소값을 가진 요소의 인덱스를 반환합니다.
+        if candidates:
+            min_index, _ = min(candidates, key=lambda x: x[1])
+            return min_index
+
+        # candidates가 비어있다면, None을 반환합니다.
+        return None
+
     def _create_base_condition(self, start_date, end_date):
         condition = {
             "scheduler": {
@@ -206,6 +223,68 @@ class ClassContentAssignService:
         condition["scheduler"]["assign"].append(first_assign)
 
         return condition
+
+    def _create_scheduler_list_v2(
+        self, lists: List[Dict], start_date, end_date
+    ) -> List[Dict]:
+        """
+        차시가 chapter를 걸치지 않게 수정.
+        """
+        scheduler_list = copy.deepcopy(lists)
+
+        branches = [item for item in scheduler_list if item["type"] != 0]
+        branches_count = len(branches)
+
+        # 날짜 범위 계산
+        date_range = (end_date - start_date).days + 1
+
+        # 각 날짜에 할당할 최대 개수 계산 (균등 분배)
+        distributions = [branches_count // date_range] * date_range
+
+        for i in range(branches_count % date_range):
+            distributions[i] += 1
+
+        # 날짜 할당
+        scheduler_index = 0
+        current_date = start_date
+        current_period = 1
+        for i, distribution in enumerate(distributions):
+            current_date = start_date + timedelta(days=i)
+
+            distributed = 0  # 실제 배정된 수
+            while distributed < distribution:
+                target = scheduler_list[scheduler_index]
+                scheduler_index += 1
+                target["date"] = ""
+                target["period"] = ""
+                if target["type"] == 0:
+                    if distributed != 0:
+                        left_distributed = distribution - distributed
+                        for _ in range(left_distributed):
+                            index_to_add_distribution = (
+                                self._find_min_index_greater_than_current(
+                                    distributions, i
+                                )
+                            )
+                            if index_to_add_distribution is not None:
+                                distributions[index_to_add_distribution] += 1
+                        break
+                else:
+                    target["date"] = current_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+                    target["period"] = i + 1
+                    target["show"] = True
+                    distributed += 1
+                    current_period = i + 1
+
+        for item in scheduler_list:
+            item.setdefault("date", "")
+            item.setdefault("period", "")
+            if item["type"] != 0 and item["date"] == "":
+                item["date"] = current_date.strftime("%Y-%m-%dT%H:%M:%SZ")
+                item["period"] = current_period
+                item["show"] = True
+
+        return scheduler_list
 
     def _create_scheduler_list(
         self, lists: List[Dict], start_date=timezone, end_date=timezone
@@ -251,13 +330,12 @@ class ClassContentAssignService:
         course = get_object(mCourseN, id=self.id_course)
 
         lists = json.loads(course.json_data).get("lists")
-        print(lists)
 
         json_data = {}
         condition = self._create_base_condition(
             start_date=self.start_date, end_date=self.end_date
         )
-        scheduler_list = self._create_scheduler_list(
+        scheduler_list = self._create_scheduler_list_v2(
             lists=lists,
             start_date=self.start_date,
             end_date=self.end_date,

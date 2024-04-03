@@ -29,6 +29,8 @@ export class AppClassroomTeacher {
     this.classData = await this.urlGetClass(this.classId);
     this.courseId = this.classData.id_course;
 
+    this.classesData = await this.urlFilterClass(this.userId);
+
     this.router = this.createRouter(this.classId);
 
     this.storeStates();
@@ -53,6 +55,7 @@ export class AppClassroomTeacher {
     store.setState("classId", this.classId);
     store.setState("courseId", this.courseId);
     store.setState("classData", this.classData);
+    store.setState("classesData", this.classesData);
     store.setState("router", this.router);
   }
 
@@ -77,6 +80,18 @@ export class AppClassroomTeacher {
       return response.data;
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async urlFilterClass(userId) {
+    try {
+      const response = await apiClass.singleCourseClass.filter({ id_owner__in: userId });
+      console.log(response);
+      console.log(response.data);
+      console.log(Array.isArray(response.data));
+      return response.data;
+    } catch (error) {
+      return;
     }
   }
 

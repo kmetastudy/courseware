@@ -932,7 +932,7 @@ export class ClassLessonPlayer {
           id_content: this.player.content_id,
           content_type: this.player.content_type,
           course_type: this.player.content_type,
-          results: JSON.stringify(this.player.testum_result_new), // one record of json_data['property']
+          results: JSON.stringify(this.player.lesson_result_new), // one record of json_data['property']
           progress: this.player.progress,
           point: this.player.point,
         },
