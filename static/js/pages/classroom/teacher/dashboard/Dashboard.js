@@ -1,5 +1,7 @@
 import elem from "../../../../core/utils/elem/elem";
 
+import { store } from "../Store";
+
 import Stat from "./stat/Stat";
 
 export class Dashboard {
@@ -9,6 +11,7 @@ export class Dashboard {
   }
 
   init() {
+    this.userData = store.getState("userData");
     this.create();
   }
 
@@ -17,7 +20,8 @@ export class Dashboard {
       class: "classroom-content grid grid-cols-12 grid-rows-[min-content] gap-y-4 p-4 lg:gap-x-4 lg:p-10 hidden",
     });
 
-    new Stat(this.elThis);
+    const name = this.userData?.full_name;
+    new Stat(this.elThis, { name });
   }
 
   activate(context = {}) {

@@ -8,6 +8,7 @@ import { teacherRouter } from "./router";
 
 import { SideManager } from "./manager/SideManager";
 import { ContentManager } from "./manager/ContentManager";
+import { apiUser } from "../../../core/api/user";
 
 export class AppClassroomTeacher {
   /**
@@ -30,6 +31,8 @@ export class AppClassroomTeacher {
     this.courseId = this.classData.id_course;
 
     this.classesData = await this.urlFilterClass(this.userId);
+
+    this.userData = await this.urlGetUser(this.userId);
 
     this.router = this.createRouter(this.classId);
 
@@ -55,6 +58,7 @@ export class AppClassroomTeacher {
     store.setState("classId", this.classId);
     store.setState("courseId", this.courseId);
     store.setState("classData", this.classData);
+    store.setState("userData", this.userData);
     store.setState("classesData", this.classesData);
     store.setState("router", this.router);
   }
@@ -86,6 +90,15 @@ export class AppClassroomTeacher {
   async urlFilterClass(userId) {
     try {
       const response = await apiClass.singleCourseClass.filter({ id_owner__in: userId });
+      return response.data;
+    } catch (error) {
+      return;
+    }
+  }
+
+  async urlGetUser(userId) {
+    try {
+      const response = await apiUser.user.get(userId);
       return response.data;
     } catch (error) {
       return;

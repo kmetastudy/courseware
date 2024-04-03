@@ -13,20 +13,96 @@ export class StatModelNew extends Model {
     const todayScheduler = this.getTodayScheduler();
     const contentIds = extract(todayScheduler, "id");
 
-    const { studyResults } = this.get();
+    const { studyResult } = this.get();
 
-    const properties = studyResults.map(({ json_data: { property } }) => property);
+    const property = getProperty(studyResult);
 
-    const branches = properties.map((property) => filterBranch(property));
+    const branches = filterBranch(property);
 
     const todayResults = contentIds.map((contentId) => {
-      return branches.map((branch) => {
-        const result = branch.find((item) => item.id === contentId);
-        return result;
-      });
+      return branches.find((item) => item.id === contentId);
     });
 
+    // studyResult의 results는, 학습을 하지 않은 경우 빈 배열이다.
+    // 이 경우, 빈 배열을 채워주어야될까?
+    // 데이터가 없는 경우, 의미가 없을거같음
+    // 채워주지 말자.
+    // const composedTodayResults = todayResults.map((result) => this.fillResult(result));
+
     return todayResults;
+  }
+
+  getTodayChapter() {
+    const todayScheduler = this.getTodayScheduler() ?? [];
+
+    if (todayScheduler.length === 0) {
+      return;
+    }
+
+    const { classContentAssign } = this.get();
+
+    const schedulerList = getSchedulerList(classContentAssign);
+
+    const branchId = todayScheduler[0].id;
+
+    console.log(schedulerList);
+
+    const todayChapter = findChapterWithBranch(branchId, schedulerList);
+
+    return todayChapter;
+  }
+
+  getPreiodInfo() {
+    const { studyResult } = this.get();
+
+    let totalPeriod = 0;
+    let completedPeriod = 0;
+    let todayPeriod;
+
+    const todayScheduler = this.getTodayScheduler();
+
+    if (todayScheduler.length > 0) {
+      todayPeriod = todayScheduler[0].period;
+    }
+
+    const property = getProperty(studyResult);
+
+    const branches = filterBranch(property);
+    const periodSet = new Set(extract(branches, "period"));
+    const periods = [...periodSet];
+    totalPeriod = periods.length;
+
+    const { length } = periods;
+
+    for (let i = 0; i < length; i++) {
+      const period = periods[i];
+
+      const periodBranches = branches.filter((branch) => branch.period === period);
+
+      const completed = periodBranches.filter((branch) => branch.progress === 100).length;
+
+      if (periodBranches.length === completed) {
+        completedPeriod++;
+      }
+    }
+
+    return { totalPeriod, completedPeriod, todayPeriod };
+  }
+
+  /**
+   * Get StudyResult Information, related with progress
+   * @returns {{total:number, completed:number, ongoing:number}}
+   */
+  getResultProgressInfo() {
+    const { studyResult } = this.get();
+    const property = getProperty(studyResult);
+    const branches = filterBranch(property);
+
+    const total = branches.length;
+    const completed = branches.filter((branch) => branch.progress === 100).length;
+    const incomplete = branches.filter((branch) => branch.progress < 100).length;
+
+    return { total, completed, incomplete };
   }
 
   getTodayScheduler() {
@@ -39,67 +115,33 @@ export class StatModelNew extends Model {
     return filterToday(schedulerList);
   }
 
-  countStudentsBetween(min, max, key) {
-    // 10, 20
-    const low = this.countStudentsAboveThreshold(min, key);
-    const high = this.countStudentsAboveThreshold(max, key);
-
-    return low - high;
-  }
-
-  /**
-   * 특정 기준을 넘는, 학생의 수를 반환
-   * @param {number} threshold 0-100
-   * @returns
-   */
-  countStudentsAboveThreshold(threshold, key) {
-    const studyResults = this.getState("studyResults");
-    const count = studyResults.reduce((acc, { json_data: { property } }) => {
-      const branches = filterBranch(property);
-      const arrayOfKey = extract(branches, key);
-      const average = calculateAverage(arrayOfKey);
-      if (average > threshold) {
-        return acc + 1;
-      }
-      return acc;
-    }, 0);
-    return count;
-  }
-
   /**
    * Get average percentage of student
-   * @param {object} studyResult
    * @param {"progress"|"sum"} key
    * @returns {number} 80.92
    */
-  getStudentAverage(studyResult, key) {
+  getAverage(key) {
+    const studyResult = this.getState("studyResult");
+    console.log(studyResult);
+
     const {
       json_data: { property },
     } = studyResult;
 
-    const branches = this.filterBranch(property);
-
-    const arrayOfKey = extract(branches, key);
-
-    return calculateAverage(arrayOfKey);
-  }
-
-  /**
-   *
-   * @param {"progress"|"sum"} key
-   * @returns
-   */
-  getClassAverage(key) {
-    const studyResults = this.getState("studyResults");
-
-    const properties = studyResults.map(({ json_data: { property } }) => property);
-
-    const branches = properties.map((property) => filterBranch(property)).flat();
+    const branches = filterBranch(property);
 
     const keyData = extract(branches, key);
 
     return calculateAverage(keyData);
   }
+}
+
+function getProperty(studyResult) {
+  return studyResult?.json_data?.property;
+}
+
+function getSchedulerList(classContentAssign) {
+  return classContentAssign?.json_data?.scheduler_list;
 }
 
 function filterToday(array) {
@@ -123,4 +165,25 @@ function calculateAverage(array) {
   const average = total / (array.length * 100);
   const percent = average * 100;
   return percent;
+}
+
+function findChapterWithBranch(branchId, data) {
+  const { length } = data;
+  let chapter;
+  for (let i = 0; i < length; i++) {
+    const target = data[i];
+
+    if (target.type === 0) {
+      chapter = target;
+      continue;
+    }
+
+    if (target.id === branchId) {
+      return chapter;
+    }
+  }
+}
+
+function utcToLocalString(isoString, format = "YYYY-MM-DD") {
+  return dayjs.utc(isoString).local().format(format);
 }

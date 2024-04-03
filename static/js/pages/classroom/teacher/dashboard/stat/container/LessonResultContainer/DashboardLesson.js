@@ -107,6 +107,11 @@ export default class DashboardLesson extends Component {
   get selectedSection() {
     const { selectedSection } = statStore.state;
     const { todayLessonResult } = this._props;
+    console.log(selectedSection);
+    console.log(todayLessonResult);
+    if (todayLessonResult[selectedSection].result?.length === 0) {
+      todayLessonResult[selectedSection].r;
+    }
 
     const correct = todayLessonResult[selectedSection].result.map((x) => {
       return x[0];
