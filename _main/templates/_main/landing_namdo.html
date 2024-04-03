@@ -284,8 +284,9 @@
         // console.log("mainlibrary: ", mainlibrary);
 
         var courses = JSON.parse("{{ courses|escapejs }}");
+        var title = JSON.parse("{{ title|escapejs }}");
         var recommend = JSON.parse("{{ recommend|escapejs }}");
-        mainlibrary.CourseLandingOnReady(context, courses, recommend)
+        mainlibrary.CourseLandingOnReady(context, courses, recommend, title)
         console.log($('.courses_recomend > .course-swiper > .swiper-background2 > div > div:nth-child(3) > div span')[0])
         // $('.courses_recomend .course-swiper .swiper-background1 div div p')[0].innerText = '기초 학력 추천 코스'
         // $('.courses_recomend .course-swiper .swiper-background2 div div p')[0].innerText = '기초 학력 추천 코스'

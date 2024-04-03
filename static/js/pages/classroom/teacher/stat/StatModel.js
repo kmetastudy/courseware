@@ -9,6 +9,13 @@ export default class StatModel extends Model {
     }
 
     getTodayLessonResult() {
+        /*
+        오늘 차시 수업 문제의 정답/오답/미응시 학생들 카운트
+        output :
+            todayLessonResult = [{date:'', id:'lesson or testum 아이디', 
+                                level:2, result:[], title:'lesson or testum 제목', 
+                                type:11or12, units:[]}]
+        */
         const selectedLesson = 0
         const scheduledCourse = this.getScheduledCourse()
         const {studentsResult} = this.get()
@@ -44,27 +51,27 @@ export default class StatModel extends Model {
                     acc = cur
                     return acc
                 }
-                acc = this.matrixAdition(acc, cur)
+                acc = matrixAdition(acc, cur)
                 return acc
             }, [])
             todayLessonResult.push({result, ...course})
             lessonResultList = []
         })
 
-        console.log(todayLessonResult)
+        // console.log(todayLessonResult)
         
         return {todayLessonResult}
     }
 
-    matrixAdition(a, b){
-        let resultArr = [];
-        for(let i = 0; i < a.length; i += 1){
-          resultArr.push(a[i].map((x, y) => a[i][y] + b[i][y]));
-        }
-        return resultArr; // [[3, 6, 8,], [5, 7, 12,]]
-    }
 
     getAllStatByResult() {
+        /*
+        학생 전체의 챕터별 stat과 챕터전체 stat
+        output :
+            studentStat = [{id:'학생아이디', name:'학생이름', 
+                        studentChapterStat:[{챕터별 진행률, 정답률}], 
+                        studentProgress:전체 진행률, studentPoint:전체 정답률}, ...]
+        */
         const {studentsResult} = this.get()
         const studentStat = []
 
@@ -74,15 +81,19 @@ export default class StatModel extends Model {
             let {studentChapterStat, studentProgress, studentPoint} = this.creatStudentStat(obj.result)
             studentStat.push({id, name, studentChapterStat, studentProgress, studentPoint})
         })
+        // console.log(studentStat)
 
         return {studentStat}
     }
 
     creatStudentStat(result) {
-        /* 
-        데이터 구조
-        studentChapterStat = [{id:'', chapter:'', progress:[]},]
-        
+        /*
+        학생의 챕터별 stat과 챕터전체 stat을 구함
+        input : result 학생 개별 결과 
+        output :
+            studentChapterStat = [{id:'챕터아이디', title:'챕터명', progress:-, point:-},...]
+            studentProgress = - (코스 전체 평균 진행률)
+            studentPoint = - (코스 전체 평균 정답률)
         */
         let studentChapterStat = result.filter((data) => data.type == StatModel.#CHAPTER_TYPE)
         let studentProgress = 0
@@ -127,12 +138,19 @@ export default class StatModel extends Model {
     }
 
 
-    getScheduledCourse() {  // Level 1인지 2인지 구분해주는 데코레이터로 변경해야함
+    getScheduledCourse() {
+        /*
+        course 원본 데이터를 날짜끼리 모아서 차시로 구분 
+        chapter가 바뀌면 1차시부터 다시 시작
+        output : 
+            schedule = [{seq: -, chapter:'', courses:[], date:'', lesson:-}, ...]
+        */
         const {course} = this.get()
         let prevLevel = ''
         let prevDate = ''
         let chapter = ''
         let lesson = 0
+        let seq = 0
         let courses = []
         const schedule = []
 
@@ -146,7 +164,8 @@ export default class StatModel extends Model {
 
             if(obj.level < prevLevel) {
                 lesson += 1
-                schedule.push({chapter:chapter, lesson:lesson, date:prevDate, courses:courses})
+                schedule.push({seq:seq, chapter:chapter, lesson:lesson, date:prevDate, courses:courses})
+                seq += 1
                 courses = []
                 prevDate = obj.date
                 prevLevel = obj.level
@@ -167,7 +186,8 @@ export default class StatModel extends Model {
                     return
                 } else {
                     lesson += 1
-                    schedule.push({chapter:chapter, lesson:lesson, date:prevDate, courses:courses})
+                    schedule.push({seq:seq, chapter:chapter, lesson:lesson, date:prevDate, courses:courses})
+                    seq += 1
                     courses = []
                     prevDate = obj.date
                 }
@@ -178,6 +198,7 @@ export default class StatModel extends Model {
 
             
         })
+        // console.log(schedule)
         return schedule
     }
 
@@ -186,6 +207,14 @@ export default class StatModel extends Model {
         
         const allChapter = course.filter(({type}) => type == 0)
 
-        return {allChapter}
+        return allChapter
     }
+}
+
+function matrixAdition(a, b){
+    let resultArr = [];
+    for(let i = 0; i < a.length; i += 1){
+      resultArr.push(a[i].map((x, y) => a[i][y] + b[i][y]));
+    }
+    return resultArr; // [[3, 6, 8,], [5, 7, 12,]]
 }

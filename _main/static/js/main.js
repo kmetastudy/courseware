@@ -15,7 +15,7 @@ export function BaseOnReady(context) {
   $(".navbar").html(clNav.getElement());
 }
 
-export function CourseLandingOnReady(context, courses, recommend) {
+export function CourseLandingOnReady(context, courses, recommend, title) {
   console.log(context);
   console.log(courses);
 
@@ -61,8 +61,8 @@ export function CourseLandingOnReady(context, courses, recommend) {
 
   $(".search").append($elSearch);
 
-  var clCourseSwiper = new CourseSwiperView(recommend);
-  $(".courses_recomend").append(clCourseSwiper.elThis);
+  var clCourseSwiper = new CourseSwiperView(recommend, title)
+  $(".courses_recomend").append(clCourseSwiper.elThis)
 
   var slider = new Swiper(".swiper-container", {
     slidesPerView: 2,

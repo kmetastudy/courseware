@@ -15,7 +15,9 @@ class courseDetail(models.Model):
     # duration 0:무제한, 값
     # price 0:무료, 값
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    courseId = models.UUIDField(editable=False, null=True, blank=True)  # UUID 필드로 바꾸기
+    courseId = models.UUIDField(
+        editable=False, null=True, blank=True
+    )  # UUID 필드로 바꾸기
     courseTitle = models.TextField(null=True, blank=True)
     courseSummary = models.TextField(null=True, blank=True)
     desc = models.TextField(null=True, blank=True)
@@ -32,6 +34,8 @@ class courseDetail(models.Model):
     producer = models.TextField(null=True, blank=True)
     duration = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
+    deliver = models.TextField(null=True, blank=True)
+
 
 class CourseReset(models.Model):
     # school E:초등 M:중등 H:고등
@@ -45,7 +49,9 @@ class CourseReset(models.Model):
     # duration 0:무제한, 값
     # price 0:무료, 값
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    id_course = models.UUIDField(editable=False, null=True, blank=True)  # UUID 필드로 바꾸기
+    id_course = models.UUIDField(
+        editable=False, null=True, blank=True
+    )  # UUID 필드로 바꾸기
     course_title = models.TextField(null=True, blank=True)
     course_summary = models.TextField(null=True, blank=True)
     descript = models.TextField(null=True, blank=True)
@@ -62,8 +68,10 @@ class CourseReset(models.Model):
     producer = models.TextField(null=True, blank=True)
     duration = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
+    deliver = models.TextField(null=True, blank=True)
 
 
 class courseLanding(models.Model):
     id_course = models.UUIDField(null=False)
     subject = models.TextField(null=True, blank=True)
+    id_page = models.TextField(null=True, blank=True)
