@@ -8,15 +8,15 @@ const LessonStudent = props => {
             <div class="">
                 <div class="flex justify-between items-center">
                     <p class="text-sm text-[#005140] m-0">학습률</p>
-                    <p class="text-sm m-0">${props.learningRate}%</p>
+                    <p class="text-sm m-0">${props.progress}%</p>
                 </div>
-                <progress class="progress progress-success w-30" value="${props.learningRate}" min="0" max="100"></progress>
+                <progress class="progress progress-success w-30" value="${props.progress}" min="0" max="100"></progress>
             </div>
             <div class="text-center">
                 <p class="text-sm m-0">맞춘 문제 수</p>
-                <p class="text-sm m-0">${props.correct}/20</p>
+                <p class="text-sm m-0">${props.point}/${props.numOfQuestion}</p>
             </div>
-            <button class="btn btn-sm">확인하기</button>
+            <button class="btn btn-sm btn-disabled">확인하기</button>
         </li>
     `
 }
