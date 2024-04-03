@@ -11,23 +11,23 @@ export default class DashboardLessonView extends View {
     template(state) {
 
         let students = [
-            {name:'김민지', learningRate:90, correct:16},
-            {name:'김가네', learningRate:50, correct:10},
+            {name:'이서영', progress:77.5, point:1, numOfQuestion:18},
+            {name:'임세희', progress:78.5, point:3, numOfQuestion:18},
             // {name:'김가연', learningRate:20, correct:2},
             // {name:'송한나', learningRate:40, correct:8},
             // {name:'전수현', learningRate:70, correct:12},
             // {name:'한소연', learningRate:20, correct:4},
         ]
         let questions = [
-            {type:'test', q:'2', num:'10'},
-            {type:'lesson', q:'2', num:'15'},
+            {type:'lesson', q:'1', num:'13'},
+            {type:'test', q:'3', num:'12'},
         ]
         return `
             <div class="card-body grow-0">
                 <h2 class="card-title">오늘 수업 결과</h2>
             </div>
-            <div class="p-8 pt-0 h-[300px] xl:h-[400px] gap-4">
-                <div class="p-2 flex">
+            <div class="p-8 pt-0 md:h-[450px] gap-4">
+                <div class="p-2 flex flex-col md:flex-row">
                     <div class="flex-1 flex flex-col gap-2">
                         <div data-component="section-change"></div>
                         <div class="">
@@ -39,11 +39,7 @@ export default class DashboardLessonView extends View {
                             ${LessonStudentsList(students)}
                         </div>
                     </div>
-                    <div class="p-2 w-1/2 flex justify-center" data-component="section-result"></div>    
-                </div>
-                <div class="flex justify-around">
-                    
-                    
+                    <div class="p-2 w-full md:w-1/2 flex justify-center" data-component="section-result"></div>    
                 </div>
             </div>
         `
