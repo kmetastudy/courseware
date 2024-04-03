@@ -15,7 +15,7 @@ export function BaseOnReady(context) {
   $(".navbar").html(clNav.getElement());
 }
 
-export function CourseLandingOnReady(context, courses, recommend) {
+export function CourseLandingOnReady(context, courses, recommend, title) {
   console.log(context);
   console.log(courses);
 

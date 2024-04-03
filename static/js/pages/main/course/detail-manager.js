@@ -37,7 +37,7 @@ export function DetailManager(context, data) {
       { text: "한국사", type: "korhist" },
       { text: "과학", type: "sci" },
       { text: "정보", type: "info" },
-      { text: "도덕", type: "mor" },
+      { text: "기타", type: "etc" },
     ],
     difficulty: [
       { text: "심화", type: 2 },

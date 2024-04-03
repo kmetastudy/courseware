@@ -212,7 +212,7 @@ def mainView(request, school, subject):
             {"kor": "수학", "eng": "math"},
             {"kor": "사회", "eng": "soc"},
             {"kor": "과학", "eng": "sci"},
-            {"kor": "도덕", "eng": "mor"},
+            {"kor": "기타", "eng": "etc"},
         ],
         "middle": [
             {"kor": "국어", "eng": "kor"},
@@ -222,7 +222,7 @@ def mainView(request, school, subject):
             {"kor": "역사", "eng": "hist"},
             {"kor": "과학", "eng": "sci"},
             {"kor": "정보", "eng": "info"},
-            {"kor": "도덕", "eng": "mor"},
+            {"kor": "기타", "eng": "etc"},
         ],
         "high": [
             {"kor": "국어", "eng": "kor"},
@@ -232,7 +232,7 @@ def mainView(request, school, subject):
             {"kor": "한국사", "eng": "korhist"},
             {"kor": "과학", "eng": "sci"},
             {"kor": "정보", "eng": "info"},
-            {"kor": "도덕", "eng": "mor"},
+            {"kor": "기타", "eng": "etc"},
         ],
     }
     print(request.method)

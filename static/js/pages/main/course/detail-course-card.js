@@ -34,7 +34,6 @@ CourseCardManager.prototype.create = function () {
                               <p class="text-sm">무제한</p>
 
                           </div>
-                          <p class="p-2 text-xl text-end">${price}</p>
                           <div class="flex"></div>
                           <div class="mt-2 py-2 grid grid-cols-2 border-t"></div>
                       </div>
