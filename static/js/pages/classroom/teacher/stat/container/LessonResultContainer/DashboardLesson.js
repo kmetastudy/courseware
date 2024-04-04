@@ -15,7 +15,8 @@ export default class DashboardLesson extends Component{
         const $sectionChange = this.$target.querySelector('[data-component="section-change"]')
         const $sectionResult = this.$target.querySelector('[data-component="section-result"]')
 
-        const {seq, todayLessonResult, correct, wrong, etc} = selectedSection
+        const {seq, todayLessonResult, correct, wrong, etc, categories, groups} = selectedSection
+
 
         $sectionChange.innerHTML = SectionChange({seq, todayLessonResult})
 
@@ -51,18 +52,13 @@ export default class DashboardLesson extends Component{
                 }
             }],
             xaxis: {
-                categories: ['Q1', 'Q2', 'Q1', 'Q2', 'Q1', 'Q2', 'Q1', 'Q2'],
+                categories: categories,
                 group: {
                     style: {
                     fontSize: '10px',
                     fontWeight: 700
                     },
-                    groups: [
-                    { title: '수업1', cols: 2 },
-                    { title: '수업2', cols: 2 },
-                    { title: '수업3', cols: 2 },
-                    { title: '수업4', cols: 2 },
-                    ]
+                    groups: groups
                 }
             },
             yaxis: {
@@ -84,6 +80,8 @@ export default class DashboardLesson extends Component{
                 palette: 'palette2' // upto palette10
             },
         };
+
+        console.log(options)
   
         var chart = new ApexCharts($sectionResult, options);
         chart.render();
@@ -107,7 +105,15 @@ export default class DashboardLesson extends Component{
         const wrong = todayLessonResult[selectedSection].result.map((x) => {return x[1]})
         const etc = todayLessonResult[selectedSection].result.map((x) => {return x[2]})
 
-        return {seq:selectedSection, todayLessonResult, correct, wrong, etc}
+        const categories = selectedSection==1?['Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Q6', 'Q7', 'Q8', 'Q9', 'Q10']:['Q1', 'Q2', 'Q1', 'Q2', 'Q1', 'Q2', 'Q1', 'Q2']
+        const groups = selectedSection==1?[{ title: '단원평가', cols: 10 }]:[
+                                { title: '수업1', cols: 2 },
+                                { title: '수업2', cols: 2 },
+                                { title: '수업3', cols: 2 },
+                                { title: '수업4', cols: 2 },
+                                ]
+
+        return {seq:selectedSection, todayLessonResult, correct, wrong, etc, categories, groups}
     }
 
     selectSectionListener(seq) {
