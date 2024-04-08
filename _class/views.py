@@ -33,6 +33,7 @@ from .models import (
     mClassCourse,
     mClassStudyResult,
 )
+
 from .serializers import (
     ClassSerializer,
     SingleCourseClassSerializer,
@@ -45,7 +46,7 @@ from .serializers import (
     ClassStudyResultSerializer,
 )
 
-from .services import ClassContentAssignService, ClassStudyResultService
+from .services import ClassContentAssignService, ClassStudyResultService, AssignService
 
 
 @last_visited
@@ -190,14 +191,17 @@ class SingleCourseClassViewSet(viewsets.ModelViewSet):
         class_member.full_clean()
         class_member.save()
 
-        service = ClassContentAssignService(
-            id_class=getattr(single_course_class, "id"),
-            id_course=getattr(single_course_class, "id_course"),
-            start_date=getattr(single_course_class, "start_date"),
-            end_date=getattr(single_course_class, "end_date"),
-        )
+        # service = ClassContentAssignService(
+        #     id_class=getattr(single_course_class, "id"),
+        #     id_course=getattr(single_course_class, "id_course"),
+        #     start_date=getattr(single_course_class, "start_date"),
+        #     end_date=getattr(single_course_class, "end_date"),
+        # )
 
-        class_content_assign = service.auto_create_assign()
+        # class_content_assign = service.auto_create_assign()
+        service = AssignService()
+        class_content_assign = service.auto_assign(class_instance=single_course_class)
+
         return Response(data=serializer.data, status=status.HTTP_201_CREATED)
 
 
