@@ -19,10 +19,11 @@ perttierrc
 *.zip
 *.json
 _bundle/
-scripts.py
+
 
 
 ### dev settings
+scripts/
 
 ### docs
 idpw.md
