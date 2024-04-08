@@ -83,8 +83,8 @@ export class MtmNav {
     //                 <path d="M9.41164 11.747C7.48836 2.6987 18.2673 -3.52453 25.1418 2.66525V2.66525C28.2161 5.43341 32.7233 5.90713 36.306 3.83866V3.83866C44.3171 -0.786584 53.5666 7.54172 49.8041 15.9925V15.9925C48.1215 19.7717 49.0637 24.2047 52.1381 26.9728V26.9728C59.0125 33.1626 53.9501 44.533 44.7503 43.5661V43.5661C40.636 43.1337 36.7112 45.3997 35.0285 49.1789V49.1789C31.266 57.6297 18.8878 56.3287 16.9645 47.2803V47.2803C16.1044 43.2338 12.7364 40.2013 8.62216 39.7689V39.7689C-0.577656 38.8019 -3.16542 26.6275 4.84574 22.0022V22.0022C8.42844 19.9338 10.2718 15.7936 9.41164 11.747V11.747Z" fill="#${data.color}"/>
     //                 <text x="14" y="32" fill="black" font-size="16">${data.title}</text>
     //             </svg>`)
-
-    const menu3 = $(`<svg class="star${i+1}" width="72" height="36" viewBox="6 6 78 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    if(i != 3){
+      const menu3 = $(`<svg class="star${i+1}" width="72" height="36" viewBox="6 6 78 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect x="12" y="8" width="72" height="32" rx="10" fill="#${data.color}"/>
                     <g filter="url(#filter0_d_157_27)">
                     <path d="M19.3529 20.4368C18.8721 18.1747 21.5668 16.6189 23.2854 18.1663C24.054 18.8584 25.1808 18.9768 26.0765 18.4597C28.0793 17.3034 30.3917 19.3854 29.451 21.4981C29.0304 22.4429 29.2659 23.5512 30.0345 24.2432C31.7531 25.7907 30.4875 28.6333 28.1876 28.3915C27.159 28.2834 26.1778 28.8499 25.7571 29.7947C24.8165 31.9074 21.7219 31.5822 21.2411 29.3201C21.0261 28.3084 20.1841 27.5503 19.1555 27.4422C16.8556 27.2005 16.2086 24.1569 18.2114 23.0006C19.1071 22.4834 19.5679 21.4484 19.3529 20.4368Z" fill="#059669"/>
@@ -104,9 +104,16 @@ export class MtmNav {
                     </defs>
                     <text x="40" y="30" fill="black" font-size="16">${data.title}</text>
                   </svg>`)
-    menu3[0].addEventListener("click", data.onClick); 
-    // console.log(menu,menu2[0])
-    return menu3[0];
+      menu3[0].addEventListener("click", data.onClick); 
+      // console.log(menu,menu2[0])
+      return menu3[0];
+    } else {
+      const menu3 = $(`<button class="mx-2 px-2 text-white text-[16px]">${data.title}</button>`)
+      menu3[0].addEventListener("click", data.onClick); 
+      // console.log(menu,menu2[0])
+      return menu3[0];
+    }
+    
   } 
 
   createRightSection() {
