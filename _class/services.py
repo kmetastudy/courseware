@@ -1,3 +1,4 @@
+from collections import Counter
 import uuid
 import json
 import copy
@@ -7,7 +8,13 @@ from datetime import timedelta, datetime
 from django.db import transaction
 from django.utils import timezone, dateparse
 
-from .models import mClass, mClassContentAssign, mClassStudyResult, mClassMember
+from .models import (
+    mClass,
+    mSingleCourseClass,
+    mClassContentAssign,
+    mClassStudyResult,
+    mClassMember,
+)
 from .selectors import get_class_course
 from _cp.models import mCourseN
 from _cp.constants import CP_TYPE_TESTUM, CP_TYPE_LESSON, CP_TYPE_EXAM
@@ -169,6 +176,11 @@ class ClassStudyResultServiceV2:
 
 
 class ClassContentAssignService:
+    """
+    Depercated
+    Use below "AssignService" instead
+    """
+
     def __init__(
         self,
         id_class: uuid.UUID,
@@ -286,6 +298,23 @@ class ClassContentAssignService:
 
         return scheduler_list
 
+    def _update_scheduler_period(self, scheduler_list):
+        current_period = 0
+        current_date = None
+
+        for data in scheduler_list:
+            if data["type"] == 0:
+                current_period = 0
+                continue
+
+            if data["date"] != current_date:
+                current_period += 1
+                current_date = data["date"]
+
+            data["period"] = current_period
+
+        return scheduler_list
+
     def _create_scheduler_list(
         self, lists: List[Dict], start_date=timezone, end_date=timezone
     ) -> List[Dict]:
@@ -357,6 +386,203 @@ class ClassContentAssignService:
 
     def auto_create_study_result(self):
         return
+
+
+class AssignService:
+    def __init__(self) -> None:
+        pass
+
+    def _distribute_date(self, start_date, end_date, N):
+        """
+        날짜의 범위를, N개의 구간으로 나눈다.
+        """
+        diff = (end_date - start_date) / (N - 1)
+        return [start_date + diff * idx for idx in range(N - 1)] + [end_date]
+
+    def _create_distributed_date_matrix(self, distributions, scheduler_list):
+        """
+        date 로 이루어진 일차원 배열을 chapter 단위로 묶는다.
+        다른 chapter에 소속된 branch는 다른 날짜를 가지게 한다.
+        [[date1, date2, ...], [date1, date2, ...], ...]
+        """
+        scheduler_index = 0
+        dates = []
+
+        for i in range(len(distributions)):
+            current_date = distributions[i][0]
+            distribution = distributions[i][1]
+
+            distributed = 0  # 실제 배정된 수
+            while distributed < distribution:
+                if scheduler_index >= len(scheduler_list):
+                    break
+                target = scheduler_list[scheduler_index]
+                scheduler_index += 1
+
+                if target["type"] == 0:
+                    dates.append([])
+                    if distributed != 0:
+                        left_distribution = distribution - distributed
+                        if i + 1 < len(distributions):
+                            distributions[i + 1][1] += left_distribution
+                            break
+                        # break
+                else:
+                    if len(dates) > 0:
+                        dates[-1].append(current_date)
+                        distributed += 1
+        return dates
+
+    def _flatten_frequencies(self, arr):
+        """
+        평준화시키는 작업을 한다.
+        허용된 날짜 내에서, 한 날짜가 너무 많은 수업을 가지지 않도록 조정한다.
+        같은 챕터 내의 branch들에 대한 평준화를 하기 때문에, 날짜가 넘어가지 않는다.
+        [0315, 0315, 0315, 0316, 0316, 0316, 0317] -> [0315, 0315, 0316, 0316, 0316, 0317, 0317]
+        """
+        # 빈도수 계산
+        freq = Counter(arr)
+
+        # 요소별 빈도수로 정렬된 리스트 생성
+        freq_sorted = sorted(freq.items(), key=lambda x: x[1], reverse=True)
+
+        # 빈도수를 평준화하기 위한 전략 구현
+        # 최빈값과 최소값의 빈도수를 이용하여 평준화 시도
+        for _ in range(len(freq_sorted)):
+            max_freq_item = freq_sorted[0]  # 가장 빈도수가 높은 요소
+            min_freq_item = freq_sorted[-1]  # 가장 빈도수가 낮은 요소
+
+            # 최대 빈도수를 갖는 요소의 빈도수를 줄이고, 최소 빈도수를 갖는 요소의 빈도수를 늘림
+            if max_freq_item[1] > min_freq_item[1] + 1:
+                freq[max_freq_item[0]] -= 1
+                freq[min_freq_item[0]] += 1
+                freq_sorted = sorted(freq.items(), key=lambda x: x[1], reverse=True)
+            else:
+                break
+
+        # 조정된 빈도수를 바탕으로 새로운 배열 생성
+        new_arr = []
+        for item, frequency in freq.items():
+            new_arr.extend([item] * frequency)
+
+        return sorted(new_arr)
+
+    def _set_values(self, date_matrix, scheduler_list):
+        """
+        chapter: {period: 0, date: ""}
+        branch: {period: 1, date: "2024-03-30T00:00:00Z", show: True}
+        """
+        scheduler_idx = 0
+        current_date = None
+        for dates in date_matrix:
+            period = 0
+            # chapter
+            target = scheduler_list[scheduler_idx]
+            target["period"] = period
+            target["date"] = ""
+            scheduler_idx += 1
+            current_date = None
+            for date in dates:
+                # branch
+                target = scheduler_list[scheduler_idx]
+                scheduler_idx += 1
+
+                if target["type"] == 0:
+                    continue
+
+                if date != current_date:
+                    period += 1
+                    current_date = date
+
+                target["date"] = date
+                target["period"] = period
+                target["show"] = True
+
+        return scheduler_list
+
+    def _create_base_condition(self, start_date, end_date):
+        condition = {
+            "scheduler": {
+                "onweek": [0, 0, 0, 0, 0, 1, 0],
+                "offweek": [0, 0, 0, 0, 0, 0, 0],
+                "onday": [],
+                "offday": [],
+                "assign": [],
+            },
+            "clinic": {
+                "wrong": {"auto": True, "term": "0000-00-01 00:00:00"},
+                "weak": {"auto": False, "term": "0000-00-01 00:00:00"},
+            },
+        }
+
+        first_assign = {
+            "index": 0,
+            "from": start_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "to": end_date.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "per": 0,
+        }
+
+        condition["scheduler"]["assign"].append(first_assign)
+
+        return condition
+
+    def create_scheduler_list(self, start_date, end_date, lists):
+        scheduler_list = copy.deepcopy(lists)
+
+        branches = [item for item in scheduler_list if item["type"] != 0]
+        branches_count = len(branches)
+
+        # 날짜를 분배할 때, 시간도 고려되어 분배되었기에, 이것을 다시 제거한다.
+        # 2024-03-30T00:10:05Z -> 2024-03-30T00:00:00Z
+        distributed_dates = [
+            datetime(value.year, value.month, value.day).strftime("%Y-%m-%dT%H:%M:%SZ")
+            for value in self._distribute_date(start_date, end_date, branches_count)
+        ]
+
+        distributions = [
+            [
+                value,
+                count,
+            ]
+            for value, count in Counter(distributed_dates).items()
+        ]
+
+        date_matrix = self._create_distributed_date_matrix(
+            distributions, scheduler_list
+        )
+
+        flattend_date_matrix = [self._flatten_frequencies(item) for item in date_matrix]
+
+        result = self._set_values(flattend_date_matrix, scheduler_list)
+
+        return result
+
+    def auto_assign(self, class_instance: mSingleCourseClass):
+        id_class = class_instance.id
+        id_course = class_instance.id_course
+        start_date = class_instance.start_date
+        end_date = class_instance.end_date
+
+        course = mCourseN.objects.filter(id=id_course).first()
+        course_json_data = json.loads(course.json_data)
+        lists = course_json_data.get("lists")
+
+        json_data = {}
+        scheduler_list = self.create_scheduler_list(start_date, end_date, lists)
+        condition = self._create_base_condition(start_date, end_date)
+        json_data["condition"] = condition
+        json_data["scheduler_list"] = scheduler_list
+
+        obj = mClassContentAssign(
+            id_class=id_class,
+            id_course=id_course,
+            json_data=json.dumps(json_data, ensure_ascii=False),
+        )
+
+        obj.full_clean()
+        obj.save()
+
+        return obj
 
 
 class ClassStudyResultService:
