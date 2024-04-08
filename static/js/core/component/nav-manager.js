@@ -22,6 +22,7 @@ export class NavManager {
       { title: "중등", onClick: () => (window.location.href = "/courses/middle/all"), color: "F6D5EA" },
       // { title: "예비고1", onClick: () => (window.location.href = "/courses/midhigh/all") },
       { title: "고등", onClick: () => (window.location.href = "/courses/high/all"), color: "F17272" },
+      { title:"기초학력", onClick: () => (window.location.href = "/namdo"), color:""}
       // { title: "수능", onClick: () => (window.location.href = "/courses/high2/all") },
     ];
 
