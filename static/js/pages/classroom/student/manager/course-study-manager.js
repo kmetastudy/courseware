@@ -35,6 +35,7 @@ export function createCourseStudyManager() {
 
   async function changeContent(studyResultProperty) {
     const { id: contentId, type: contentType } = studyResultProperty;
+    console.log(contentId, contentType);
     const content = await urlGetContent({ courseId, contentId, contentType });
 
     clContent.changeContent({ studyResultProperty, content });
