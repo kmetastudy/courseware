@@ -14,6 +14,17 @@ module.exports = {
   },
   plugins: [require("daisyui")],
   daisyui: {
-    themes: ["light", "dark", "cupcake", "winter"],
+    // themes: ["light", "dark", "cupcake", "winter"],
+    themes: [
+      "light",
+      "dark",
+      {
+        cupcake: {
+          ...require("daisyui/src/theming/themes")["cupcake"],
+          "--rounded-btn": "0.5rem",
+        },
+      },
+      "winter",
+    ],
   },
 };
