@@ -41,8 +41,11 @@ export function createCourseAssignManager() {
 
   // Handler
   function handleSideItemClick(scheduler) {
-    console.log(scheduler);
     clContent.initialize(scheduler);
+  }
+
+  function handleTitleItemClick() {
+    clContent.initialize();
   }
 
   // Requests
@@ -86,7 +89,7 @@ export function createCourseAssignManager() {
   const manager = {
     start() {
       clContent = new CourseAssign();
-      clSide = new SideCourseAssign({ onSideItemClick: handleSideItemClick });
+      clSide = new SideCourseAssign({ onSideItemClick: handleSideItemClick, onTitleItemClick: handleTitleItemClick });
 
       elContent = clContent.getElement();
       elSide = clSide.getElement();

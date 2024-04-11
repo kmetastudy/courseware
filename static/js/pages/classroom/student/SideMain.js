@@ -50,7 +50,7 @@ export class SideMain {
 
   create() {
     this.elThis = elem("nav", {
-      class: "min-h-screen w-72 flex-col gap-2 overflow-y-auto bg-base-100 px-6 pb-10 pt-4",
+      class: "min-h-screen w-72 flex-col gap-2 overflow-y-auto bg-base-100 px-6 pb-10 pt-4 hidden",
     });
 
     // home

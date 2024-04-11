@@ -1,5 +1,5 @@
 import { isNumber, isHTMLNode } from "../../../../../core/utils/type";
-
+import { TextOverflowTooltip } from "../../../../../core/component/FloatingUI/TextOverflowTooltip/TextOverflowTooptip";
 import { extract, extracts } from "../../../../../core/utils/array";
 import elem from "../../../../../core/utils/elem/elem";
 
@@ -67,13 +67,13 @@ export class SideCourseStudy {
   updateData({ studyResult, course }) {
     const courseTitle = course.title;
     const schedulers = this.composeSchedulers(studyResult);
-    const {
-      json_data: { property },
-    } = studyResult;
+    // const {
+    //   json_data: { property },
+    // } = studyResult;
 
     this.setTitle(courseTitle);
 
-    this.renderMenu(schedulers, property);
+    this.renderMenu(schedulers);
   }
 
   setTitle(title) {
@@ -85,114 +85,221 @@ export class SideCourseStudy {
       json_data: { property: schedulerList },
     } = studyResult;
 
-    const schedulers = extracts(schedulerList, ["period", "date"]);
+    // const schedulers = extracts(schedulerList, ["id", "period", "type", "date", "title", "show"]);
 
-    const uniqueSchedulers = this.removeDuplicateObjects(schedulers);
+    const nestedSchedulers = this.composeNestedSchedulers(schedulerList);
 
-    const result = uniqueSchedulers
-      .filter((item) => isNumber(item.period))
-      .map((assign) => {
-        assign.periodTitle = `${assign.period} 차시`;
-        assign.dateTitle = this.utcToLocalString(assign.date) ?? assign.date;
-        return assign;
-      });
+    const formattedScheduler = nestedSchedulers.map((scheduler) => this.formatScheduler(scheduler));
 
-    return result;
+    return formattedScheduler;
   }
 
-  removeDuplicateObjects(array) {
-    return [...new Map(array.map((obj) => [JSON.stringify(obj), obj])).values()];
-  }
+  composeNestedSchedulers(schedulers) {
+    const nestedSchedulers = [];
 
-  renderMenu(schedulers, property) {
-    const elItems = schedulers.map((scheduler) => this.createMenuItem(scheduler, property));
+    let currentPeriod = 0;
 
-    this.elMenu.append(...elItems);
+    const { length } = schedulers;
 
-    this.elItems = elItems;
-  }
+    for (let i = 0; i < length; i++) {
+      const scheduler = schedulers[i];
+      const { type, period, date } = scheduler;
 
-  createMenuItem(scheduler, property) {
-    const { periodTitle, dateTitle, period, date } = scheduler;
-    const elItem = elem("li");
+      // chapter
+      if (type === 0) {
+        const title = scheduler.title;
+        const child = [];
+        nestedSchedulers.push({ title, child });
 
-    const elContainer = elem("details");
-    elItem.append(elContainer);
+        currentPeriod = period;
+        continue;
+      }
 
-    const elSummary = this.createSummaryItem(periodTitle, dateTitle);
+      // 차시
+      if (period !== currentPeriod) {
+        const title = `${period} 차시`;
+        const dateTitle = this.utcToLocalString(date) ?? date;
+        const branchCount = schedulers.filter((item) => item.date === date).length;
 
-    // Submenu
-    const elSubMenu = elem("ul");
+        nestedSchedulers.at(-1)?.child?.push({ title, date, dateTitle, period, branchCount, child: [] });
 
-    const contents = property.filter((data) => data.period === period && data.show === true);
+        currentPeriod = period;
+      }
 
-    const elContents = contents.map((content) => this.createContentItem(content));
+      // branch
+      const id = scheduler.id;
+      const title = scheduler.title;
+      const typeString = SideCourseStudy.TYPE_CONTENT_KOR[type];
+      const typeTitle = typeString ? `유형: ${typeString}` : "";
 
-    elSubMenu.append(...elContents);
-
-    elContainer.append(elSummary, elSubMenu);
-
-    return elItem;
-  }
-
-  createSummaryItem(periodTitle, dateTitle) {
-    const elSummary = elem("summary");
-
-    const elTextContainer = elem("a");
-    elSummary.append(elTextContainer);
-
-    const elPeriod = elem("p", { class: "mb-0" }, periodTitle);
-    const elDate = elem("p", { class: "mb-0 text-xs  font-bold text-base-content/50" }, dateTitle);
-    elTextContainer.append(elPeriod, elDate);
-
-    return elSummary;
-  }
-
-  createContentItem(content) {
-    const { title, type: contentType, units } = content;
-
-    const elContentItem = elem("li", { on: { click: this.handleItemClick.bind(this, content) } });
-
-    const elContainer = elem("a", { class: "flex flex-col" });
-    elContentItem.append(elContainer);
-
-    const elTextContainer = elem("div", { class: "overflow-hidden" });
-    elContainer.append(elTextContainer);
-
-    const elContentTitle = elem("span", { class: "text-ellipsis text-xs" }, title);
-
-    const infoText = this.composeInfoText(contentType, units);
-    const elContentInfo = elem("span", { class: "text-ellipsis text-xs" }, infoText);
-    elTextContainer.append(elContentTitle, elContentInfo);
-    // elContainer.append(elContentTitle, elContentInfo);
-
-    this.elContentItems.push(elContentItem);
-
-    return elContentItem;
-
-    //
-  }
-
-  composeInfoText(contentType, units) {
-    const contentTypeString = this.formatContentType(contentType);
-
-    const elementTypes = extract(units, "type").flat();
-
-    const questionNum = this.countQuestion(elementTypes);
-    const videoNum = this.countVideo(elementTypes);
-
-    let infoText = `유형: ${contentTypeString}`;
-
-    if (questionNum) {
-      infoText += ` 문제: ${questionNum}`;
+      nestedSchedulers
+        .at(-1)
+        ?.child?.at(-1)
+        ?.child?.push({ ...scheduler, typeTitle });
     }
 
-    if (videoNum) {
-      infoText += ` 비디오: ${videoNum}`;
+    return nestedSchedulers;
+  }
+
+  formatScheduler(scheduler) {
+    const { child } = scheduler;
+    if (child.length === 0) {
+      scheduler.disabled = true;
+      return scheduler;
     }
 
-    return infoText;
+    const startDate = child.at(0)?.dateTitle;
+    const endDate = child.at(-1)?.dateTitle;
+    const period = child.length;
+
+    let date;
+    if (startDate && endDate) {
+      date = `${startDate} - ${endDate}`;
+    } else {
+      date = "";
+    }
+
+    scheduler.disabled = false;
+    scheduler.date = date;
+    scheduler.period = period;
+
+    return scheduler;
   }
+
+  renderMenu(schedulers) {
+    this.elChapters = [];
+    this.elPeriods = [];
+    this.elBranches = [];
+
+    const elChapters = schedulers.map((scheduler) => this.createChapter(scheduler));
+
+    this.elMenu.append(...elChapters);
+
+    this.elChapters = elChapters;
+  }
+
+  createChapter(scheduler) {
+    const { title, child, disabled } = scheduler;
+
+    if (child.length > 0 && disabled !== true) {
+      const elChapter = elem("li", { on: { click: this.handleToggle.bind(this) } });
+
+      const elTitle = elem("span", { class: "menu-dropdown-toggle" }, title);
+
+      const elPeriodContainer = elem("ul", { class: "menu-dropdown" });
+
+      elChapter.append(elTitle, elPeriodContainer);
+
+      const elPeriods = child.map((child) => this.createPeriod(child));
+      elPeriodContainer.append(...elPeriods);
+
+      this.elPeriods = elPeriods;
+
+      return elChapter;
+    }
+  }
+
+  createPeriod(periodData) {
+    const { title, dateTitle, child, disabled } = periodData;
+    if (child.length > 0 && disabled !== true) {
+      const elPeriod = elem("li", { on: { click: this.handleToggle.bind(this) } });
+
+      const elToggle = elem("span", { class: "menu-dropdown-toggle" });
+
+      const elTitleContainer = elem("a", { class: "grid-flow-row" });
+      elToggle.append(elTitleContainer);
+
+      const elPeriodTitle = elem("p", { class: "mb-0" }, title);
+      const elDateTitle = elem("p", { class: "mb-0 text-xs  font-bold text-base-content/50" }, dateTitle);
+      elTitleContainer.append(elPeriodTitle, elDateTitle);
+
+      const elBranchContainer = elem("ul", { class: "menu-dropdown" });
+
+      elPeriod.append(elToggle, elBranchContainer);
+
+      const elBranches = child.map((child) => this.createBranch(child));
+
+      elBranchContainer.append(...elBranches);
+
+      this.elBranches = elBranches;
+
+      return elPeriod;
+    }
+
+    const elPeriod = elem("li");
+
+    const elTitle = elem("a", { class: "grid-flow-row" });
+    elPeriod.append(elTitle);
+
+    const elPeriodTitle = elem("p", { class: "mb-0 text-sm" }, title);
+    const elDateTitle = elem("p", { class: "mb-0 text-xs  font-bold text-base-content/50" }, dateTitle);
+    elTitle.append(elPeriodTitle, elDateTitle);
+
+    return elPeriod;
+  }
+
+  createBranch(branchData) {
+    const { title, typeTitle } = branchData;
+
+    const elBranch = elem("li", { on: { click: this.handleItemClick.bind(this, branchData) } });
+
+    const elTitleContainer = elem("a", { class: "grid-flow-row" });
+    elBranch.append(elTitleContainer);
+
+    const elTitle = elem("p", { class: "mb-0 text-sm overflow-hidden whitespace-nowrap text-ellipsis" }, title);
+    const elTypeTitle = elem("p", { class: "mb-0 text-xs  font-bold text-base-content/50" }, typeTitle);
+    elTitleContainer.append(elTitle, elTypeTitle);
+
+    TextOverflowTooltip({ targetElement: elBranch, textElement: elTitle, content: title });
+
+    return elBranch;
+  }
+
+  // createContentItem(content) {
+  //   const { title, type: contentType, units } = content;
+
+  //   const elContentItem = elem("li", { on: { click: this.handleItemClick.bind(this, content) } });
+
+  //   const elContainer = elem("a", { class: "flex flex-col" });
+  //   elContentItem.append(elContainer);
+
+  //   const elTextContainer = elem("div", { class: "overflow-hidden" });
+  //   elContainer.append(elTextContainer);
+
+  //   const elContentTitle = elem("span", { class: "text-ellipsis text-xs" }, title);
+
+  //   const infoText = this.composeInfoText(contentType, units);
+  //   const elContentInfo = elem("span", { class: "text-ellipsis text-xs" }, infoText);
+  //   elTextContainer.append(elContentTitle, elContentInfo);
+  //   // elContainer.append(elContentTitle, elContentInfo);
+
+  //   this.elContentItems.push(elContentItem);
+
+  //   return elContentItem;
+
+  //   //
+  // }
+
+  // composeInfoText(contentType, units) {
+  //   const contentTypeString = this.formatContentType(contentType);
+
+  //   const elementTypes = extract(units, "type").flat();
+
+  //   const questionNum = this.countQuestion(elementTypes);
+  //   const videoNum = this.countVideo(elementTypes);
+
+  //   let infoText = `유형: ${contentTypeString}`;
+
+  //   if (questionNum) {
+  //     infoText += ` 문제: ${questionNum}`;
+  //   }
+
+  //   if (videoNum) {
+  //     infoText += ` 비디오: ${videoNum}`;
+  //   }
+
+  //   return infoText;
+  // }
 
   handleItemClick(content, evt) {
     evt.stopPropagation();
@@ -210,11 +317,20 @@ export class SideCourseStudy {
     }
   }
 
-  changeItemFocus(selectedItem) {
-    this.elItems.forEach((elItem) => elItem.firstElementChild.classList.remove("focus"));
-    this.elContentItems.forEach((elItem) => elItem.firstElementChild.classList.remove("focus"));
+  handleToggle(evt) {
+    evt.stopPropagation();
 
-    selectedItem.firstElementChild.classList.add("focus");
+    const target = evt.currentTarget;
+
+    for (const child of target.children) {
+      child.classList.toggle("menu-dropdown-show");
+    }
+  }
+
+  changeItemFocus(selectedItem) {
+    // this.elItems.forEach((elItem) => elItem.firstElementChild.classList.remove("focus"));
+    // this.elContentItems.forEach((elItem) => elItem.firstElementChild.classList.remove("focus"));
+    // selectedItem.firstElementChild.classList.add("focus");
   }
 
   getElement() {

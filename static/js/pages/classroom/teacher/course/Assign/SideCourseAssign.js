@@ -7,13 +7,15 @@ import { mtoEvents } from "../../../../../core/utils/mto-events";
 import { extracts } from "../../../../../core/utils/array/extracts";
 
 export class SideCourseAssign {
-  constructor({ onSideItemClick }) {
+  constructor({ onSideItemClick, onTitleItemClick }) {
     this.onSideItemClick = onSideItemClick;
+    this.onTitleItemClick = onTitleItemClick;
 
     this.courseId = undefined;
     this.selectedItem = null;
     this.isActive = false;
     this.headerTitle = "뒤로가기";
+    this.elSubMenuItems = [];
 
     this.create();
   }
@@ -35,9 +37,14 @@ export class SideCourseAssign {
     this.elHeader.prepend(goBackIcon);
 
     this.elTitle = elem("div", { class: "mx-4 mb-4 flex items-center gap-2 font-black" });
+    this.elTitleButton = elem("button", {
+      class: "btn btn-ghost btn-block justify-normal font-bold text-lg mb-4",
+      on: { click: this.handleTitleItemClick.bind(this) },
+    });
 
-    this.elMenu = elem("ul", { class: "menu" });
-    this.elThis.append(this.elHeader, this.elTitle, this.elMenu);
+    this.elMenu = elem("ul", { class: "menu p-0" });
+    // this.elThis.append(this.elHeader, this.elTitle, this.elMenu);
+    this.elThis.append(this.elHeader, this.elTitleButton, this.elMenu);
   }
 
   activate() {
@@ -53,32 +60,48 @@ export class SideCourseAssign {
   updateData({ classContentAssign, course }) {
     const courseTitle = course.title;
     const schedulers = this.composeSchedulers(classContentAssign);
+    console.log(schedulers);
 
-    this.setTitle(courseTitle);
-    this.setSchedulerMenu(schedulers);
+    // this.setTitle(courseTitle);
+    this.renderTitleButton(courseTitle);
+
+    this.renderSchedulerMenu(schedulers);
+
+    // initially, show all
+    this.handleTitleItemClick();
   }
 
   setTitle(title) {
     this.elTitle.textContent = title;
   }
 
-  setSchedulerMenu(schedulers) {
-    const [startDate, endDate] = [schedulers.at(0)?.dateTitle, schedulers.at(-1)?.dateTitle];
+  renderTitleButton(title) {
+    this.elTitleButton.textContent = title;
+  }
 
-    const totalPeriod = {
-      period: 0,
-      date: `${startDate}-${endDate}`,
-      periodTitle: "전체",
-      dateTitle: `${startDate} - ${endDate}`,
-    };
+  renderSchedulerMenu(schedulers) {
+    // 전체보기 데이터 추가
+    const firstChild = schedulers.find((scheduler) => scheduler.disabled === false).child.at(0);
+    const lastChild = schedulers.findLast((scheduler) => scheduler.disabled === false).child.at(-1);
 
-    schedulers.unshift(totalPeriod);
+    let periodCount = 0;
+    schedulers.forEach((scheduler) => {
+      periodCount += scheduler.child.length;
+    });
 
+    // const fullScheduler = {
+    //   title: "전체보기",
+    //   date: `${firstChild.date} - ${lastChild.date}`,
+    //   period: periodCount,
+    //   isFull: true,
+    // };
+
+    console.log(schedulers);
     const elItems = schedulers.map((scheduler) => this.createMenuItem(scheduler));
 
     this.elMenu.append(...elItems);
 
-    this.elItems = elItems;
+    // this.elItems = elItems;
   }
 
   composeSchedulers(classContentAssign) {
@@ -86,37 +109,117 @@ export class SideCourseAssign {
       json_data: { scheduler_list: schedulerList },
     } = classContentAssign;
 
-    const schedulers = extracts(schedulerList, ["period", "date"]);
+    const schedulers = extracts(schedulerList, ["period", "type", "date", "title", "show"]);
 
-    const uniqueSchedulers = this.removeDuplicateObjects(schedulers);
+    const nestedSchedulers = this.composeNestedSchedulers(schedulers);
 
-    const result = uniqueSchedulers
-      .filter((item) => isNumber(item.period))
-      .map((assign) => {
-        assign.periodTitle = `${assign.period} 차시`;
-        assign.dateTitle = this.utcToLocalString(assign.date) ?? assign.date;
-        return assign;
-      });
+    const formattedScheduler = nestedSchedulers.map((scheduler) => this.formatScheduler(scheduler));
 
-    return result;
+    return formattedScheduler;
   }
 
-  removeDuplicateObjects(array) {
-    return [...new Map(array.map((obj) => [JSON.stringify(obj), obj])).values()];
+  composeNestedSchedulers(schedulers) {
+    const nestedSchedulers = [];
+
+    let currentPeriod = 0;
+
+    const { length } = schedulers;
+
+    for (let i = 0; i < length; i++) {
+      const scheduler = schedulers[i];
+      const { type, period, date } = scheduler;
+
+      if (type === 0) {
+        const title = scheduler.title;
+        const child = [];
+        nestedSchedulers.push({ title, child });
+
+        currentPeriod = period;
+        continue;
+      }
+
+      if (period !== currentPeriod && scheduler.show === true) {
+        const title = `${period} 차시`;
+        const dateTitle = this.utcToLocalString(date) ?? date;
+        const branchCount = schedulers.filter((item) => item.date === date).length;
+
+        nestedSchedulers.at(-1)?.child?.push({ title, date, dateTitle, period, branchCount });
+
+        currentPeriod = period;
+      }
+    }
+
+    return nestedSchedulers;
+  }
+
+  formatScheduler(scheduler) {
+    const { child } = scheduler;
+    if (child.length === 0) {
+      scheduler.disabled = true;
+      return scheduler;
+    }
+
+    const startDate = child.at(0)?.dateTitle;
+    const endDate = child.at(-1)?.dateTitle;
+    const period = child.length;
+
+    let date;
+    if (startDate && endDate) {
+      date = `${startDate} - ${endDate}`;
+    } else {
+      date = "";
+    }
+
+    scheduler.disabled = false;
+    scheduler.date = date;
+    scheduler.period = period;
+
+    return scheduler;
   }
 
   createMenuItem(scheduler) {
-    const { periodTitle, dateTitle } = scheduler;
-    const elItem = elem("li", { on: { click: this.handleItemClick.bind(this, scheduler) } });
+    const { title, child, disabled } = scheduler;
 
-    const elTextWrapper = elem("a", { class: "grid-flow-row" });
-    elItem.append(elTextWrapper);
+    if (child.length > 0 && disabled !== true) {
+      const elItem = elem("li");
 
-    const elPeriod = elem("p", { class: "mb-0" }, periodTitle);
-    const elDate = elem("p", { class: "mb-0 text-xs  font-bold text-base-content/50" }, dateTitle);
-    elTextWrapper.append(elPeriod, elDate);
+      const elDetails = elem("details");
+      elItem.append(elDetails);
+
+      const elSummary = elem("summary", title);
+      const elSubMenuContainer = elem("ul");
+      elDetails.append(elSummary, elSubMenuContainer);
+
+      const elSubMenuItems = child.map((child) => this.createSubMenuItem(child));
+      elSubMenuContainer.append(...elSubMenuItems);
+
+      this.elSubMenuItems.push(...elSubMenuItems);
+
+      return elItem;
+    }
+
+    const elItem = elem("li", { class: "disabled" });
+
+    const elTitle = elem("a", { class: "grid-flow-row" }, title);
+    elItem.append(elTitle);
 
     return elItem;
+  }
+
+  createSubMenuItem(childScheduler) {
+    // 차시
+    const { title, dateTitle } = childScheduler;
+
+    const elSubMenu = elem("li", { on: { click: this.handleItemClick.bind(this, childScheduler) } });
+
+    const elTextContainer = elem("a", { class: "grid-flow-row" });
+    elSubMenu.append(elTextContainer);
+
+    const elTitle = elem("p", { class: "mb-0" }, title);
+    const elDate = elem("p", { class: "mb-0 text-xs font-bold text-base-content/50" }, dateTitle);
+    elTextContainer.append(elTitle, elDate);
+
+    return elSubMenu;
   }
 
   handleItemClick(scheduler, evt) {
@@ -135,10 +238,21 @@ export class SideCourseAssign {
     }
   }
 
-  changeItemFocus(selectedItem) {
-    this.elItems.forEach((elItem) => elItem.firstElementChild.classList.remove("focus"));
+  handleTitleItemClick(evt) {
+    this.elTitleButton.classList.add("btn-active");
+    this.changeItemFocus();
+    if (this.onTitleItemClick) {
+      this.onTitleItemClick();
+    }
+  }
 
-    selectedItem.firstElementChild.classList.add("focus");
+  changeItemFocus(selectedItem) {
+    this.elSubMenuItems.forEach((elItem) => elItem.firstElementChild.classList.remove("focus"));
+
+    if (selectedItem) {
+      this.elTitleButton.classList.remove("btn-active");
+      selectedItem.firstElementChild.classList.add("focus");
+    }
   }
 
   getElement() {

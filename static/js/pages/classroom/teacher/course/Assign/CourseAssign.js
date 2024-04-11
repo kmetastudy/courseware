@@ -101,20 +101,24 @@ export class CourseAssign {
     });
   }
 
-  initialize({ period, date }) {
-    this.tableData = this.composeTableData(period, this.propertyWithUser, this.schedulerList);
+  initialize({ period, date } = {}) {
+    this.tableData = this.composeTableData({
+      date,
+      propertyWithUser: this.propertyWithUser,
+      schedulerList: this.schedulerList,
+    });
 
     this.clTable.initTable(this.tableData, this.users);
   }
 
-  composeTableData(period, propertyWithUser, schedulerList) {
+  composeTableData({ date, propertyWithUser, schedulerList }) {
     // {property, user1property?, name2}
     // 1. row가 lesson/testum, column이 member
     // 2. row가 member, column이 lesson/testum
     // 일단 지금은, 1번
     //
 
-    const filteredSchedulerList = this.filterByPeriod(schedulerList, period).filter((data) => isNumber(data.period));
+    const filteredSchedulerList = this.filterByDate(schedulerList, date).filter((scheduler) => scheduler.type !== 0);
 
     const tableData = filteredSchedulerList.map((scheduler) => {
       //
@@ -136,18 +140,6 @@ export class CourseAssign {
     });
 
     return tableData;
-
-    // const filteredProperty = propertyWithUser.map(({ user, property }) => {
-    //   return {
-    //     user: user,
-    //     property: this.filterByPeriod(property, period),
-    //   };
-    // });
-    // const filteredSchedulerList = this.filterByPeriod(schedulerList);
-    // const { length } = filteredSchedulerList;
-    // for (let i = 0; i < length; i++) {
-    //   const row = {};
-    // }
   }
 
   composeSchedulerList(classContentAssign) {
@@ -163,12 +155,11 @@ export class CourseAssign {
     this.elTitle.textContent = title;
   }
 
-  filterByPeriod(array, period) {
-    if (period === 0) {
+  filterByDate(array, date) {
+    if (!date) {
       return array;
     }
-
-    return array.filter((item) => item.period === period);
+    return array.filter((item) => item.date === date);
   }
 
   getElement() {

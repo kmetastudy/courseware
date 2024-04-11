@@ -581,7 +581,7 @@ export class StCourseTree {
 
     const clUpdatedPoint = new MtuProgress({ percent: point, size: 32 });
     const elUpdatedPoint = clUpdatedPoint.getElement();
-    elUpdatedPoint.classList.add(".branch-point");
+    elUpdatedPoint.classList.add("branch-point");
 
     elPoint.replaceWith(elUpdatedPoint);
   }
