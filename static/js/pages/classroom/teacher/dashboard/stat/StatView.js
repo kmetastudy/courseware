@@ -16,6 +16,7 @@ export default class StatView extends View {
             </header>
             <section class="stats stats-vertical xl:stats-horizontal col-span-12 w-full shadow-sm" data-component="dashboard-stat"></section>
             <section class="card col-span-12 xl:col-span-3 2xl:col-span-4 overflow-hidden bg-base-100 shadow-sm" data-component="dashboard-today"></section>
+            <section class="card col-span-12 xl:col-span-9 2xl:col-span-8 overflow-hidden bg-base-100 shadow-sm" data-component="dashboard-lesson"></section>
         `;
     // return `
     //         <header class="col-span-12 flex items-center gap-2 lg:gap-4">

@@ -8,7 +8,7 @@ import { apiCp } from "../../../../../core/api/cp";
 import Component from "./core/Component.js";
 import { statStore } from "./StatStore.js";
 import StatView from "./StatView.js";
-import StatModel from "./StatModel.js";
+
 import { StatModelNew } from "./StatModelNew.js";
 
 import DashboardStat from "./container/StatContainer/DashboardStat.js";
@@ -42,60 +42,55 @@ export default class Stat extends Component {
       .finally(() => {});
   }
 
-  //   mounted() {
-  //     const { studentStat } = this._model.getAllStatByResult();
-  //     const { totalProgress, totalPoint } = this.totalAverage(studentStat);
-  //     const { todayLessonResult } = this._model.getTodayLessonResult();
-  //     const { scheduledCourse, selectedStudent, selectedClass, selectStudentListener } = this;
-  //     const selectClassListener = this.selectClass.bind(this);
-
-  //     const $dashboardStat = this.$target.querySelector('[data-component="dashboard-stat"]');
-  //     const $dashboardToday = this.$target.querySelector('[data-component="dashboard-today"]');
-  //     const $dashboardLesson = this.$target.querySelector('[data-component="dashboard-lesson"]');
-
-  //     new DashboardStat($dashboardStat, { totalProgress, totalPoint, selectedClass, selectClassListener });
-  //     new DashboardToday($dashboardToday, { scheduledCourse });
-  //     new DashboardLesson($dashboardLesson, { todayLessonResult });
-  //   }
   mounted() {
-    // const { totalProgress, totalPoint } = this._model.totalAverage(studentStat);
+    // DashboardStat
     const totalProgress = this._model.getClassAverage("progress");
     const totalPoint = this._model.getClassAverage("point");
 
-    const progressLow = this._model.countStudentsBetween(30, "progress");
-    const progressMiddle = this._model.countStudentsBetween(50, "progress");
-    const progressHigh = this._model.countStudentsBetween(70, "progress");
+    const progressLow = this._model.countStudentsBetween(-1, 30, "progress");
+    const progressMiddle = this._model.countStudentsBetween(31, 70, "progress");
+    const progressHigh = this._model.countStudentsBetween(71, 100, "progress");
 
+    // DashboardToday
     const todayScheduler = this._model.getTodayScheduler();
+    const todayChapter = this._model.getTodayChapter();
+    const { completedStudents, inProgressStudents, notStartedStudents } = this._model.getTodayStudentProgressStatus();
+    console.log(completedStudents, inProgressStudents, notStartedStudents);
 
-    console.log(todayScheduler);
-    console.log(progressLow);
-    console.log(progressMiddle);
-    console.log(progressHigh);
+    // DashboardLesson
+    const todayChartData = this._model.getTodayChartData();
 
-    const todayStudyResults = this._model.getTodayResults();
-    console.log(todayStudyResults);
+    const studentStatus = this._model.getTodayStudentStatus();
+    const studentCount = this._model.getStudentCount();
+    const questionCounts = this._model.getTodayQuestionCounts();
 
     const $dashboardStat = this.$target.querySelector('[data-component="dashboard-stat"]');
     const $dashboardToday = this.$target.querySelector('[data-component="dashboard-today"]');
     const $dashboardLesson = this.$target.querySelector('[data-component="dashboard-lesson"]');
 
     new DashboardStat($dashboardStat, { totalProgress, totalPoint, progressLow, progressMiddle, progressHigh });
-    new DashboardToday($dashboardToday, { todayScheduler });
-    // new DashboardLesson($dashboardLesson, { todayLessonResult: todayStudyResults });
+    new DashboardToday($dashboardToday, {
+      todayScheduler,
+      todayChapter,
+      completedStudents,
+      inProgressStudents,
+      notStartedStudents,
+    });
+
+    new DashboardLesson($dashboardLesson, { todayChartData, studentCount, studentStatus, questionCounts });
   }
 
-  totalAverage(studentStat) {
-    let totalProgress = studentStat.reduce((a, b) => a + b.studentProgress, 0) / studentStat.length;
-    let totalPoint = studentStat.reduce((a, b) => a + b.studentPoint, 0) / studentStat.length;
+  // totalAverage(studentStat) {
+  //   let totalProgress = studentStat.reduce((a, b) => a + b.studentProgress, 0) / studentStat.length;
+  //   let totalPoint = studentStat.reduce((a, b) => a + b.studentPoint, 0) / studentStat.length;
 
-    return { totalProgress, totalPoint };
-  }
+  //   return { totalProgress, totalPoint };
+  // }
 
-  get allStudentStat() {
-    const { chapterStat, progressStat, pointStat } = this._model.getAllStatByResult();
-    const { totalProgress, totalPoint } = this.totalAverage(progressStat, pointStat);
-  }
+  // get allStudentStat() {
+  //   const { chapterStat, progressStat, pointStat } = this._model.getAllStatByResult();
+  //   const { totalProgress, totalPoint } = this.totalAverage(progressStat, pointStat);
+  // }
 
   get scheduledCourse() {
     return this._model.getScheduledCourse();
@@ -156,11 +151,9 @@ async function loadData({ classId, courseId }) {
     });
 
     const studentIds = extract(data.studyResults, "id_student");
-    console.log(studentIds);
 
     const usersResponse = await apiUser.user.filter({ id__in: studentIds.join(",") });
     data["users"] = usersResponse.data;
-    console.log(data);
 
     return data;
   } catch (error) {

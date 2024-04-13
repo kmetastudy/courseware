@@ -1,12 +1,11 @@
 import Section from "../molecules/Section.js";
 
+// tab
 const SectionChange = (props) => {
-  const { seq, todayLessonResult } = props;
-  console.log(seq);
-  console.log(todayLessonResult);
+  const { seq, todayChartData } = props;
   return `
     <ul class="menu menu-horizontal bg-base-200 rounded-box">
-        ${todayLessonResult
+        ${todayChartData
           .map(({ type }, index) => {
             if (type == "12") {
               return `

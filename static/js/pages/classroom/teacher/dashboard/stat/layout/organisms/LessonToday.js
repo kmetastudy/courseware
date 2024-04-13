@@ -2,11 +2,12 @@ import Lesson from "../molecules/Lesson.js";
 
 const LessonToday = (props) => {
   console.log(props);
+  const { todayScheduler, todayChapter } = props;
   return `
-        <div class="flex flex-col justify-around lg:gap-8">
+        <div class="flex flex-col justify-between gap-4">
             ${Lesson(props)}
             <div class="p-2 border rounded-lg font-bold text-sm">
-                ${props
+                ${todayScheduler
                   .map(({ type, title }) => {
                     if (type == 12) {
                       return `<div class="flex items-center">

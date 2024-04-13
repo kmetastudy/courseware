@@ -7,12 +7,12 @@ export default class DashboardStatView extends View {
 
   template(state) {
     let { totalProgress, totalPoint, progressLow, progressMiddle, progressHigh } = state;
-
-    const totalProgressNum = isNumber(totalProgress) && totalProgress > 0 ? totalProgress : 0;
-    const totalPointNum = isNumber(totalPoint) && totalPoint > 0 ? totalPoint > 0 : 0;
-    // progressLow = progressLow ?? 0;
-    // progressMiddle = progressMiddle ?? 0;
-    // progressHigh = progressHigh ?? 0;
+    if (!totalProgress || totalProgress < 0 || totalProgress > 100) {
+      totalProgress = 0;
+    }
+    if (!totalPoint || totalPoint < 0 || totalPoint > 100) {
+      totalPoint = 0;
+    }
 
     return `
             <div class="stat">
@@ -20,8 +20,8 @@ export default class DashboardStatView extends View {
                 <div class="flex justify-around items-center">
                     <p>성취율</p>
                     <div class="radial-progress bg-base-200 border-4 border-base-200" style="--value:${parseInt(
-                      totalProgressNum,
-                    )};" role="progressbar">${parseInt(totalProgressNum)}%</div>
+                      totalProgress,
+                    )};" role="progressbar">${parseInt(totalProgress)}%</div>
                 </div>
             </div>
             <div class="stat">
@@ -29,8 +29,8 @@ export default class DashboardStatView extends View {
                 <div class="flex justify-around items-center">
                     <p>정답률</p>
                     <div class="radial-progress bg-base-200 border-4 border-base-200" style="--value:${parseInt(
-                      totalPointNum,
-                    )};" role="progressbar">${parseInt(totalPointNum)}%</div>
+                      totalPoint,
+                    )};" role="progressbar">${parseInt(totalPoint)}%</div>
                 </div>
             </div>
             <div class="stat">

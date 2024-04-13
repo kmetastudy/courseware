@@ -1,24 +1,23 @@
-const LessonQuestion = props => {
-    if(props.type == 'lesson'){
-        return `
+const LessonQuestion = ({ questionIndex, correct, studentCount, idx }) => {
+  return `
         <div class="flex">
-            <div class="border rounded-lg m-2 p-2">2</div>
+            <div class="border rounded-lg m-2 p-2">${idx}</div>
             <li class="grid grid-cols-3 flex-1 border rounded-lg m-2 p-2 gap-4">
                 <div class="flex items-center">
-                    <p class="pl-2 m-0">수업 2</p>
+                    <p class="pl-2 m-0">수업</p>
                 </div>
                 <div class="flex items-center gap-4">
-                    <p class="font-bold text-lg m-0">${props.q}번</p>
+                    <p class="font-bold text-lg m-0">${questionIndex}번</p>
                 </div>
                 <div class="flex-col xl:flex-row justify-end text-center gap-4">
-                    <p class="text-sm m-0">정답 ${props.num}/30 명</p>
+                    <p class="text-sm m-0">정답 ${correct}/${studentCount} 명</p>
                 </div>
             </li>
         </div>
-        `
-    }
-    if(props.type == 'test'){
-        return `
+        `;
+
+  if (props.type == "test") {
+    return `
         <div class="flex">
             <div class="border rounded-lg m-2 p-2">1</div>
             <li class="grid grid-cols-3 flex-1 justify-between items-center border rounded-lg m-2 p-2 gap-4">
@@ -33,8 +32,8 @@ const LessonQuestion = props => {
                 </div>
             </li>
         </div>
-        `
-    }
-}
+        `;
+  }
+};
 
-export default LessonQuestion
+export default LessonQuestion;
