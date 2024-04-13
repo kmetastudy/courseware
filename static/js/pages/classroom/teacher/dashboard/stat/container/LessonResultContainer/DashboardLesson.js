@@ -1,6 +1,6 @@
 import Component from "../../core/Component.js";
 import { statStore } from "../../StatStore.js";
-
+import { MtuIcon } from "../../../../../../../core/mtu/icon/mtu-icon.js";
 import DashboardLessonView from "./DashboardLessonView.js";
 import SectionChange from "../../layout/organisms/SectionChange.js";
 
@@ -11,15 +11,28 @@ export default class DashboardLesson extends Component {
 
   mounted() {
     const { selectedSection } = this;
+    const { studentCount } = this._props;
+
+    const $sectionStatus = this.$target.querySelector('[data-component="section-status"]');
+    const $sectionEmpty = this.$target.querySelector('[data-component="section-empty"]');
+
+    if (!studentCount) {
+      $sectionStatus.classList.add("hidden");
+      $sectionEmpty.classList.remove("hidden");
+      return;
+    }
+
+    $sectionStatus.classList.remove("hidden");
+    $sectionEmpty.classList.add("hidden");
 
     const $sectionChange = this.$target.querySelector('[data-component="section-change"]');
     const $sectionResult = this.$target.querySelector('[data-component="section-result"]');
 
-    const { seq, todayLessonResult, correct, wrong, etc } = selectedSection;
+    const { seq, todayChartData, correct, wrong, fixed, notStarted, categories, groups } = selectedSection;
 
-    $sectionChange.innerHTML = SectionChange({ seq, todayLessonResult });
+    $sectionChange.innerHTML = SectionChange({ seq, todayChartData });
 
-    var options = {
+    const options = {
       series: [
         {
           name: "정답",
@@ -30,8 +43,12 @@ export default class DashboardLesson extends Component {
           data: wrong,
         },
         {
+          name: "오답완료",
+          data: fixed,
+        },
+        {
           name: "미응시",
-          data: etc,
+          data: notStarted,
         },
       ],
       chart: {
@@ -57,24 +74,27 @@ export default class DashboardLesson extends Component {
         },
       ],
       xaxis: {
-        categories: ["Q1", "Q2", "Q1", "Q2", "Q1", "Q2", "Q1", "Q2"],
+        // categories: ["Q1", "Q2", "Q1", "Q2", "Q1", "Q2", "Q1", "Q2"],
+        categories,
         group: {
           style: {
             fontSize: "10px",
             fontWeight: 700,
           },
-          groups: [
-            { title: "수업1", cols: 2 },
-            { title: "수업2", cols: 2 },
-            { title: "수업3", cols: 2 },
-            { title: "수업4", cols: 2 },
-          ],
+          groups,
+          // groups: [
+          //   { title: "수업1", cols: 2 },
+          //   { title: "수업2", cols: 2 },
+          //   { title: "수업3", cols: 2 },
+          //   { title: "수업4", cols: 2 },
+          // ],
         },
       },
       yaxis: {
         type: "numeric",
         min: 0,
-        max: 30,
+        // max: 30,
+        max: studentCount,
         tickAmount: 3,
       },
       fill: {
@@ -91,43 +111,55 @@ export default class DashboardLesson extends Component {
       },
     };
 
-    var chart = new ApexCharts($sectionResult, options);
+    const chart = new ApexCharts($sectionResult, options);
     chart.render();
-
-    // new LessonResult($lessonResult, {})
   }
 
   setEvent() {
     this.addEvent("click", ".selectSection", ({ target }) => {
-      // console.log(target.closest('[data-seq]').dataset.seq)
-      this.selectSectionListener(target.closest("[data-seq]").dataset.seq);
+      const selectedSection = parseInt(target.closest("[data-seq]").dataset.seq);
+
+      // this.selectSectionListener(target.closest("[data-seq]").dataset.seq);
+      this.selectSectionListener(selectedSection);
     });
   }
 
   get selectedSection() {
     const { selectedSection } = statStore.state;
-    const { todayLessonResult } = this._props;
-    console.log(selectedSection);
-    console.log(todayLessonResult);
-    if (todayLessonResult[selectedSection].result?.length === 0) {
-      todayLessonResult[selectedSection].r;
-    }
+    const { todayChartData } = this._props;
 
-    const correct = todayLessonResult[selectedSection].result.map((x) => {
+    const contentResults = todayChartData[selectedSection];
+
+    const correct = contentResults.result.flat().map((x) => {
       return x[0];
     });
-    const wrong = todayLessonResult[selectedSection].result.map((x) => {
+
+    const wrong = contentResults.result.flat().map((x) => {
       return x[1];
     });
-    const etc = todayLessonResult[selectedSection].result.map((x) => {
+
+    const fixed = contentResults.result.flat().map((x) => {
       return x[2];
     });
 
-    return { seq: selectedSection, todayLessonResult, correct, wrong, etc };
+    const notStarted = contentResults.result.flat().map((x) => {
+      return x[3];
+    });
+
+    const categories = [];
+    const groups = [];
+    contentResults.result.forEach((result, idx) => {
+      const { length } = result;
+      groups.push({ title: `수업${idx + 1}`, cols: length });
+      for (let i = 1; i < length + 1; i++) {
+        categories.push(`Q${i}`);
+      }
+    });
+
+    return { seq: selectedSection, todayChartData, correct, wrong, fixed, notStarted, categories, groups };
   }
 
   selectSectionListener(seq) {
-    // console.log(seq)
     statStore.setState({ selectedSection: seq });
   }
 
