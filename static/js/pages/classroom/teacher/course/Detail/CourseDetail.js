@@ -374,13 +374,13 @@ export class CourseDetail {
       const elChapter = elem("li");
       const branches = chapter.child;
       const { length: branchNum } = branches;
-      if (branchNum === 0) {
+      if (!branchNum) {
         const elItem = elem("a", chapter.title);
         elChapter.append(elItem);
       } else {
         const elItemWrapper = elem("details");
 
-        const elItem = elem("summary", chapter.title);
+        const elItem = elem("summary", `${chapter.title} (수업: ${branchNum}개)`);
         elItemWrapper.append(elItem);
 
         const elBranchWrapper = elem("ul");
