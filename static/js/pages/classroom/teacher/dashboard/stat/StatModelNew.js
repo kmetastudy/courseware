@@ -271,7 +271,7 @@ function calculateAverage(array) {
 
   const total = sum(array);
   const average = total / (array.length * 100);
-  console.log(average);
+
   const percent = average * 100;
   return percent;
 }

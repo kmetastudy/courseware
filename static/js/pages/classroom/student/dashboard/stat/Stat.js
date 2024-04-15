@@ -57,11 +57,10 @@ export default class Stat extends Component {
   }
 
   mounted() {
-    const { totalPeriod, completedPeriod, todayPeriod } = this._model.getPreiodInfo();
-    const totalProgress = this._model.getAverage("progress");
-    const totalPoint = this._model.getAverage("point");
+    const totalProgress = this._model.getAverageUpToToday("progress");
+    const totalPoint = this._model.getAverageUpToToday("point");
 
-    const { total, completed, incomplete } = this._model.getResultProgressInfo();
+    const { totalPeriod, completedPeriod, todayPeriod } = this._model.getPeriodInfo();
 
     const todayChapter = this._model.getTodayChapter(); // 오늘 차시에 해당하는 챕터 ({id, type:0, title:"", ...})
 
@@ -77,7 +76,7 @@ export default class Stat extends Component {
 
     new DashboardStat($dashboardStat, { totalProgress, totalPoint, totalPeriod, completedPeriod, todayPeriod });
     new DashboardToday($dashboardToday, { todayScheduler, todayChapter });
-    new DashboardLesson($dashboardLesson, { todayLessonResult: todayStudyResults });
+    // new DashboardLesson($dashboardLesson, { todayLessonResult: todayStudyResults });
   }
 
   totalAverage(studentStat) {

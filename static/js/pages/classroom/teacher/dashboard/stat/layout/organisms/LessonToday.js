@@ -1,7 +1,6 @@
 import Lesson from "../molecules/Lesson.js";
 
 const LessonToday = (props) => {
-  console.log(props);
   const { todayScheduler, todayChapter } = props;
   return `
         <div class="flex flex-col justify-between gap-4">
