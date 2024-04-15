@@ -4,6 +4,7 @@ import RankingList from "../../layout/template/RankingList.js";
 import LessonStudentsList from "../../layout/template/LessonStudentsList.js";
 import { EmptyStudent } from "../../layout/template/EmptyStudent.js";
 import { statStore } from "../../StatStore.js";
+import { EmptyCard } from "../../layout/template/EmptyCard.js";
 
 export default class DashboardLessonView extends View {
   constructor(target) {
@@ -13,18 +14,20 @@ export default class DashboardLessonView extends View {
   template({ questionCounts, studentCount, studentStatus, todayChartData }) {
     const { selectedSection } = statStore.state;
     const index = selectedSection ?? 0;
-    const targetStatus = studentStatus[index];
+    const targetStatus = studentStatus[index] ?? [];
+    let questions = [];
+    let status = [];
 
     targetStatus.sort(this.sortAscendingByCorrect);
 
     const numberOfStudentToShow = Math.min(targetStatus.length, 2) ?? 0;
 
-    const status = targetStatus.slice(0, numberOfStudentToShow);
+    status = targetStatus.slice(0, numberOfStudentToShow);
 
     // compose RankingList Data
     // {type, index, correct, questionCounts}
-    const targetChartData = todayChartData[index];
-    const { result } = targetChartData;
+    const targetChartData = todayChartData[index] ?? {};
+    const result = targetChartData?.result ?? [];
     // ADD index to inner array
     const results = result.flat().map((item, questionIndex) => [...item, questionIndex + 1]);
 
@@ -34,7 +37,7 @@ export default class DashboardLessonView extends View {
 
     const slicedResults = results.slice(0, numberOfQuestionToShow);
     const CORRECT_INDEX = 0;
-    const questions = slicedResults.map((result) => {
+    questions = slicedResults.map((result) => {
       const correct = result[CORRECT_INDEX];
       const questionIndex = result.at(-1);
       return { questionIndex, correct, studentCount };
@@ -50,6 +53,10 @@ export default class DashboardLessonView extends View {
             </div>
             <div class="p-8 pt-0 min-h-[300px] xl:min-h-[400px] gap-4">
                 ${EmptyStudent()}
+                ${EmptyCard({
+                  title: "오늘 수업이 없습니다",
+                  content: "오늘 진행할 수업이 없습니다. 일정을 확인해보세요!",
+                })}
                 <div class="p-2 flex" data-component="section-status">
                     <div class="flex-1 flex flex-col gap-2">
                         <div data-component="section-change"></div>

@@ -10,17 +10,23 @@ export default class DashboardLesson extends Component {
   }
 
   mounted() {
-    const { selectedSection } = this;
-    const { studentCount } = this._props;
+    // const { selectedSection } = this;
+    const { studentCount, todayChartData: charts } = this._props;
 
     const $sectionStatus = this.$target.querySelector('[data-component="section-status"]');
     const $sectionEmpty = this.$target.querySelector('[data-component="section-empty"]');
+    const $sectionEmptyLesson = this.$target.querySelector('[data-component="empty-card"]');
 
     if (!studentCount) {
       $sectionStatus.classList.add("hidden");
       $sectionEmpty.classList.remove("hidden");
       return;
+    } else if (charts.length === 0) {
+      $sectionStatus.classList.add("hidden");
+      $sectionEmptyLesson.classList.remove("hidden");
+      return;
     }
+    const { selectedSection } = this;
 
     $sectionStatus.classList.remove("hidden");
     $sectionEmpty.classList.add("hidden");

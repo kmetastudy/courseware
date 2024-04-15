@@ -10,6 +10,17 @@ export default class DashboardTodayView extends View {
   template(state) {
     const { todayScheduler, todayChapter, completedStudents, inProgressStudents, notStartedStudents } = state;
 
+    if (todayScheduler.length === 0) {
+      return `
+      <div class="card-body grow-0">
+        <h2 class="card-title">오늘 수업</h2>
+      </div>
+      <div class="p-8 pt-0 flex flex-col gap-8 font-bold font-xl text-wrap" data-component="empty-today-lesson">
+        오늘 진행할 수업이 없습니다
+      </div>
+        `;
+    }
+
     return `
             <div class="card-body grow-0">
                 <h2 class="card-title">오늘 수업</h2>
