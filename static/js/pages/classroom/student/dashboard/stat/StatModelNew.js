@@ -125,7 +125,7 @@ export class StatModelNew extends Model {
 
 function getTodayPeriod(property) {
   const todayProperty = property.find(({ date }) => isToday(date));
-  return todayProperty.period;
+  return todayProperty?.period;
 }
 
 function filterUntilToday(property) {

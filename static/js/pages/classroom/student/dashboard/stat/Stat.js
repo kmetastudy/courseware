@@ -76,7 +76,7 @@ export default class Stat extends Component {
 
     new DashboardStat($dashboardStat, { totalProgress, totalPoint, totalPeriod, completedPeriod, todayPeriod });
     new DashboardToday($dashboardToday, { todayScheduler, todayChapter });
-    new DashboardLesson($dashboardLesson, { todayLessonResult: todayStudyResults });
+    // new DashboardLesson($dashboardLesson, { todayLessonResult: todayStudyResults });
   }
 
   totalAverage(studentStat) {
