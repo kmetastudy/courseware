@@ -1,7 +1,11 @@
 import { isNumber, isHTMLNode } from "../../../../../core/utils/type";
+import { classNames } from "../../../../../core/utils/class-names";
 import { TextOverflowTooltip } from "../../../../../core/component/FloatingUI/TextOverflowTooltip/TextOverflowTooptip";
 import { extract, extracts } from "../../../../../core/utils/array";
+import { removeChildNodes } from "../../../../../core/utils/dom";
+import { CourseStudyModel } from "./CourseStudyModel";
 import elem from "../../../../../core/utils/elem/elem";
+import { mtoEvents } from "../../../../../core/utils/mto-events";
 
 import { MtuIcon } from "../../../../../core/mtu/icon/mtu-icon";
 
@@ -19,7 +23,11 @@ export class SideCourseStudy {
   };
 
   constructor({ onSideItemClick }) {
+    this.model = new CourseStudyModel();
     this.onSideItemClick = onSideItemClick;
+
+    this.chapterNodeMap = null;
+    this.branchNodeMap = null;
 
     this.courseId = undefined;
     this.selectedItem = null;
@@ -27,9 +35,9 @@ export class SideCourseStudy {
     this.headerTitle = "뒤로가기";
 
     this.elItems = null;
-    this.elContentItems = [];
 
     this.create();
+    this.initEvents();
   }
 
   create() {
@@ -54,6 +62,31 @@ export class SideCourseStudy {
     this.elThis.append(this.elHeader, this.elTitle, this.elMenu);
   }
 
+  initEvents() {
+    mtoEvents.on("onClassStudyResultUpdate", this.handleUpdate.bind(this));
+    mtoEvents.on("OnChangeProgressPoint", this.handleChangeProgressPoint.bind(this));
+  }
+
+  handleUpdate(studyResult) {
+    this.model.setState({ studyResult });
+  }
+
+  handleChangeProgressPoint({ point, progress, content_id } = {}) {
+    const contentId = content_id;
+    if (!this.branchNodeMap.has(contentId)) {
+      return;
+    }
+
+    const elBranch = this.branchNodeMap.get(contentId);
+    const elInfoTitle = elBranch.querySelector(".branch-info");
+
+    elInfoTitle.textContent = `진행도: ${progress ?? 0}% | 점수: ${point ?? 0}점`;
+
+    if (progress === 100) {
+      elBranch.classList.add("focus");
+    }
+  }
+
   activate() {
     this.elThis.classList.remove("hidden");
     this.isActive = true;
@@ -65,126 +98,54 @@ export class SideCourseStudy {
   }
 
   updateData({ studyResult, course }) {
-    const courseTitle = course.title;
-    const schedulers = this.composeSchedulers(studyResult);
-    // const {
-    //   json_data: { property },
-    // } = studyResult;
+    this.chapterNodeMap = new Map();
+    this.branchNodeMap = new Map();
 
+    this.model.setState({ studyResult });
+    this.model.setState({ course });
+
+    const courseTitle = course.title;
     this.setTitle(courseTitle);
 
+    const schedulers = this.model.composeSchedulers(studyResult);
+
     this.renderMenu(schedulers);
+
+    const todayProperties = this.model.getTodayProperties();
+    const todayChapters = this.model.getTodayChapters();
+    const todayChapter = todayChapters[0];
+    const todayPeriod = this.model.getTodayPeriod();
+
+    this.openTodayMenu(todayChapter, todayPeriod);
+    this.startTodayStudy(todayProperties);
   }
 
-  setTitle(title) {
+  setTitle(title = "") {
     this.elTitle.textContent = title;
   }
 
-  composeSchedulers(studyResult) {
-    const {
-      json_data: { property: schedulerList },
-    } = studyResult;
-
-    // const schedulers = extracts(schedulerList, ["id", "period", "type", "date", "title", "show"]);
-
-    const nestedSchedulers = this.composeNestedSchedulers(schedulerList);
-
-    const formattedScheduler = nestedSchedulers.map((scheduler) => this.formatScheduler(scheduler));
-
-    return formattedScheduler;
-  }
-
-  composeNestedSchedulers(schedulers) {
-    const nestedSchedulers = [];
-
-    let currentPeriod = 0;
-
-    const { length } = schedulers;
-
-    for (let i = 0; i < length; i++) {
-      const scheduler = schedulers[i];
-      const { type, period, date } = scheduler;
-
-      // chapter
-      if (type === 0) {
-        const title = scheduler.title;
-        const child = [];
-        nestedSchedulers.push({ title, child });
-
-        currentPeriod = period;
-        continue;
-      }
-
-      // 차시
-      if (period !== currentPeriod) {
-        const title = `${period} 차시`;
-        const dateTitle = this.utcToLocalString(date) ?? date;
-        const branchCount = schedulers.filter((item) => item.date === date).length;
-
-        nestedSchedulers.at(-1)?.child?.push({ title, date, dateTitle, period, branchCount, child: [] });
-
-        currentPeriod = period;
-      }
-
-      // branch
-      const id = scheduler.id;
-      const title = scheduler.title;
-      const typeString = SideCourseStudy.TYPE_CONTENT_KOR[type];
-      const typeTitle = typeString ? `유형: ${typeString}` : "";
-
-      nestedSchedulers
-        .at(-1)
-        ?.child?.at(-1)
-        ?.child?.push({ ...scheduler, typeTitle });
-    }
-
-    return nestedSchedulers;
-  }
-
-  formatScheduler(scheduler) {
-    const { child } = scheduler;
-    if (child.length === 0) {
-      scheduler.disabled = true;
-      return scheduler;
-    }
-
-    const startDate = child.at(0)?.dateTitle;
-    const endDate = child.at(-1)?.dateTitle;
-    const period = child.length;
-
-    let date;
-    if (startDate && endDate) {
-      date = `${startDate} - ${endDate}`;
-    } else {
-      date = "";
-    }
-
-    scheduler.disabled = false;
-    scheduler.date = date;
-    scheduler.period = period;
-
-    return scheduler;
-  }
-
   renderMenu(schedulers) {
-    this.elChapters = [];
-    this.elPeriods = [];
-    this.elBranches = [];
+    removeChildNodes(this.elMenu);
 
-    const elChapters = schedulers.map((scheduler) => this.createChapter(scheduler));
+    const elChapters = [];
+    schedulers.forEach((scheduler) => {
+      const elChapter = this.createChapter(scheduler);
+      elChapters.push(elChapter);
+      this.chapterNodeMap.set(scheduler.id, elChapter);
+    });
 
     this.elMenu.append(...elChapters);
-
-    this.elChapters = elChapters;
   }
 
   createChapter(scheduler) {
-    const { title, child, disabled } = scheduler;
+    const { title, child, disabled, completed } = scheduler;
 
     if (child.length > 0 && disabled !== true) {
-      const elChapter = elem("li", { on: { click: this.handleToggle.bind(this) } });
+      const elChapter = elem("li", {
+        on: { click: this.handleToggle.bind(this) },
+      });
 
-      const elTitle = elem("span", { class: "menu-dropdown-toggle" }, title);
+      const elTitle = elem("span", { class: classNames("menu-dropdown-toggle", { focus: completed }) }, title);
 
       const elPeriodContainer = elem("ul", { class: "menu-dropdown" });
 
@@ -193,24 +154,25 @@ export class SideCourseStudy {
       const elPeriods = child.map((child) => this.createPeriod(child));
       elPeriodContainer.append(...elPeriods);
 
-      this.elPeriods = elPeriods;
-
       return elChapter;
     }
   }
 
   createPeriod(periodData) {
-    const { title, dateTitle, child, disabled } = periodData;
+    const { title, dateTitle, child, disabled, completed, period } = periodData;
     if (child.length > 0 && disabled !== true) {
-      const elPeriod = elem("li", { on: { click: this.handleToggle.bind(this) } });
+      const elPeriod = elem("li", {
+        "data-period": period,
+        on: { click: this.handleToggle.bind(this) },
+      });
 
-      const elToggle = elem("span", { class: "menu-dropdown-toggle" });
+      const elToggle = elem("span", { class: classNames("menu-dropdown-toggle", { focus: completed }) });
 
       const elTitleContainer = elem("a", { class: "grid-flow-row" });
       elToggle.append(elTitleContainer);
 
       const elPeriodTitle = elem("p", { class: "mb-0" }, title);
-      const elDateTitle = elem("p", { class: "mb-0 text-xs  font-bold text-base-content/50" }, dateTitle);
+      const elDateTitle = elem("p", { class: "mb-0 text-xs font-bold text-base-content/50" }, dateTitle);
       elTitleContainer.append(elPeriodTitle, elDateTitle);
 
       const elBranchContainer = elem("ul", { class: "menu-dropdown" });
@@ -221,85 +183,47 @@ export class SideCourseStudy {
 
       elBranchContainer.append(...elBranches);
 
-      this.elBranches = elBranches;
-
       return elPeriod;
     }
 
-    const elPeriod = elem("li");
+    const elPeriod = elem("li", { "data-period": period });
 
     const elTitle = elem("a", { class: "grid-flow-row" });
     elPeriod.append(elTitle);
 
     const elPeriodTitle = elem("p", { class: "mb-0 text-sm" }, title);
-    const elDateTitle = elem("p", { class: "mb-0 text-xs  font-bold text-base-content/50" }, dateTitle);
+    const elDateTitle = elem("p", { class: "mb-0 text-xs font-bold text-base-content/50" }, dateTitle);
     elTitle.append(elPeriodTitle, elDateTitle);
 
     return elPeriod;
   }
 
   createBranch(branchData) {
-    const { title, typeTitle } = branchData;
+    const { title, typeTitle, progress, point, completed, id } = branchData;
 
-    const elBranch = elem("li", { on: { click: this.handleItemClick.bind(this, branchData) } });
+    const elBranch = elem("li", {
+      class: classNames({ focus: completed }),
+      on: { click: this.handleItemClick.bind(this, branchData) },
+    });
 
     const elTitleContainer = elem("a", { class: "grid-flow-row" });
     elBranch.append(elTitleContainer);
 
     const elTitle = elem("p", { class: "mb-0 text-sm overflow-hidden whitespace-nowrap text-ellipsis" }, title);
-    const elTypeTitle = elem("p", { class: "mb-0 text-xs  font-bold text-base-content/50" }, typeTitle);
-    elTitleContainer.append(elTitle, elTypeTitle);
+
+    const elInfoTitle = elem(
+      "p",
+      { class: "branch-info mb-0 text-xs font-bold text-base-content/50" },
+      `진행도: ${progress ?? 0}% | 점수: ${point ?? 0}점`,
+    );
+    elTitleContainer.append(elTitle, elInfoTitle);
 
     TextOverflowTooltip({ targetElement: elBranch, textElement: elTitle, content: title });
 
+    this.branchNodeMap.set(id, elBranch);
+
     return elBranch;
   }
-
-  // createContentItem(content) {
-  //   const { title, type: contentType, units } = content;
-
-  //   const elContentItem = elem("li", { on: { click: this.handleItemClick.bind(this, content) } });
-
-  //   const elContainer = elem("a", { class: "flex flex-col" });
-  //   elContentItem.append(elContainer);
-
-  //   const elTextContainer = elem("div", { class: "overflow-hidden" });
-  //   elContainer.append(elTextContainer);
-
-  //   const elContentTitle = elem("span", { class: "text-ellipsis text-xs" }, title);
-
-  //   const infoText = this.composeInfoText(contentType, units);
-  //   const elContentInfo = elem("span", { class: "text-ellipsis text-xs" }, infoText);
-  //   elTextContainer.append(elContentTitle, elContentInfo);
-  //   // elContainer.append(elContentTitle, elContentInfo);
-
-  //   this.elContentItems.push(elContentItem);
-
-  //   return elContentItem;
-
-  //   //
-  // }
-
-  // composeInfoText(contentType, units) {
-  //   const contentTypeString = this.formatContentType(contentType);
-
-  //   const elementTypes = extract(units, "type").flat();
-
-  //   const questionNum = this.countQuestion(elementTypes);
-  //   const videoNum = this.countVideo(elementTypes);
-
-  //   let infoText = `유형: ${contentTypeString}`;
-
-  //   if (questionNum) {
-  //     infoText += ` 문제: ${questionNum}`;
-  //   }
-
-  //   if (videoNum) {
-  //     infoText += ` 비디오: ${videoNum}`;
-  //   }
-
-  //   return infoText;
-  // }
 
   handleItemClick(content, evt) {
     evt.stopPropagation();
@@ -311,6 +235,7 @@ export class SideCourseStudy {
     }
 
     this.changeItemFocus(selectedItem);
+    this.selectedItem = selectedItem;
 
     if (this.onSideItemClick) {
       this.onSideItemClick(content);
@@ -328,29 +253,80 @@ export class SideCourseStudy {
   }
 
   changeItemFocus(selectedItem) {
-    // this.elItems.forEach((elItem) => elItem.firstElementChild.classList.remove("focus"));
-    // this.elContentItems.forEach((elItem) => elItem.firstElementChild.classList.remove("focus"));
-    // selectedItem.firstElementChild.classList.add("focus");
+    if (!this.selectedItem) {
+      selectedItem.firstChild.classList.add("focus");
+      return;
+    }
+
+    this.selectedItem.firstChild.classList.remove("focus");
+
+    selectedItem.firstChild.classList.add("focus");
+  }
+
+  openTodayMenu(todayChapter, todayPeriod) {
+    const { id } = todayChapter;
+
+    const elChapter = this.chapterNodeMap.get(id);
+
+    if (!elChapter) {
+      return;
+    }
+
+    const elPeriod = elChapter.querySelector(`[data-period="${todayPeriod}"]`);
+
+    this.openMenu(elChapter);
+    this.openMenu(elPeriod);
+  }
+
+  startTodayStudy(todayProperties) {
+    const property = todayProperties.filter(({ completed }) => !completed)[0] ?? todayProperties[0];
+
+    if (!property) {
+      return;
+    }
+
+    const selectedItem = this.branchNodeMap.get(property.id);
+
+    this.changeItemFocus(selectedItem);
+
+    this.selectedItem = selectedItem;
+
+    if (this.onSideItemClick) {
+      this.onSideItemClick(property);
+    }
+  }
+
+  /**
+   * open Menu
+   * https://daisyui.com/components/menu/#collapsible-submenu-that-works-with-class-names
+   * @param {HTMLLIElement} parent
+   */
+  openMenu(parent) {
+    const children = parent.children;
+
+    const { length } = children;
+    for (let i = 0; i < length; i++) {
+      const child = children[i];
+      child.classList.add("menu-dropdown-show");
+    }
+  }
+
+  /**
+   * close Menu
+   * https://daisyui.com/components/menu/#collapsible-submenu-that-works-with-class-names
+   * @param {HTMLLIElement} parent
+   */
+  closeMenu(parent) {
+    const children = parent.children;
+
+    const { length } = children;
+    for (let i = 0; i < length; i++) {
+      const child = children[i];
+      child.classList.remove("menu-dropdown-show");
+    }
   }
 
   getElement() {
     return this.elThis;
-  }
-
-  // ========= utils =========
-  utcToLocalString(isoString, format = "YYYY-MM-DD") {
-    return dayjs.utc(isoString).local().format(format);
-  }
-
-  formatContentType(type) {
-    return SideCourseStudy.TYPE_CONTENT_KOR[type] ?? "콘텐츠";
-  }
-
-  countVideo(types) {
-    return types.filter((type) => type === SideCourseStudy.TYPE_ELEMENT_STRING.video).length;
-  }
-
-  countQuestion(types) {
-    return types.filter((type) => type === SideCourseStudy.TYPE_ELEMENT_STRING.video).length;
   }
 }
