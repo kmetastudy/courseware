@@ -222,18 +222,22 @@ body {
   height:64px;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  justify-items: center;
   align-items: center;
 }
 
-.nav p {
-  font-size: 1.25rem;
-  line-height: 1.75rem;
-  font-weight: 700;
+.mtm-nav-logo{
+  justify-self: start;
+}
+
+.nav-lms-logo {
+  height:36px;
 }
 
 .nav .btn {
+  justify-self: end;
   display: inline-flex;
   height: 3rem;
   min-height: 3rem;

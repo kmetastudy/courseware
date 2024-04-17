@@ -15,7 +15,7 @@ CourseCardManager.prototype.create = function () {
 
   var $elCard = $(`<div class="flex flex-row md:flex-col border rounded-md lg:w-[300px] lg:fixed">
 
-                      <img class="p-2 w-1/2 h-fit md:w-full" src="/static/img/thumnail/${
+                      <img class="p-2 w-1/2 md:w-full" src="/static/img/thumnail/${
                         this.data.thumnail
                       }.png">
 
