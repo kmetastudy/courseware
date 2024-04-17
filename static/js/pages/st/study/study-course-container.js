@@ -160,7 +160,7 @@ export class StudyCourseContainer {
   urlGetCourse(id) {
     try {
       return axios
-        .get(`../cp/api/course_n/${id}/`)
+        .get(`/cp/api/course_n/${id}/`)
         .then((res) => {
           if (res.data) {
             return res.data;
@@ -181,7 +181,7 @@ export class StudyCourseContainer {
       };
 
       return axios
-        .get("../st/api/study_result/properties/", {
+        .get("/st/api/study_result/properties/", {
           params: param,
         })
         .then((res) => {
@@ -201,7 +201,7 @@ export class StudyCourseContainer {
       };
 
       return axios
-        .get("../st/api/demo_study_result/properties/", {
+        .get("/st/api/demo_study_result/properties/", {
           params: param,
         })
         .then((res) => {
@@ -217,7 +217,7 @@ export class StudyCourseContainer {
     data.csrfmiddlewaretoken = csrftoken;
     const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
 
-    navigator.sendBeacon("../st/api/study_result/information/", blob);
+    navigator.sendBeacon("/st/api/study_result/information/", blob);
   }
   ////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////// API  //////////////////////////////////////////

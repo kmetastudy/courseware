@@ -1,0 +1,64 @@
+{% extends "_main/base_basic.html" %} {% block content %}
+{% block css %}
+<style>
+.nav {
+    background-color: white !important;
+}
+.mtm-nav {
+    background-color: white;
+}
+.mtm-nav-logo img {
+    content: url(/static/img/school/logoBasic.png);
+    height: 36px;
+}
+.container-right div div div:nth-child(4){
+  display: none;
+}
+</style>
+{% endblock %}
+<main id="main" class="w-full flex justify-center">
+  <div class="course_body w-full">
+    <header class="course_header w-full flex justify-center bg-blue-800"></header>
+    <main class="course_main w-full flex justify-center">
+      <div class="container p-2 xl:p-6 w-[1200px] flex flex-col lg:flex-row justify-center">
+        <div class="container-left flex-1">
+          <div class="course_description m-2 p-2 border rounded-md">
+            <p class="p-2">강좌 소개</p>
+            <div class="desc_category p-2">
+              <!-- 카테고리 분류 -->
+            </div>
+            <div class="desc_content p-4 text-[16px]">
+              <!-- 코스 설명 -->
+            </div>
+            <div class="desc_preview">
+              <div class="desc_preview_title mt-8 flex justify-center p-4 text-[24px] md:text-[28px]">미리보기</div>
+              <div class="desc_preview_thumbnail flex justify-center p-2 md:p-16"></div>
+              <div class="desc_preview_content"></div>
+            </div>
+          </div>
+          <div class="course_chapter m-2 p-2 flex-col border rounded-md cursor-pointer">
+            <p class="p-2 text-[16px]">코스 과정</p>
+            <!-- 코스 목차 -->
+          </div>
+        </div>
+        <div class="container-right m-2 lg:w-[300px]">
+          <!-- 코스 카드 -->
+        </div>
+      </div>
+    </main>
+  </div>
+</main>
+{% endblock %} {% block extra-script %}
+<script>
+  // var csrftoken = "{{csrf_token}}";
+
+  // var context = JSON.parse("{{ context|escapejs }}");
+  var data = JSON.parse("{{ options|escapejs }}");
+
+  window.addEventListener("DOMContentLoaded", function () {
+    // console.log("mainlibrary: ", mainlibrary);
+    mainlibrary.CourseDetailOnReady(context, data);
+  });
+</script>
+
+{% endblock %}

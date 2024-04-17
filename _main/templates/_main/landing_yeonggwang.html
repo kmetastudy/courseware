@@ -1,71 +1,17 @@
-{% extends "_main/base.html" %}
+{% extends "_main/base_basic.html" %}
 {% load static %}
-{% block title %}작은학교{% endblock %}
+{% block title %}영광중학교{% endblock %}
 {% block css %}
 <style>
 .nav {
-    background-color: #9FCD36 !important;
+    background-color: white !important;
 }
 .mtm-nav {
-    background-color: #9FCD36;
-}
-.mtm-nav-logo img {
-    content: url(/static/img/school/namdoLogo.svg);
-    height: 36px;
-}
-.btn-expand {
     background-color: white;
 }
-.btn-expand:nth-child(3) img{
-    filter: invert(32%) sepia(46%) saturate(2066%) hue-rotate(195deg) brightness(87%) contrast(105%);
-}
-.btn-expand:nth-child(4) img{
-    filter: invert(32%) sepia(46%) saturate(2066%) hue-rotate(195deg) brightness(87%) contrast(105%);
-}
-.btn-expand p {
-    color:black;
-}
-.btn-expand:hover p {
-    color:black;
-}
-.mtm-nav-left-section svg:nth-child(1) rect {
-    fill: white;
-}
-.mtm-nav-left-section svg:nth-child(1) g path {
-    fill: #0019FF;
-}
-.mtm-nav-left-section svg:nth-child(1) text {
-    fill: black;
-}
-.mtm-nav-left-section svg:nth-child(2) rect {
-    fill: white;
-}
-.mtm-nav-left-section svg:nth-child(2) g path {
-    fill: #0019FF;
-}
-.mtm-nav-left-section svg:nth-child(2) text {
-    fill: black;
-}
-.mtm-nav-left-section svg:nth-child(3) rect {
-    fill: white;
-}
-.mtm-nav-left-section svg:nth-child(3) g path {
-    fill: #0019FF;
-}
-.mtm-nav-left-section svg:nth-child(3) text {
-    fill: black;
-}
-.star1:hover path{
-  stroke: none;
-  stroke-width: 2;
-}
-.star2:hover path{
-  stroke: none;
-  stroke-width: 2;
-}
-.star3:hover path{
-  stroke: none;
-  stroke-width: 2;
+.mtm-nav-logo img {
+    content: url(/static/img/school/logoBasic.png);
+    height: 36px;
 }
 .swiper-background1{
     border-radius: 30px;
@@ -83,10 +29,12 @@
     margin-right:0.5rem;
 }
 .swiper-background4{
-    display: none !important;
+    border-radius: 30px;
+    margin-left:0.5rem;
+    margin-right:0.5rem;
 }
 .swiper-background5{
-    display: none !important;
+    display: none;
 }
 .courses_recomend > .course-swiper > .swiper-background2 > div > div:nth-child(3) > div span {
     font-size: 20px !important;;
@@ -100,10 +48,10 @@
 <div class="w-full flex flex-col items-center">
     <div class="landing-swiper w-full overflow-hidden relative">
         <div class="swiper-wrapper ">
-            <div class="swiper-slide cursor-pointer flex justify-center"><img class="py-7 h-[500px] object-contain" src="/static/img/school/banner8.png"></div>
-            <div class="swiper-slide cursor-pointer flex justify-center"><img class="py-7 h-[500px] object-contain" src="/static/img/school/banner5.png"></div>
-            <div class="swiper-slide cursor-pointer flex justify-center"><img class="py-7 h-[500px] object-contain" src="/static/img/school/banner6.png"></div>
-            <div class="swiper-slide cursor-pointer flex justify-center"><img class="py-7 h-[500px] object-contain" src="/static/img/school/banner7.png"></div>
+            <div class="swiper-slide cursor-pointer flex justify-center"><img class="py-7 h-[500px] object-contain" src="/static/img/school/banner11.png"></div>
+            <div class="swiper-slide cursor-pointer flex justify-center"><img class="py-7 h-[500px] object-contain" src="/static/img/school/banner12.png"></div>
+            <div class="swiper-slide cursor-pointer flex justify-center"><img class="py-7 h-[500px] object-contain" src="/static/img/school/banner11.png"></div>
+            <div class="swiper-slide cursor-pointer flex justify-center"><img class="py-7 h-[500px] object-contain" src="/static/img/school/banner12.png"></div>
         </div>
         <div class="py-2 flex justify-end items-center swiper-pagination"></div>
     </div>
@@ -120,27 +68,27 @@
                 <div class="w-full">
                     <div class="post flex items-center cursor-pointer" >
                         <p class="text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg></p>
-                        <p class="flex-1 p-1 text-[12px] truncate" onclick="window.location='https://megacourse.co.kr/post/notice/11/'">메가코스 초등학교 학습 설명서</p>
-                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-02-01</p>
+                        <p class="flex-1 p-1 text-[12px] truncate" onclick="window.location='https://megacourse.co.kr/post/notice/12/'">메가코스 체험 소개영상</p>
+                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-04-09</p>
                     </div>
                     <div class="post flex items-center cursor-pointer" >
                         <p class="text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg></p>
+                        <p class="flex-1 p-1 text-[12px] truncate" onclick="window.location='https://megacourse.co.kr/post/notice/11/'">메가코스 초등학교 학습 설명서</p>
+                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-04-09</p>
+                    </div>
+                    <div class="post flex items-center cursor-pointer">
+                        <p class="text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg></p>
                         <p class="flex-1 p-1 text-[12px] truncate" onclick="window.location='https://megacourse.co.kr/post/notice/10/'">선생님 화면 소개(TC APP)</p>
-                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-01-22</p>
+                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-04-09</p>
                     </div>
                     <div class="post flex items-center cursor-pointer">
                         <p class="text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg></p>
                         <p class="flex-1 p-1 text-[12px] truncate" onclick="window.location='https://megacourse.co.kr/post/notice/9/'">제작자(CP APP) 소개</p>
-                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-01-22</p>
+                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-04-09</p>
                     </div>
                     <div class="post flex items-center cursor-pointer">
                         <p class="text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg></p>
                         <p class="flex-1 p-1 text-[12px] truncate" onclick="window.location='https://megacourse.co.kr/post/notice/8/'">선생님 고민 해결! "메가코스"</p>
-                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-01-22</p>
-                    </div>
-                    <div class="post flex items-center cursor-pointer">
-                        <p class="text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg></p>
-                        <p class="flex-1 p-1 text-[12px] truncate" onclick="window.location='https://megacourse.co.kr/post/notice/7/'">학교별 맞춤 제작해 드리는 코스웨어 "메가코스"</p>
                         <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-01-22</p>
                     </div>
                     <!-- {% for list in noticelist %}
@@ -154,35 +102,35 @@
             </div>
             <div class="mt-2 p-4 w-full md:w-1/2 h-[200px] rounded-[30px] border">
                 <div class="pb-2 flex justify-between border-b-2 border-gray-400">
-                    <p class="text-[12px] md:text-[16px]">교육청 게시판</p>
-                    <p class="cursor-pointer text-[12px]" >더보기 ></p>
+                    <p class="text-[12px] md:text-[16px]">학교 공지사항</p>
+                    <p class="cursor-pointer text-[12px]" onclick="window.location='https://school.gyo6.net/yeonggwang/na/ntt/selectNttList.do?mi=191419&bbsId=70584'">더보기 ></p>
                 </div>
                 
                 <div class="w-full">
-                    <div class="post flex items-center cursor-pointer" >
+                    <div class="post flex items-center cursor-pointer" onclick="window.location='https://school.gyo6.net/yeonggwang/na/ntt/selectNttInfo.do?mi=191419&bbsId=70584&nttSn=16110618'">
                         <p class="text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg></p>
-                        <p class="flex-1 p-1 text-[12px] truncate">2024년 초.중등 신규교사 임용예정자 직무연수 I 필수 참석 안내</p>
-                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-02-05</p>
+                        <p class="flex-1 p-1 text-[12px] truncate">2024년도 한국어수업 강사 위촉 공고</p>
+                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-04-08</p>
                     </div>
-                    <div class="post flex items-center cursor-pointer" >
+                    <div class="post flex items-center cursor-pointer" onclick="window.location='https://school.gyo6.net/yeonggwang/na/ntt/selectNttInfo.do?mi=191419&bbsId=70584&nttSn=16110533'">
                         <p class="text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg></p>
-                        <p class="flex-1 p-1 text-[12px] truncate">안전점검의 날 홍보 자료(2월)</p>
-                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-01-30</p>
+                        <p class="flex-1 p-1 text-[12px] truncate">학교폭력, 사이버 폭력, 사이버도박 예방 표어 공모전</p>
+                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-04-08</p>
                     </div>
-                    <div class="post flex items-center cursor-pointer">
+                    <div class="post flex items-center cursor-pointer"  onclick="window.location='https://school.gyo6.net/yeonggwang/na/ntt/selectNttInfo.do?mi=191419&bbsId=70584&nttSn=16110342'">
                         <p class="text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg></p>
-                        <p class="flex-1 p-1 text-[12px] truncate">2024학년도 학교법인 춘광학원 중등신규교사 임용후보자 선정경쟁시험 최종 합격자 공고</p>
-                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-01-26</p>
+                        <p class="flex-1 p-1 text-[12px] truncate">2024학년도 영광중학교 평가계획</p>
+                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-04-08</p>
                     </div>
-                    <div class="post flex items-center cursor-pointer">
+                    <div class="post flex items-center cursor-pointer" onclick="window.location='https://school.gyo6.net/yeonggwang/na/ntt/selectNttInfo.do?mi=191419&bbsId=70584&nttSn=16104042'">
                         <p class="text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg></p>
-                        <p class="flex-1 p-1 text-[12px] truncate">학교현장 재난유형별 교육·훈련매뉴얼(대설·한파)</p>
-                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-01-25</p>
+                        <p class="flex-1 p-1 text-[12px] truncate">영주 선비고을 마을교사 모집 안내</p>
+                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-04-02</p>
                     </div>
-                    <div class="post flex items-center cursor-pointer">
+                    <div class="post flex items-center cursor-pointer" onclick="window.location='https://school.gyo6.net/yeonggwang/na/ntt/selectNttInfo.do?mi=191419&bbsId=70584&nttSn=16100932'">
                         <p class="text-gray-500"><svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg></p>
-                        <p class="flex-1 p-1 text-[12px] truncate">2024학년도 전학년 교과서 목록</p>
-                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-01-23</p>
+                        <p class="flex-1 p-1 text-[12px] truncate">2024년 제2기 영주시 사이버 화상영어 수강생 모집 안내</p>
+                        <p class="w-[80px] text-[12px] text-center text-gray-500 block">2024-04-01</p>
                     </div>
                     <!-- {% for list in postlist %}
                     <div class="post p-2 flex flex-col md:flex-row items-start md:items-center border-b border-gray-400 cursor-pointer" onclick="window.location.href='/post/news/{{list.pk}}'">
@@ -225,30 +173,18 @@
         <!-- <div class="search w-full flex">
             
         </div> -->
-        <!-- <div class="w-full p-2 sm:w-2/3"><p class="pt-4 self-start text-lg">컨텐츠 리스트<span class="text-sm text-red-400">new</span></p></div>
+        <div class="w-full p-2 sm:w-2/3"><p class="pt-4 self-start text-lg">컨텐츠 리스트<span class="text-sm text-red-400">new</span></p></div>
         
         <div class="w-full p-2 sm:w-2/3 courses_landing">
             
-        </div> -->
+        </div>
 
         <div class="pt-6 px-4 w-full sm:w-2/3 flex items-center"><object type="image/svg+xml" data="/static/assets/Star5.svg"></object><p class="pl-2 text-[28px] sm:text-[32px]">자주하는 질문 FAQ</p></div>
         <div class="pb-6 p-4 w-full sm:w-2/3">
             <div class="py-4 w-full">
-                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">01. 회원가입 & 로그인</div>
-                <div class="p-2 border hidden"><img src="/static/img/landing/FAQ1.png"></div>
-            </div>
-            <div class="py-4 w-full">
-                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">02. 포인트 충전 방법</div>
-                <div class="p-2 border hidden"><img src="/static/img/landing/FAQ2.png"></div>
-            </div>
-            <div class="py-4 w-full">
-                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">03. 영상 후 문제 (나노학습)</div>
+                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">01. 영상 후 문제 (나노학습)</div>
                 <!-- <div class="p-2 border hidden"><img src="/static/img/landing/FAQ1.png"></div> -->
                 <div class="p-2 pt-[56%] w-full border hidden relative"><iframe class="w-full h-full absolute top-0 left-0" src="https://www.youtube.com/embed/JuQIq43IgZM?si=6G2nwHkSaIY11J_l" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-            </div>
-            <div class="py-4 w-full">
-                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">04. 수료증</div>
-                <div class="p-2 border hidden"><img src="/static/img/landing/FAQ4.png"></div>
             </div>
         </div>
     </div>

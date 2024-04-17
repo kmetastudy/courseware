@@ -98,6 +98,27 @@ var configST = Object.assign({}, config, {
   ],
 });
 
+var configSchool = Object.assign({}, config, {
+  name: "configSchool",
+
+  entry: {
+    school: path.resolve(__dirname, "_st/static/js/school.js"),
+  },
+  output: {
+    path: path.resolve(__dirname, "static/_bundle/school"),
+    library: "schoollibrary",
+    filename: "school-bundle.js",
+    libraryTarget: "var",
+    clean: true,
+    // assetModuleFilename: '[name][ext]',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "school-bundle.css",
+    }),
+  ],
+});
+
 var configUser = Object.assign({}, config, {
   name: "configUser",
 
@@ -322,6 +343,7 @@ module.exports = [
   configCP,
   configCM,
   configST,
+  configSchool,
   configUser,
   configDashboard,
   configStats,

@@ -135,7 +135,7 @@ export class StudyCourseBuilder {
       formData.append("content_id", content_id);
       formData.append("content_type", content_type);
 
-      return await axios.post("../st/get-content/", formData).then((res) => {
+      return await axios.post("/st/get-content/", formData).then((res) => {
         if (res.data.result) {
           return res.data.result;
         }

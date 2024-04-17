@@ -15,7 +15,7 @@ CourseCardManager.prototype.create = function () {
 
   var $elCard = $(`<div class="flex flex-row md:flex-col border rounded-md lg:w-[300px] lg:fixed">
 
-                      <img class="p-2 w-1/2 h-fit md:w-full" src="../../../../static/img/thumnail/${
+                      <img class="p-2 w-1/2 h-fit md:w-full" src="/static/img/thumnail/${
                         this.data.thumnail
                       }.png">
 
@@ -43,7 +43,7 @@ CourseCardManager.prototype.create = function () {
     `<button class="rounded-lg"><i class="ri-shopping-cart-2-line text-[24px] hover:text-blue-800"></i></button>`,
   );
   var $elButton = $(
-    `<button class="mx-2 p-2 flex-1 rounded-lg bg-blue-800 text-white" onclick='window.location.href="/st/?course_id=${this.data.courseId}"'>체험하기</button>`,
+    `<button class="mx-2 p-2 flex-1 rounded-lg bg-blue-800 text-white" onclick='window.location.href="../../../../st/?course_id=${this.data.courseId}"'>체험하기</button>`,
   );
 
   $elCart.on("click", () => {

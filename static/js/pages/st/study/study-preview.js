@@ -79,7 +79,7 @@ export class StudyPreview extends StudyCourseBuilder {
   urlGetCourse(courseId) {
     try {
       return axios
-        .get(`../../../../cp/api/course_n/${courseId}/`)
+        .get(`/cp/api/course_n/${courseId}/`)
         .then((res) => {
           if (res.data) {
             return res.data;
@@ -98,7 +98,7 @@ export class StudyPreview extends StudyCourseBuilder {
       formData.append("content_id", content_id);
       formData.append("content_type", content_type);
 
-      return axios.post("../../../../st/get-content/", formData).then((res) => {
+      return axios.post("/st/get-content/", formData).then((res) => {
         if (res.data.result) {
           return res.data.result;
         }
