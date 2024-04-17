@@ -1,7 +1,6 @@
-import { isNumber, isHTMLNode } from "../../../../../core/utils/type";
+import { isArray, isHTMLNode } from "../../../../../core/utils/type";
 import { classNames } from "../../../../../core/utils/class-names";
 import { TextOverflowTooltip } from "../../../../../core/component/FloatingUI/TextOverflowTooltip/TextOverflowTooptip";
-import { extract, extracts } from "../../../../../core/utils/array";
 import { removeChildNodes } from "../../../../../core/utils/dom";
 import { CourseStudyModel } from "./CourseStudyModel";
 import elem from "../../../../../core/utils/elem/elem";
@@ -116,8 +115,10 @@ export class SideCourseStudy {
     const todayChapter = todayChapters[0];
     const todayPeriod = this.model.getTodayPeriod();
 
-    this.openTodayMenu(todayChapter, todayPeriod);
-    this.startTodayStudy(todayProperties);
+    if (this.hasTodayStudy(todayProperties)) {
+      this.openTodayMenu(todayChapter, todayPeriod);
+      this.startTodayStudy(todayProperties);
+    }
   }
 
   setTitle(title = "") {
@@ -156,6 +157,13 @@ export class SideCourseStudy {
 
       return elChapter;
     }
+
+    const elChapter = elem("li", { class: "disabled" });
+    const elTitle = elem("a", title);
+
+    elChapter.append(elTitle);
+
+    return elChapter;
   }
 
   createPeriod(periodData) {
@@ -324,6 +332,11 @@ export class SideCourseStudy {
       const child = children[i];
       child.classList.remove("menu-dropdown-show");
     }
+  }
+
+  hasTodayStudy(properties) {
+    console.log(properties);
+    return isArray(properties) && properties.length > 0;
   }
 
   getElement() {
