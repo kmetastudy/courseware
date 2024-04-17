@@ -1,20 +1,19 @@
-import { extract } from "../../../../../core/utils/array";
-
-import { store } from "../../Store.js";
+import { mtoEvents } from "../../../../../core/utils/mto-events.js";
 import { apiClass } from "../../../../../core/api/class";
 import { apiUser } from "../../../../../core/api/user";
 import { apiCp } from "../../../../../core/api/cp";
 
 import Component from "./core/Component.js";
-import { statStore } from "./StatStore.js";
 import StatView from "./StatView.js";
 import StatModel from "./StatModel.js";
+//
+import { statStore } from "./StatStore.js";
+import { store } from "../../Store.js";
 import { StatModelNew } from "./StatModelNew.js";
 
 import DashboardStat from "./container/StatContainer/DashboardStat.js";
 import DashboardToday from "./container/TodayContainer/DashboardToday.js";
-import DashboardLesson from "./container/LessonResultContainer/DashboardLesson.js";
-import { mtoEvents } from "../../../../../core/utils/mto-events.js";
+import { ChapterStatChart } from "./container/ChapterStatChart/ChapterStatChart.js";
 
 export default class Stat extends Component {
   constructor(target, props) {
@@ -22,11 +21,10 @@ export default class Stat extends Component {
     // this._model = new StatModel();
     this._model = new StatModelNew();
     mtoEvents.on("onClassStudyResultUpdate", (data) => {
-      console.log(data);
-      console.log(data.json_data.property);
       this._model.setState("studyResult", data);
       this.mounted();
     });
+
     store.subscribe("userId", this.initState.bind(this));
     store.subscribe("classId", this.initState.bind(this));
     store.subscribe("courseId", this.initState.bind(this));
@@ -49,6 +47,7 @@ export default class Stat extends Component {
     await loadData({ userId, classId, courseId })
       .then((result) => {
         this._model.setState(result);
+        this.result = result;
       })
       .catch((error) => {
         console.log(error);
@@ -66,63 +65,13 @@ export default class Stat extends Component {
 
     const todayScheduler = this._model.getTodayScheduler();
 
-    const todayStudyResults = this._model.getTodayResults();
-    console.log(todayStudyResults);
-
     const $dashboardStat = this.$target.querySelector('[data-component="dashboard-stat"]');
     const $dashboardToday = this.$target.querySelector('[data-component="dashboard-today"]');
-    const $dashboardLesson = this.$target.querySelector('[data-component="dashboard-lesson"]');
-    // const $dashboardChapterChart = this.$target.querySelector('[data-component="dashboard-chapter-chart"]');
+    const $chapterStatChart = this.$target.querySelector('[data-component="dashboard-chapter-stat-chart"]');
 
     new DashboardStat($dashboardStat, { totalProgress, totalPoint, totalPeriod, completedPeriod, todayPeriod });
     new DashboardToday($dashboardToday, { todayScheduler, todayChapter });
-    // new DashboardLesson($dashboardLesson, { todayLessonResult: todayStudyResults });
-  }
-
-  totalAverage(studentStat) {
-    let totalProgress = studentStat.reduce((a, b) => a + b.studentProgress, 0) / studentStat.length;
-    let totalPoint = studentStat.reduce((a, b) => a + b.studentPoint, 0) / studentStat.length;
-
-    return { totalProgress, totalPoint };
-  }
-
-  get allStudentStat() {
-    const { chapterStat, progressStat, pointStat } = this._model.getAllStatByResult();
-    const { totalProgress, totalPoint } = this.totalAverage(progressStat, pointStat);
-  }
-
-  get scheduledCourse() {
-    return this._model.getScheduledCourse();
-  }
-
-  selectStudentListener(seq) {
-    // console.log( seq )
-    statStore.setState({ selectedStudent: seq });
-  }
-
-  get selectedStudent() {
-    const { studentStat } = this._model.getAllStatByResult();
-    const { selectedStudent } = statStore.state;
-
-    // console.log(selectedStudent)
-
-    return studentStat.filter(({ id }) => id == selectedStudent)[0];
-  }
-
-  async selectClass(seq) {
-    await loadData(seq)
-      .then((result) => {
-        this._model.setState(result);
-      })
-      .then(() => {
-        statStore.setState({ selectedClass: seq });
-      });
-  }
-
-  get selectedClass() {
-    const { selectedClass } = statStore.state;
-
-    return selectedClass;
+    new ChapterStatChart({ target: $chapterStatChart, props: this.result });
   }
 }
 
@@ -157,8 +106,6 @@ async function loadData({ userId, classId, courseId }) {
         }
       });
     });
-
-    console.log(data);
 
     return data;
   } catch (error) {
