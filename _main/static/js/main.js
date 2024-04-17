@@ -72,7 +72,7 @@ export function CourseLandingOnReady(context, courses, recommend, title) {
         slidesPerView: 3,
         spaceBetween: 20,
       },
-      1024: {
+      1536: {
         slidesPerView: 4,
         spaceBetween: 20,
       },
