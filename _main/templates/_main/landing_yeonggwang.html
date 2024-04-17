@@ -46,21 +46,21 @@
 {% endblock %}
 {% block content %}
 <div class="w-full flex flex-col items-center">
-    <div class="landing-swiper w-full overflow-hidden relative">
+    <div class="landing-swiper w-full lg:w-2/3 overflow-hidden relative">
         <div class="swiper-wrapper ">
-            <div class="swiper-slide cursor-pointer flex justify-center"><img class="py-7 h-[500px] object-contain" src="/static/img/school/banner11.png"></div>
-            <div class="swiper-slide cursor-pointer flex justify-center"><img class="py-7 h-[500px] object-contain" src="/static/img/school/banner12.png"></div>
-            <div class="swiper-slide cursor-pointer flex justify-center"><img class="py-7 h-[500px] object-contain" src="/static/img/school/banner11.png"></div>
-            <div class="swiper-slide cursor-pointer flex justify-center"><img class="py-7 h-[500px] object-contain" src="/static/img/school/banner12.png"></div>
+            <div class="swiper-slide cursor-pointer flex justify-center"><img class="h-[250px] xl:h-[350px] 2xl:h-[500px] object-cover" src="/static/img/school/banner11.png"></div>
+            <div class="swiper-slide cursor-pointer flex justify-center"><img class="h-[250px] xl:h-[350px] 2xl:h-[500px] object-cover" src="/static/img/school/banner12.png"></div>
+            <div class="swiper-slide cursor-pointer flex justify-center"><img class="h-[250px] xl:h-[350px] 2xl:h-[500px] object-cover" src="/static/img/school/banner11.png"></div>
+            <div class="swiper-slide cursor-pointer flex justify-center"><img class="h-[250px] xl:h-[350px] 2xl:h-[500px] object-cover" src="/static/img/school/banner12.png"></div>
         </div>
         <div class="py-2 flex justify-end items-center swiper-pagination"></div>
     </div>
     <!-- 뉴스 -->
-    <div class="w-full lg:w-[1000px] flex-col items-center">
+    <div class="w-full lg:w-2/3 flex-col items-center">
         <!-- <p class="text-[16px] sm:text-[20px] lg:text-[24px]">메가코스 소식</p> -->
-        <div class="p-2 flex flex-col md:flex-row">
-            <div class="mt-2 mr-2 p-4 w-full md:w-1/2 h-[200px] rounded-[30px] border">
-                <div class="pb-2 flex justify-between border-b-2 border-gray-400">
+        <div class="p-2 lg:p-0 flex flex-col md:flex-row">
+            <div class="mt-2 mr-2 p-4 w-full md:w-1/2 h-[200px] rounded-[30px] border border-[#175CBE]">
+                <div class="pb-2 flex justify-between border-b-2 border-[#175CBE]">
                     <p class="text-[12px] md:text-[16px]">공지사항</p>
                     <p class="cursor-pointer text-[12px]" onclick="window.location='https://megacourse.co.kr/post/notice/'">더보기 ></p>
                 </div>
@@ -100,8 +100,8 @@
                     {% endfor %} -->
                 </div>
             </div>
-            <div class="mt-2 p-4 w-full md:w-1/2 h-[200px] rounded-[30px] border">
-                <div class="pb-2 flex justify-between border-b-2 border-gray-400">
+            <div class="mt-2 p-4 w-full md:w-1/2 h-[200px] rounded-[30px] border border-[#9FCD36]">
+                <div class="pb-2 flex justify-between border-b-2 border-[#9FCD36]">
                     <p class="text-[12px] md:text-[16px]">학교 공지사항</p>
                     <p class="cursor-pointer text-[12px]" onclick="window.location='https://school.gyo6.net/yeonggwang/na/ntt/selectNttList.do?mi=191419&bbsId=70584'">더보기 ></p>
                 </div>
@@ -173,14 +173,14 @@
         <!-- <div class="search w-full flex">
             
         </div> -->
-        <div class="w-full p-2 sm:w-2/3"><p class="pt-4 self-start text-lg">컨텐츠 리스트<span class="text-sm text-red-400">new</span></p></div>
+        <div class="w-full p-2 lg:w-2/3"><p class="pt-4 self-start text-lg">컨텐츠 리스트<span class="text-sm text-red-400">new</span></p></div>
         
-        <div class="w-full p-2 sm:w-2/3 courses_landing">
+        <div class="w-full p-2 lg:w-2/3 courses_landing">
             
         </div>
 
-        <div class="pt-6 px-4 w-full sm:w-2/3 flex items-center"><object type="image/svg+xml" data="/static/assets/Star5.svg"></object><p class="pl-2 text-[28px] sm:text-[32px]">자주하는 질문 FAQ</p></div>
-        <div class="pb-6 p-4 w-full sm:w-2/3">
+        <div class="pt-6 px-4 w-full md:w-2/3 flex items-center"><object type="image/svg+xml" data="/static/assets/Star5.svg"></object><p class="pl-2 text-[28px] sm:text-[32px]">자주하는 질문 FAQ</p></div>
+        <div class="pb-6 p-4 w-full md:w-2/3">
             <div class="py-4 w-full">
                 <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">01. 영상 후 문제 (나노학습)</div>
                 <!-- <div class="p-2 border hidden"><img src="/static/img/landing/FAQ1.png"></div> -->

@@ -9,14 +9,15 @@ export function CourseSwiperUnit(data, key) {
 }
 
 CourseSwiperUnit.prototype.create = function() {
-    var $elCourseUnitList = $(`<div class="swiper-wrapper pb-[90px]">
+
+    var $elCourseUnitList = $(`<div class="swiper-wrapper lg:pb-[90px]">
                                 </div>`)
     
     var cnt = 0
     this.data.forEach(content => {
         
         if (this.options.key == 'etc') {
-            var $elCourseUnit = $(`<div class="swiper-slide p-4 flex flex-col justify-center items-center lg:w-[250px] h-auto lg:h-[225px] rounded-[30px] bg-[#ADD9CB] cursor-pointer">
+            var $elCourseUnit = $(`<div class="swiper-slide p-4 flex flex-col justify-center items-center lg:w-[250px] h-fit rounded-[30px] bg-[#ADD9CB] cursor-pointer">
                                     <div class="flex flex-col items-center">
                                         <img class="w-full" src="/static/img/thumnail/${content.thumnail}.png">
                                         <div class="mt-4 w-full flex justify-center items-center rounded-full bg-[#059669]">
@@ -27,7 +28,7 @@ CourseSwiperUnit.prototype.create = function() {
             cnt++
         } else {
             if(content.grade == '0'){
-                var $elCourseUnit = $(`<div class="swiper-slide p-4 flex flex-col justify-center items-center lg:w-[250px] h-auto lg:h-[225px] rounded-[30px] bg-[#ADD9CB] cursor-pointer">
+                var $elCourseUnit = $(`<div class="swiper-slide p-4 flex flex-col justify-center items-center lg:w-[250px] h-fit rounded-[30px] bg-[#ADD9CB] cursor-pointer">
                                     <div class="flex flex-col items-center">
                                         <img class="w-full" src="/static/img/thumnail/${content.thumnail}.png">
                                         <div class="pt-2 w-full flex justify-between items-center">
@@ -39,7 +40,7 @@ CourseSwiperUnit.prototype.create = function() {
                                     </div>
                                 </div>`)
             } else {
-                var $elCourseUnit = $(`<div class="swiper-slide p-4 flex flex-col justify-center items-center lg:w-[250px] h-auto lg:h-[225px] rounded-[30px] bg-[#ADD9CB] cursor-pointer">
+                var $elCourseUnit = $(`<div class="swiper-slide p-4 flex flex-col justify-center items-center lg:w-[250px] h-fit rounded-[30px] bg-[#ADD9CB] cursor-pointer">
                                     <div class="flex flex-col items-center">
                                         <img class="w-full" src="/static/img/thumnail/${content.thumnail}.png">
                                         <div class="pt-2 w-full flex justify-between items-center">
