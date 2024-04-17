@@ -1,0 +1,223 @@
+/* 
+// Rounded Bootstrap Buttons
+// https://codepen.io/davidelvar/pen/dYMgrR 
+*/
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+.btn-rounded {
+  border-radius : 40px;
+}
+
+div.class-mtv-choice-number {
+  box-sizing: border-box;
+  width:36px;
+  height:36px;
+  margin: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  cursor: pointer;
+
+  border-radius: 100%;
+  /* border-color: rgb(139, 163, 182); */
+  border : 2px solid rgb(154, 170, 183);
+
+  color: rgb(154, 170, 183);
+  -webkit-box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
+  box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
+}
+
+div.class-mtv-choice-number.inactive {
+  cursor: default;
+}
+
+div.class-mtv-choice-number.active {
+  /* border-radius: 50%; */
+  /* border-color: rgb(34, 154, 252); */
+  /* color: rgb(24, 10, 229); */
+  color : rgb(34, 154, 252);
+  border : 2px solid rgb(34, 154, 252);
+}
+
+.btn-fixed{
+  -webkit-box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
+  box-shadow: 0 5px 11px 0 rgb(0 0 0 / 18%), 0 4px 15px 0 rgb(0 0 0 / 15%);
+  border: transparent;
+  outline: 0px;
+  user-select: none;
+}
+
+.btn-fixed:focus{
+  border: transparent !important;
+  outline: 0px;
+  user-select: none;
+}
+
+/* @media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  font-size : 0.5rem;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 3) {
+  font-size : 0.33rem;
+} */
+
+/* div .container-fluid {
+  font-size : 0.33rem !important;
+} */
+
+/* @media (-webkit-min-device-pixel-ratio: 2) { 
+  font-size : 0.5rem;
+}
+
+@media (-webkit-min-device-pixel-ratio: 3) { 
+  font-size : 0.34rem;
+} */
+
+
+.ytp-pause-overlay-controls-hidden .ytp-pause-overlay{
+  display: none !important;
+}
+div.ytp-pause-overlay.ytp-scroll-min {
+  display: none !important;
+}
+
+.ytp-scroll-min.ytp-pause-overlay{
+  display: none !important;
+}
+
+.sunda-inline{
+  width:20px;
+  height:20px;
+}
+
+figure.graphic{
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.graphic-style-align-left,
+.graphic-style-align-right {
+  clear: none;
+}
+
+.graphic-style-align-left {
+  float:left;
+}
+
+.graphic-style-align-right {
+  float:right;
+}
+
+.graphic-style-align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.graphic-style-block-align-right {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.graphic-style-block-align-left {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.btn-icon {
+  padding : 0rem 0.7rem
+}
+
+figure.graphic img {
+  max-width:100%;
+  display: block;
+  margin: 0 auto;
+}
+
+
+figure.table td,figure.table table th {    
+  box-sizing: border-box;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 0px;
+  /* border: 1px solid #bfbfbf; */
+ 
+  /* width: 100%; */
+}
+
+figure.table table {
+  box-sizing: border-box;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px double #b3b3b3;
+}
+
+.table td, .table th {
+  padding: 0.4rem;
+  vertical-align: top;
+  /* border-top: 1px solid #dee2e6; */
+}
+
+:root {
+  --nav-height: 48px;
+  --tablet-min-width: 1025px;
+
+  --tablet-toolbar-height: 70px;
+}
+
+
+body {
+  /* font-family: 'Noto Sans KR', sans-serif; */
+  font-family: 'Noto Sans KR';
+  font-weight: 500;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* https://github.com/nolimits4web/swiper/issues/3599 */
+.swiper-container {
+  min-width: 0;
+  width: 100%;
+  display: grid;
+  overflow: hidden;
+}
+
+.swiper-wrapper {
+  min-width: 0;
+}
+
+.nav-container {
+  z-index: 20;
+  position:sticky;
+  top: 0px;
+  width: 100%;
+  height: 64px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+}
+
+.nav {
+  width: 100%;
+  height:64px;
+}

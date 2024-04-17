@@ -2,7 +2,6 @@ import elem from "../../../../core/utils/elem/elem";
 
 import { store } from "../Store";
 
-// import Stat from "../stat/Stat";
 import Stat from "./stat/Stat";
 
 export class Dashboard {

@@ -20,6 +20,7 @@ from _main.models import (
     PointUse,
     Points,
 )
+from _st.utils import has_course_permission
 from _user.decorators import jwt_login_required
 from _user.models import mUser
 from _user.utils import make_context
@@ -32,7 +33,7 @@ def index(request):
     context_sample = make_context(request)
     courses = getCourses(request, "all", "all")
 
-    course_recomend = courseLanding.objects.all().values()
+    course_recomend = courseLanding.objects.filter(id_page="nscreen").values()
     # print(list(course_recomend))
     recommend = {"kor": [], "eng": [], "math": [], "etc": []}
     options = ["kor", "eng", "math", "etc"]
@@ -118,38 +119,108 @@ def edu(request):
 
 
 @jwt_login_required
-def namdo(request):
+def school_page(request, name):
     context_sample = make_context(request)
-    courses = getCourses(request, "all", "all")
-
-    course_recomend = courseLanding.objects.filter(id_page="namdo").values()
+    courses = courseLanding.objects.filter(id_page=name).values()
+    course_recomend = courseLanding.objects.filter(id_page="basic").values()
     # print(list(course_recomend))
-    recommend = {"kor": [], "eng": [], "math": [], "etc": [], "basic": []}
+    schoolCourses = []
+    recommend = {"basic": [], "kor": [], "eng": [], "math": [], "etc": []}
     options = ["kor", "eng", "math", "etc", "basic"]
     title = {
+        "basic": "영광중 코스",
         "kor": "기초학력 국어 코스",
         "eng": "기초학력 영어 코스",
         "math": "기초학력 수학 코스",
         "etc": "학교별 강의",
-        "basic": "기초수학 추천 코스",
     }
-    for content in course_recomend:
+    for schoolContent in courses:
+        print(schoolContent)
+        schoolCourse = courseDetail.objects.filter(
+            courseId=schoolContent["id_course"]
+        ).values("courseId", "courseTitle", "thumnail", "school", "grade", "subject")[0]
+        recommend["basic"].append(schoolCourse)
+        schoolCourses.append(schoolCourse)
+
+    for basicContent in course_recomend:
         # print(content)
-        if content["subject"] in options:
-            course = courseDetail.objects.filter(courseId=content["id_course"]).values(
+        if basicContent["subject"] in options:
+            course = courseDetail.objects.filter(
+                courseId=basicContent["id_course"]
+            ).values(
                 "courseId", "courseTitle", "thumnail", "school", "grade", "subject"
-            )[0]
+            )[
+                0
+            ]
             # course['type'] = content['subject']
             # print(course)
-            recommend[content["subject"]].append(course)
+            recommend[basicContent["subject"]].append(course)
+            schoolCourses.append(course)
     print(recommend)
+
     context = {
         "context": json.dumps(context_sample),
-        "courses": json.dumps(courses, default=str),
+        "courses": json.dumps(schoolCourses, default=str),
         "title": json.dumps(title, default=str),
         "recommend": json.dumps(recommend, default=str),
     }
-    return render(request, "_main/landing_namdo.html", context)
+
+    return render(request, "_main/landing_yeonggwang.html", context)
+
+
+@jwt_login_required
+def school_detailView(request, name, school, subject, id):
+    context_sample = make_context(request)
+
+    courses = courseDetail.objects.filter(courseId=id).values(
+        "courseId",
+        "courseTitle",
+        "courseSummary",
+        "desc",
+        "thumnail",
+        "year",
+        "school",
+        "grade",
+        "semester",
+        "subject",
+        "publisher",
+        "difficulty",
+        "producer",
+        "duration",
+        "price",
+        "deliver",
+    )
+
+    detail_context = json.dumps(list(courses), default=str)
+
+    context = {"context": json.dumps(context_sample), "options": detail_context}
+    return render(request, "_main/school_detail.html", context)
+
+
+@jwt_login_required
+def school_st(request, name):
+    course_id = request.GET.get("course_id")
+    content_id = request.GET.get("content_id")
+    user_id = request.userId
+
+    # remove after test
+    if not course_id:
+        next_url = request.session.get("next", "/")
+        del request.session["next"]
+
+        return redirect(next_url)
+
+    request.demo = True
+    if has_course_permission(course_id, user_id):
+        request.demo = False
+
+    st_context = make_context(request)
+    st_context["courseId"] = course_id
+    st_context["contentId"] = content_id
+
+    print("st_context: ", st_context)
+    context = {"context": json.dumps(st_context)}
+    return render(request, "_st/_st_school.html", context)
 
 
 @jwt_login_required

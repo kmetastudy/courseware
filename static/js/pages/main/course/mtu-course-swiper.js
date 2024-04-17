@@ -54,7 +54,7 @@ CourseSwiperUnit.prototype.create = function() {
         }
 
         $elCourseUnit.on("click", function(){
-            window.location.href = `/courses/${content.school}/${content.subject}/${content.courseId}`
+            window.location.href = `./courses/${content.school}/${content.subject}/${content.courseId}`
         })
       
         

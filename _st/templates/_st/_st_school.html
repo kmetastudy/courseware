@@ -1,0 +1,86 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+    <title>학습하기</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="{% static 'img/mdb-favicon.ico' %}" type="image/x-icon" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" />
+
+    <link rel="stylesheet" href="{% static '_dist/katex@0.12.0/dist/katex.min.css' %}" />
+
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="{% static '_dist/swiper/swiper-bundle.min.css' %}" />
+
+    <link rel="stylesheet" href="{% static '_dist/plyr/3.7.2/plyr.css' %}" />
+    <!-- font(NotoSansKr) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet" />
+
+    <!-- Tabulator -->
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+
+    <!-- apexcharts -->
+    <script type="text/javascript" src="{% static '_dist/apexcharts/apexcharts.min.js' %}"></script>
+
+    <script src="{% static '_dist/katex@0.12.0/dist/katex.min.js' %}"></script>
+    <script src="{% static '_dist/katex@0.12.0/dist/contrib/auto-render.min.js' %}"></script>
+    <script src="{% static '_dist/katex@0.12.0/dist/contrib/mhchem.min.js' %}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="{% static '_dist/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- Plyr -->
+    <script type="text/javascript" src="{% static '_dist/plyr/3.7.2/plyr.min.js' %}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- TEST JS COOKIE -->
+    <!-- 1.5kb, 35ms밖에 안되니, javascript에서 cookie를 다루고 싶으면 사용해도 괜찮을거같다. -->
+    <!-- axios -->
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <style>
+      .mtm-nav-logo img {
+          content: url(/static/img/school/logoBasic.png);
+          height: 36px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="body">
+      <div class="nav-container z-20 sticky top-0 w-full h-[64px] flex justify-center bg-white shadow">
+        <nav class="nav w-full h-[64px] 2xl:w-2/3">
+          <div class="mtm-nav-logo">
+            <img src="/static/assets/logo_courseware_white.svg" onclick="window.location='/school/yeonggwang'">
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <link rel="stylesheet" href="{% static '_bundle/school/school-bundle.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/school/school-bundle.js' %}"></script>
+  </body>
+
+  <script>
+    var csrftoken = "{{csrf_token}}";
+    {% comment %} var context = "{{ context|escapejs }}"; {% endcomment %}
+    {% comment %} const defaultAxiosConfig = {
+      headers: { "X-CSRFTOKEN": "{{csrf_token}}" },
+    };
+    axios.defaults.headers = defaultAxiosConfig.headers; {% endcomment %}
+    window.addEventListener("DOMContentLoaded", function () {
+      console.log("schoollibrary: ", schoollibrary);
+      schoollibrary.school_run("{{ context|escapejs }}");
+    });
+  </script>
+</html>
