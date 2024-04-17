@@ -8,7 +8,15 @@ export function CourseUnit(options, data) {
 }
 
 CourseUnit.prototype.create = function() {
-  var $elCourseList = $(`<div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4"></div>`)
+  const path = window.location.pathname
+  const splitedPath = path.split('/')
+  let uri = '/'
+  if(splitedPath.includes('school')){
+      uri = path
+  }
+  console.log(uri)
+
+  var $elCourseList = $(`<div class="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4"></div>`)
   let pageNumber = this.options.currentPage
   for(let i = this.options.countPerPage * (pageNumber - 1) + 1;
       i <= this.options.countPerPage * (pageNumber - 1) + this.options.countPerPage && i <= this.data.length;
@@ -88,7 +96,7 @@ CourseUnit.prototype.create = function() {
     
     
         $elCourse.on("click", function(){
-          window.location.href = `./courses/${course.school}/${course.subject}/${course.courseId}`
+          window.location.href = uri + `courses/${course.school}/${course.subject}/${course.courseId}`
         })
     
     
