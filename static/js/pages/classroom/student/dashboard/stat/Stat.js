@@ -21,7 +21,8 @@ export default class Stat extends Component {
     // this._model = new StatModel();
     this._model = new StatModelNew();
     mtoEvents.on("onClassStudyResultUpdate", (data) => {
-      this._model.setState("studyResult", data);
+      this.result = { ...this.result, studyResult: data };
+      this._model.setState(this.result);
       this.mounted();
     });
 
