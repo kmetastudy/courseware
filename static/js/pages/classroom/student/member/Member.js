@@ -67,7 +67,6 @@ export class Member {
       const members = responseMember.data;
 
       const userIds = extract(members, "id_user");
-      console.log(userIds);
 
       const responseUsers = await apiUser.user.filter({ id__in: userIds.join(",") });
       const users = responseUsers.data;
