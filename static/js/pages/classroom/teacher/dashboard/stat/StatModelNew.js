@@ -10,6 +10,74 @@ export class StatModelNew extends Model {
     super(state);
   }
 
+  getPropertyList() {
+    const propertyList = [];
+
+    const studyResults = this.getState("studyResults") ?? [];
+
+    studyResults.forEach((studyResult) => {
+      if (studyResult?.json_data?.property) {
+        propertyList.push(studyResult.json_data.property);
+      }
+    });
+
+    return propertyList;
+  }
+
+  /**
+   *
+   * @param {"progress"|"sum"} key
+   * @returns
+   */
+  getClassAverage(key) {
+    const properties = this.getPropertyList();
+
+    const propertiesUntilToday = properties.map((property) => filterUntilToday(property)).flat();
+
+    const keyData = extract(propertiesUntilToday, key);
+
+    return calculateAverage(keyData);
+  }
+
+  countStudentsBetween(min, max, key) {
+    // 10, 20
+    const low = this.countStudentsAboveThreshold(min, key);
+    const high = this.countStudentsAboveThreshold(max, key);
+
+    return low - high ?? 0;
+  }
+
+  /**
+   * 특정 기준을 넘는, 학생의 수를 반환(until today)
+   * @param {number} threshold 0-100
+   * @returns
+   */
+  countStudentsAboveThreshold(threshold, key) {
+    const propertyList = this.getPropertyList();
+    const propertiesUntilToday = propertyList.map((property) => filterUntilToday(property));
+    const count = propertiesUntilToday.reduce((acc, property) => {
+      const arrayOfKey = extract(property, key);
+      const average = calculateAverage(arrayOfKey);
+      if (average > threshold) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+
+    return count;
+    // const studyResults = this.getState("studyResults");
+    // const count = studyResults.reduce((acc, { json_data: { property } }) => {
+    //   const branches = filterBranch(property);
+    //   const arrayOfKey = extract(branches, key);
+    //   const average = calculateAverage(arrayOfKey);
+    //   if (average > threshold) {
+    //     return acc + 1;
+    //   }
+    //   return acc;
+    // }, 0);
+    // return count;
+  }
+
   /**
    * 각 학습에 대한 학생들의 결과데이터
    * [[{수업1에대한 학생1의 결과}, {수업1에 대한 학생2의 결과}], [{수업2에대한 학생1의 결과}, {수업2에 대한 학생2의 결과}]]
@@ -180,33 +248,6 @@ export class StatModelNew extends Model {
     }
   }
 
-  countStudentsBetween(min, max, key) {
-    // 10, 20
-    const low = this.countStudentsAboveThreshold(min, key);
-    const high = this.countStudentsAboveThreshold(max, key);
-
-    return low - high;
-  }
-
-  /**
-   * 특정 기준을 넘는, 학생의 수를 반환
-   * @param {number} threshold 0-100
-   * @returns
-   */
-  countStudentsAboveThreshold(threshold, key) {
-    const studyResults = this.getState("studyResults");
-    const count = studyResults.reduce((acc, { json_data: { property } }) => {
-      const branches = filterBranch(property);
-      const arrayOfKey = extract(branches, key);
-      const average = calculateAverage(arrayOfKey);
-      if (average > threshold) {
-        return acc + 1;
-      }
-      return acc;
-    }, 0);
-    return count;
-  }
-
   /**
    * Get average percentage of student
    * @param {object} studyResult
@@ -224,23 +265,22 @@ export class StatModelNew extends Model {
 
     return calculateAverage(arrayOfKey);
   }
+}
 
-  /**
-   *
-   * @param {"progress"|"sum"} key
-   * @returns
-   */
-  getClassAverage(key) {
-    const studyResults = this.getState("studyResults");
+function filterUntilToday(property) {
+  const properties = [];
+  const { length } = property;
 
-    const properties = studyResults.map(({ json_data: { property } }) => property);
+  for (let i = 0; i < length; i++) {
+    const item = property[i];
+    const { date } = item;
 
-    const branches = properties.map((property) => filterBranch(property)).flat();
-
-    const keyData = extract(branches, key);
-
-    return calculateAverage(keyData);
+    if (dayjs(date).isBefore(dayjs(), "day")) {
+      properties.push(item);
+    }
   }
+
+  return properties;
 }
 
 function filterToday(array) {

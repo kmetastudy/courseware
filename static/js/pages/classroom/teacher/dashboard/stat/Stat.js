@@ -55,7 +55,6 @@ export default class Stat extends Component {
     const todayScheduler = this._model.getTodayScheduler();
     const todayChapter = this._model.getTodayChapter();
     const { completedStudents, inProgressStudents, notStartedStudents } = this._model.getTodayStudentProgressStatus();
-    console.log(completedStudents, inProgressStudents, notStartedStudents);
 
     // DashboardLesson
     const todayChartData = this._model.getTodayChartData();
@@ -80,18 +79,6 @@ export default class Stat extends Component {
     new DashboardLesson($dashboardLesson, { todayChartData, studentCount, studentStatus, questionCounts });
   }
 
-  // totalAverage(studentStat) {
-  //   let totalProgress = studentStat.reduce((a, b) => a + b.studentProgress, 0) / studentStat.length;
-  //   let totalPoint = studentStat.reduce((a, b) => a + b.studentPoint, 0) / studentStat.length;
-
-  //   return { totalProgress, totalPoint };
-  // }
-
-  // get allStudentStat() {
-  //   const { chapterStat, progressStat, pointStat } = this._model.getAllStatByResult();
-  //   const { totalProgress, totalPoint } = this.totalAverage(progressStat, pointStat);
-  // }
-
   get scheduledCourse() {
     return this._model.getScheduledCourse();
   }
@@ -104,8 +91,6 @@ export default class Stat extends Component {
   get selectedStudent() {
     const { studentStat } = this._model.getAllStatByResult();
     const { selectedStudent } = statStore.state;
-
-    // console.log(selectedStudent)
 
     return studentStat.filter(({ id }) => id == selectedStudent)[0];
   }
