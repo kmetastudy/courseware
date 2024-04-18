@@ -64,7 +64,7 @@ var configCP = Object.assign({}, config, {
     path: path.resolve(__dirname, "static/_bundle/cp"),
     library: "cplibrary",
     // filename: "cp-bundle-20230807.js",
-    filename: `cp-bundle-20231012.js`,
+    filename: `cp-bundle-20240418.js`,
     libraryTarget: "var",
     clean: true,
     // assetModuleFilename: '[name][ext]',
@@ -72,7 +72,7 @@ var configCP = Object.assign({}, config, {
   plugins: [
     new MiniCssExtractPlugin({
       // filename: "cp-bundle-20230807.css",
-      filename: `cp-bundle-20231012.css`,
+      filename: `cp-bundle-20240418.css`,
     }),
   ],
 });
@@ -86,14 +86,14 @@ var configST = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/st"),
     library: "stlibrary",
-    filename: "st-bundle-20231012.js",
+    filename: "st-bundle-20240418.js",
     libraryTarget: "var",
     clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "st-bundle-20231012.css",
+      filename: "st-bundle-20240418.css",
     }),
   ],
 });
@@ -107,14 +107,14 @@ var configSchool = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/school"),
     library: "schoollibrary",
-    filename: "school-bundle.js",
+    filename: "school-bundle-20240418.js",
     libraryTarget: "var",
     clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "school-bundle.css",
+      filename: "school-bundle-20240418.css",
     }),
   ],
 });
@@ -128,14 +128,14 @@ var configUser = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/user"),
     library: "userlibrary",
-    filename: "user-bundle.js",
+    filename: "user-bundle-20240418.js",
     libraryTarget: "var",
     clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "user-bundle.css",
+      filename: "user-bundle-20240418.css",
     }),
   ],
   module: tailwindModuleConfig,
@@ -150,14 +150,14 @@ var configMain = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/main"),
     library: "mainlibrary",
-    filename: "main-bundle.js",
+    filename: "main-bundle-20240418.js",
     libraryTarget: "var",
     // clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "main-bundle.css",
+      filename: "main-bundle-20240418.css",
     }),
   ],
   module: tailwindModuleConfig,
@@ -172,14 +172,14 @@ var configCM = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/cm"),
     library: "cmlibrary",
-    filename: "cm-bundle.js",
+    filename: "cm-bundle-20240418.js",
     libraryTarget: "var",
     clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "cm-bundle.css",
+      filename: "cm-bundle-20240418.css",
     }),
   ],
   module: tailwindModuleConfig,
@@ -194,14 +194,14 @@ var configDashboard = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/dashboard"),
     library: "dashboardlibrary",
-    filename: "dashboard-bundle.js",
+    filename: "dashboard-bundle-20240418.js",
     libraryTarget: "var",
     // clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "dashboard-bundle.css",
+      filename: "dashboard-bundle-20240418.css",
     }),
   ],
   module: tailwindModuleConfig,
@@ -216,14 +216,14 @@ var configStats = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/stats"),
     library: "statslibrary",
-    filename: "stats-bundle.js",
+    filename: "stats-bundle-20240418.js",
     libraryTarget: "var",
     clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "stats-bundle.css",
+      filename: "stats-bundle-20240418.css",
     }),
   ],
   module: tailwindModuleConfig,
@@ -238,14 +238,14 @@ var configStatsDetail = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/statsdetail"),
     library: "statsdetaillibrary",
-    filename: "stats-detail-bundle.js",
+    filename: "stats-detail-bundle-20240418.js",
     libraryTarget: "var",
     clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "stats-detail-bundle.css",
+      filename: "stats-detail-bundle-20240418.css",
     }),
   ],
   module: tailwindModuleConfig,
@@ -260,14 +260,14 @@ var configClass = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/class"),
     library: "classlibrary",
-    filename: "class-bundle.js",
+    filename: "class-bundle-20240418.js",
     libraryTarget: "var",
     clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "class-bundle.css",
+      filename: "class-bundle-20240418.css",
     }),
   ],
   module: tailwindModuleConfig,
@@ -282,14 +282,14 @@ var configClassLaunch = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/class_launch"),
     library: "classLaunchLibrary",
-    filename: "class_launch-bundle.js",
+    filename: "class_launch-bundle-20240418.js",
     libraryTarget: "var",
     clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "class_launch-bundle.css",
+      filename: "class_launch-bundle-20240418.css",
     }),
   ],
   module: tailwindModuleConfig,
@@ -304,13 +304,13 @@ var configClassRoomTeacher = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/classroom/teacher"),
     library: "classroomTeacherLibrary",
-    filename: "classroom-teacher-bundle.js",
+    filename: "classroom-teacher-bundle-20240418.js",
     libraryTarget: "var",
     clean: true,
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "classroom-teacher-bundle.css",
+      filename: "classroom-teacher-bundle-20240418.css",
     }),
   ],
   module: tailwindModuleConfig,
@@ -325,13 +325,13 @@ var configClassroomStudent = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/classroom/student"),
     library: "classroomStudentLibrary",
-    filename: `classroom-student-bundle.js`,
+    filename: `classroom-student-bundle-20240418.js`,
     libraryTarget: "var",
     clean: true,
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: `classroom-student-bundle.css`,
+      filename: `classroom-student-bundle-20240418.css`,
     }),
   ],
   module: tailwindModuleConfig,
