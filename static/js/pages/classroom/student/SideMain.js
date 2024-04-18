@@ -58,7 +58,7 @@ export class SideMain {
     this.elHomeButton = this.clHomeButton.getElement();
     this.elThis.append(this.elHomeButton);
 
-    this.elHeader = elem("div", { class: "mx-4 flex items-center gap-2 font-black" });
+    this.elHeader = elem("div", { class: "p-2 flex items-center gap-2 font-black" });
     this.elThis.append(this.elHeader);
 
     this.clDropdown = new Dropdown({
