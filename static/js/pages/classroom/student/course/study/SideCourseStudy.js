@@ -77,12 +77,13 @@ export class SideCourseStudy {
     }
 
     const elBranch = this.branchNodeMap.get(contentId);
+    const elBranchTitle = elBranch.querySelector(".branch-title");
     const elInfoTitle = elBranch.querySelector(".branch-info");
 
     elInfoTitle.textContent = `진행도: ${progress ?? 0}% | 점수: ${point ?? 0}점`;
 
     if (progress === 100) {
-      elBranch.classList.add("focus");
+      elBranchTitle.classList.add("bg-neutral-content");
     }
   }
 
@@ -107,6 +108,8 @@ export class SideCourseStudy {
     this.setTitle(courseTitle);
 
     const schedulers = this.model.composeSchedulers(studyResult);
+
+    console.log("schedulers: ", schedulers);
 
     this.renderMenu(schedulers);
 
@@ -146,7 +149,11 @@ export class SideCourseStudy {
         on: { click: this.handleToggle.bind(this) },
       });
 
-      const elTitle = elem("span", { class: classNames("menu-dropdown-toggle", { focus: completed }) }, title);
+      const elTitle = elem(
+        "span",
+        { class: classNames("menu-dropdown-toggle", { "bg-neutral-content": completed }) },
+        title,
+      );
 
       const elPeriodContainer = elem("ul", { class: "menu-dropdown" });
 
@@ -174,13 +181,13 @@ export class SideCourseStudy {
         on: { click: this.handleToggle.bind(this) },
       });
 
-      const elToggle = elem("span", { class: classNames("menu-dropdown-toggle", { focus: completed }) });
+      const elToggle = elem("span", { class: classNames("menu-dropdown-toggle", { "bg-neutral-content": completed }) });
 
       const elTitleContainer = elem("a", { class: "grid-flow-row" });
       elToggle.append(elTitleContainer);
 
       const elPeriodTitle = elem("p", { class: "mb-0" }, title);
-      const elDateTitle = elem("p", { class: "mb-0 text-xs font-bold text-base-content/50" }, dateTitle);
+      const elDateTitle = elem("p", { class: "mb-0 text-xs font-bold" }, dateTitle);
       elTitleContainer.append(elPeriodTitle, elDateTitle);
 
       const elBranchContainer = elem("ul", { class: "menu-dropdown" });
@@ -200,7 +207,7 @@ export class SideCourseStudy {
     elPeriod.append(elTitle);
 
     const elPeriodTitle = elem("p", { class: "mb-0 text-sm" }, title);
-    const elDateTitle = elem("p", { class: "mb-0 text-xs font-bold text-base-content/50" }, dateTitle);
+    const elDateTitle = elem("p", { class: "mb-0 text-xs font-bold" }, dateTitle);
     elTitle.append(elPeriodTitle, elDateTitle);
 
     return elPeriod;
@@ -210,18 +217,21 @@ export class SideCourseStudy {
     const { title, typeTitle, progress, point, completed, id } = branchData;
 
     const elBranch = elem("li", {
-      class: classNames({ focus: completed }),
+      class: "py-1",
       on: { click: this.handleItemClick.bind(this, branchData) },
     });
 
-    const elTitleContainer = elem("a", { class: "grid-flow-row" });
+    // const elTitleContainer = elem("a", { class: "grid-flow-row" });
+    const elTitleContainer = elem("a", {
+      class: classNames("branch-title grid-flow-row", { "bg-neutral-content": completed }),
+    });
     elBranch.append(elTitleContainer);
 
     const elTitle = elem("p", { class: "mb-0 text-sm overflow-hidden whitespace-nowrap text-ellipsis" }, title);
 
     const elInfoTitle = elem(
       "p",
-      { class: "branch-info mb-0 text-xs font-bold text-base-content/50" },
+      { class: "branch-info mb-0 text-xs font-bold" },
       `진행도: ${progress ?? 0}% | 점수: ${point ?? 0}점`,
     );
     elTitleContainer.append(elTitle, elInfoTitle);
@@ -262,13 +272,13 @@ export class SideCourseStudy {
 
   changeItemFocus(selectedItem) {
     if (!this.selectedItem) {
-      selectedItem.firstChild.classList.add("focus");
+      selectedItem.firstChild.classList.add("active");
       return;
     }
 
-    this.selectedItem.firstChild.classList.remove("focus");
+    this.selectedItem.firstChild.classList.remove("active");
 
-    selectedItem.firstChild.classList.add("focus");
+    selectedItem.firstChild.classList.add("active");
   }
 
   openTodayMenu(todayChapter, todayPeriod) {
