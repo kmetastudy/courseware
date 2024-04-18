@@ -90,11 +90,11 @@ export class MemberTable {
         header: "이름",
         cell: (info) => info.getValue(),
       }),
-      columnHelper.accessor("email", {
-        id: "email",
-        header: "이메일",
-        cell: (info) => info.getValue(),
-      }),
+      // columnHelper.accessor("email", {
+      //   id: "email",
+      //   header: "이메일",
+      //   cell: (info) => info.getValue(),
+      // }),
       columnHelper.accessor("type", {
         id: "type",
         header: "유형",
