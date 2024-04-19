@@ -32,7 +32,7 @@ urlpatterns = [
     path("class/", include("_class.urls")),
     path("__debug__/", include("debug_toolbar.urls")),
     path(
-        "robots.txt",
+        "robots.txt/",
         TemplateView.as_view(
             template_name="_main/robots.txt", content_type="text/plain"
         ),
