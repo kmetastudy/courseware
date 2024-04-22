@@ -1,4 +1,5 @@
 import { createElement } from "../../../core/utils/dom-utils";
+import elem from "../../../core/utils/elem/elem";
 import { TYPE_USER } from "../../user/constants";
 import { TYPE_MEMBER } from "../../class/constants";
 import { mtmSideMenu } from "../../../core/ui/sideMenu/mtm-side-menu";
@@ -45,21 +46,31 @@ export class AppDashboard {
   create() {
     const { userType, userId: studentId, userLogin } = this.config;
 
-    this.elThis = createElement("main", { className: "flex px-4 py-8 mx-auto md:px-8 xl:px-16" });
+    // this.elThis = createElement("main", { className: "flex px-4 py-8 mx-auto md:px-8 xl:px-16" });
+    this.elThis = elem("div", { class: "drawer min-h-screen lg:drawer-open" });
+
+    this.elDrawer = elem("input", {
+      class: "drawer-toggle",
+      id: "dashboard-drawer",
+      type: "checkbox",
+    });
+
+    this.elMain = elem("main", { class: "drawer-content bg-base-200" });
 
     this.clSide = new mtmSideMenu({ item: this.sideItems });
     this.elSide = this.clSide.getElement();
-    this.elThis.append(this.elSide);
+
+    this.elThis.append(this.elDrawer, this.elMain, this.elSide);
 
     switch (this.config.userType) {
       case TYPE_MEMBER.TEACHER:
         this.clClassManager = new TeacherClassManager({ userId: this.config.userId });
         this.elClassManager = this.clClassManager.getElement();
-        this.elThis.append(this.elClassManager);
+        this.elMain.append(this.elClassManager);
 
         this.clInactiveClassManager = new InactiveClassManager({ userId: this.config.userId });
         this.elInactiveClassManager = this.clInactiveClassManager.getElement();
-        this.elThis.append(this.elInactiveClassManager);
+        this.elMain.append(this.elInactiveClassManager);
 
         this.handleSideClick("class");
         break;
@@ -67,11 +78,11 @@ export class AppDashboard {
       default:
         this.clDashboardManager = new MtmDashboardManager({ userType, studentId, userLogin });
         this.elDashboardManager = this.clDashboardManager.getElement();
-        this.elThis.append(this.elDashboardManager);
+        this.elMain.append(this.elDashboardManager);
 
         this.clClassManager = new StudentClassManager({ userId: this.config.userId });
         this.elClassManager = this.clClassManager.getElement();
-        this.elThis.append(this.elClassManager);
+        this.elMain.append(this.elClassManager);
 
         this.handleSideClick("dashboard");
         break;
@@ -82,12 +93,11 @@ export class AppDashboard {
     const sideItems = [
       {
         title: "클래스",
-        children: [
+        child: [
           { title: "내 클래스", onClick: this.handleSideClick.bind(this, "class"), key: "class" },
           { title: "종료된 클래스", onClick: this.handleSideClick.bind(this, "inactiveClass"), key: "inactiveClass" },
         ],
       },
-      // { title: "설정", children: [{ title: "계정 정보" }, { title: "알림 설정" }] },
     ];
 
     return sideItems;
@@ -106,38 +116,21 @@ export class AppDashboard {
       },
       {
         title: "클래스",
-        children: [{ title: "내 클래스", onClick: this.handleSideClick.bind(this, "class"), key: "class" }],
+        child: [
+          { title: "내 클래스", icon: "academicCap", onClick: this.handleSideClick.bind(this, "class"), key: "class" },
+        ],
       },
-      // {
-      //   title: "학습 관리",
-      //   children: [{ title: "내 학습", onClick: () => (window.location.href = "../mycourse/"), key: "mycourse" }],
-      // },
-      // {
-      //   title: "수강신청 관리",
-      //   children: [
-      //     { title: "수강바구니", onClick: () => (window.location.href = "../cart/"), key: "cart" },
-      //     { title: "구매내역", onClick: () => (window.location.href = "../orders/"), key: "orders" },
-      //   ],
-      // },
-      // {
-      //   title: "설정",
-      //   children: [
-      //     { title: "계정 정보", key: "accountSetting" },
-      //     { title: "알림 설정", key: "notificationSetting" },
-      //   ],
-      // },
     ];
 
     return sideItems;
   }
 
   handleSideClick(key, evt) {
-    console.log(key);
     if (!key || (this.currentSideKey && this.currentSideKey === key)) {
       return;
     }
 
-    this.currentContent?.classList.add("hidden");
+    this.currentContent && this.currentContent.classList.add("hidden");
     this.currentKey = key;
 
     switch (key) {

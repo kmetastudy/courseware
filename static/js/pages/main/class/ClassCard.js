@@ -16,8 +16,7 @@ export class ClassCard {
 
   create() {
     this.elThis = elem("section", {
-      class:
-        "card card-compact card-bordered col-span-12 bg-base-100 shadow-lg md:col-span-6 xl:col-span-4 2xl:col-span-3",
+      class: "card card-compact card-bordered bg-base-100 shadow-lg col-span-12 sm:col-span-6 xl:col-span-4",
     });
 
     if (this.data?.thumbnail) {
