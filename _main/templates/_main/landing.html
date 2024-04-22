@@ -3,12 +3,13 @@
 {% block content %}
 <div class="w-full flex flex-col items-center">
     <div class="landing-swiper w-full overflow-hidden relative">
-        <div class="swiper-wrapper ">
+        <div class="swiper-wrapper">
             <!-- <div class="swiper-slide slide5 cursor-pointer flex justify-center"><img class="xl:h-[500px] 2xl:h-[600px]" src="static/img/banner5-1.png"></div> -->
-            <div class="swiper-slide slide6 cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner6-1.png"></div>
+            
             <div class="swiper-slide slide1 cursor-pointer flex justify-center" onclick='window.location.href="/desc/1/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner1-1.png"></div>
-            <!-- <div class="swiper-slide slide2 cursor-pointer flex justify-center" onclick='window.location.href="/desc/2/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner2-1.png"></div> -->
+            <!-- <div class="swiper-slide slide2 cursor-pointer flex justify-center" onclick='window.location.href="/desc/2/"'><img class="xl:h-[500px] 2xl:h-[600px]" src=xl:banner2-1.png"></div> -->
             <div class="swiper-slide slide3 cursor-pointer flex justify-center" onclick='window.location.href="/desc/3/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner3-1.png"></div>
+            <div class="swiper-slide slide6 cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="" src="/static/img/banner6-1.png"></div>
             <!-- <div class="swiper-slide slide4 cursor-pointer flex justify-center" onclick='window.location.href="/desc/4/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner4-1.png"></div> -->
             
         </div>
@@ -16,7 +17,11 @@
         
     </div>
     <div class="w-full flex flex-col items-center">
-        
+        <div class="mt-4 w-full xl:w-2/3 flex justify-center">
+            <div class="flex h-[50px] items-center rounded-full mx-2 px-4 border cursor-pointer" onclick="window.location='/school/gunsan/'"><div class="pr-4 hidden md:block">초등학교 홈페이지 바로가기</div><img class="" src="/static/img/schoolLogo/gunsan_logo.png"></div>
+            <div class="flex h-[50px] items-center rounded-full mx-2 px-4 py-2 border cursor-pointer" onclick="window.location='/school/yeonggwang/'"><div class="pr-4 hidden md:block">중학교 홈페이지 바로가기</div><img class="" src="/static/img/schoolLogo/yeonggwang_logo.png"></div>
+            
+        </div>
         <div class="courses_recomend w-full">
             <!-- <div class="course-swiper w-[1000px]">
                 <div class="swiper-container py-2 w-full">
@@ -45,9 +50,9 @@
         <div class="search w-full flex">
             
         </div>
-        <div class="w-full p-2 sm:w-2/3"><p class="pt-4 self-start text-lg">전체 강의<span class="text-sm text-red-400">new</span></p></div>
+        <div class="w-full p-2 lg:w-2/3"><p class="pt-4 self-start text-lg">전체 강의<span class="text-sm text-red-400">new</span></p></div>
         
-        <div class="w-full p-2 sm:w-2/3 courses_landing">
+        <div class="w-full p-2 lg:w-2/3 courses_landing">
             
         </div>
 
