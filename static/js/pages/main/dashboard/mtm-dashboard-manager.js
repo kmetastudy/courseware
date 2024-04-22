@@ -1,13 +1,12 @@
-import { DashboardRecentCourse } from "./dashboard-recent-course";
-import { DashboardTotalStats } from "./dashboard-total-stats";
-import { DashboardMonthlySubjectCounts } from "./dashboard-monthly-subject-counts";
-import { dashboardTitle } from "./common/dashboard-title";
 import { dashboardServices } from "./dashboard-services";
 
-import isString from "../../../core/utils/type/isString";
-import { createElement } from "../../../core/utils/dom-utils";
+import { RecentCourseCard } from "./dashboard/recent-course/recent-course-card";
+import { CourseStatusChart } from "./dashboard/course-status-chart/CourseStatusChart";
+import { MonthlySubjectChart } from "./dashboard/monthly-subject-chart/MonthlySubjectChart";
 
-require("../../../../css/pages/main/dashboard/mtm-dashboard-manager.css");
+import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
+import elem from "../../../core/utils/elem/elem";
+
 export class MtmDashboardManager {
   /**usertype, studentId, userLogin
    *
@@ -28,74 +27,63 @@ export class MtmDashboardManager {
   }
 
   async init() {
-    this.setup();
-
     this.create();
 
     this.setData(this.studentId);
   }
 
-  setup() {
-    const prefixCls = "dashboard-card";
-    const gridSpan8 = "grid-span-8"; // grid-column : span 4;
-    this.elContents = [];
-    this.clRecentCourse = new DashboardRecentCourse({ prefixCls, ...this.config });
-    this.elRecentCourse = this.clRecentCourse.getElement();
-
-    this.clTotalStats = new DashboardTotalStats({ prefixCls });
-    this.elTotalStats = this.clTotalStats.getElement();
-
-    this.clMonthlySubject = new DashboardMonthlySubjectCounts({ className: [prefixCls, gridSpan8] });
-    this.elMonthlySubject = this.clMonthlySubject.getElement();
-
-    this.elContents.push(this.elRecentCourse, this.elTotalStats, this.elMonthlySubject);
-  }
-
   create() {
-    this.elThis = document.createElement("div");
-    this.elThis.classList.add(this.prefixCls);
+    this.elThis = elem("div", {
+      class: "grid grid-cols-12 grid-rows-[min-content] gap-x-6 gap-y-12 p-4 lg:gap-x-12 lg:p-10 hidden",
+    });
 
-    this.elWrapper = document.createElement("div");
-    this.elWrapper.classList.add(`${this.prefixCls}-wrapper`);
-    this.elThis.appendChild(this.elWrapper);
+    // Header
+    this.elHeader = elem("div", {
+      class: "col-span-12 flex items-center gap-2 lg:gap-4",
+    });
+    this.elThis.append(this.elHeader);
 
-    this.elHeader = this.createHeader();
-    this.elBody = this.createBody();
+    this.elLabel = elem("label", {
+      for: "dashboard-drawer",
+      class: "btn btn-square btn-ghost drawer-button lg:hidden",
+    });
+    this.elHeader.append(this.elLabel);
 
-    this.elWrapper.append(this.elHeader, this.elBody);
-  }
+    this.elIcon = MtuIcon("menu");
+    this.elLabel.append(this.elIcon);
 
-  createHeader() {
-    const elHeader = createElement("div", { className: `${this.prefixCls}-header` });
+    this.elTitleWrapper = elem("div", { class: "grow" });
+    this.elHeader.append(this.elTitleWrapper);
 
-    const elTitle = dashboardTitle({ title: this.title, className: `${this.prefixCls}-title` });
-    elHeader.appendChild(elTitle);
+    this.elTitle = elem("h1", { class: "font-bold lg:text-2xl" }, "Dashboard");
+    this.elTitleWrapper.append(this.elTitle);
 
-    return elHeader;
-  }
+    // 최근 학습 강의
+    this.clRecentCourseCard = new RecentCourseCard();
+    this.elRecentCourseCard = this.clRecentCourseCard.getElement();
+    this.elThis.append(this.elRecentCourseCard);
 
-  createBody() {
-    const elBody = createElement("div", { className: `${this.prefixCls}-body` });
+    // 학습 현황
+    this.clCourseStatusChart = new CourseStatusChart();
+    this.elCourseStatusChart = this.clCourseStatusChart.getElement();
+    this.elThis.append(this.elCourseStatusChart);
 
-    if (Array.isArray(this.elContents) && this.elContents.length > 0) {
-      elBody.append(...this.elContents);
-    }
-
-    return elBody;
+    // 월별 수강 강의
+    this.clMonthlySubjectChart = new MonthlySubjectChart();
+    this.elMonthlySubjectChart = this.clMonthlySubjectChart.getElement();
+    this.elThis.append(this.elMonthlySubjectChart);
   }
 
   async setData(studentId) {
     await dashboardServices.set(studentId);
 
-    this.clRecentCourse.setData(dashboardServices.getRecentCourses(3));
+    const studyResults = dashboardServices.getStudyResults();
 
-    this.clTotalStats.setData({
-      courseCount: dashboardServices.getTotalCourseCount(),
-      questionAccuracy: dashboardServices.getTotalQuestionAccuracy(),
-      progress: dashboardServices.getTotalProgress(),
-    });
+    this.clRecentCourseCard.setData(dashboardServices.getRecentCourses(3));
 
-    this.clMonthlySubject.setData(dashboardServices.getMonthlySubjectCounts());
+    this.clCourseStatusChart.setData(studyResults);
+
+    this.clMonthlySubjectChart.setData(dashboardServices.getMonthlySubjectCounts());
   }
 
   getElement() {
