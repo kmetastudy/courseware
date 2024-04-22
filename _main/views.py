@@ -119,20 +119,27 @@ def edu(request):
 
 
 @jwt_login_required
-def school_page(request, name):
+def school_page(request):
     context_sample = make_context(request)
-    courses = courseLanding.objects.filter(id_page=name).values()
-    course_recomend = courseLanding.objects.filter(id_page="basic").values()
+    courses = courseLanding.objects.filter(
+        id_page="yeonggwang", subject="basic"
+    ).values()
+    course_recomend = (
+        courseLanding.objects.filter(id_page="yeonggwang")
+        .exclude(subject="basic")
+        .values()
+    )
     # print(list(course_recomend))
     schoolCourses = []
     recommend = {"basic": [], "kor": [], "eng": [], "math": [], "etc": []}
     options = ["kor", "eng", "math", "etc", "basic"]
+    school_name = {"yeonggwang": "영광중", "gunsan": "군산초"}
     title = {
         "basic": "영광중 코스",
         "kor": "기초학력 국어 코스",
         "eng": "기초학력 영어 코스",
         "math": "기초학력 수학 코스",
-        "etc": "학교별 강의",
+        "etc": " 사회, 과학 코스",
     }
     for schoolContent in courses:
         print(schoolContent)
@@ -163,9 +170,72 @@ def school_page(request, name):
         "courses": json.dumps(schoolCourses, default=str),
         "title": json.dumps(title, default=str),
         "recommend": json.dumps(recommend, default=str),
+        "name": "yeonggwang",
+        "schoolName": "영광중",
     }
 
     return render(request, "_main/landing_yeonggwang.html", context)
+
+
+@jwt_login_required
+def school_gunsan(request):
+    context_sample = make_context(request)
+    courses = courseLanding.objects.filter(id_page="gunsan", subject="basic").values()
+    course_recomend = (
+        courseLanding.objects.filter(id_page="gunsan").exclude(subject="basic").values()
+    )
+    # print(list(course_recomend))
+    schoolCourses = []
+    recommend = {
+        "kor": [],
+        "eng": [],
+        "math": [],
+        "basic": [],
+        "etc": [],
+    }
+    options = ["kor", "eng", "math", "etc", "basic"]
+    school_name = {"yeonggwang": "영광중", "gunsan": "군산초"}
+    title = {
+        "basic": "군산초 사회, 과학 코스",
+        "kor": "군산초 국어 코스",
+        "eng": "군산초 영어 코스",
+        "math": "군산초 수학 코스",
+        "etc": "군산초 사회, 과학 코스",
+    }
+    for schoolContent in courses:
+        print(schoolContent)
+        schoolCourse = courseDetail.objects.filter(
+            courseId=schoolContent["id_course"]
+        ).values("courseId", "courseTitle", "thumnail", "school", "grade", "subject")[0]
+        recommend["basic"].append(schoolCourse)
+        schoolCourses.append(schoolCourse)
+
+    for basicContent in course_recomend:
+        # print(content)
+        if basicContent["subject"] in options:
+            course = courseDetail.objects.filter(
+                courseId=basicContent["id_course"]
+            ).values(
+                "courseId", "courseTitle", "thumnail", "school", "grade", "subject"
+            )[
+                0
+            ]
+            # course['type'] = content['subject']
+            # print(course)
+            recommend[basicContent["subject"]].append(course)
+            schoolCourses.append(course)
+    print(recommend)
+
+    context = {
+        "context": json.dumps(context_sample),
+        "courses": json.dumps(schoolCourses, default=str),
+        "title": json.dumps(title, default=str),
+        "recommend": json.dumps(recommend, default=str),
+        "name": "gunsan",
+        "schoolName": "군산초",
+    }
+
+    return render(request, "_main/landing_gunsan.html", context)
 
 
 @jwt_login_required

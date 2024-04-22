@@ -10,7 +10,8 @@ urlpatterns = [
     path("teacher/", teacher, name="teacher"),
     path("desc/<str:page>/", descView, name="descView"),
     path("contact/", new_contact, name="index"),
-    path("school/<str:name>/", school_page, name="schoolPage"),
+    path("school/yeonggwang/", school_page, name="schoolPage"),
+    path("school/gunsan/", school_gunsan, name="schoolGunsan"),
     path(
         "school/<str:name>/courses/<str:school>/<str:subject>/<str:id>/",
         school_detailView,
