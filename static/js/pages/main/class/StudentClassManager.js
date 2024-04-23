@@ -2,9 +2,12 @@ import { TYPE_MEMBER } from "../../class/constants";
 
 import { transformCourseDetail } from "../utils/format-course-detail";
 import { extract } from "../../../core/utils/array/extract";
+
 import elem from "../../../core/utils/elem/elem";
 
 import { apiClass } from "../../../core/api/class/";
+
+import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
 
 import { ClassCard } from "./ClassCard";
 
@@ -28,18 +31,32 @@ export class StudentClassManager {
   }
 
   create() {
-    this.elThis = elem("div", { class: "ml-8 w-full hidden" });
+    this.elThis = elem("div", {
+      class: "grid grid-cols-12 grid-rows-[min-content] gap-x-6 gap-y-12 p-4 lg:gap-x-12 lg:p-10 hidden",
+    });
 
-    this.elHeader = elem("div", { class: "mb-1 flex flex-row items-center gap-0 text-2xl font-semibold" });
+    // Header
+    this.elHeader = elem("div", {
+      class: "col-span-12 flex items-center gap-2 lg:gap-4",
+    });
+    this.elThis.append(this.elHeader);
 
-    this.elTitle = elem("div", { class: "dashboard-title" }, "내 클래스");
-    this.elHeader.append(this.elTitle);
+    this.elLabel = elem("label", {
+      for: "dashboard-drawer",
+      class: "btn btn-square btn-ghost drawer-button lg:hidden",
+    });
+    this.elHeader.append(this.elLabel);
 
-    this.elBody = elem("div", { class: "grid grid-cols-12 grid-rows-[min-content] gap-y-12 p-4 md:gap-x-12" });
+    this.elIcon = MtuIcon("menu");
+    this.elLabel.append(this.elIcon);
+
+    this.elTitleWrapper = elem("div", { class: "grow" });
+    this.elHeader.append(this.elTitleWrapper);
+
+    this.elTitle = elem("h1", { class: "font-bold lg:text-2xl" }, "내 클래스");
+    this.elTitleWrapper.append(this.elTitle);
 
     this.elEmptyClass = elem("div", { class: "col-span-8" });
-
-    this.elThis.append(this.elHeader, this.elBody);
   }
 
   async initData() {
@@ -119,7 +136,7 @@ export class StudentClassManager {
       const clClassCard = new ClassCard({ onClick: this.handleClick.bind(this), data: cardData });
       const elClassCard = clClassCard.getElement();
 
-      this.elBody.append(elClassCard);
+      this.elThis.append(elClassCard);
     });
   }
 

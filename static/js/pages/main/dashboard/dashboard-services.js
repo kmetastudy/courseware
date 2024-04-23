@@ -303,6 +303,10 @@ export const dashboardServices = (function () {
       await setData(id);
     },
 
+    getStudyResults() {
+      return results;
+    },
+
     // Recent course
     getRecentCourses(num, digits = 0) {
       const end = isNumber(num) && num > 0 ? num : 1;

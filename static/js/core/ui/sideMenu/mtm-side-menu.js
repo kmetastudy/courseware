@@ -1,17 +1,12 @@
-import { createElement } from "../../utils/dom-utils";
+import elem from "../../utils/elem/elem";
 import { classNames } from "../../utils/class-names";
 import { MtuIcon } from "../../mtu/icon/mtu-icon";
-// Deprecated
-// Planned to replaced by "MtuMenu"
+import { isFunction } from "../../utils/type";
 
-require("./mtm-side-menu.css");
 export class mtmSideMenu {
   constructor({ item }) {
-    this.prefixCls = "mtm-side-menu";
-
     this.items = item;
 
-    this.elItems = []; // [HTMLLIElement]
     this.elItemMap = new Map(); // (key, HTMLLIElement)
 
     this.init();
@@ -22,91 +17,69 @@ export class mtmSideMenu {
   }
 
   create() {
-    this.elThis = createElement("ul", {
-      className: classNames(this.prefixCls, `${this.prefixCls}-root`),
+    this.elThis = elem("aside", { class: "drawer-side z-10" });
+
+    this.elLabel = elem("label", { for: "dashboard-drawer", class: "drawer-overlay" });
+    this.elThis.append(this.elLabel);
+
+    this.elNav = elem("nav", {
+      class: "flex my-12 min-h-screen w-72 flex-col gap-2 overflow-y-auto bg-base-100 px-6 py-10 lg:my-0",
     });
+    this.elThis.append(this.elNav);
+    setTimeout(() => {
+      console.log(this.elNav.getBoundingClientRect());
+    }, 1000);
 
-    const itemNodes = this.createItems(this.items);
+    this.elMenu = elem("ul", { class: "menu menu-lg" });
+    this.elNav.append(this.elMenu);
 
-    this.elThis.append(...itemNodes);
+    const itemNodes = this.createItemNodes(this.items);
+
+    itemNodes.length > 0 && this.elMenu.append(...itemNodes);
   }
 
-  createItems(items) {
-    if (!Array.isArray(items)) {
-      return;
-    }
+  createItemNodes(items = []) {
+    const itemNodes = items
+      .filter((item) => !!item.title)
+      .map(({ title, child = [], key, icon, onClick, disabled = false }) => {
+        const elItem = elem("li", { class: classNames({ disabled: disabled === true }) });
 
-    const itemNodes = [];
-    items.forEach((item) => {
-      if (item.children) {
-        const elItemGroup = this.createItemGroup(item);
-        itemNodes.push(elItemGroup);
-      } else {
-        const elItem = this.createItem(item);
+        isFunction(onClick) && !disabled && elItem.addEventListener("click", onClick);
 
-        this.elItems.push(elItem);
-        item.key && this.elItemMap.set(item.key, elItem);
+        // Title
+        let elTitle;
 
-        itemNodes.push(elItem);
-      }
-    });
+        if (child.length > 0) {
+          elTitle = elem("h2", { class: "menu-title" }, title);
+          elItem.append(elTitle);
+
+          // Child
+          const elChildContainer = elem("ul");
+          elItem.append(elChildContainer);
+
+          const elChildNodes = this.createItemNodes(child);
+          elChildContainer.append(...elChildNodes);
+        } else {
+          elTitle = elem("a", title);
+          elItem.append(elTitle);
+        }
+
+        // Icon
+        icon && elTitle.prepend(MtuIcon(icon));
+
+        key && this.elItemMap.set(key, elItem);
+
+        return elItem;
+      });
 
     return itemNodes;
   }
 
-  createItemGroup(item) {
-    const elItemGroup = createElement("li", {
-      className: `${this.prefixCls}-item-group`,
-      attributes: { role: "presentation" },
-    });
-
-    const elTitle = createElement("div", {
-      className: `${this.prefixCls}-item-group-title`,
-      attributes: { role: "presentation" },
-    });
-    elTitle.textContent = item.title;
-
-    const elGroupList = createElement("ul", {
-      className: `${this.prefixCls}-item-group-list`,
-      attributes: { role: "group" },
-    });
-
-    const elItems = this.createItems(item.children);
-    elGroupList.append(...elItems);
-
-    elItemGroup.append(elTitle, elGroupList);
-
-    return elItemGroup;
-  }
-
-  createItem(item) {
-    const elItem = createElement("li", { className: `${this.prefixCls}-item`, attributes: "menuitem" });
-    if (item.icon) {
-      const elIcon = MtuIcon(item.icon);
-      elItem.append(elIcon);
-    }
-
-    const elTitleContent = createElement("span", { className: `${this.prefixCls}-title-content` });
-    elTitleContent.textContent = item.title;
-    elItem.append(elTitleContent);
-
-    if (item.onClick && typeof item.onClick === "function" && item.disabled !== true) {
-      elItem.addEventListener("click", item.onClick);
-    }
-
-    if (item.disabled) {
-      elItem.classList.add("disabled");
-    }
-
-    return elItem;
-  }
-
   activate(key) {
-    this.elItems.forEach((elItem) => elItem.classList.remove("active"));
-
-    if (this.elItemMap.has(key)) {
-      this.elItemMap.get(key).classList.add("active");
-    }
+    this.elItemMap.forEach((elItem, itemKey) => {
+      const elTitle = elItem.querySelector("h2") || elItem.querySelector("a");
+      itemKey === key ? elTitle.classList.add("bg-primary-content") : elTitle.classList.remove("bg-primary-content");
+    });
   }
 
   getElement() {
