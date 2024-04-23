@@ -263,7 +263,11 @@ def school_detailView(request, name, school, subject, id):
 
     detail_context = json.dumps(list(courses), default=str)
 
-    context = {"context": json.dumps(context_sample), "options": detail_context}
+    context = {
+        "context": json.dumps(context_sample),
+        "options": detail_context,
+        "name": name,
+    }
     return render(request, "_main/school_detail.html", context)
 
 
@@ -289,7 +293,7 @@ def school_st(request, name):
     st_context["contentId"] = content_id
 
     print("st_context: ", st_context)
-    context = {"context": json.dumps(st_context)}
+    context = {"context": json.dumps(st_context), "name": name}
     return render(request, "_st/_st_school.html", context)
 
 

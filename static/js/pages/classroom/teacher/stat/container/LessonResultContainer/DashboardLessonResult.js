@@ -1,70 +1,118 @@
 import Component from "../../core/Component.js";
-import { store } from "../../core/Store.js";
+import { statStore } from "../../core/Store.js";
 
 import DashboardLessonResultView from "./DashboardLessonResultView.js"
 import LessonStudentsList from "../../layout/templates/LessonStudentsList.js";
 import SectionChange from "../../layout/organisms/SectionChange.js";
+import CourseProgress from "../../layout/templates/CourseProgress.js";
+import StackedBar from "../../layout/templates/StackedBar.js"
+import ChapterSummaryLineColumnChart from "../../layout/templates/ChapterSummaryLineColumnChart.js";
+import ChapterSummaryColumnChart from "../../layout/templates/ChapterSummaryColumnChart.js";
+import ScheduleSummaryHeatMap from "../../layout/templates/ScheduleSummaryHeatMap.js";
+import ScheduleStudentHeatMap from "../../layout/templates/ScheduleStudentHeatMap.js";
+import LessonToday from "../../layout/organisms/LessonToday.js";
 
 export default class DashboardLessonResult extends Component{
-    constructor(target, props) {
+    constructor(target, model, props) {
         super(target, new DashboardLessonResultView(target), props)
+        this._model = model
+    }
+
+    initState() {
+        // statStore.setState({ selectedChapter: chapter})
+        // statStore.setState({ selectedPeriod: period })
+        // statStore.setState({ selectedSchedule: schedule })
     }
 
     mounted() {
-        const {selectedLesson} = this
-        const {selectedLessonStat, progress, correct} = this.getSelectedLessonStat(selectedLesson)
-        const {scheduledCourse} = this._props
-
-        const chapter = scheduledCourse[selectedLesson].chapter
-        const lesson = scheduledCourse[selectedLesson].lesson
+        const {selectedSchedule, selectedSection, selectedStudent} = this
+        const classStat = this._model.getClassStat(selectedSchedule.schedule, selectedSchedule.period)
+        const studentStat = this._model.getStudentStat(selectedSchedule.schedule, selectedSchedule.period)
+        console.log(selectedSchedule)
+        console.log(classStat)
+        console.log(studentStat)
         
         const $titleChapterLesson = this.$target.querySelector('[data-component="title-chapter-lesson"]')
-        const $statChapterLesson = this.$target.querySelector('[data-component="stat-chapter-lesson"]')
-        const $listStudentsResult = this.$target.querySelector('[data-component="list-students-result"]')
 
+        const $chartProgress = this.$target.querySelector('[data-component="chart-progress"]')
+        const $chartSummary = this.$target.querySelector('[data-component="chart-summary"]')
+
+        const $sectionSchedule = this.$target.querySelector('[data-component="section-schedule"]')
+        const $sectionCorrect = this.$target.querySelector('[data-component="section-correct"]')
+        const $chartStacked = this.$target.querySelector('[data-component="chart-stacked"]')
+        
+        const $summaryChapterLesson = this.$target.querySelector('[data-component="summary-chapter-lesson"]')
+        const $listStudentsResult = this.$target.querySelector('[data-component="list-students-result"]')
+        const $summaryStudentsResult = this.$target.querySelector('[data-component="summary-students-result"]')
+
+        // 통계 제목 (전체, 단원, 단원+차시)
+        const chapter = selectedSchedule.chapter?selectedSchedule.chapter:'전체 단원'
+        const period = selectedSchedule.period==0?'전체 ':selectedSchedule.period
         $titleChapterLesson.innerHTML = `<ul>
                                             <li><button>${chapter}</button></li>
-                                            <li><button>${lesson}차시</button></li>
+                                            ${period?`<li><button>${period}차시</button></li>`:``}
                                         </ul>`
-        this.$target.querySelector('[data-component="progress"]').style.setProperty('--value', `${progress}`)
-        this.$target.querySelector('[data-component="progress"]').innerHTML = `${progress.toFixed(0)}%`
-        this.$target.querySelector('[data-component="correct"]').style.setProperty('--value', `${correct}`)
-        this.$target.querySelector('[data-component="correct"]').innerHTML = `${correct.toFixed(0)}%`
 
-        $listStudentsResult.innerHTML = LessonStudentsList(selectedLessonStat)
+        // 선택된 스케줄의 반 평균 진행률, 정답률
+        CourseProgress({target:$chartProgress, data:[70]})
+        this.$target.querySelector('.avg-progress').innerHTML = classStat.progress
+        this.$target.querySelector('.avg-point').innerHTML = classStat.point
+        ChapterSummaryLineColumnChart({target:$chartSummary, data:classStat.classSummary, type:selectedSchedule.period})
+
+        // 선택된 스케줄의 문항별 정답률
+        if(!selectedSchedule.period) {
+            $sectionSchedule.style.display = 'none'
+            $sectionCorrect.style.display = 'none'
+        } else {
+            $sectionSchedule.innerHTML = SectionChange({seq:selectedSection, courses:classStat.classSummary.scheduleBranches})
+            StackedBar({target:$chartStacked})
+        }
+        // 전체 학생 결과
+        $listStudentsResult.innerHTML = LessonStudentsList(studentStat)
+
+        // if(!Number.isInteger(selectedSchedule.period)){
+            
+        // } else if(selectedSchedule.period == 0){
+        //     // 선택된 스케줄의 요약
+        //     ChapterSummaryLineColumnChart({target:$summaryChapterLesson, data:classStat.classSummary})
+
+        //     // 선택된 학생의 요약
+        //     let student = studentStat.find((obj) => obj.id_student == selectedStudent)
+        //     if(!student || student.length == 0) student = studentStat[0]
+        //     ChapterSummaryColumnChart({target:$summaryStudentsResult, class:classStat.classSummary, student:student.studentSummary})
+        // } else {
+
+        //     $summaryChapterLesson.innerHTML = ScheduleSummaryHeatMap({data:classStat.classSummary})
+        //     let student = studentStat.find((obj) => obj.id_student == selectedStudent)
+        //     if(!student || student.length == 0) student = studentStat[0]
+        //     $summaryStudentsResult.innerHTML = ScheduleStudentHeatMap({data:student.studentSummary})
+        // }
+        
     }
 
-    get selectedLesson() {
-        const {selectedLesson} = store.state
-        return selectedLesson
+    setEvent() {
+        this.addEvent('click', '.selectStudent', ({target}) => {
+            // console.log(target.closest('[data-seq]').dataset.seq)
+            let student = target.closest('[data-id]').dataset.id
+            this.selectStudentListener(student)
+        })
     }
 
-    getSelectedLessonStat(selectedLesson) {
-        const {scheduledCourse, studentStat, studentsResult} = this._props
-        const selectedLessonIds = scheduledCourse[selectedLesson].courses.map((obj) => {
-            return obj.id
-        })
+    get selectedSchedule() {
+        const {selectedSchedule} = statStore.state
+        return selectedSchedule
+    }
+    get selectedSection() {
+        const {selectedSection} = statStore.state
+        return selectedSection
+    }
+    get selectedStudent() {
+        const {selectedStudent} = statStore.state
+        return selectedStudent
+    }
 
-        // console.log(scheduledCourse[selectedLesson])
-        let progress = 0
-        let correct = 0
-
-        const selectedLessonStat = studentsResult.map((obj) => {
-            let id = obj.id
-            let name = obj.name
-            let result = obj.result.filter(({id}) => selectedLessonIds.includes(id))
-            let progress = result.reduce((a, b) => a + b.progress, 0) / result.length
-            let point = result.reduce((a, b) => a + b.point, 0)
-            let numOfQuestion = result.reduce((a,b) => a + b.results.reduce((a,b) => a + b.result.length, 0),0)
-            let correct = point / numOfQuestion
-            return {id, name, result, progress, point, correct, numOfQuestion}
-        })
-        // console.log(selectedLessonStat)
-
-        progress = selectedLessonStat.reduce((a, b) => a + b.progress, 0) / selectedLessonStat.length
-        correct = selectedLessonStat.reduce((a, b) => a + b.correct, 0) / selectedLessonStat.length * 100
-        // console.log(correct)
-        return {selectedLessonStat, progress, correct}
+    selectStudentListener(seq) {
+        statStore.setState({ selectedStudent: seq })
     }
 
 }
