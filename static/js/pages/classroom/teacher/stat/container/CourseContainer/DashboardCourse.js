@@ -12,10 +12,4 @@ export default class DashboardCourse extends Component{
 
     }
 
-    get selectedLesson() {
-        const {scheduledCourse} = this._props
-        
-        return scheduledCourse
-    }
-
 }
