@@ -18,7 +18,7 @@ Accordion.prototype.create = function () {
   var self = this
   var $elMenuList = $(`<div class="cursor-pointer"></div>`)
   this.options.forEach(function(option) {
-    if(option.submenu == true) {
+    if(option.submenu) {
       var $elMenu = $(`<div class="">
                         <div class="px-6 pt-4 flex justify-between items-center">
                           <div class="flex items-center">
