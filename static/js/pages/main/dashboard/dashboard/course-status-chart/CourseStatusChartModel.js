@@ -24,21 +24,21 @@ export class CourseStatusChartModel extends Model {
         },
       },
       events: {
-        beforeMount: (chartContext, config) => {
-          console.log("beforeMount");
-        },
-        mounted: (chartContext, config) => {
-          console.log("mounted");
-        },
-        updated: (chartContext, config) => {
-          console.log("updated");
-          console.log("chartContext: ", chartContext);
-          console.log("config: ", config);
-          // chartContext.windowResizeHandler();
-        },
-        animationEnd: (chartContext, config) => {
-          console.log("animationEnd");
-        },
+        // beforeMount: (chartContext, config) => {
+        //   console.log("beforeMount");
+        // },
+        // mounted: (chartContext, config) => {
+        //   console.log("mounted");
+        // },
+        // updated: (chartContext, config) => {
+        //   console.log("updated");
+        //   console.log("chartContext: ", chartContext);
+        //   console.log("config: ", config);
+        //   // chartContext.windowResizeHandler();
+        // },
+        // animationEnd: (chartContext, config) => {
+        //   console.log("animationEnd");
+        // },
       },
     },
     plotOptions: {
