@@ -20,6 +20,7 @@ export class MonthlySubjectChartModel extends Model {
     chart: {
       type: "bar",
       height: 350,
+      stacked: true,
       toolbar: {
         show: false,
       },
@@ -27,19 +28,11 @@ export class MonthlySubjectChartModel extends Model {
     plotOptions: {
       bar: {
         horizontal: false,
-        // columnWidth: "0%",
-        endingShape: "rounded",
+        borderRadius: 10,
+        borderRadiusApplication: "end", // 'around', 'end'
+        borderRadiusWhenStacked: "last", // 'all', 'last'
       },
     },
-    dataLabels: {
-      enabled: false,
-    },
-    stroke: {
-      show: true,
-      width: 2,
-      colors: ["transparent"],
-    },
-
     fill: {
       opacity: 1,
     },
