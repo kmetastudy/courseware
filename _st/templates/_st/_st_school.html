@@ -77,8 +77,8 @@
     };
     axios.defaults.headers = defaultAxiosConfig.headers; {% endcomment %}
     window.addEventListener("DOMContentLoaded", function () {
-      console.log("schoollibrary: ", stlibrary);
-      stlibrary.school_run("{{ context|escapejs }}");
+      console.log("schoollibrary: ", stSchoollibrary);
+      stSchoollibrary.school_run("{{ context|escapejs }}");
     });
   </script>
 </html>

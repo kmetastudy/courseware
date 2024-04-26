@@ -94,26 +94,47 @@ var configST = Object.assign({}, config, {
     }),
   ],
 });
-
-var configSchool = Object.assign({}, config, {
-  name: "configSchool",
+var configSTSchool = Object.assign({}, config, {
+  name: "configSTSchool",
 
   entry: {
-    school: path.resolve(__dirname, "_st/static/js/school.js"),
+    stSchool: path.resolve(__dirname, "_st/static/js/st_school.js"),
   },
   output: {
-    path: path.resolve(__dirname, "static/_bundle/school"),
-    library: "schoollibrary",
-    filename: "school-bundle.js",
+    path: path.resolve(__dirname, "static/_bundle/st_school"),
+    library: "stSchoollibrary",
+    filename: "st-school-bundle-20240418.js",
     libraryTarget: "var",
     clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "school-bundle.css",
+      filename: "st-school-bundle-20240418.css",
     }),
   ],
+});
+
+var configSchool = Object.assign({}, config, {
+  name: "configSchool",
+
+  entry: {
+    school: path.resolve(__dirname, "_school/static/js/school.js"),
+  },
+  output: {
+    path: path.resolve(__dirname, "static/_bundle/school"),
+    library: "schoollibrary",
+    filename: "school-bundle-20240418.js",
+    libraryTarget: "var",
+    clean: true,
+    // assetModuleFilename: '[name][ext]',
+  },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "school-bundle-20240418.css",
+    }),
+  ],
+  module: tailwindModuleConfig,
 });
 
 var configUser = Object.assign({}, config, {
@@ -341,6 +362,7 @@ module.exports = [
   configCP,
   configCM,
   configST,
+  configSTSchool,
   configSchool,
   configDashboard,
   configStats,

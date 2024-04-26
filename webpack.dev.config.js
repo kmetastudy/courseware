@@ -99,14 +99,14 @@ var configST = Object.assign({}, config, {
 });
 
 var configSTSchool = Object.assign({}, config, {
-  name: "configSchool",
+  name: "configSTSchool",
 
   entry: {
     stSchool: path.resolve(__dirname, "_st/static/js/st_school.js"),
   },
   output: {
-    path: path.resolve(__dirname, "static/_bundle/st"),
-    library: "stlibrary",
+    path: path.resolve(__dirname, "static/_bundle/st_school"),
+    library: "stSchoollibrary",
     filename: "st-school-bundle-20240418.js",
     libraryTarget: "var",
     clean: true,
