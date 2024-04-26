@@ -7,6 +7,8 @@ from _cm.models import courseDetail
 
 from _cp.nmodels import mCourseN, mElementN
 
+from _cm.constants import CM_TYPE_QUESTION, CM_TYPE_VIDEO
+
 # Create your views here.
 
 
@@ -39,7 +41,9 @@ def course_import(request):
             if "units" in branch:
                 branch_units = branch["units"]
                 for unit in branch_units:
-                    unit["types"] = ["v" if x == 2 else "q" for x in unit["types"]]
+                    unit["types"] = [
+                        "v" if x == CM_TYPE_VIDEO else "q" for x in unit["types"]
+                    ]
 
         id_course = uuid.UUID(course_id)
 
