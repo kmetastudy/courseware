@@ -160,7 +160,12 @@ input::-webkit-inner-spin-button {
   background-size: cover;
 }
 .swiper-background5 {
-  background-image: url("/static/img/landing/background4.png");
+  background-image: url("/static/img/landing/background2.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.swiper-background6 {
+  background-image: url("/static/img/landing/background1.png");
   background-repeat: no-repeat;
   background-size: cover;
 }

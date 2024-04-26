@@ -12,8 +12,8 @@ export function BaseOnReady(context, csrf_token) {
 
     var navOptions = [
         {title:'메인', url:'banner/', icon:'ri-dashboard-fill', submenu:false},
-        {title:'랜딩', icon:'ri-home-3-fill', submenu:true, subMenuItems:[{title:'코스12 관리', url:'banner/',},{title:'학교 관리'}]}, //학교추가, 로고, 배너, 공지, 추천코스
-        {title:'콘텐츠', icon:'ri-user-2-fill', submenu:true, subMenuItems:[{title:'코스 업로드', url:'/course/'}]},
+        {title:'랜딩', icon:'ri-home-3-fill', submenu:true, subMenuItems:[{title:'코스12 관리', url:'banner/',},{title:'학교 관리', url:'school/'}]}, //학교추가, 로고, 배너, 공지, 추천코스
+        {title:'콘텐츠', icon:'ri-user-2-fill', submenu:true, subMenuItems:[{title:'코스 업로드', url:'course/'}]},
         // {title:'콘텐츠 구매자', icon:'ri-user-fill', submenu:true, subMenuItems:[{title:'구매자 관리'},{title:'포인트 관리'},{title:'주문 관리'}]},
         {title:'설정', icon:'ri-equalizer-fill', submenu:true, subMenuItems:[{title:'카테고리 관리'},{title:'태그 관리'}]},
     ]   
@@ -21,11 +21,11 @@ export function BaseOnReady(context, csrf_token) {
     $('.nav').append(clNav.elThis)
 
     const $content = document.querySelector('.content')
-    console.log($content)
+    console.log($content)3
     new Course($content)
 }
 
-// old
+// ----------------------old--------------------------
 export function contentManagementOnReady(context){
     var optionsCM = {}
     optionsCM.body = document.querySelector('body')

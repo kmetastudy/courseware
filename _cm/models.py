@@ -36,6 +36,9 @@ class courseDetail(models.Model):
     price = models.IntegerField(default=0)
     deliver = models.TextField(null=True, blank=True)
 
+    def __str__(self):
+        return self.courseTitle
+
 
 class CourseReset(models.Model):
     # school E:초등 M:중등 H:고등

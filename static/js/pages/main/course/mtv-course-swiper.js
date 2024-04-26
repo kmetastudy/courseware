@@ -20,7 +20,7 @@ CourseSwiperView.prototype.init = function() {
     var keys = Object.keys(this.data)
 
     keys.forEach((key, index) => {
-        var elCourseSwiperCointer = $(`<div class="swiper-background${index+1} my-7 flex justify-center items-center">
+        var elCourseSwiperCointer = $(`<div class="swiper-background${index+1} my-6 flex justify-center items-center">
                                             <div class="swiper-container m-4 lg:w-2/3 overflow-hidden">
                                                 <div class="w-fit flex items-center text-[20px] sm:text-[24px] font-bold"><object type="image/svg+xml" data="/static/assets/Star4.svg"></object><p class="text-[20px] sm:text-[24px] font-bold">${this.options[key]}</p><span class="text-sm text-red-400">new</span></div>
                                                 <div class="pl-[60px] pb-4 flex justify-between items-center">

@@ -5,19 +5,19 @@ app_name = "_main"
 
 urlpatterns = [
     path("", index, name="index"),
-    path("school/", school, name="school"),
+    # path("school/", school, name="school"),
     path("edu/", edu, name="edu"),
     path("teacher/", teacher, name="teacher"),
     path("desc/<str:page>/", descView, name="descView"),
     path("contact/", new_contact, name="index"),
-    path("school/yeonggwang/", school_page, name="schoolPage"),
-    path("school/gunsan/", school_gunsan, name="schoolGunsan"),
-    path(
-        "school/<str:name>/courses/<str:school>/<str:subject>/<str:id>/",
-        school_detailView,
-        name="school_detailView",
-    ),
-    path("school/<str:name>/st/", school_st, name="schoolST"),
+    # path("school/yeonggwang/", school_page, name="schoolPage"),
+    # path("school/gunsan/", school_gunsan, name="schoolGunsan"),
+    # path(
+    #     "school/<str:name>/courses/<str:school>/<str:subject>/<str:id>/",
+    #     school_detailView,
+    #     name="school_detailView",
+    # ),
+    # path("school/<str:name>/st/", school_st, name="schoolST"),
     # path('courses/<str:school>/', getSubject, name='getSubject'),
     path("courses/<str:school>/<str:subject>/", mainView, name="mainView"),
     path("courses/<str:school>/<str:subject>/<str:id>/", detailView, name="detailView"),
