@@ -1,15 +1,22 @@
 {% extends "_main/base.html" %}
 {% load static %}
+{% block css %}
+<style>
+.swiper-wrapper{
+    transition-timing-function: linear;
+}
+</style>
+{% endblock %}
 {% block content %}
 <div class="w-full flex flex-col items-center">
     <div class="landing-swiper w-full overflow-hidden relative">
         <div class="swiper-wrapper">
             <!-- <div class="swiper-slide slide5 cursor-pointer flex justify-center"><img class="xl:h-[500px] 2xl:h-[600px]" src="static/img/banner5-1.png"></div> -->
             
-            <div class="swiper-slide slide1 cursor-pointer flex justify-center" onclick='window.location.href="/desc/1/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner1-1.png"></div>
+            <div class="swiper-slide slide1 cursor-pointer flex justify-center" onclick='window.location.href="/desc/1/"'><img class="h-[250px] md:h-[400px] xl:h-[500px]" src="/static/img/banner1-1.png"></div>
             <!-- <div class="swiper-slide slide2 cursor-pointer flex justify-center" onclick='window.location.href="/desc/2/"'><img class="xl:h-[500px] 2xl:h-[600px]" src=xl:banner2-1.png"></div> -->
-            <div class="swiper-slide slide3 cursor-pointer flex justify-center" onclick='window.location.href="/desc/3/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner3-1.png"></div>
-            <div class="swiper-slide slide6 cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="" src="/static/img/banner6-1.png"></div>
+            <div class="swiper-slide slide3 cursor-pointer flex justify-center" onclick='window.location.href="/desc/3/"'><img class="h-[250px] md:h-[400px] xl:h-[500px]" src="/static/img/banner3-1.png"></div>
+            <div class="swiper-slide slide6 cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="h-[250px] md:h-[400px] xl:h-[500px]" src="/static/img/banner6-1.png"></div>
             <!-- <div class="swiper-slide slide4 cursor-pointer flex justify-center" onclick='window.location.href="/desc/4/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner4-1.png"></div> -->
             
         </div>
@@ -17,10 +24,12 @@
         
     </div>
     <div class="w-full flex flex-col items-center">
-        <div class="mt-4 w-full xl:w-2/3 flex justify-center">
-            <div class="flex h-[50px] items-center rounded-full mx-2 px-4 border cursor-pointer" onclick="window.location='/school/gunsan/'"><div class="pr-4 hidden md:block">초등학교 홈페이지 바로가기</div><img class="" src="/static/img/schoolLogo/gunsan_logo.png"></div>
-            <div class="flex h-[50px] items-center rounded-full mx-2 px-4 py-2 border cursor-pointer" onclick="window.location='/school/yeonggwang/'"><div class="pr-4 hidden md:block">중학교 홈페이지 바로가기</div><img class="" src="/static/img/schoolLogo/yeonggwang_logo.png"></div>
-            
+        <div class="logo-swiper mt-4 w-full xl:w-2/3 flex justify-center overflow-hidden">
+            <div class="swiper-wrapper">
+                {% for school in schools %}
+                <div class="swiper-slide flex h-[50px] items-center md:mx-2 cursor-pointer grayscale hover:grayscale-0" onclick="window.location='/school/page/{{school.id}}'"><img class="" src="{{school.img_logo}}"></div>
+                {% endfor %}
+            </div>
         </div>
         <div class="courses_recomend w-full">
             <!-- <div class="course-swiper w-[1000px]">
@@ -105,6 +114,23 @@
         },
         
         centeredSlides:true
+    })
+
+    var mySwiper2 = new Swiper('.logo-swiper',{
+        loop:true,
+        speed:7000,
+        autoplay:{
+            delay: 0,
+            disableOnInteraction: true,
+        },
+        slidesPerView: 4,
+        spaceBetween: 10,
+        breakpoints: {
+          640: {
+            slidesPerView: 6,
+            spaceBetween: 10,
+          },
+        }
     })
 
     window.addEventListener("DOMContentLoaded", function () {

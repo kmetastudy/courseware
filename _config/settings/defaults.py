@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     "_user",
     "_cp",
     "_cm",
+    "_school",
     "_st",
     "_class",
     "core",
@@ -165,10 +166,10 @@ STATICFILES_DIRS = [
     # os.path.join(BASE_DIR, 'static/_dist/static'),  # packages
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'fstatic')
+STATIC_ROOT = os.path.join(BASE_DIR, "fstatic")
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
 
 # Default primary key field type

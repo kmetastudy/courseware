@@ -20,6 +20,8 @@ from _main.models import (
     PointUse,
     Points,
 )
+from _school.models import mSchool
+from _school.serializers import SchoolSerializer
 from _st.utils import has_course_permission
 from _user.decorators import jwt_login_required
 from _user.models import mUser
@@ -32,6 +34,9 @@ from _user.utils import make_context
 def index(request):
     context_sample = make_context(request)
     courses = getCourses(request, "all", "all")
+
+    school = mSchool.objects.all()
+    schools = SchoolSerializer(school, many=True).data
 
     course_recomend = courseLanding.objects.filter(id_page="nscreen").values()
     # print(list(course_recomend))
@@ -46,11 +51,11 @@ def index(request):
             # course['type'] = content['subject']
             # print(course['courseId'])
             recommend[content["subject"]].append(course)
-    print(recommend)
     context = {
         "context": json.dumps(context_sample),
         "courses": json.dumps(courses, default=str),
         "recommend": json.dumps(recommend, default=str),
+        "schools": schools,
     }
     return render(request, "_main/landing.html", context)
 
@@ -440,7 +445,7 @@ def getCourses(request, school, subject):
 
     courseList = list(courses)
 
-    print(courseList)
+    # print(courseList)
     print("--------------------")
 
     return courseList
