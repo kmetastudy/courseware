@@ -38,11 +38,13 @@ def school_page(request, school_id):
     school_logo = school_data["img_logo"]
     school_banner = school_data["img_banner"]
 
-    notice = mSchoolNotice.objects.filter(id_school=school_id)
+    notice = mSchoolNotice.objects.filter(id_school=school_id).order_by("-date")
     notice_data = NoticeSerializer(notice, many=True).data
     print(notice_data)
 
-    school_sections = mSchoolSection.objects.filter(id_school=school_id, active=True)
+    school_sections = mSchoolSection.objects.filter(
+        id_school=school_id, active=True
+    ).order_by("sequence")
 
     sections = SectionSerializer(school_sections, many=True).data
 
