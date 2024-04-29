@@ -163,7 +163,7 @@ var configCM = Object.assign({}, config, {
   name: "configCM",
 
   entry: {
-    st: path.resolve(__dirname, "_cm/static/js/cm.js"),
+    cm: path.resolve(__dirname, "_cm/static/js/cm.js"),
   },
   output: {
     path: path.resolve(__dirname, "static/_bundle/cm"),

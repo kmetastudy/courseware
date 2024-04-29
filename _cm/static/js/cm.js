@@ -21,7 +21,7 @@ export function BaseOnReady(context, csrf_token) {
     $('.nav').append(clNav.elThis)
 
     const $content = document.querySelector('.content')
-    console.log($content)3
+    console.log($content)
     new Course($content)
 }
 
