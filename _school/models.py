@@ -46,6 +46,7 @@ class mSchoolSection(BaseModel):
     )
     title = models.CharField(max_length=64, blank=True)
     img_background = models.TextField(null=True, blank=True)
+    sequence = models.PositiveIntegerField(null=True, blank=True)
     active = models.BooleanField(default=True, verbose_name="활성화 여부")
 
     def __str__(self):

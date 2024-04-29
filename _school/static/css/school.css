@@ -169,3 +169,9 @@ input::-webkit-inner-spin-button {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.swiper-background7 {
+  background-image: url("/static/img/landing/background3.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
