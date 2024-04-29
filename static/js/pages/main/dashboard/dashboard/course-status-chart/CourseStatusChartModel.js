@@ -1,6 +1,6 @@
 import { isNumber } from "../../../../../core/utils/type";
 
-import { Model } from "../../../../../shared/component/Model";
+import { Model } from "../../../../../shared/lib/components";
 
 export class CourseStatusChartModel extends Model {
   static CHAPTER_TYPE = 0;

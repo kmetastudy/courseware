@@ -3,7 +3,7 @@ import { isArray } from "../../../../../../../core/utils/type";
 import { sum, extract } from "../../../../../../../core/utils/array";
 import { round } from "../../../../../../../core/utils/number";
 
-import { Model } from "../../../../../../../shared/component/Model";
+import { Model } from "../../../../../../../shared/lib/components";
 
 export class ChapterStatChartModel extends Model {
   static CHAPTER_TYPE = 0;

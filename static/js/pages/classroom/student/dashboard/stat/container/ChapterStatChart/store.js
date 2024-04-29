@@ -1,4 +1,4 @@
-import { Store } from "../../../../../../../shared/component/Store";
+import { Store } from "../../../../../../../shared/lib/components";
 
 export const store = new Store({
   state: {

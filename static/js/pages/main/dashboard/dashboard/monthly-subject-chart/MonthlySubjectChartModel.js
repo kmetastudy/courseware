@@ -1,4 +1,4 @@
-import { Model } from "../../../../../shared/component/Model";
+import { Model } from "../../../../../shared/lib/components";
 
 export class MonthlySubjectChartModel extends Model {
   static CHAPTER_TYPE = 0;
