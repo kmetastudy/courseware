@@ -28,6 +28,7 @@ urlpatterns = [
     path("", include("_main.urls")),
     path("cp/", include("_cp.urls")),
     path("cm/", include("_cm.urls")),
+    path("school/", include("_school.urls")),
     path("st/", include("_st.urls")),
     path("class/", include("_class.urls")),
     path("__debug__/", include("debug_toolbar.urls")),

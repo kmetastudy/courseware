@@ -49,12 +49,7 @@
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
-    <style>
-      .mtm-nav-logo img {
-          content: url(/static/img/school/logoBasic.png);
-          height: 36px;
-      }
-    </style>
+
   </head>
 
   <body>
@@ -62,16 +57,16 @@
       <div class="nav-container z-20 sticky top-0 w-full h-[64px] flex justify-center bg-white shadow">
         <nav class="nav">
           <div class="mtm-nav-logo">
-            <img src="/static/assets/logo_courseware_white.svg" onclick="window.location='/school/yeonggwang'">
+            <img src="{{schoolLogo}}" onclick="window.location='/school/page/{{schoolId}}'">
           </div>
           <img class="nav-lms-logo" src="/static/img/LMSLogo.svg">
-          <button class="btn btn-ghost" onclick="window.location='http://megacourse.co.kr/ml/'">로그인</button>
+          <button class="btn btn-ghost" onclick="window.location='http://megatest.kr:7700/ml/'">로그인</button>
         </nav>
       </div>
     </div>
 
-    <link rel="stylesheet" href="{% static '_bundle/school/school-bundle-20240418.css' %}" />
-    <script type="text/javascript" src="{% static '_bundle/school/school-bundle-20240418.js' %}"></script>
+    <link rel="stylesheet" href="{% static '_bundle/st_school/st-school-bundle-20240418.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/st_school/st-school-bundle-20240418.js' %}"></script>
   </body>
 
   <script>
@@ -82,8 +77,8 @@
     };
     axios.defaults.headers = defaultAxiosConfig.headers; {% endcomment %}
     window.addEventListener("DOMContentLoaded", function () {
-      console.log("schoollibrary: ", schoollibrary);
-      schoollibrary.school_run("{{ context|escapejs }}");
+      console.log("schoollibrary: ", stSchoollibrary);
+      stSchoollibrary.school_run("{{ context|escapejs }}");
     });
   </script>
 </html>

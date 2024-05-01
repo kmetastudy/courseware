@@ -18,6 +18,7 @@ export function BaseOnReady(context) {
 export function CourseLandingOnReady(context, courses, recommend, title) {
   console.log(context);
   console.log(courses);
+  console.log(recommend);
 
   var $elSearch = $(`<div class="my-6 flex flex-1 justify-center items-center">
                         <input type="text" class="mx-2 p-2 w-1/2 border border-gray-500 rounded-full text-[12px] focus:outline-none focus:shadow-lg" placeholder="과목을 입력해보세요.">

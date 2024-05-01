@@ -1,6 +1,6 @@
 {% extends "_main/base_basic.html" %}
 {% load static %}
-{% block title %}영광중학교{% endblock %}
+{% block title %}{{schoolName}}{% endblock %}
 {% block css %}
 <style>
 .nav {
@@ -8,10 +8,6 @@
 }
 .mtm-nav {
     background-color: white;
-}
-.mtm-nav-logo img {
-    content: url(/static/img/school/logoBasic.png);
-    height: 36px;
 }
 .swiper-background1{
     border-radius: 30px;
@@ -34,7 +30,7 @@
     margin-right:0.5rem;
 }
 .swiper-background5{
-    display: none;
+    display: none !important;
 }
 .courses_recomend > .course-swiper > .swiper-background2 > div > div:nth-child(3) > div span {
     font-size: 20px !important;;
@@ -48,10 +44,7 @@
 <div class="w-full flex flex-col items-center">
     <div class="landing-swiper w-full lg:w-2/3 overflow-hidden relative">
         <div class="swiper-wrapper ">
-            <div class="swiper-slide cursor-pointer flex justify-center"><img class="h-[250px] xl:h-[350px] 2xl:h-[500px] object-cover" src="/static/img/school/banner11.png"></div>
-            <div class="swiper-slide cursor-pointer flex justify-center"><img class="h-[250px] xl:h-[350px] 2xl:h-[500px] object-cover" src="/static/img/school/banner12.png"></div>
-            <div class="swiper-slide cursor-pointer flex justify-center"><img class="h-[250px] xl:h-[350px] 2xl:h-[500px] object-cover" src="/static/img/school/banner11.png"></div>
-            <div class="swiper-slide cursor-pointer flex justify-center"><img class="h-[250px] xl:h-[350px] 2xl:h-[500px] object-cover" src="/static/img/school/banner12.png"></div>
+            <div class="swiper-slide cursor-pointer flex justify-center"><img class="xl:h-[350px] 2xl:h-[450px]" src="/static/img/schoolBanner/{{name}}_banner1.png"></div>
         </div>
         <div class="py-2 flex justify-end items-center swiper-pagination"></div>
     </div>
