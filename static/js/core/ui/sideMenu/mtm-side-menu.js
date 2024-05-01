@@ -17,20 +17,14 @@ export class mtmSideMenu {
   }
 
   create() {
-    this.elThis = elem("aside", { class: "drawer-side z-10" });
-
-    this.elLabel = elem("label", { for: "dashboard-drawer", class: "drawer-overlay" });
-    this.elThis.append(this.elLabel);
+    this.elThis = elem("aside", { class: "h-dvh z-10" });
 
     this.elNav = elem("nav", {
-      class: "flex my-12 min-h-screen w-72 flex-col gap-2 overflow-y-auto bg-base-100 px-6 py-10 lg:my-0",
+      class: "lg:flex hidden my-12 min-h-screen w-72 flex-col gap-2 overflow-y-auto bg-base-100 px-6 py-10 lg:my-0",
     });
     this.elThis.append(this.elNav);
-    setTimeout(() => {
-      console.log(this.elNav.getBoundingClientRect());
-    }, 1000);
 
-    this.elMenu = elem("ul", { class: "menu menu-lg" });
+    this.elMenu = elem("ul", { class: "menu menu-lg min-h-full" });
     this.elNav.append(this.elMenu);
 
     const itemNodes = this.createItemNodes(this.items);

@@ -1,22 +1,25 @@
-import { createElement } from "../../../core/utils/dom-utils";
-import elem from "../../../core/utils/elem/elem";
 import { TYPE_USER } from "../../user/constants";
 import { TYPE_MEMBER } from "../../class/constants";
+
+import elem from "../../../core/utils/elem/elem";
+
 import { mtmSideMenu } from "../../../core/ui/sideMenu/mtm-side-menu";
+
 import { MtmDashboardManager } from "./mtm-dashboard-manager";
 import { TeacherClassManager } from "../class/TeacherClassManager";
 import { StudentClassManager } from "../class/StudentClassManager";
 import { InactiveClassManager } from "../class/InactiveClassManager";
+
 require("../../../../css/pages/main/dashboard/app-dashboard.css");
 export class AppDashboard {
-  /**usertype, userId, userLogin
+  /**userType, userId, userLogin
    *
    * @param {Object} config
    * @property {string} config.userId
-   * @property {string} config.usertype
+   * @property {string} config.userType
    * @property {string} config.userLogin
    */
-  constructor(config) {
+  constructor(config = {}) {
     this.config = config;
     this.currentContent = null;
     this.currentSideKey = null;
@@ -32,57 +35,60 @@ export class AppDashboard {
 
   setup() {
     const { userType } = this.config;
-    switch (userType) {
-      case TYPE_USER.TEACHER:
-        this.sideItems = this.createTeacherSideItems();
-        break;
 
-      default:
-        this.sideItems = this.createDefaultSideItems();
-        break;
-    }
+    this.sideItems = this.setSideItems(userType);
   }
 
+  setSideItems(userType) {
+    switch (userType) {
+      case TYPE_USER.TEACHER:
+        return this.createTeacherSideItems();
+
+      default:
+        return this.createDefaultSideItems();
+    }
+  }
   create() {
-    const { userType, userId: studentId, userLogin } = this.config;
+    const { userType, userId, userLogin } = this.config;
 
-    // this.elThis = createElement("main", { className: "flex px-4 py-8 mx-auto md:px-8 xl:px-16" });
-    this.elThis = elem("div", { class: "drawer min-h-screen lg:drawer-open" });
-
-    this.elDrawer = elem("input", {
-      class: "drawer-toggle",
-      id: "dashboard-drawer",
-      type: "checkbox",
+    this.elThis = elem("div", {
+      class: "grid w-full relative",
+      style: "grid-auto-columns: max-content auto max-content",
     });
-
-    this.elMain = elem("main", { class: "drawer-content bg-base-200" });
 
     this.clSide = new mtmSideMenu({ item: this.sideItems });
     this.elSide = this.clSide.getElement();
+    this.elSide.classList.add("col-start-1");
+    this.elSide.classList.add("row-start-1");
+    this.elSide.classList.add("overflow-x-hidden");
 
-    this.elThis.append(this.elDrawer, this.elMain, this.elSide);
+    this.elThis.append(this.elSide);
 
     switch (this.config.userType) {
       case TYPE_MEMBER.TEACHER:
-        this.clClassManager = new TeacherClassManager({ userId: this.config.userId });
+        this.clClassManager = new TeacherClassManager({ userId });
         this.elClassManager = this.clClassManager.getElement();
-        this.elMain.append(this.elClassManager);
 
-        this.clInactiveClassManager = new InactiveClassManager({ userId: this.config.userId });
+        this.elThis.append(this.elClassManager);
+
+        this.clInactiveClassManager = new InactiveClassManager({ userId });
         this.elInactiveClassManager = this.clInactiveClassManager.getElement();
-        this.elMain.append(this.elInactiveClassManager);
+
+        this.elThis.append(this.elInactiveClassManager);
 
         this.handleSideClick("class");
         break;
 
       default:
-        this.clDashboardManager = new MtmDashboardManager({ userType, studentId, userLogin });
+        this.clDashboardManager = new MtmDashboardManager({ userType, studentId: userId, userLogin });
         this.elDashboardManager = this.clDashboardManager.getElement();
-        this.elMain.append(this.elDashboardManager);
 
-        this.clClassManager = new StudentClassManager({ userId: this.config.userId });
+        this.elThis.append(this.elDashboardManager);
+
+        this.clClassManager = new StudentClassManager({ userId });
         this.elClassManager = this.clClassManager.getElement();
-        this.elMain.append(this.elClassManager);
+
+        this.elThis.append(this.elClassManager);
 
         this.handleSideClick("dashboard");
         break;

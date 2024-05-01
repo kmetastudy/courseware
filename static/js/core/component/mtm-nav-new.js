@@ -5,7 +5,11 @@ import { MtuExpandingButton } from "../mtu/button/mtu-expanding-button";
 import { MtuHamburgerMenu } from "../mtu/menu/mtu-hamburger-menu";
 
 require("../../../css/core/component/mtm-nav.css");
-export class MtmNav {
+export class MtmNavNew {
+  /**
+   * @description 현재 사용하지 않음(2024/05/01)
+   * @param {*} options
+   */
   constructor(options = {}) {
     console.log(options);
     this.options = options;
@@ -121,45 +125,18 @@ export class MtmNav {
     const section = document.createElement("div");
     section.classList.add(`mtm-nav-right-section`);
 
-    const drawer = this.options?.drawer;
-
     if (this.options.login) {
-      // const clMenuButton = new MtuExpandingButton(this.options.login);
-      // const clMenuList = new MtuHamburgerMenu(this.options.login);
-      // section.appendChild(clMenuButton.elThis[0]);
-      // section.appendChild(clMenuList.elThis);
-
-      // Menu button container;
       const clMenuButton = new MtuExpandingButton(this.options.login);
-      const elDrawerTriggerButton = drawer.Label();
-      const elMenuIcon = MtuIcon("menu");
-      elMenuIcon.setAttribute("style", "color: #fff;");
-      elMenuIcon.classList.add("lg:hidden");
-      elMenuIcon.classList.add("text-lg");
-      elDrawerTriggerButton.append(elMenuIcon);
-
-      //
+      const clMenuList = new MtuHamburgerMenu(this.options.login);
       section.appendChild(clMenuButton.elThis[0]);
-      section.appendChild(elDrawerTriggerButton);
+      section.appendChild(clMenuList.elThis);
     }
 
     if (this.options.logout) {
-      // const clMenuButton = new MtuExpandingButton(this.options.logout);
-      // const clMenuList = new MtuHamburgerMenu(this.options.logout);
-      // section.appendChild(clMenuButton.elThis[0]);
-      // section.appendChild(clMenuList.elThis);
-
       const clMenuButton = new MtuExpandingButton(this.options.logout);
-      const elDrawerTriggerButton = drawer.Label();
-      elDrawerTriggerButton.classList.add("btn");
-      elDrawerTriggerButton.classList.add("btn-ghost");
-      const elMenuIcon = MtuIcon("menu");
-      elMenuIcon.classList.add("lg:hidden");
-      elMenuIcon.setAttribute("style", "color: #fff;");
-      elMenuIcon.classList.add("text-lg");
-      elDrawerTriggerButton.append(elMenuIcon);
+      const clMenuList = new MtuHamburgerMenu(this.options.logout);
       section.appendChild(clMenuButton.elThis[0]);
-      section.appendChild(elDrawerTriggerButton);
+      section.appendChild(clMenuList.elThis);
     }
 
     // if (this.options.search) {

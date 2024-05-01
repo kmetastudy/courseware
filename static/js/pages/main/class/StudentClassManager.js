@@ -32,7 +32,8 @@ export class StudentClassManager {
 
   create() {
     this.elThis = elem("div", {
-      class: "grid grid-cols-12 grid-rows-[min-content] gap-x-6 gap-y-12 p-4 lg:gap-x-12 lg:p-10 hidden",
+      class:
+        "col-start-2 row-start-1 bg-base-200 grid grid-cols-12 grid-rows-[min-content] items-start gap-x-6 gap-y-12 p-4 lg:gap-x-12 lg:p-10 hidden",
     });
 
     // Header
@@ -41,19 +42,10 @@ export class StudentClassManager {
     });
     this.elThis.append(this.elHeader);
 
-    this.elLabel = elem("label", {
-      for: "dashboard-drawer",
-      class: "btn btn-square btn-ghost drawer-button lg:hidden",
-    });
-    this.elHeader.append(this.elLabel);
-
-    this.elIcon = MtuIcon("menu");
-    this.elLabel.append(this.elIcon);
-
     this.elTitleWrapper = elem("div", { class: "grow" });
     this.elHeader.append(this.elTitleWrapper);
 
-    this.elTitle = elem("h1", { class: "font-bold lg:text-2xl" }, "내 클래스");
+    this.elTitle = elem("h1", { class: "font-bold text-2xl" }, "내 클래스");
     this.elTitleWrapper.append(this.elTitle);
 
     this.elEmptyClass = elem("div", { class: "col-span-8" });

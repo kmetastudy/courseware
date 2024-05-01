@@ -1,4 +1,4 @@
-import { Component } from "../../../../../../../shared/component/Component";
+import { Component } from "../../../../../../../shared/lib/components";
 import { store } from "./store";
 import { ChapterStatChartModel } from "./ChapterStatChartModel";
 import { createTabs } from "../../../../../../../core/mtu/tab/create-tabs";

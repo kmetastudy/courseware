@@ -25,23 +25,11 @@ export class TeacherClassManager {
     this.createClassCards(data);
   }
 
-  // create() {
-  //   this.elThis = elem("div", { class: "ml-8 w-full hidden" });
-
-  //   this.elHeader = elem("div", { class: "mb-1 flex flex-row items-center gap-0 text-2xl font-semibold" });
-
-  //   this.elTitle = elem("div", { class: "dashboard-title" }, "내 클래스");
-  //   this.elHeader.append(this.elTitle);
-
-  //   this.elBody = elem("div", { class: "grid grid-cols-12 grid-rows-[min-content] gap-y-12 p-4 md:gap-x-12" });
-
-  //   this.elEmptyClass = elem("div", { class: "col-span-8" });
-
-  //   this.elThis.append(this.elHeader, this.elBody);
-  // }
-
   create() {
-    this.elThis = elem("div", { class: "grid grid-cols-12 grid-rows-[min-content] gap-y-12 p-4 lg:gap-x-12 lg:p-10" });
+    this.elThis = elem("div", {
+      class:
+        "col-start-2 row-start-1 bg-base-200 grid grid-cols-12 grid-rows-[min-content] gap-y-12 p-4 lg:gap-x-12 lg:p-10",
+    });
 
     // Header
     this.elHeader = elem("div", {
@@ -49,19 +37,10 @@ export class TeacherClassManager {
     });
     this.elThis.append(this.elHeader);
 
-    this.elLabel = elem("label", {
-      for: "dashboard-drawer",
-      class: "btn btn-square btn-ghost drawer-button lg:hidden",
-    });
-    this.elHeader.append(this.elLabel);
-
-    this.elIcon = MtuIcon("menu");
-    this.elLabel.append(this.elIcon);
-
     this.elTitleWrapper = elem("div", { class: "grow" });
     this.elHeader.append(this.elTitleWrapper);
 
-    this.elTitle = elem("h1", { class: "lg:text-2xl lg:font-light" }, "내 클래스");
+    this.elTitle = elem("h1", { class: "text-2xl lg:font-light" }, "내 클래스");
     this.elTitleWrapper.append(this.elTitle);
 
     this.elEmptyClass = elem("div", { class: "col-span-8" });

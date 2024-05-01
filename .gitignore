@@ -49,6 +49,9 @@ downloads/
 eggs/
 .eggs/
 lib/
+!/static/js/shared/lib/
+!/staticfiles/js/shared/lib/
+
 lib64/
 parts/
 sdist/

@@ -3,10 +3,16 @@ import { isArray } from "../../../../../../../core/utils/type";
 import { sum, extract } from "../../../../../../../core/utils/array";
 import { round } from "../../../../../../../core/utils/number";
 
-import { Model } from "../../../../../../../shared/component/Model";
+import { Model } from "../../../../../../../shared/lib/components";
 
 export class ChapterStatChartModel extends Model {
   static CHAPTER_TYPE = 0;
+  static DAISY_CUPCAKE_HEX = {
+    primary: "#65c3c8",
+    secondary: "#ef9fbc",
+    accent: "#eeaf3a",
+  };
+
   chartOptions = {
     chart: {
       type: "bar",
@@ -65,9 +71,11 @@ export class ChapterStatChartModel extends Model {
 
     const tooltip = composeTooltip(tabValue);
 
+    const colors = composeColors(tabValue);
+
     const defaultOption = this.chartOptions;
 
-    return { ...defaultOption, series, xaxis, tooltip };
+    return { ...defaultOption, series, xaxis, tooltip, colors };
   }
 
   getProperty() {
@@ -169,6 +177,11 @@ function addChapterIdToBranch(property) {
   });
 
   return properties;
+}
+
+function composeColors(selectedTabValue) {
+  const colorKey = selectedTabValue === "progress" ? "primary" : "secondary";
+  return [ChapterStatChartModel.DAISY_CUPCAKE_HEX[colorKey]];
 }
 
 function isChapter(item) {
