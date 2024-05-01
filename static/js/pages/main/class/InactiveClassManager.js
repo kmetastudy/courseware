@@ -27,7 +27,7 @@ export class InactiveClassManager {
   }
 
   create() {
-    this.elThis = elem("div", { class: "mtm-dashboard-manager hidden" });
+    this.elThis = elem("div", { class: "mtm-dashboard-manager col-start-2 row-start-1 bg-base-200 hidden" });
 
     this.elWrapper = elem("div", { class: "mtm-dashboard-manager-wrapper" });
     this.elThis.append(this.elWrapper);

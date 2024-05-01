@@ -4,7 +4,6 @@ import { RecentCourseCard } from "./dashboard/recent-course/recent-course-card";
 import { CourseStatusChart } from "./dashboard/course-status-chart/CourseStatusChart";
 import { MonthlySubjectChart } from "./dashboard/monthly-subject-chart/MonthlySubjectChart";
 
-import { MtuIcon } from "../../../core/mtu/icon/mtu-icon";
 import elem from "../../../core/utils/elem/elem";
 
 export class MtmDashboardManager {
@@ -34,7 +33,8 @@ export class MtmDashboardManager {
 
   create() {
     this.elThis = elem("div", {
-      class: "grid grid-cols-12 grid-rows-[min-content] gap-x-6 gap-y-12 p-4 lg:gap-x-12 lg:p-10 hidden",
+      class:
+        "col-start-2 row-start-1 bg-base-200 grid grid-cols-12 grid-rows-[min-content] gap-x-6 gap-y-12 p-4 lg:gap-x-12 lg:p-10 hidden",
     });
 
     // Header
@@ -43,19 +43,10 @@ export class MtmDashboardManager {
     });
     this.elThis.append(this.elHeader);
 
-    this.elLabel = elem("label", {
-      for: "dashboard-drawer",
-      class: "btn btn-square btn-ghost drawer-button lg:hidden",
-    });
-    this.elHeader.append(this.elLabel);
-
-    this.elIcon = MtuIcon("menu");
-    this.elLabel.append(this.elIcon);
-
     this.elTitleWrapper = elem("div", { class: "grow" });
     this.elHeader.append(this.elTitleWrapper);
 
-    this.elTitle = elem("h1", { class: "font-bold lg:text-2xl" }, "Dashboard");
+    this.elTitle = elem("h1", { class: "text-2xl font-bold" }, "Dashboard");
     this.elTitleWrapper.append(this.elTitle);
 
     // 최근 학습 강의
@@ -82,6 +73,8 @@ export class MtmDashboardManager {
     this.clRecentCourseCard.setData(dashboardServices.getRecentCourses(3));
 
     this.clCourseStatusChart.setData(studyResults);
+
+    console.log(dashboardServices.getMonthlySubjectCounts());
 
     this.clMonthlySubjectChart.setData(dashboardServices.getMonthlySubjectCounts());
   }
