@@ -3,6 +3,9 @@ require("../css/main.css");
 // require("../css/tailwind.css");
 import("../css/tailwind.css");
 
+import { drawerHelper } from "../../../static/js/shared/helpers/drawer/drawer-helper";
+import { DrawerSide } from "../../../static/js/core/ui/DrawerSide";
+
 import { NavManager } from "../../../static/js/core/component/nav-manager";
 import { CourseManager } from "../../../static/js/pages/main/course/course-manager";
 import { DetailManager } from "../../../static/js/pages/main/course/detail-manager";
@@ -11,8 +14,46 @@ import { CourseView } from "../../../static/js/pages/main/course/mtv-course";
 import { CourseSwiperView } from "../../../static/js/pages/main/course/mtv-course-swiper";
 
 export function BaseOnReady(context) {
-  const clNav = new NavManager(context);
+  // const clNav = new NavManager(context);
+  // $(".navbar").html(clNav.getElement());
+
+  const drawer = drawerHelper();
+
+  const navOptions = { ...context, drawer };
+  const clNav = new NavManager(navOptions);
   $(".navbar").html(clNav.getElement());
+
+  // Drawer
+  const { userType, userLogin } = context;
+
+  // drawer > root
+  const body = document.body;
+  body.classList.add("drawer");
+  body.classList.add("drawer-end");
+
+  // drawer > content
+  const content = document.querySelector("#root-container");
+
+  // drawer > side
+  const fakeWrapper = document.createElement("div");
+  const clDrawerSide = new DrawerSide({ target: fakeWrapper, props: { userType, userLogin } });
+  const elDrawerSide = clDrawerSide.getElement();
+
+  setDrawer({ root: body, content, side: elDrawerSide, drawer });
+}
+
+function setDrawer({ root, content, side, drawer }) {
+  const { Root, Toggle, Content, Side, Overlay } = drawer;
+  Root({ element: root, position: "right", forceOpen: false });
+  // Toggle
+  Toggle({ id: "base-drawer" });
+  // Content
+  Content({ element: content });
+  // Side
+  Side({ element: side });
+  // Overlay
+  const overlay = side.querySelector(".drawer-overlay");
+  Overlay({ element: overlay });
 }
 
 export function CourseLandingOnReady(context, courses, recommend, title) {
@@ -62,8 +103,8 @@ export function CourseLandingOnReady(context, courses, recommend, title) {
 
   $(".search").append($elSearch);
 
-  var clCourseSwiper = new CourseSwiperView(recommend, title)
-  $(".courses_recomend").append(clCourseSwiper.elThis)
+  var clCourseSwiper = new CourseSwiperView(recommend, title);
+  $(".courses_recomend").append(clCourseSwiper.elThis);
 
   var slider = new Swiper(".swiper-container", {
     slidesPerView: 2,
