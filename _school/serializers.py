@@ -25,15 +25,17 @@ class SectionSerializer(serializers.ModelSerializer):
         fields = ["title", "courses"]
 
 
-class SchoolSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = mSchool
-        fields = "__all__"
-
-
 class NoticeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = mSchoolNotice
         fields = "__all__"
+
+
+class SchoolSerializer(serializers.ModelSerializer):
+
+    notice = NoticeSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = mSchool
+        fields = ["id", "title", "institution_type", "img_logo", "img_banner", "notice"]

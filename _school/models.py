@@ -83,7 +83,7 @@ class mSchoolCourse(BaseModel):
 class mSchoolNotice(BaseModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     id_school = models.ForeignKey(
-        mSchool, on_delete=models.CASCADE, null=True, blank=True
+        mSchool, on_delete=models.CASCADE, related_name="notice", null=True, blank=True
     )
     title = models.CharField(max_length=64, blank=True)
     date = models.CharField(max_length=64, blank=True)
