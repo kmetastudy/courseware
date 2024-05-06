@@ -2,17 +2,21 @@ require("../../../static/css/css-reset.css");
 require("../../../static/css/core/component/mtm-common.css");
 require("../css/st.css");
 
+import("../css/tailwind.css");
+
 import { mtoConfig } from "../../../static/js/core/utils/mto-config.js";
 import { mtoEvents } from "../../../static/js/core/utils/mto-events.js";
+
+import { drawerHelper } from "../../../static/js/shared/helpers/drawer/drawer-helper.js";
 
 import { StManager } from "../../../static/js/pages/st/st-manager.js";
 import { mtmNaviBar } from "../../../static/js/core/ui/navi/mtm-navi-bar.js";
 import { NavManager } from "../../../static/js/core/component/nav-manager.js";
 import { mtoCommon } from "../../../static/js/core/component/mto-common.js";
+import { DrawerSide } from "../../../static/js/core/ui/DrawerSide/DrawerSide.js";
 
 function mtfLearnManagerOnReady(context) {
   const parsedContext = JSON.parse(context);
-  console.log(parsedContext);
 
   // NaviBar;
   const naviOptions = {
@@ -23,7 +27,11 @@ function mtfLearnManagerOnReady(context) {
   };
   const clNavibar = new mtmNaviBar(naviOptions);
 
-  const clNav = new NavManager(parsedContext);
+  // change drawer
+  const drawer = drawerHelper();
+
+  const navOptions = { ...parsedContext, drawer };
+  const clNav = new NavManager(navOptions);
 
   // StManager
   const options = {
@@ -36,10 +44,43 @@ function mtfLearnManagerOnReady(context) {
   };
   const clManager = new StManager(options);
 
-  var body = document.getElementById("body");
+  // var body = document.getElementById("body");
+  // Drawer
+  // drawer > root
+  const { userType, userLogin } = parsedContext;
 
-  body.appendChild(clNav.getElement());
-  body.appendChild(clManager.elThis);
+  const body = document.body;
+
+  // drawer > content
+  const content = body.querySelector("#body");
+
+  content.appendChild(clNav.getElement());
+  content.appendChild(clManager.elThis);
+
+  // drawer > side
+
+  const fakeWrapper = document.createElement("div");
+  const clDrawerSide = new DrawerSide({
+    target: fakeWrapper,
+    props: { userType: parsedContext.userType, userLogin: parsedContext.userLogin },
+  });
+  const elDrawerSide = clDrawerSide.getElement();
+
+  setDrawer({ root: body, content, side: elDrawerSide, drawer });
+}
+
+function setDrawer({ root, content, side, drawer }) {
+  const { Root, Toggle, Content, Side, Overlay } = drawer;
+  Root({ element: root, position: "right", forceOpen: false });
+  // Toggle
+  Toggle({ id: "st-drawer" });
+  // Content
+  Content({ element: content });
+  // Side
+  Side({ element: side });
+  // Overlay
+  const overlay = side.querySelector(".drawer-overlay");
+  Overlay({ element: overlay });
 }
 
 mtoEvents.on("OnReady", mtfLearnManagerOnReady);

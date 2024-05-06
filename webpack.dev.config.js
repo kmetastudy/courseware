@@ -96,6 +96,7 @@ var configST = Object.assign({}, config, {
       filename: "st-bundle-20240418.css",
     }),
   ],
+  module: tailwindModuleConfig,
 });
 
 var configSTSchool = Object.assign({}, config, {
