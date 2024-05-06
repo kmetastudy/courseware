@@ -96,16 +96,59 @@ export default class DashboardLessonResult extends Component{
             let student = target.closest('[data-id]').dataset.id
             this.selectStudentListener(student)
         })
+
+        this.addEvent("click", ".selectSection", ({ target }) => {
+            const selectedSection = parseInt(target.closest("[data-seq]").dataset.seq);
+      
+            // this.selectSectionListener(target.closest("[data-seq]").dataset.seq);
+            this.selectSectionListener(selectedSection);
+        });
+    }
+    
+    get selectedSection() {
+      const { selectedSection } = statStore.state;
+      const { todayChartData } = this._props;
+
+      const contentResults = todayChartData[selectedSection];
+
+      const correct = contentResults.result.flat().map((x) => {
+        return x[0];
+      });
+
+      const wrong = contentResults.result.flat().map((x) => {
+        return x[1];
+      });
+
+      const fixed = contentResults.result.flat().map((x) => {
+        return x[2];
+      });
+
+      const notStarted = contentResults.result.flat().map((x) => {
+        return x[3];
+      });
+
+      const categories = [];
+      const groups = [];
+      contentResults.result.forEach((result, idx) => {
+        const { length } = result;
+        groups.push({ title: `수업${idx + 1}`, cols: length });
+        for (let i = 1; i < length + 1; i++) {
+          categories.push(`Q${i}`);
+        }
+      });
+
+      return { seq: selectedSection, todayChartData, correct, wrong, fixed, notStarted, categories, groups };
+    }
+
+    selectSectionListener(seq) {
+      statStore.setState({ selectedSection: seq });
     }
 
     get selectedSchedule() {
         const {selectedSchedule} = statStore.state
         return selectedSchedule
     }
-    get selectedSection() {
-        const {selectedSection} = statStore.state
-        return selectedSection
-    }
+
     get selectedStudent() {
         const {selectedStudent} = statStore.state
         return selectedStudent

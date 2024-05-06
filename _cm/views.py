@@ -3,9 +3,16 @@ import uuid
 
 from django.shortcuts import render
 from django.http import JsonResponse
-from _cm.models import courseDetail
+from rest_framework import viewsets
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.http import Http404
 
+from _cm.models import courseDetail
 from _cp.nmodels import mCourseN, mElementN
+from _school.models import mSchool
+from _school.serializers import SchoolSerializer
 
 from _cm.constants import CM_TYPE_QUESTION, CM_TYPE_VIDEO
 
@@ -15,6 +22,16 @@ from _cm.constants import CM_TYPE_QUESTION, CM_TYPE_VIDEO
 def index(request):
     context = {"user": "mega"}
     return render(request, "_cm/_cm.html", context)
+
+
+def school(request):
+    context = {"user": "mega"}
+    return render(request, "_cm/school.html", context)
+
+
+class SchoolViewSet(viewsets.ModelViewSet):
+    queryset = mSchool.objects.all()
+    serializer_class = SchoolSerializer
 
 
 def course_import(request):

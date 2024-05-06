@@ -37,10 +37,7 @@ def school_page(request, school_id):
     school_name = school_data["title"]
     school_logo = school_data["img_logo"]
     school_banner = school_data["img_banner"]
-
-    notice = mSchoolNotice.objects.filter(id_school=school_id).order_by("-date")
-    notice_data = NoticeSerializer(notice, many=True).data
-    print(notice_data)
+    school_notice = school_data["notice"]
 
     school_sections = mSchoolSection.objects.filter(
         id_school=school_id, active=True
@@ -55,7 +52,7 @@ def school_page(request, school_id):
         "schoolName": json.dumps(school_name),
         "schoolLogo": school_logo,
         "schoolBanner": school_banner,
-        "notices": notice_data,
+        "notices": school_notice,
     }
 
     return render(request, "_school/school_landing.html", context)
