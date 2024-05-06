@@ -11,7 +11,7 @@ export const statStore = {
 
     setState(newState) {
         for (const [key, value] of Object.entries(newState)) {
-            if (!this.state[key] && this.state[key] !== 0) continue;
+            if (!this.state[key]) continue;
             this.state[key] = value;
         }
     },

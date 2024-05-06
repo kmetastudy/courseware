@@ -19,7 +19,7 @@ export default class Component {
     async setup() {
         await this.initState()
         observe(() => { // state가 변결될 경우, 함수가 실행된다.
-            console.log(this)
+            // console.log(this)
             this.render(this._props);
             this.mounted();
         })
