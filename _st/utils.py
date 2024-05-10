@@ -228,7 +228,7 @@ def get_testum_info(request):
                             "style": info["style"],
                             "level": info["level"],
                             "answer": info["answer"],
-                            "tag": info["tag"],
+                            # "tag": info["tag"],
                             "json_data": elements[0].json_data,
                         }
                     )
