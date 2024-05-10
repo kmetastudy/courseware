@@ -20,8 +20,8 @@ from _main.models import (
     PointUse,
     Points,
 )
-from _school.models import mSchool
-from _school.serializers import SchoolSerializer
+from _school.models import mSchool, mSchoolSection
+from _school.serializers import SchoolSerializer, SectionSerializer
 from _st.utils import has_course_permission
 from _user.decorators import jwt_login_required
 from _user.models import mUser
@@ -35,7 +35,7 @@ def index(request):
     context_sample = make_context(request)
     courses = getCourses(request, "all", "all")
 
-    school = mSchool.objects.all()
+    school = mSchool.objects.filter(active=True)
     schools = SchoolSerializer(school, many=True).data
 
     course_recomend = courseLanding.objects.filter(id_page="nscreen").values()
@@ -67,266 +67,6 @@ def new_contact(request):
         "context": json.dumps(context_sample),
     }
     return render(request, "_main/contact.html", context)
-
-
-@jwt_login_required
-def school(request):
-    context_sample = make_context(request)
-    courses = getCourses(request, "all", "all")
-
-    course_recomend = courseLanding.objects.all().values()
-    # print(list(course_recomend))
-    recommend = {"kor": [], "eng": [], "math": [], "etc": [], "basic": []}
-    options = ["kor", "eng", "math", "etc", "basic"]
-    for content in course_recomend:
-        # print(content)
-        if content["subject"] in options:
-            course = courseDetail.objects.filter(courseId=content["id_course"]).values(
-                "courseId", "courseTitle", "thumnail", "school", "grade", "subject"
-            )[0]
-            # course['type'] = content['subject']
-            # print(course)
-            recommend[content["subject"]].append(course)
-    print(recommend)
-    context = {
-        "context": json.dumps(context_sample),
-        "courses": json.dumps(courses, default=str),
-        "recommend": json.dumps(recommend, default=str),
-    }
-    return render(request, "_main/landing_school.html", context)
-
-
-@jwt_login_required
-def edu(request):
-    context_sample = make_context(request)
-    courses = getCourses(request, "all", "all")
-
-    course_recomend = courseLanding.objects.all().values()
-    # print(list(course_recomend))
-    recommend = {"kor": [], "eng": [], "math": [], "etc": []}
-    options = ["kor", "eng", "math", "etc"]
-    for content in course_recomend:
-        # print(content)
-        if content["subject"] in options:
-            course = courseDetail.objects.filter(courseId=content["id_course"]).values(
-                "courseId", "courseTitle", "thumnail", "school", "grade", "subject"
-            )[0]
-            # course['type'] = content['subject']
-            # print(course)
-            recommend[content["subject"]].append(course)
-    print(recommend)
-    context = {
-        "context": json.dumps(context_sample),
-        "courses": json.dumps(courses, default=str),
-        "recommend": json.dumps(recommend, default=str),
-    }
-    return render(request, "_main/landing_edu.html", context)
-
-
-@jwt_login_required
-def school_page(request):
-    context_sample = make_context(request)
-    courses = courseLanding.objects.filter(
-        id_page="yeonggwang", subject="basic"
-    ).values()
-    course_recomend = (
-        courseLanding.objects.filter(id_page="yeonggwang")
-        .exclude(subject="basic")
-        .values()
-    )
-    # print(list(course_recomend))
-    schoolCourses = []
-    recommend = {"basic": [], "kor": [], "eng": [], "math": [], "etc": []}
-    options = ["kor", "eng", "math", "etc", "basic"]
-    school_name = {"yeonggwang": "영광중", "gunsan": "군산초"}
-    title = {
-        "basic": "영광중 코스",
-        "kor": "기초학력 국어 코스",
-        "eng": "기초학력 영어 코스",
-        "math": "기초학력 수학 코스",
-        "etc": " 사회, 과학 코스",
-    }
-    for schoolContent in courses:
-        print(schoolContent)
-        schoolCourse = courseDetail.objects.filter(
-            courseId=schoolContent["id_course"]
-        ).values("courseId", "courseTitle", "thumnail", "school", "grade", "subject")[0]
-        recommend["basic"].append(schoolCourse)
-        schoolCourses.append(schoolCourse)
-
-    for basicContent in course_recomend:
-        # print(content)
-        if basicContent["subject"] in options:
-            course = courseDetail.objects.filter(
-                courseId=basicContent["id_course"]
-            ).values(
-                "courseId", "courseTitle", "thumnail", "school", "grade", "subject"
-            )[
-                0
-            ]
-            # course['type'] = content['subject']
-            # print(course)
-            recommend[basicContent["subject"]].append(course)
-            schoolCourses.append(course)
-    print(recommend)
-
-    context = {
-        "context": json.dumps(context_sample),
-        "courses": json.dumps(schoolCourses, default=str),
-        "title": json.dumps(title, default=str),
-        "recommend": json.dumps(recommend, default=str),
-        "name": "yeonggwang",
-        "schoolName": "영광중",
-    }
-
-    return render(request, "_main/landing_yeonggwang.html", context)
-
-
-@jwt_login_required
-def school_gunsan(request):
-    context_sample = make_context(request)
-    courses = courseLanding.objects.filter(id_page="gunsan", subject="basic").values()
-    course_recomend = (
-        courseLanding.objects.filter(id_page="gunsan").exclude(subject="basic").values()
-    )
-    # print(list(course_recomend))
-    schoolCourses = []
-    recommend = {
-        "kor": [],
-        "eng": [],
-        "math": [],
-        "basic": [],
-        "etc": [],
-    }
-    options = ["kor", "eng", "math", "etc", "basic"]
-    school_name = {"yeonggwang": "영광중", "gunsan": "군산초"}
-    title = {
-        "basic": "군산초 사회, 과학 코스",
-        "kor": "군산초 국어 코스",
-        "eng": "군산초 영어 코스",
-        "math": "군산초 수학 코스",
-        "etc": "군산초 사회, 과학 코스",
-    }
-    for schoolContent in courses:
-        print(schoolContent)
-        schoolCourse = courseDetail.objects.filter(
-            courseId=schoolContent["id_course"]
-        ).values("courseId", "courseTitle", "thumnail", "school", "grade", "subject")[0]
-        recommend["basic"].append(schoolCourse)
-        schoolCourses.append(schoolCourse)
-
-    for basicContent in course_recomend:
-        # print(content)
-        if basicContent["subject"] in options:
-            course = courseDetail.objects.filter(
-                courseId=basicContent["id_course"]
-            ).values(
-                "courseId", "courseTitle", "thumnail", "school", "grade", "subject"
-            )[
-                0
-            ]
-            # course['type'] = content['subject']
-            # print(course)
-            recommend[basicContent["subject"]].append(course)
-            schoolCourses.append(course)
-    print(recommend)
-
-    context = {
-        "context": json.dumps(context_sample),
-        "courses": json.dumps(schoolCourses, default=str),
-        "title": json.dumps(title, default=str),
-        "recommend": json.dumps(recommend, default=str),
-        "name": "gunsan",
-        "schoolName": "군산초",
-    }
-
-    return render(request, "_main/landing_gunsan.html", context)
-
-
-@jwt_login_required
-def school_detailView(request, name, school, subject, id):
-    context_sample = make_context(request)
-
-    courses = courseDetail.objects.filter(courseId=id).values(
-        "courseId",
-        "courseTitle",
-        "courseSummary",
-        "desc",
-        "thumnail",
-        "year",
-        "school",
-        "grade",
-        "semester",
-        "subject",
-        "publisher",
-        "difficulty",
-        "producer",
-        "duration",
-        "price",
-        "deliver",
-    )
-
-    detail_context = json.dumps(list(courses), default=str)
-
-    context = {
-        "context": json.dumps(context_sample),
-        "options": detail_context,
-        "name": name,
-    }
-    return render(request, "_main/school_detail.html", context)
-
-
-@jwt_login_required
-def school_st(request, name):
-    course_id = request.GET.get("course_id")
-    content_id = request.GET.get("content_id")
-    user_id = request.userId
-
-    # remove after test
-    if not course_id:
-        next_url = request.session.get("next", "/")
-        del request.session["next"]
-
-        return redirect(next_url)
-
-    request.demo = True
-    if has_course_permission(course_id, user_id):
-        request.demo = False
-
-    st_context = make_context(request)
-    st_context["courseId"] = course_id
-    st_context["contentId"] = content_id
-
-    print("st_context: ", st_context)
-    context = {"context": json.dumps(st_context), "name": name}
-    return render(request, "_st/_st_school.html", context)
-
-
-@jwt_login_required
-def teacher(request):
-    context_sample = make_context(request)
-    courses = getCourses(request, "all", "all")
-
-    course_recomend = courseLanding.objects.all().values()
-    # print(list(course_recomend))
-    recommend = {"kor": [], "eng": [], "math": [], "etc": [], "basic": []}
-    options = ["kor", "eng", "math", "etc", "basic"]
-    for content in course_recomend:
-        # print(content)
-        if content["subject"] in options:
-            course = courseDetail.objects.filter(courseId=content["id_course"]).values(
-                "courseId", "courseTitle", "thumnail", "school", "grade", "subject"
-            )[0]
-            # course['type'] = content['subject']
-            # print(course)
-            recommend[content["subject"]].append(course)
-    print(recommend)
-    context = {
-        "context": json.dumps(context_sample),
-        "courses": json.dumps(courses, default=str),
-        "recommend": json.dumps(recommend, default=str),
-    }
-    return render(request, "_main/landing_teacher.html", context)
 
 
 @jwt_login_required
@@ -413,6 +153,43 @@ def mainView(request, school, subject):
         return JsonResponse(
             {"message": subject, "courses": json.dumps(courses, default=str)}
         )
+
+
+@jwt_login_required
+def basic_landing(request, school_id):
+    context_sample = make_context(request)
+
+    school = mSchool.objects.filter(id=school_id)[0]
+    school_data = SchoolSerializer(school).data
+    school_name = school_data["title"]
+    school_logo = school_data["img_logo"]
+    school_banner = school_data["img_banner"]
+    school_notice = school_data["notice"]
+
+    school_sections = mSchoolSection.objects.filter(
+        id_school=school_id, active=True
+    ).order_by("sequence")
+
+    sections = SectionSerializer(school_sections, many=True).data
+
+    bannerBG = ""
+    if school_id == "8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c":
+        bannerBG = "banner7-2"
+    else:
+        bannerBG = "banner8-2"
+
+    context = {
+        "context": json.dumps(context_sample),
+        "sectionCourses": json.dumps(sections),
+        "schoolId": school_id,
+        "schoolName": json.dumps(school_name),
+        "schoolLogo": school_logo,
+        "schoolBanner": school_banner,
+        "bannerBG": bannerBG,
+        "notices": school_notice,
+    }
+
+    return render(request, "_main/landing_basic.html", context)
 
 
 def getCourses(request, school, subject):

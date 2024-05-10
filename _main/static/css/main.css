@@ -88,6 +88,16 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+.landing-swiper .slide7 {
+  background-image: url("/static/img/banner7-2.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.landing-swiper .slide8 {
+  background-image: url("/static/img/banner8-2.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 .swiper-pagination-bullet {
   width: 12px;
