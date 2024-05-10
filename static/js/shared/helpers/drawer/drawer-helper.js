@@ -77,7 +77,7 @@ export function drawerHelper() {
     },
     Content: ({ element } = {}) => {
       contentElement = isHTMLNode(element) ? element : document.createElement("main");
-      contentElement.classList.add("drawer-content");
+      contentElement.classList.add("drawer-content", "w-full", "flex", "justify-center", "fixed", "top-0", "z-10", "bg-[#175CBE]");
 
       if (rootElement && rootElement.contains(contentElement) === false) {
         rootElement.append(contentElement);

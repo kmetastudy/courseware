@@ -46,6 +46,12 @@
     <!-- 1.5kb, 35ms밖에 안되니, javascript에서 cookie를 다루고 싶으면 사용해도 괜찮을거같다. -->
     <!-- axios -->
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <!-- dayjs -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/ko.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/relativeTime.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/utc.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/timezone.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
 
@@ -53,8 +59,10 @@
   </head>
 
   <body>
+    <div id="main"></div>
+    <div class="h-[48px]"></div>
     <div id="body"></div>
-
+    <link rel="stylesheet" href="{% static '_bundle/st/st-bundle-20240418.css' %}" />
     <script type="text/javascript" src="{% static '_bundle/st/st-bundle-20240418.js' %}"></script>
   </body>
 

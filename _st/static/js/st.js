@@ -1,3 +1,4 @@
+require("../css/tailwind.css");
 require("../../../static/css/css-reset.css");
 require("../../../static/css/core/component/mtm-common.css");
 require("../css/st.css");
@@ -15,7 +16,17 @@ import { NavManager } from "../../../static/js/core/component/nav-manager.js";
 import { mtoCommon } from "../../../static/js/core/component/mto-common.js";
 import { DrawerSide } from "../../../static/js/core/ui/DrawerSide/DrawerSide.js";
 
+import { drawerHelper } from "../../../static/js/shared/helpers/drawer/drawer-helper";
+import { DrawerSide } from "../../../static/js/core/ui/DrawerSide";
+
 function mtfLearnManagerOnReady(context) {
+  dayjs.extend(window.dayjs_plugin_relativeTime);
+  dayjs.extend(window.dayjs_plugin_utc);
+  dayjs.extend(window.dayjs_plugin_timezone);
+  dayjs.locale("ko");
+
+  axios.defaults.headers["X-CSRFTOKEN"] = csrftoken;
+
   const parsedContext = JSON.parse(context);
 
   // NaviBar;

@@ -15,9 +15,7 @@ class courseDetail(models.Model):
     # duration 0:무제한, 값
     # price 0:무료, 값
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    courseId = models.UUIDField(
-        editable=False, null=True, blank=True
-    )  # UUID 필드로 바꾸기
+    courseId = models.UUIDField(null=True, blank=True)  # UUID 필드로 바꾸기
     courseTitle = models.TextField(null=True, blank=True)
     courseSummary = models.TextField(null=True, blank=True)
     desc = models.TextField(null=True, blank=True)

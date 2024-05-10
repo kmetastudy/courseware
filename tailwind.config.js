@@ -9,6 +9,7 @@ module.exports = {
     "./_main/**/*.{html,js}",
     "./_st/**/*.{html,js}",
     "./_school/**/*.{html,js}",
+    "./_st/**/*.{html,js}",
     // "./staticfiles/**/*.{html,js}",
   ],
   theme: {

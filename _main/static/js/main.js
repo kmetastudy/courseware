@@ -13,40 +13,46 @@ import { mtmSideMenu } from "../../../static/js/core/ui/sideMenu/mtm-side-menu";
 import { CourseView } from "../../../static/js/pages/main/course/mtv-course";
 import { CourseSwiperView } from "../../../static/js/pages/main/course/mtv-course-swiper";
 
-export function BaseOnReady(context) {
-  // const clNav = new NavManager(context);
-  // $(".navbar").html(clNav.getElement());
+import { drawerHelper } from "../../../static/js/shared/helpers/drawer/drawer-helper";
+import { DrawerSide } from "../../../static/js/core/ui/DrawerSide";
+import HighlightCourse from "../../../static/js/pages/school/container/HighlightCourse";
 
+export function BaseOnReady(context) {
+  dayjs.extend(window.dayjs_plugin_relativeTime);
+  dayjs.extend(window.dayjs_plugin_utc);
+  dayjs.extend(window.dayjs_plugin_timezone);
+  dayjs.locale("ko");
+
+  axios.defaults.headers["X-CSRFTOKEN"] = csrftoken;
+
+  const parsedContext = JSON.parse(context);
+  const { userType, userId, userLogin } = parsedContext;
+  // drawer API
   const drawer = drawerHelper();
 
-  const navOptions = { ...context, drawer };
+  const root = document.querySelector("#main");
+  // root.classList.add("min-h-screen");
+
+  const content = document.createElement("main");
+
+  const navOptions = { ...parsedContext, drawer };
   const clNav = new NavManager(navOptions);
-  $(".navbar").html(clNav.getElement());
+  const elNav = clNav.getElement();
 
-  // Drawer
-  const { userType, userLogin } = context;
+  content.append(elNav);
 
-  // drawer > root
-  const body = document.body;
-  body.classList.add("drawer");
-  body.classList.add("drawer-end");
-
-  // drawer > content
-  const content = document.querySelector("#root-container");
-
-  // drawer > side
   const fakeWrapper = document.createElement("div");
   const clDrawerSide = new DrawerSide({ target: fakeWrapper, props: { userType, userLogin } });
   const elDrawerSide = clDrawerSide.getElement();
 
-  setDrawer({ root: body, content, side: elDrawerSide, drawer });
+  setDrawer({ root, content, side: elDrawerSide, drawer });
 }
 
 function setDrawer({ root, content, side, drawer }) {
   const { Root, Toggle, Content, Side, Overlay } = drawer;
   Root({ element: root, position: "right", forceOpen: false });
   // Toggle
-  Toggle({ id: "base-drawer" });
+  Toggle({ id: "mypage-drawer" });
   // Content
   Content({ element: content });
   // Side
@@ -166,6 +172,25 @@ function getCookie(name) {
   }
   console.log("token : ", cookieValue);
   return cookieValue;
+}
+
+export function BasicLandingOnReady(context, sections) {
+  console.log(context);
+  console.log(sections);
+
+  const courses = []
+  sections.forEach((section) => {
+      section.courses.forEach((course) => {
+          courses.push(course.course)
+      })
+  })
+
+  console.log(courses)
+
+  new HighlightCourse(document.querySelector(".courses_recomend"), {sections})
+
+  var clCourseView = new CourseView(courses);
+  $(".courses_landing").append(clCourseView.elThis);
 }
 
 export function MyCourseOnReady(context) {
