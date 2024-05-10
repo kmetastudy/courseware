@@ -3,6 +3,9 @@ require("../css/main.css");
 // require("../css/tailwind.css");
 import("../css/tailwind.css");
 
+import { drawerHelper } from "../../../static/js/shared/helpers/drawer/drawer-helper";
+import { DrawerSide } from "../../../static/js/core/ui/DrawerSide";
+
 import { NavManager } from "../../../static/js/core/component/nav-manager";
 import { CourseManager } from "../../../static/js/pages/main/course/course-manager";
 import { DetailManager } from "../../../static/js/pages/main/course/detail-manager";
@@ -106,8 +109,8 @@ export function CourseLandingOnReady(context, courses, recommend, title) {
 
   $(".search").append($elSearch);
 
-  var clCourseSwiper = new CourseSwiperView(recommend, title)
-  $(".courses_recomend").append(clCourseSwiper.elThis)
+  var clCourseSwiper = new CourseSwiperView(recommend, title);
+  $(".courses_recomend").append(clCourseSwiper.elThis);
 
   var slider = new Swiper(".swiper-container", {
     slidesPerView: 2,

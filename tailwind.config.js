@@ -7,6 +7,7 @@ module.exports = {
     "./_cm/**/*.{html,js}",
     "./_user/**/*.{html,js}",
     "./_main/**/*.{html,js}",
+    "./_st/**/*.{html,js}",
     "./_school/**/*.{html,js}",
     "./_st/**/*.{html,js}",
     // "./staticfiles/**/*.{html,js}",
