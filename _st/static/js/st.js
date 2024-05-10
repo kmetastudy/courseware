@@ -16,8 +16,6 @@ import { NavManager } from "../../../static/js/core/component/nav-manager.js";
 import { mtoCommon } from "../../../static/js/core/component/mto-common.js";
 import { DrawerSide } from "../../../static/js/core/ui/DrawerSide/DrawerSide.js";
 
-import { drawerHelper } from "../../../static/js/shared/helpers/drawer/drawer-helper";
-import { DrawerSide } from "../../../static/js/core/ui/DrawerSide";
 
 function mtfLearnManagerOnReady(context) {
   dayjs.extend(window.dayjs_plugin_relativeTime);
@@ -60,13 +58,13 @@ function mtfLearnManagerOnReady(context) {
   // drawer > root
   const { userType, userLogin } = parsedContext;
 
-  const body = document.body;
-
+  const root = document.querySelector("#main")
+  const content = document.createElement("main");
   // drawer > content
-  const content = body.querySelector("#body");
+  const body = document.querySelector("#body");
 
   content.appendChild(clNav.getElement());
-  content.appendChild(clManager.elThis);
+  body.appendChild(clManager.elThis);
 
   // drawer > side
 
@@ -77,7 +75,7 @@ function mtfLearnManagerOnReady(context) {
   });
   const elDrawerSide = clDrawerSide.getElement();
 
-  setDrawer({ root: body, content, side: elDrawerSide, drawer });
+  setDrawer({ root, content, side: elDrawerSide, drawer });
 }
 
 function setDrawer({ root, content, side, drawer }) {

@@ -13,8 +13,6 @@ import { mtmSideMenu } from "../../../static/js/core/ui/sideMenu/mtm-side-menu";
 import { CourseView } from "../../../static/js/pages/main/course/mtv-course";
 import { CourseSwiperView } from "../../../static/js/pages/main/course/mtv-course-swiper";
 
-import { drawerHelper } from "../../../static/js/shared/helpers/drawer/drawer-helper";
-import { DrawerSide } from "../../../static/js/core/ui/DrawerSide";
 import HighlightCourse from "../../../static/js/pages/school/container/HighlightCourse";
 
 export function BaseOnReady(context) {
