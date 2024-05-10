@@ -11,9 +11,38 @@ import { mtmNaviBar } from "../../../static/js/core/ui/navi/mtm-navi-bar.js";
 import { NavManager } from "../../../static/js/core/component/nav-manager.js";
 import { mtoCommon } from "../../../static/js/core/component/mto-common.js";
 
+import { drawerHelper } from "../../../static/js/shared/helpers/drawer/drawer-helper";
+import { DrawerSide } from "../../../static/js/core/ui/DrawerSide";
+
 function mtfLearnManagerOnReady(context) {
+  dayjs.extend(window.dayjs_plugin_relativeTime);
+  dayjs.extend(window.dayjs_plugin_utc);
+  dayjs.extend(window.dayjs_plugin_timezone);
+  dayjs.locale("ko");
+
+  axios.defaults.headers["X-CSRFTOKEN"] = csrftoken;
+
   const parsedContext = JSON.parse(context);
-  console.log(parsedContext);
+  const { userType, userId, userLogin } = parsedContext;
+  // drawer API
+  const drawer = drawerHelper();
+
+  const root = document.querySelector("#main");
+  // root.classList.add("min-h-screen");
+
+  const content = document.createElement("main");
+
+  const navOptions = { ...parsedContext, drawer };
+  const clNav = new NavManager(navOptions);
+  const elNav = clNav.getElement();
+
+  content.append(elNav);
+
+  const fakeWrapper = document.createElement("div");
+  const clDrawerSide = new DrawerSide({ target: fakeWrapper, props: { userType, userLogin } });
+  const elDrawerSide = clDrawerSide.getElement();
+
+  setDrawer({ root, content, side: elDrawerSide, drawer });
 
   // NaviBar;
   const naviOptions = {
@@ -23,8 +52,6 @@ function mtfLearnManagerOnReady(context) {
     eventLogin: () => (window.location.href = "../user/"),
   };
   const clNavibar = new mtmNaviBar(naviOptions);
-
-  const clNav = new NavManager(parsedContext);
 
   // StManager
   const options = {
@@ -39,8 +66,21 @@ function mtfLearnManagerOnReady(context) {
 
   var body = document.getElementById("body");
 
-  body.appendChild(clNav.getElement());
   body.appendChild(clManager.elThis);
+}
+
+function setDrawer({ root, content, side, drawer }) {
+  const { Root, Toggle, Content, Side, Overlay } = drawer;
+  Root({ element: root, position: "right", forceOpen: false });
+  // Toggle
+  Toggle({ id: "mypage-drawer" });
+  // Content
+  Content({ element: content });
+  // Side
+  Side({ element: side });
+  // Overlay
+  const overlay = side.querySelector(".drawer-overlay");
+  Overlay({ element: overlay });
 }
 
 mtoEvents.on("OnReady", mtfLearnManagerOnReady);
