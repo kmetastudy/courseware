@@ -18,7 +18,7 @@ export class MtmNav {
 
   create() {
     this.nav = document.createElement("div");
-    this.nav.classList.add("mtm-nav");
+    this.nav.classList.add("mtm-nav", "w-full", "lg:w-2/3");
 
     // header
     this.header = document.createElement("div");
