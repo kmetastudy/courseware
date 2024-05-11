@@ -182,7 +182,7 @@ def basic_landing(request, school_id):
         "context": json.dumps(context_sample),
         "sectionCourses": json.dumps(sections),
         "schoolId": school_id,
-        "schoolName": json.dumps(school_name),
+        "schoolName": school_name,
         "schoolLogo": school_logo,
         "schoolBanner": school_banner,
         "bannerBG": bannerBG,
