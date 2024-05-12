@@ -50,11 +50,17 @@
 .footer {
     background-color: #9FCD36 !important;
 }
+
+@media(min-width:1024px){
+    .screenBanner{
+        height: 100vh;
+    }
+}
 </style>
 {% endblock %}
 {% block content %}
 <div class="w-full flex flex-col items-center">
-    <div class="w-full flex flex-col items-center md:h-screen">
+    <div class="screenBanner w-full flex flex-col items-center">
         <div class="landing-swiper flex-1 w-full lg:w-2/3 overflow-hidden relative">
             <div class="swiper-wrapper ">
                 <div class="swiper-slide flex justify-center"><img class="w-full object-scale-down" src="{{schoolBanner}}"></div>
@@ -156,8 +162,7 @@
                 </div>
             </div>
         </div>
-        <div class="md:h-[64px]"></div>
-        <div id="tag1" class="h-[64px]"></div>
+        <div id="tag1" class="h-[80px]"></div>
     </div>
     <div class="w-full flex flex-col items-center">
             
