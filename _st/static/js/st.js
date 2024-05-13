@@ -1,4 +1,4 @@
-require("../css/tailwind.css");
+// require("../css/tailwind.css");
 require("../../../static/css/css-reset.css");
 require("../../../static/css/core/component/mtm-common.css");
 require("../css/st.css");
