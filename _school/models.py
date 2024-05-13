@@ -68,7 +68,11 @@ class mSchoolCourse(BaseModel):
         null=True,
         blank=True,
     )
+    sequence = models.PositiveIntegerField(null=True, blank=True)
     active = models.BooleanField(default=True, verbose_name="활성화 여부")
+
+    class Meta:
+        ordering = ["sequence"]
 
     def __str__(self):
         return (
