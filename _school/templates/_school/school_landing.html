@@ -63,10 +63,10 @@
 {% endblock %}
 {% block content %}
 <div class="w-full flex flex-col items-center">
-    <div class="screenBanner w-full flex flex-col items-center">
-        <div class="landing-swiper flex-1 w-full lg:w-2/3 overflow-hidden relative">
+    <div class="screenBanner px-2 w-full flex flex-col items-center justify-center">
+        <div class="landing-swiper w-full lg:w-2/3 overflow-hidden relative">
             <div class="swiper-wrapper ">
-                <div class="swiper-slide flex justify-center"><img class="w-full object-scale-down" src="{{schoolBanner}}"></div>
+                <div class="swiper-slide flex justify-center"><img class="w-full object-contain bg-stone-50" src="{{schoolBanner}}"></div>
             </div>
             <div class="py-2 flex justify-end items-center swiper-pagination"></div>
         </div>
