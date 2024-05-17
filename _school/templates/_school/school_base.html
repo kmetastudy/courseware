@@ -45,7 +45,7 @@
             <img class="cursor-pointer" src="{{schoolLogo}}" onclick="window.location='/school/page/{{schoolId}}'">
           </div>
           <img class="h-[36px]" src="/static/img/LMSLogo.svg">
-          <button class="btn btn-ghost lg:justify-self-end" onclick="window.location='http://megatest.kr:7700/ml/'">로그인</button>
+          <button class="btn btn-ghost lg:justify-self-end" onclick="LoginToDemo()">로그인</button>
         </nav>
       </div>
 
@@ -161,11 +161,32 @@
   </body>
 
   <script>
-    var csrftoken = "{{csrf_token}}";
+    const csrftoken = "{{csrf_token}}";
+    const defaultAxiosConfig = {
+      headers: { "X-CSRFTOKEN": "{{csrf_token}}" },
+    };
 
-    var context = JSON.parse("{{ context|escapejs }}");
-    window.addEventListener("DOMContentLoaded", function () {
+    axios.defaults.headers = defaultAxiosConfig.headers;
 
-    });
+    function LoginToDemo() {
+      data = {
+        "agency_id": "742c0eb4-9286-4915-8c2e-9b0132d86cec",
+        "user_id": "24010101",
+        "user_pw": "010101",
+        "info_save": false,
+        "agency_name": "봉화고등학교",
+        "agency_sub": "경상북도",
+        "user_enpw": null,
+        "access_token": null,
+      }
+
+      data1 = {
+        "email": "yun@naver.com",
+        "password": "jeong135"
+
+      }
+
+      axios.post("https://courseware.co.kr/user/api/login/", data1).then(res => {console.log(res.data)}).catch(err => {console.log(err)})
+    }
   </script>
 </html>

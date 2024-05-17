@@ -64,7 +64,7 @@
 {% block content %}
 <div class="w-full flex flex-col items-center">
     <div class="screenBanner px-2 w-full flex flex-col items-center justify-center">
-        <div class="landing-swiper w-full lg:w-2/3 overflow-hidden relative">
+        <div class="landing-swiper flex-1 w-full lg:w-2/3 overflow-hidden relative">
             <div class="swiper-wrapper ">
                 <div class="swiper-slide flex justify-center"><img class="w-full object-contain bg-stone-50" src="{{schoolBanner}}"></div>
             </div>
@@ -244,20 +244,10 @@
 
 
     window.addEventListener("DOMContentLoaded", function () {
-        // console.log("mainlibrary: ", mainlibrary);
 
+        var context = JSON.parse("{{ context|escapejs }}");
         var sections = JSON.parse("{{ sectionCourses|escapejs }}");
         schoollibrary.SchoolLandingOnReady(context, sections)
-        // $('.courses_recomend .course-swiper .swiper-background1 div div p')[0].innerText = '기초 학력 추천 코스'
-        // $('.courses_recomend .course-swiper .swiper-background2 div div p')[0].innerText = '기초 학력 추천 코스'
-        // $('.courses_recomend > .course-swiper > .swiper-background2 > div > div:nth-child(3) > div span')[0].innerText = '기초'
-        // $('.courses_recomend > .course-swiper > .swiper-background2 > div > div:nth-child(3) > div span')[1].innerText = '기초'
-        // $('.courses_recomend > .course-swiper > .swiper-background2 > div > div:nth-child(3) > div span')[2].innerText = '기초'
-        // $('.courses_recomend > .course-swiper > .swiper-background2 > div > div:nth-child(3) > div span')[3].innerText = '기초'
-        // $('.courses_recomend > .course-swiper > .swiper-background2 > div > div:nth-child(3) > div p')[0].innerText = '고등 정보 파이썬'
-        // $('.courses_recomend > .course-swiper > .swiper-background2 > div > div:nth-child(3) > div p')[1].innerText = '고등 국어 기초'
-        // $('.courses_recomend > .course-swiper > .swiper-background2 > div > div:nth-child(3) > div p')[2].innerText = '고등 수학 기초'
-        // $('.courses_recomend > .course-swiper > .swiper-background2 > div > div:nth-child(3) > div p')[3].innerText = '고등 영어 기초'
     });
 </script>
 {% endblock %}
