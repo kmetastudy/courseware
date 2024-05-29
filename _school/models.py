@@ -70,6 +70,8 @@ class mSchoolCourse(BaseModel):
     )
     sequence = models.PositiveIntegerField(null=True, blank=True)
     active = models.BooleanField(default=True, verbose_name="활성화 여부")
+    modified_course_title = models.TextField(null=True, blank=True)
+    modified_thumnail = models.TextField(null=True, blank=True)
 
     class Meta:
         ordering = ["sequence"]
