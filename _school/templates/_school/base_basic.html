@@ -45,7 +45,7 @@
             {% if schoolLogo %}
             <img class="cursor-pointer" src="{{schoolLogo}}" onclick="window.location='/school/page/{{schoolId}}'">
             {% else %}
-            <p onclick="window.location='/school/basic/{{schoolId}}'">{{schoolName}}</p>
+            <p class="cursor-pointer" onclick="window.location='/school/basic/{{schoolId}}'">{{schoolName}}</p>
             {% endif %}
           </div>
           <img class="h-[36px]" src="/static/img/LMSLogo.svg">
