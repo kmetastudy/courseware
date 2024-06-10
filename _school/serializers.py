@@ -2,19 +2,20 @@ from django.conf import settings
 from rest_framework import serializers
 
 from _cm.models import courseDetail
-from _main.serializers import CourseDetailSerializer
+from _cm.serializers import CourseDetailSerializer
 from _school.models import mSchool, mSchoolCourse, mSchoolNotice, mSchoolSection
 
 
 class CourseSerializer(serializers.ModelSerializer):
 
+    id = serializers.UUIDField(required=False)
     course = CourseDetailSerializer(read_only=True)
     modified_course_title = serializers.CharField(required=False)
     modified_thumnail = serializers.CharField(required=False)
 
     class Meta:
         model = mSchoolCourse
-        fields = ["course", "modified_course_title", "modified_thumnail"]
+        fields = ["id", "course", "modified_course_title", "modified_thumnail"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)

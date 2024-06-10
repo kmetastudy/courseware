@@ -253,7 +253,7 @@ def detailView(request, school, subject, id):
         "deliver",
     )
 
-    detail_context = json.dumps(list(courses), default=str)
+    detail_context = json.dumps(courses[0], default=str)
 
     context = {"context": json.dumps(context_sample), "options": detail_context}
     return render(request, "_main/detail.html", context)

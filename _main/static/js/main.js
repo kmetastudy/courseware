@@ -152,7 +152,7 @@ export function CourseDetailOnReady(context, data) {
   };
   axios.defaults.headers = defaultAxiosConfig.headers;
 
-  var clCourseDetail = new DetailManager(context, data[0]);
+  var clCourseDetail = new DetailManager(context, data);
 }
 
 function getCookie(name) {

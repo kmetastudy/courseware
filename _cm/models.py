@@ -1,6 +1,7 @@
 from django.db import models
 import uuid
 from _cp.models import mCourseN
+from django.utils import timezone
 
 
 class courseDetail(models.Model):
@@ -33,6 +34,9 @@ class courseDetail(models.Model):
     duration = models.IntegerField(default=0)
     price = models.IntegerField(default=0)
     deliver = models.TextField(null=True, blank=True)
+
+    created_date = models.DateTimeField(db_index=True, default=timezone.now)
+    updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.courseTitle
