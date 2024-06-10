@@ -29,7 +29,7 @@ CourseUnit.prototype.create = function() {
                               <p class="text-[16px] truncate">${course.courseTitle}</p>
                               <p class="text-gray-600 text-[12px]">megacourse</p>
                               <div class="flex justify-between">
-                                <p class="text-[12px] text-[#1E40AF] font-bold">${course.deliver}</p>
+                                <p class="text-[12px] text-[#1E40AF] font-bold"></p>
                                 <div class="flex">
                                   <i class="ri-heart-3-line hover:text-red-500"></i>
                                 </div>
@@ -44,7 +44,7 @@ CourseUnit.prototype.create = function() {
                               <p class="text-[16px] truncate">${course.courseTitle}</p>
                               <p class="text-gray-600 text-[12px]">megacourse</p>
                               <div class="flex justify-between">
-                                <p class="text-[12px] text-[#1E40AF] font-bold">${course.deliver} 맞춤형</p>
+                                <p class="text-[12px] text-[#1E40AF] font-bold"></p>
                                 <div class="flex">
                                   <i class="ri-heart-3-line hover:text-red-500"></i>
                                 </div>

@@ -1,7 +1,7 @@
 import json
 from django.shortcuts import redirect, render
 from _cm.models import courseDetail
-from _main.serializers import CourseDetailSerializer
+from _cm.serializers import CourseDetailSerializer
 from _school.models import mSchool, mSchoolCourse, mSchoolNotice, mSchoolSection
 from _school.serializers import (
     NoticeSerializer,
@@ -45,6 +45,8 @@ def school_page(request, school_id):
 
     sections = SectionSerializer(school_sections, many=True).data
 
+    print(sections)
+
     context = {
         "context": json.dumps(context_sample),
         "sectionCourses": json.dumps(sections),
@@ -63,33 +65,27 @@ def school_detailView(request, school_id, school, subject, id):
     context_sample = make_context(request)
 
     school = mSchool.objects.filter(id=school_id)[0]
-    school_logo = SchoolSerializer(school).data["img_logo"]
+    school_data = SchoolSerializer(school).data
+    school_logo = school_data["img_logo"]
+    school_name = school_data["title"]
 
-    courses = courseDetail.objects.filter(courseId=id).values(
-        "courseId",
-        "courseTitle",
-        "courseSummary",
-        "desc",
-        "thumnail",
-        "year",
-        "school",
-        "grade",
-        "semester",
-        "subject",
-        "publisher",
-        "difficulty",
-        "producer",
-        "duration",
-        "price",
-        "deliver",
-    )
+    try:
+        course = mSchoolCourse.objects.filter(id=id)[0]
 
-    detail_context = json.dumps(list(courses), default=str)
+    except:
+        origin_course = courseDetail.objects.filter(courseId=id)[0]
+        course = mSchoolCourse.objects.filter(course=origin_course)[0]
+
+    course_data = CourseSerializer(course).data
+    modified_course = course_data["course"]
+    print(json.dumps(modified_course))
+    # detail_context = json.dumps(list(courses), default=str)
 
     context = {
         "context": json.dumps(context_sample),
-        "options": detail_context,
+        "options": json.dumps(modified_course, default=str),
         "schoolId": school_id,
+        "schoolName": school_name,
         "schoolLogo": school_logo,
     }
     return render(request, "_main/school_detail.html", context)
@@ -126,3 +122,42 @@ def school_st(request, school_id):
         "schoolId": school_id,
     }
     return render(request, "_st/_st_school.html", context)
+
+
+@jwt_login_required
+def basic_landing(request, school_id):
+    context_sample = make_context(request)
+
+    school = mSchool.objects.filter(id=school_id)[0]
+    school_data = SchoolSerializer(school).data
+    school_name = school_data["title"]
+    school_logo = school_data["img_logo"]
+    school_banner = school_data["img_banner"]
+    school_notice = school_data["notice"]
+
+    school_sections = mSchoolSection.objects.filter(
+        id_school=school_id, active=True
+    ).order_by("sequence")
+
+    sections = SectionSerializer(school_sections, many=True).data
+
+    bannerBG = ""
+    if school_id == "8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c":
+        bannerBG = "banner7-2"
+    elif school_id == "cbb29b29-9f01-4024-9aac-15e382e3edb2":
+        bannerBG = "banner8-2"
+    else:
+        bannerBG = "banner9-2"
+
+    context = {
+        "context": json.dumps(context_sample),
+        "sectionCourses": json.dumps(sections),
+        "schoolId": school_id,
+        "schoolName": school_name,
+        "schoolLogo": school_logo,
+        "schoolBanner": school_banner,
+        "bannerBG": bannerBG,
+        "notices": school_notice,
+    }
+
+    return render(request, "_school/landing_basic.html", context)

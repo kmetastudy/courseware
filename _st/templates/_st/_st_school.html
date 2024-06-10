@@ -57,7 +57,11 @@
       <div class="nav-container z-20 sticky top-0 w-full h-[64px] flex justify-center bg-white shadow">
         <nav class="nav">
           <div class="mtm-nav-logo">
-            <img src="{{schoolLogo}}" onclick="window.location='/school/page/{{schoolId}}'">
+            {% if schoolLogo %}
+            <img class="cursor-pointer" src="{{schoolLogo}}" onclick="window.location='/school/page/{{schoolId}}'">
+            {% else %}
+            <p class="cursor-pointer" onclick="window.location='/school/basic/{{schoolId}}'">{{schoolName}}</p>
+            {% endif %}
           </div>
           <img class="nav-lms-logo" src="/static/img/LMSLogo.svg">
           <button class="btn btn-ghost" onclick="window.location='http://megatest.kr:7700/ml/'">로그인</button>

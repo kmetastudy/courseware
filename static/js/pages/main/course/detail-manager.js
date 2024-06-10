@@ -64,7 +64,7 @@ DetailManager.prototype.init = function () {
                         ${this.data.courseSummary ? this.data.courseSummary : ""}
                     </div>`);
   $(".course_header").append($elHeader);
-  console.log(this.data.publisher == "null");
+  console.log(this.data);
 
   var pub = this.data.publisher == "null" ? "없음" : this.data.publisher;
 
