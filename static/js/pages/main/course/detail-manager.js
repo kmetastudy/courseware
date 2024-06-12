@@ -83,18 +83,8 @@ DetailManager.prototype.init = function () {
                         <div class="px-2 md:px-4 py-3 w-full flex items-center border bg-gray-100">
                             <p class="w-[100px] md:w-[150px] text-[12px] md:text-[16px] flex items-center">${
                               MtuIcon("grade").innerHTML
-                            }<span class="px-2">학년</span></p>
-                            <p class="text-[12px] md:text-[16px]">${
-                              this.options.school.find((obj) => obj.type == this.data.school).text
-                            } ${this.options.grade.find((obj) => obj.type == this.data.grade).text}</p>
-                        </div>
-                        <div class="px-2 md:px-4 py-3 w-full flex items-center border bg-gray-100">
-                            <p class="w-[100px] md:w-[150px] text-[12px] md:text-[16px] flex items-center">${
-                              MtuIcon("semester").innerHTML
-                            }<span class="px-2">학기</span></p>
-                            <p class="text-[12px] md:text-[16px]">${
-                              this.options.semester.find((obj) => obj.type == this.data.semester).text
-                            }</p>
+                            }<span class="px-2">대상</span></p>
+                            <p class="text-[12px] md:text-[16px]">${this.options.grade.find((obj) => obj.type == this.data.grade).text}</p>
                         </div>
                         <div class="px-2 md:px-4 py-3 w-full flex items-center border bg-gray-100">
                             <p class="w-[100px] md:w-[150px] text-[12px] md:text-[16px] flex items-center">${
