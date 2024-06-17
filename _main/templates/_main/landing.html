@@ -11,31 +11,30 @@
 <div class="w-full flex flex-col items-center">
     <div class="landing-swiper w-full overflow-hidden relative">
         <div class="swiper-wrapper">
-            <!-- <div class="swiper-slide slide5 cursor-pointer flex justify-center"><img class="xl:h-[500px] 2xl:h-[600px]" src="static/img/banner5-1.png"></div> -->
-            <div class="swiper-slide slide7 cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="h-[250px] md:h-[400px] xl:h-[500px]" src="/static/img/banner7-1.png"></div>
-            <div class="swiper-slide slide8 cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="h-[250px] md:h-[400px] xl:h-[500px]" src="/static/img/banner8-1.png"></div>
-            <div class="swiper-slide slide9 cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/"'><img class="h-[250px] md:h-[400px] xl:h-[500px]" src="/static/img/banner9-1.png"></div>
-            <div class="swiper-slide slide6 cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="h-[250px] md:h-[400px] xl:h-[500px]" src="/static/img/banner6-1.png"></div>
-            <div class="swiper-slide slide1 cursor-pointer flex justify-center" onclick='window.location.href="/desc/1/"'><img class="h-[250px] md:h-[400px] xl:h-[500px]" src="/static/img/banner1-1.png"></div>
-            
-            <!-- <div class="swiper-slide slide2 cursor-pointer flex justify-center" onclick='window.location.href="/desc/2/"'><img class="xl:h-[500px] 2xl:h-[600px]" src=xl:banner2-1.png"></div> -->
-            <div class="swiper-slide slide3 cursor-pointer flex justify-center" onclick='window.location.href="/desc/3/"'><img class="h-[250px] md:h-[400px] xl:h-[500px]" src="/static/img/banner3-1.png"></div>
-            
-            
-            <!-- <div class="swiper-slide slide4 cursor-pointer flex justify-center" onclick='window.location.href="/desc/4/"'><img class="xl:h-[500px] 2xl:h-[600px]" src="/static/img/banner4-1.png"></div> -->
-            
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="h-[428px]" src="/static/img/landing/banner1.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="h-[428px]" src="/static/img/landing/banner2.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="h-[428px]" src="/static/img/landing/banner3.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/"'><img class="h-[428px]" src="/static/img/landing/banner4.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="h-[428px]" src="/static/img/landing/banner1.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="h-[428px]" src="/static/img/landing/banner2.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="h-[428px]" src="/static/img/landing/banner3.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/"'><img class="h-[428px]" src="/static/img/landing/banner4.png"></div>
         </div>
         <div class="py-2 flex justify-end items-center swiper-pagination"></div>
         
     </div>
     <div class="w-full flex flex-col items-center">
-        <div class="logo-swiper mt-4 w-full xl:w-2/3 flex justify-center overflow-hidden">
-            <div class="swiper-wrapper">
-                {% for school in schools %}
-                <div class="swiper-slide flex h-[50px] items-center md:mx-2 cursor-pointer grayscale hover:grayscale-0" onclick="window.location='/school/page/{{school.id}}'"><img class="" src="{{school.img_logo}}"></div>
-                {% endfor %}
+        <div style="padding: 0 85px;">
+            <div class="logo-swiper my-20 w-full flex justify-center overflow-hidden">
+                <div class="swiper-wrapper">
+                    {% for school in schools %}
+                    <div class="swiper-slide flex w-auto h-[50px] items-center md:mx-2 cursor-pointer grayscale hover:grayscale-0" onclick="window.location='/school/page/{{school.id}}'"><img class="" src="{{school.img_logo}}"></div>
+                    <div class="swiper-slide flex w-auto h-[50px] items-center md:mx-2 cursor-pointer grayscale hover:grayscale-0" onclick="window.location='/school/page/{{school.id}}'"><img class="" src="{{school.img_logo}}"></div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
+        
         <div class="courses_recomend w-full">
             <!-- <div class="course-swiper w-[1000px]">
                 <div class="swiper-container py-2 w-full">
@@ -104,38 +103,34 @@
 
     var mySwiper = new Swiper('.landing-swiper',{
         loop:true,
+        speed:19500,
         autoplay:{
-            delay:5000,
-        },
-        navigation: {
-            prevEl:'.bt1',
-            nextEl:'.bt2' 
-        },
-        pagination:{
-            el:'.swiper-pagination',
-            clickable: true,
-            type: 'bullets',
+            delay:0,
+            disableOnInteraction: false,
             
         },
-        
-        centeredSlides:true
+        slidesPerView: 'auto',
+        spaceBetween: 20,
     })
+
+    document.querySelector('.landing-swiper').addEventListener('mouseenter', function () {
+        mySwiper.autoplay.stop();
+    });
+
+    document.querySelector('.landing-swiper').addEventListener('mouseleave', function () {
+        mySwiper.autoplay.start();
+    });
 
     var mySwiper2 = new Swiper('.logo-swiper',{
         loop:true,
-        speed:7000,
+        speed:16000,
         autoplay:{
             delay: 0,
             disableOnInteraction: true,
+            reverseDirection: true,
         },
-        slidesPerView: 4,
-        spaceBetween: 10,
-        breakpoints: {
-          640: {
-            slidesPerView: 6,
-            spaceBetween: 10,
-          },
-        }
+        slidesPerView: 'auto',
+        spaceBetween: 40,
     })
 
     window.addEventListener("DOMContentLoaded", function () {

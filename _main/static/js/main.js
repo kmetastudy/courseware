@@ -43,7 +43,7 @@ export function BaseOnReady(context) {
   const clDrawerSide = new DrawerSide({ target: fakeWrapper, props: { userType, userLogin } });
   const elDrawerSide = clDrawerSide.getElement();
 
-  setDrawer({ root, content, side: elDrawerSide, drawer });
+  // setDrawer({ root, content, side: elDrawerSide, drawer });
 }
 
 function setDrawer({ root, content, side, drawer }) {

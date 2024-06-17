@@ -33,6 +33,11 @@
   var courses = JSON.parse("{{ courses|escapejs }}");
   window.addEventListener("DOMContentLoaded", function () {
     // console.log("mainlibrary: ", mainlibrary);
+    let school_type = window.location.pathname.split('/')[2]
+    // let navigations = document.querySelectorAll('.nav-color');
+    // navigations.forEach((nav) => nav.style.cssText=`color:#999999; font-weight:700;`)
+    document.getElementById(school_type).style.fontWeight=700;
+    document.getElementById(school_type).style.color='#3DB051';
     mainlibrary.CourseMainOnReady(context, options, courses)
   });
 </script>
