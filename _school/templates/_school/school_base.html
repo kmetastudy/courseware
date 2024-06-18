@@ -39,7 +39,7 @@
   <body>
     <div id="root" class="flex flex-col items-center">
       <!-- header -->
-      <div class="w-full border-b border-[#d1d1d1] md:flex justify-between items-center hidden" style="height: 80px;padding-left: 85px;padding-right: 85px;">
+      <div class="screenPC w-full border-b border-[#d1d1d1] justify-between items-center" style="height: 80px;padding-left: 85px;padding-right: 85px;">
         <img class="cursor-pointer" src="{{schoolLogo}}" style="width: 190px;height: 39px;" onclick="window.location.href='/school/page/{{schoolId}}'">
         <img class="cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" style="width: 200px;height: 52px;">
         <div class="flex text-[#474747] text-[18px]">
@@ -54,7 +54,7 @@
         </div>
       </div>
       <!-- 모바일 header -->
-      <div class="w-full border-b border-[#d1d1d1] flex justify-between items-center md:hidden" style="height: 80px;padding-left: 10px;padding-right: 10px;">
+      <div class="screenMobile w-full border-b border-[#d1d1d1] justify-between items-center" style="height: 80px;padding-left: 10px;padding-right: 10px;">
         <img class="cursor-pointer" src="{{schoolLogo}}" style="width: 190px;height: 39px;" onclick="window.location.href='/school/page/{{schoolId}}'">
         <!-- <img class="cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" style="width: 200px;height: 52px;"> -->
         <div class="flex text-[#474747] text-[18px]">
@@ -77,7 +77,7 @@
       {% block content %} {% endblock %}
     </div>
     <!-- footer -->
-    <div class="w-full md:flex justify-between items-center border-t border-[#3db051] text-[#999999] hidden" style="height: 176px; padding:0 85px;">
+    <div class="screenPC w-full justify-between items-center border-t border-[#3db051] text-[#999999]" style="height: 176px; padding:0 85px;">
       <div class="flex items-center">
         <img class="" src="{% static '/img/landing/logo_nscreen_green.png' %}" />
         <div class="grid grid-cols-1 text-[12px]" style="margin-left: 80px; row-gap: 8px">
@@ -109,7 +109,7 @@
       </div>
     </div>
     <!-- 모바일 footer -->
-    <div class="w-full flex flex-col-reverse justify-between border-t border-[#3db051] text-[#999999] md:hidden" style="padding:0 10px;">
+    <div class="screenMobile w-full flex-col-reverse justify-between border-t border-[#3db051] text-[#999999]" style="padding:0 10px;">
       <div class="flex items-center">
         <!-- <img class="" src="{% static '/img/landing/logo_nscreen_green.png' %}" /> -->
         <div class="grid grid-cols-1 text-[12px]" style="margin-top: 20px;margin-left: 20px;">
