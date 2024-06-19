@@ -122,7 +122,7 @@ def mainView(request, school, subject):
             {"kor": "한국사", "eng": "korhist"},
             {"kor": "과학", "eng": "sci"},
             {"kor": "정보", "eng": "info"},
-            {"kor": "기타", "eng": "etc"},
+            {"kor": "특성화", "eng": "etc"},
         ],
     }
     print(request.method)
