@@ -10,7 +10,7 @@ export default class CategoryPaginatedContentView extends View {
         // console.log(sections)
         return `
             <div class="">
-                <div data-component="category" class="w-fit grid grid-cols-7 text-[20px] text-[#474747]" style="margin: 40px 0; column-gap:40px;">
+                <div data-component="category" class="w-fit grid grid-rows-1 grid-flow-col text-[20px] text-[#474747]" style="margin: 40px 0; column-gap:40px;">
                     <div class="category-click cursor-pointer text-[#3db051] font-bold" data-seq="0">전체보기</div>
                     ${sections.map(({title}, index) => {
                         return `<div class="category-click cursor-pointer" data-seq="${index+1}">${title}</div>`
