@@ -40,7 +40,7 @@
     <div id="root" class="flex flex-col items-center">
       <!-- header -->
       <div class="screenPC w-full border-b border-[#d1d1d1] justify-between items-center" style="height: 80px;padding-left: 85px;padding-right: 85px;">
-        <img class="cursor-pointer" src="{{schoolLogo}}" style="width: 190px;height: 39px;" onclick="window.location.href='/school/page/{{schoolId}}'">
+        <img class="cursor-pointer" src="{{school_data.img_logo}}" style="width: 190px;height: 39px;" onclick="window.location.href='/school/page/{{school_data.id}}'">
         <img class="cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" style="width: 200px;height: 52px;">
         <div class="flex text-[#474747] text-[18px]">
           <div class="grid grid-cols-2 place-items-center font-normal" style="column-gap: 40px;">
@@ -55,7 +55,7 @@
       </div>
       <!-- 모바일 header -->
       <div class="screenMobile w-full border-b border-[#d1d1d1] justify-between items-center" style="height: 80px;padding-left: 10px;padding-right: 10px;">
-        <img class="cursor-pointer" src="{{schoolLogo}}" style="width: 190px;height: 39px;" onclick="window.location.href='/school/page/{{schoolId}}'">
+        <img class="cursor-pointer" src="{{school_data.img_logo}}" style="width: 190px;height: 39px;" onclick="window.location.href='/school/page/{{school_data.id}}'">
         <!-- <img class="cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" style="width: 200px;height: 52px;"> -->
         <div class="flex text-[#474747] text-[18px]">
           <div class="grid grid-cols-1  place-items-center font-normal" style="column-gap: 40px;">
