@@ -51,7 +51,7 @@ class SectionSerializer(serializers.ModelSerializer):
         fields = ["title", "courses"]
 
 
-class NoticeSerializer(serializers.ModelSerializer):
+class SchoolNoticeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = mSchoolNotice
@@ -60,7 +60,7 @@ class NoticeSerializer(serializers.ModelSerializer):
 
 class SchoolSerializer(serializers.ModelSerializer):
 
-    notice = NoticeSerializer(many=True, read_only=True)
+    notice = SchoolNoticeSerializer(many=True, read_only=True)
 
     class Meta:
         model = mSchool

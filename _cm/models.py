@@ -80,3 +80,43 @@ class courseLanding(models.Model):
     id_course = models.UUIDField(null=False)
     subject = models.TextField(null=True, blank=True)
     id_page = models.TextField(null=True, blank=True)
+
+
+class Notice(models.Model):
+    STATUS_CHOICES = [
+        ("Active", "Active"),
+        ("Inactive", "Inactive"),
+    ]
+
+    title = models.CharField(max_length=255)
+    content = models.TextField(null=True, blank=True)
+    author = models.CharField(max_length=255, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    view_count = models.IntegerField(default=0)
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default="Active")
+    attachment = models.FileField(upload_to="attachments/", blank=True, null=True)
+    is_pinned = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title
+
+
+class FAQCategory(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class FAQ(models.Model):
+    category = models.ForeignKey(
+        FAQCategory, on_delete=models.CASCADE, related_name="faqs"
+    )
+    question = models.CharField(max_length=255)
+    answer = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.question

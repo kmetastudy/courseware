@@ -1,10 +1,9 @@
 import json
 from django.shortcuts import redirect, render
-from _cm.models import courseDetail
-from _cm.serializers import CourseDetailSerializer
+from _cm.models import FAQ, Notice, courseDetail
+from _cm.serializers import CourseDetailSerializer, NoticeSerializer, FAQSerializer
 from _school.models import mSchool, mSchoolCourse, mSchoolNotice, mSchoolSection
 from _school.serializers import (
-    NoticeSerializer,
     SchoolSerializer,
     SectionSerializer,
     CourseSerializer,
@@ -34,27 +33,29 @@ def school_page(request, school_id):
 
     school = mSchool.objects.filter(id=school_id)[0]
     school_data = SchoolSerializer(school).data
-    school_name = school_data["title"]
-    school_logo = school_data["img_logo"]
-    school_banner = school_data["img_banner"]
-    school_notice = school_data["notice"]
+    school_notices = school_data["notice"]
 
-    school_sections = mSchoolSection.objects.filter(
+    notice_queryset = Notice.objects.all()
+    notices = NoticeSerializer(notice_queryset, many=True).data
+
+    faq_queryset = FAQ.objects.all()
+    faqs = FAQSerializer(faq_queryset, many=True).data
+
+    school_section_queryset = mSchoolSection.objects.filter(
         id_school=school_id, active=True
     ).order_by("sequence")
 
-    sections = SectionSerializer(school_sections, many=True).data
+    school_sections = SectionSerializer(school_section_queryset, many=True).data
 
-    print(sections)
+    print(school_data)
 
     context = {
         "context": json.dumps(context_sample),
-        "sectionCourses": json.dumps(sections),
-        "schoolId": school_id,
-        "schoolName": json.dumps(school_name),
-        "schoolLogo": school_logo,
-        "schoolBanner": school_banner,
-        "notices": school_notice,
+        "school_data": school_data,  # json.dumps 안하고 보내야 .으로 참조가능 -> 시리얼라이즈 했으니까
+        "school_sections": json.dumps(school_sections),
+        "school_notices": school_notices[:7],
+        "notices": notices[:7],
+        "faqs": faqs[:7],
     }
 
     return render(request, "_school/school_landing.html", context)
