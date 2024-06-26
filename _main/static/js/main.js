@@ -11,6 +11,7 @@ import { CourseManager } from "../../../static/js/pages/main/course/course-manag
 import { DetailManager } from "../../../static/js/pages/main/course/detail-manager";
 import { mtmSideMenu } from "../../../static/js/core/ui/sideMenu/mtm-side-menu";
 import { CourseView } from "../../../static/js/pages/main/course/mtv-course";
+import CategoryPaginatedContent from "../../../static/js/pages/school/container/CategoryPaginatedContent";
 import { CourseSwiperView } from "../../../static/js/pages/main/course/mtv-course-swiper";
 
 import HighlightCourse from "../../../static/js/pages/school/container/HighlightCourse";
@@ -60,77 +61,11 @@ function setDrawer({ root, content, side, drawer }) {
   Overlay({ element: overlay });
 }
 
-export function CourseLandingOnReady(context, courses, recommend, title) {
+export function CourseLandingOnReady(context, sections) {
   console.log(context);
-  console.log(courses);
-  console.log(recommend);
+  console.log(sections);
 
-  var $elSearch = $(`<div class="my-6 flex flex-1 justify-center items-center">
-                        <input type="text" class="mx-2 p-2 w-1/2 border border-gray-500 rounded-full text-[12px] focus:outline-none focus:shadow-lg" placeholder="과목을 입력해보세요.">
-                        <i class="ri-search-line cursor-pointer"></i>
-                    </div>`);
-
-  $elSearch[0].children[0].addEventListener("keyup", function (e) {
-    if (e.keyCode == 13) {
-      // console.log('enter')
-      var keyword = $elSearch[0].children[1].previousElementSibling.value;
-      var obj = courses;
-      // console.log(obj)
-      var keyCourse = obj.filter((course) => course.courseTitle.includes(keyword));
-      console.log(keyCourse);
-      if (keyCourse.length == 0) {
-        var clCourseView = new CourseView(courses);
-        $(".courses_landing").html(clCourseView.elThis);
-      } else {
-        var clCourseView = new CourseView(keyCourse);
-        $(".courses_landing").html(clCourseView.elThis);
-      }
-    }
-  });
-
-  $elSearch[0].children[1].addEventListener("click", () => {
-    console.log($elSearch[0].children[1].previousElementSibling.value);
-    var keyword = $elSearch[0].children[1].previousElementSibling.value;
-    var obj = courses;
-    // console.log(obj)
-    var keyCourse = obj.filter((course) => course.courseTitle.includes(keyword));
-    console.log(keyCourse);
-
-    if (keyCourse.length == 0) {
-      var clCourseView = new CourseView(courses);
-      $(".courses_landing").html(clCourseView.elThis);
-    } else {
-      var clCourseView = new CourseView(keyCourse);
-      $(".courses_landing").html(clCourseView.elThis);
-    }
-  });
-
-  $(".search").append($elSearch);
-
-  var clCourseSwiper = new CourseSwiperView(recommend, title);
-  $(".courses_recomend").append(clCourseSwiper.elThis);
-
-  var slider = new Swiper(".swiper-container", {
-    slidesPerView: 2,
-    spaceBetween: 10,
-    breakpoints: {
-      640: {
-        slidesPerView: 3,
-        spaceBetween: 20,
-      },
-      1536: {
-        slidesPerView: 4,
-        spaceBetween: 20,
-      },
-    },
-    navigation: {
-      nextEl: ".prev-btn",
-      prevEl: ".next-btn",
-    },
-  });
-
-  var clCourseView = new CourseView(courses);
-  $(".courses_landing").append(clCourseView.elThis);
+  new CategoryPaginatedContent(document.querySelector(".courses_landing"), {sections})
 }
 
 export function CourseMainOnReady(context, options, courses) {

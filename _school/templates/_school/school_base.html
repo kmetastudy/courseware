@@ -39,9 +39,9 @@
   <body>
     <div id="root" class="flex flex-col items-center">
       <!-- header -->
-      <div class="screenPC w-full border-b border-[#d1d1d1] justify-between items-center" style="height: 80px;padding-left: 85px;padding-right: 85px;">
-        <img class="cursor-pointer" src="{{school_data.img_logo}}" style="width: 190px;height: 39px;" onclick="window.location.href='/school/page/{{school_data.id}}'">
-        <img class="cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" style="width: 200px;height: 52px;">
+      <div class="navPC w-full border-b border-[#d1d1d1] justify-between items-center text-center" style="height:80px;">
+        <img class="h-10 min-[1280px]:h-12 cursor-pointer" src="{{school_data.img_logo}}" onclick="window.location.href='/school/page/{{school_data.id}}'">
+        <img class="h-12 min-[1280px]:h-14 cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}">
         <div class="flex text-[#474747] text-[18px]">
           <div class="grid grid-cols-2 place-items-center font-normal" style="column-gap: 40px;">
             <div class="font-normal cursor-pointer" onclick="window.location='http://megatest.kr:7700/ml/'">로그인</div>
@@ -54,19 +54,13 @@
         </div>
       </div>
       <!-- 모바일 header -->
-      <div class="screenMobile w-full border-b border-[#d1d1d1] justify-between items-center" style="height: 80px;padding-left: 10px;padding-right: 10px;">
-        <img class="cursor-pointer" src="{{school_data.img_logo}}" style="width: 190px;height: 39px;" onclick="window.location.href='/school/page/{{school_data.id}}'">
+      <div class="navMobile w-full border-b border-[#d1d1d1] justify-between items-center" style="height: 46px;padding-left: 20px;padding-right: 20px;">
+        <img class="cursor-pointer" src="{{school_data.img_logo}}" style="height: 21px;" onclick="window.location.href='/school/page/{{school_data.id}}'">
         <!-- <img class="cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" style="width: 200px;height: 52px;"> -->
-        <div class="flex text-[#474747] text-[18px]">
-          <div class="grid grid-cols-1  place-items-center font-normal" style="column-gap: 40px;">
-            <div class="font-normal cursor-pointer" onclick="window.location='http://megatest.kr:7700/ml/'">로그인</div>
-            <!-- <div id="" class="cursor-pointer">
-              <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M25.3902 25.5604L30.5999 30.6004M28.9199 17.1604C28.9199 23.6553 23.6548 28.9204 17.1599 28.9204C10.665 28.9204 5.3999 23.6553 5.3999 17.1604C5.3999 10.6655 10.665 5.40039 17.1599 5.40039C23.6548 5.40039 28.9199 10.6655 28.9199 17.1604Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div> -->
-          </div>
-        </div>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2.40039 20.5128C2.40039 16.7373 5.55468 13.6766 12.0004 13.6766C18.4461 13.6766 21.6004 16.7373 21.6004 20.5128C21.6004 21.1135 21.1622 21.6004 20.6216 21.6004H3.37921C2.83862 21.6004 2.40039 21.1135 2.40039 20.5128Z" stroke="#737373" stroke-width="2"/>
+          <path d="M15.6004 6.00039C15.6004 7.98862 13.9886 9.60039 12.0004 9.60039C10.0122 9.60039 8.40039 7.98862 8.40039 6.00039C8.40039 4.01217 10.0122 2.40039 12.0004 2.40039C13.9886 2.40039 15.6004 4.01217 15.6004 6.00039Z" stroke="#737373" stroke-width="2"/>
+        </svg>
       </div>
 
       <!-- <div class="w-full xl:w-[1200px] flex justify-end">
@@ -77,8 +71,8 @@
       {% block content %} {% endblock %}
     </div>
     <!-- footer -->
-    <div class="screenPC w-full justify-between items-center border-t border-[#3db051] text-[#999999]" style="height: 176px; padding:0 85px;">
-      <div class="flex items-center">
+    <div class="footerPC w-full max-[743px]:hidden flex min-[744px]:flex-col min-[1280px]:flex-row px-[20px] min-[1280px]:px-[85px] py-[40px] justify-between items-center border-t border-[#3db051] text-[#999999]">
+      <div class="flex items-center self-start">
         <img class="" src="{% static '/img/landing/logo_nscreen_green.png' %}" />
         <div class="grid grid-cols-1 text-[12px]" style="margin-left: 80px; row-gap: 8px">
           <p>상호명 (주)엔스크린  대표자 정대욱  주소 06350 서울특별시 강남구 광평로 63 3층  사업자 번호 679-81-00799</p>
@@ -87,7 +81,7 @@
           <p>© N SCREEN.All rights reserved.</p>
         </div>
       </div>
-      <div class="flex flex-col items-end">
+      <div class="flex flex-col items-end self-end">
         <div class="opt-sel abtn" tabindex="1">
           <div class="flex justify-between items-center">
             관련 사이트
@@ -109,17 +103,20 @@
       </div>
     </div>
     <!-- 모바일 footer -->
-    <div class="screenMobile w-full flex-col-reverse justify-between border-t border-[#3db051] text-[#999999]" style="padding:0 10px;">
-      <div class="flex items-center">
-        <!-- <img class="" src="{% static '/img/landing/logo_nscreen_green.png' %}" /> -->
-        <div class="grid grid-cols-1 text-[12px]" style="margin-top: 20px;margin-left: 20px;">
-          <p>상호명 (주)엔스크린  대표자 정대욱  주소 06350 서울특별시 강남구 광평로 63 3층  사업자 번호 679-81-00799</p>
-          <p>Tel 02-2226-4279  고객센터 운영시간 평일 09:00 ~ 18:00 (점심시간 12:00 ~ 13:00)</p>
-          <p>E-mail kmetastudy@gmail.com</p>
-          <p>© N SCREEN.All rights reserved.</p>
-        </div>
+    <div class="footerMobile w-full flex flex-col min-[744px]:hidden justify-between items-center border-t border-[#3db051] text-[#999999]" style="padding:20px 0;">
+      <img class="" src="{% static '/img/landing/logo_nscreen_green.png' %}" />
+      <div class="text-[12px] text-center" style="margin-top: 20px;margin-left: 20px;">
+        <p class="mt-2">상호명 (주)엔스크린  대표자 정대욱</p>
+        <p class="mt-2">사업자 번호 679-81-00799</p>
+        <p class="mt-2">주소 06350 서울특별시 강남구 광평로 63 3층</p>
+        <p class="mt-2">Tel 02-2226-4279</p>
+        <p class="mt-2">고객센터 운영시간</p>
+        <p class="mt-2">평일 09:00 ~ 18:00</p>
+        <p class="mt-2">(점심시간 12:00 ~ 13:00)</p>
+        <p class="mt-2">E-mail kmetastudy@gmail.com</p>
+        <p class="mt-2">© N SCREEN.All rights reserved.</p>
       </div>
-      <div class="w-full  flex items-center justify-end">
+      <div class="py-5 w-full flex flex-col items-center justify-end">
         <div class="opt-sel abtn" tabindex="1">
           <div class="flex justify-between items-center">
             관련 사이트
@@ -133,7 +130,7 @@
             <li onclick="window.location.href='https://megacourse.co.kr'">메가코스</li>
           </ul>
         </div>
-        <div class="grid grid-cols-3" style="column-gap: 20px;">
+        <div class="grid grid-cols-3 pt-5" style="column-gap: 20px;">
           <img style="width:24px; height:24px;" src="{% static '/img/landing/icon_blog.png' %}" onclick="window.location.href='https://blog.naver.com/megacourse'"/>
           <img style="width:24px; height:24px;" src="{% static '/img/landing/icon_insta.png' %}" onclick="window.location.href='https://www.instagram.com/megacourse?igsh=MTF1ZmhlZXZ0c2lvZw%3D%3D&utm_source=qr'"/>
           <img style="width:24px; height:24px;" src="{% static '/img/landing/icon_youtube.png' %}" onclick="window.location.href='https://www.youtube.com/channel/UCMwv57GH2JbsPqcRR8vXCeg'"/>

@@ -20,6 +20,7 @@ export default class CategoryPaginatedContent extends Component {
     }
 
     setEvent() {
+      // 학교페이지 콘텐츠 카테고리
       this.addEvent('click', '.category-click', ({target}) => {
         // console.log(target.dataset.seq)
         this.categoryClickHandler(target.dataset.seq)
@@ -27,6 +28,16 @@ export default class CategoryPaginatedContent extends Component {
         let categories = document.querySelectorAll('.category-click')
         categories.forEach((category) => category.classList.remove('text-[#3db051]', 'font-bold'))
         target.classList.add('text-[#3db051]', 'font-bold')
+      })
+
+      // 코스12 콘텐츠 카테고리
+      this.addEvent('click', '.category-click-border', ({target}) => {
+        // console.log(target.dataset.seq)
+        this.categoryClickHandler(target.dataset.seq)
+
+        let categories = document.querySelectorAll('.category-click-border')
+        categories.forEach((category) => category.classList.remove('text-[#3db051]', 'font-bold', 'border-b-[2px]', 'border-[#3db051]'))
+        target.classList.add('text-[#3db051]', 'font-bold', 'border-b-[2px]', 'border-[#3db051]')
       })
     }
 

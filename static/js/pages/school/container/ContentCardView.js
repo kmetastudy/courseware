@@ -13,12 +13,18 @@ export default class ContentCardView extends View {
 
         const contents = filteredContents.slice(start,end)
 
+        let pathname = window.location.pathname
+        let splitedPath = pathname.split('/')
+        let startURL = ''
+        if(splitedPath.includes('school')) startURL = '.'
+        else startURL = ''
+
         return `
             ${contents.map((content) => {
                 return `
-                    <div class="cursor-pointer">
+                    <div class="cursor-pointer" onclick="window.location='${startURL}/courses/${content.course.courseId}'">
                         <img class="rounded-[8px]" src="/static/img/thumnail/${content.course.thumnail}.png">
-                        <div class="text-[14px] text-[#474747]" style="padding-top: 20px;">${content.course.courseTitle}</div>
+                        <div class="text-[14px] text-[#474747] break-keep" style="padding-top: 20px;">${content.course.courseTitle}</div>
                     </div>
                 `
             }).join('')}

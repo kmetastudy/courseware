@@ -62,13 +62,11 @@ def school_page(request, school_id):
 
 
 @jwt_login_required
-def school_detailView(request, school_id, school, subject, id):
+def school_detailView(request, school_id, id):
     context_sample = make_context(request)
 
     school = mSchool.objects.filter(id=school_id)[0]
     school_data = SchoolSerializer(school).data
-    school_logo = school_data["img_logo"]
-    school_name = school_data["title"]
 
     try:
         course = mSchoolCourse.objects.filter(id=id)[0]
@@ -85,11 +83,9 @@ def school_detailView(request, school_id, school, subject, id):
     context = {
         "context": json.dumps(context_sample),
         "options": json.dumps(modified_course, default=str),
-        "schoolId": school_id,
-        "schoolName": school_name,
-        "schoolLogo": school_logo,
+        "school_data": school_data,
     }
-    return render(request, "_main/school_detail.html", context)
+    return render(request, "_school/school_detail.html", context)
 
 
 @jwt_login_required
@@ -114,12 +110,12 @@ def school_st(request, school_id):
     st_context["contentId"] = content_id
 
     school = mSchool.objects.filter(id=school_id)[0]
-    school_logo = SchoolSerializer(school).data["img_logo"]
+    school_data = SchoolSerializer(school).data
 
     print("st_context: ", st_context)
     context = {
         "context": json.dumps(st_context),
-        "schoolLogo": school_logo,
+        "school_data": school_data,
         "schoolId": school_id,
     }
     return render(request, "_st/_st_school.html", context)

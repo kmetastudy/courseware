@@ -10,19 +10,19 @@
 <div class="w-full flex flex-col items-center">
     <div class="landing-swiper w-full overflow-hidden relative">
         <div class="swiper-wrapper">
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="h-[428px]" src="/static/img/landing/banner1.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="h-[428px]" src="/static/img/landing/banner3.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="h-[428px]" src="/static/img/landing/banner2.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/"'><img class="h-[428px]" src="/static/img/landing/banner4.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="h-[428px]" src="/static/img/landing/banner1.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="h-[428px]" src="/static/img/landing/banner3.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="h-[428px]" src="/static/img/landing/banner2.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/"'><img class="h-[428px]" src="/static/img/landing/banner4.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="h-[243px] min-[744]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner1.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="h-[243px] min-[744]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner3.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="h-[243px] min-[744]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner2.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/"'><img class="h-[243px] min-[744]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner4.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="h-[243px] min-[744]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner1.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="h-[243px] min-[744]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner3.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="h-[243px] min-[744]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner2.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/"'><img class="h-[243px] min-[744]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner4.png"></div>
         </div>
     </div>
 
     <!-- FAQ, 공지사항 -->
-    <div class="w-full" style="padding: 0 85px;">
+    <div class="w-full max-[743px]:hidden px-[20px] min-[1280px]:px-[85px] ">
         <div class="" style="padding: 40px 0; column-gap: 20px;"> 
             <div class="grid grid-cols-3 text-[#474747]" style="padding:20px 0;">
                 <div class="border-r" style="padding: 20px;">
@@ -78,6 +78,76 @@
         </div>
     </div>
 
+    <!-- 모바일 공지, faq -->
+    <div class="w-full flex flex-col min-[744px]:hidden my-5 px-5 py-[18px] bg-[#fafaf9]">
+        <div class="w-full grid grid-cols-3">
+            <div></div>
+            <p class="font-medium text-[14px]">공지사항 & FAQ</p>
+            <div class="open-content justify-self-end flex items-center cursor-pointer">
+                <p class="font-light text-[12px]">펼치기</p>
+                <svg class="ml-3 -mb-0.5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 10L12.0008 14.58L17 10" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+        <div class="content pt-6 hidden">
+            <div class="border" style="padding: 20px 12px;">
+                <div class="w-full flex justify-between" style="padding-bottom: 24px;">
+                    <p></p>
+                    <p class="text-[14px] cursor-default" style="font-weight: 500;">FAQ</p>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 17L14.58 11.9992L10 7" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="grid grid-cols-1 text-[14px] font-normal cursor-pointer" style="column-gap: 8px ;">
+                    {% for faq in faqs|slice:":4" %}
+                    <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;">
+                        <p>{{faq.question|truncatechars:24}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="border mt-5" style="padding: 20px 12px;">
+                <div class="w-full flex justify-between" style="padding-bottom: 24px;">
+                    <p></p>
+                    <p class="text-[14px] cursor-default" style="font-weight: 500;">코스 공지사항</p>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 17L14.58 11.9992L10 7" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="grid grid-cols-1 text-[14px] font-normal cursor-pointer" style="column-gap: 8px ;">
+                    {% for notice in notices|slice:":4" %}
+                    <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;">
+                        <p>{{notice.title|truncatechars:24}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="border mt-5" style="padding: 20px 12px;">
+                <div class="w-full flex justify-between" style="padding-bottom: 24px;">
+                    <p></p>
+                    <p class="text-[14px] cursor-default" style="font-weight: 500;">학교 공지사항</p>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 17L14.58 11.9992L10 7" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="grid grid-cols-1 text-[14px] font-normal cursor-pointer" style="column-gap: 8px ;">
+                    {% for notice in school_notices|slice:":4" %}
+                    <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;">
+                        <p>{{notice.title|truncatechars:24}}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="close-content mt-5 flex justify-end item-center cursor-pointer">
+                <p class="text-[12px] font-light">접기</p>
+                <svg class="ml-3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M7 14L12.0008 9.42L17 14" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
     <div class="w-full flex flex-col items-center">
             
         <div class="courses_recomend w-full">
@@ -110,7 +180,7 @@
             
         </div> -->
 
-        <div class="w-full courses_landing" style="padding: 0 85px;">
+        <div class="w-full courses_landing px-[20px] min-[1280px]:px-[85px]">
             
         </div>
     </div>
@@ -121,32 +191,51 @@
 
 {% block extra-script %}
 <script>
-    $('.faq-btn').on('click', (e) => {
-        e.target.nextElementSibling.classList.toggle('hidden')
-    })
-
-    var mySwiper = new Swiper('.landing-swiper',{
-        loop:true,
-        speed:19500,
-        autoplay:{
-            delay:0,
-            disableOnInteraction: false,
-            
-        },
-        slidesPerView: 'auto',
-        spaceBetween: 20,
-    })
-
-    document.querySelector('.landing-swiper').addEventListener('mouseenter', function () {
-        mySwiper.autoplay.stop();
-    });
-
-    document.querySelector('.landing-swiper').addEventListener('mouseleave', function () {
-        mySwiper.autoplay.start();
-    });
-
-
     window.addEventListener("DOMContentLoaded", function () {
+        $('.faq-btn').on('click', (e) => {
+            e.target.nextElementSibling.classList.toggle('hidden')
+        })
+    
+        var mySwiper = new Swiper('.landing-swiper',{
+            loop:true,
+            speed:19500,
+            autoplay:{
+                delay:0,
+                disableOnInteraction: false,
+                
+            },
+            slidesPerView: 'auto',
+            spaceBetween: 12,
+            breakpoints: {
+                1280: {
+                    spaceBetween: 20,
+                }
+            }
+        })
+    
+        document.querySelector('.landing-swiper').addEventListener('mouseenter', function () {
+            mySwiper.autoplay.stop();
+        });
+    
+        document.querySelector('.landing-swiper').addEventListener('mouseleave', function () {
+            mySwiper.autoplay.start();
+        });
+
+        var open = document.querySelector('.open-content');
+
+        open.addEventListener('click', function() {
+            var content = document.querySelector('.content')
+            content.style.display = 'block'
+            open.style.display = 'none'
+        })
+        
+        var close = document.querySelector('.close-content')
+        close.addEventListener('click', function() {
+            var content = document.querySelector('.content')
+            content.style.display = 'none'
+            open.style.display = 'flex'
+        })
+
 
         var context = JSON.parse("{{ context|escapejs }}");
         var sections = JSON.parse("{{ school_sections|escapejs }}");

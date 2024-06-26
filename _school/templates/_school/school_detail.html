@@ -1,15 +1,7 @@
-{% extends "_main/base_basic.html" %} {% block content %}
+{% extends "_school/school_base.html" %} {% block content %}
 {% block css %}
 <style>
-.nav {
-    background-color: white !important;
-}
-.mtm-nav {
-    background-color: white;
-}
-.container-right div div div:nth-child(4){
-  display: none;
-}
+
 </style>
 {% endblock %}
 <main id="main" class="w-full flex justify-center">
@@ -48,12 +40,12 @@
 <script>
   // var csrftoken = "{{csrf_token}}";
 
-  // var context = JSON.parse("{{ context|escapejs }}");
+  var context = JSON.parse("{{ context|escapejs }}");
   var data = JSON.parse("{{ options|escapejs }}");
 
   window.addEventListener("DOMContentLoaded", function () {
-    // console.log("mainlibrary: ", mainlibrary);
-    mainlibrary.CourseDetailOnReady(context, data);
+    console.log("schoollibrary: ", schoollibrary);
+    schoollibrary.CourseDetailOnReady(context, data);
   });
 </script>
 
