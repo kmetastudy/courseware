@@ -7,7 +7,13 @@ from django.urls import reverse
 
 from decouple import config
 
-from _cm.models import CourseReset, courseDetail, courseLanding
+from _cm.models import FAQ, CourseReset, Notice, Post, courseDetail, courseLanding
+from _cm.serializers import (
+    CourseDetailSerializer,
+    FAQSerializer,
+    NoticeSerializer,
+    PostSerializer,
+)
 from _cp.nmodels import mCourseN
 from _main.forms import CartCourseForm, PaymentForm
 from _main.models import (
@@ -33,28 +39,40 @@ from _user.utils import make_context
 @jwt_login_required
 def index(request):
     context_sample = make_context(request)
-    courses = getCourses(request, "all", "all")
 
     school = mSchool.objects.filter(active=True)
     schools = SchoolSerializer(school, many=True).data
 
-    course_recomend = courseLanding.objects.filter(id_page="nscreen").values()
-    # print(list(course_recomend))
-    recommend = {"kor": [], "eng": [], "math": [], "etc": []}
-    options = ["kor", "eng", "math", "etc"]
-    for content in course_recomend:
-        # print(content)
-        if content["subject"] in options:
-            course = courseDetail.objects.filter(courseId=content["id_course"]).values(
-                "courseId", "courseTitle", "thumnail", "school", "grade", "subject"
-            )[0]
-            # course['type'] = content['subject']
-            # print(course['courseId'])
-            recommend[content["subject"]].append(course)
+    elementary_course_queryset = courseDetail.objects.filter(school="E")
+    elementary_courses = CourseDetailSerializer(
+        elementary_course_queryset, many=True
+    ).data
+
+    elementary_sections = {"title": "초등코스"}
+    elementary_sections["courses"] = [
+        {"course": course} for course in elementary_courses
+    ]
+
+    middle_course_queryset = courseDetail.objects.filter(school="M")
+    middle_courses = CourseDetailSerializer(middle_course_queryset, many=True).data
+
+    middle_sections = {"title": "중등코스"}
+    middle_sections["courses"] = [{"course": course} for course in middle_courses]
+
+    high_course_queryset = courseDetail.objects.filter(school="H")
+    high_courses = CourseDetailSerializer(high_course_queryset, many=True).data
+
+    high_sections = {"title": "고등코스"}
+    high_sections["courses"] = [{"course": course} for course in high_courses]
+
+    sections = []
+    sections.append(elementary_sections)
+    sections.append(middle_sections)
+    sections.append(high_sections)
+
     context = {
         "context": json.dumps(context_sample),
-        "courses": json.dumps(courses, default=str),
-        "recommend": json.dumps(recommend, default=str),
+        "sections": json.dumps(sections),
         "schools": schools,
     }
     return render(request, "_main/landing.html", context)
@@ -67,6 +85,31 @@ def new_contact(request):
         "context": json.dumps(context_sample),
     }
     return render(request, "_main/contact.html", context)
+
+
+@jwt_login_required
+def about(request):
+    context_sample = make_context(request)
+
+    notice_queryset = Notice.objects.all()
+    notices = NoticeSerializer(notice_queryset, many=True).data
+    date = notices[0]["created_at"]
+    print(type(date))
+
+    faq_queryset = FAQ.objects.all()
+    faqs = FAQSerializer(faq_queryset, many=True).data
+
+    post_queryset = Post.objects.all()
+    posts = PostSerializer(post_queryset, many=True).data
+
+    context = {
+        "context": json.dumps(context_sample),
+        "notices": notices,
+        "faqs": faqs,
+        "posts": posts,
+        "posts_json": json.dumps(posts),
+    }
+    return render(request, "_main/about.html", context)
 
 
 @jwt_login_required
@@ -231,7 +274,7 @@ def getCourses(request, school, subject):
 
 
 @jwt_login_required
-def detailView(request, school, subject, id):
+def detailView(request, id):
     context_sample = make_context(request)
 
     courses = courseDetail.objects.filter(courseId=id).values(

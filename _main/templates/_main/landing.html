@@ -9,86 +9,35 @@
 {% endblock %}
 {% block content %}
 <div class="w-full flex flex-col items-center">
+    <!-- 배너 스와이퍼 -->
     <div class="landing-swiper w-full overflow-hidden relative">
         <div class="swiper-wrapper">
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="h-[428px]" src="/static/img/landing/banner1.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="h-[428px]" src="/static/img/landing/banner2.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="h-[428px]" src="/static/img/landing/banner3.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/"'><img class="h-[428px]" src="/static/img/landing/banner4.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="h-[428px]" src="/static/img/landing/banner1.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="h-[428px]" src="/static/img/landing/banner2.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="h-[428px]" src="/static/img/landing/banner3.png"></div>
-            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/"'><img class="h-[428px]" src="/static/img/landing/banner4.png"></div>
-        </div>
-        <div class="py-2 flex justify-end items-center swiper-pagination"></div>
-        
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="h-[243px] min-[744px]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner1.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="h-[243px] min-[744px]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner2.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="h-[243px] min-[744px]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner3.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/"'><img class="h-[243px] min-[744px]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner4.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/contact/"'><img class="h-[243px] min-[744px]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner1.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="h-[243px] min-[744px]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner2.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="h-[243px] min-[744px]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner3.png"></div>
+            <div class="swiper-slide w-auto cursor-pointer flex justify-center" onclick='window.location.href="/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/"'><img class="h-[243px] min-[744px]:h-[295px] min-[1280px]:h-[428px]" src="/static/img/landing/banner4.png"></div>
+        </div>        
     </div>
-    <div class="w-full flex flex-col items-center">
-        <div style="padding: 0 85px;">
-            <div class="logo-swiper my-20 w-full flex justify-center overflow-hidden">
-                <div class="swiper-wrapper">
-                    {% for school in schools %}
-                    <div class="swiper-slide flex w-auto h-[50px] items-center md:mx-2 cursor-pointer grayscale hover:grayscale-0" onclick="window.location='/school/page/{{school.id}}'"><img class="" src="{{school.img_logo}}"></div>
-                    <div class="swiper-slide flex w-auto h-[50px] items-center md:mx-2 cursor-pointer grayscale hover:grayscale-0" onclick="window.location='/school/page/{{school.id}}'"><img class="" src="{{school.img_logo}}"></div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        
-        <div class="courses_recomend w-full">
-            <!-- <div class="course-swiper w-[1000px]">
-                <div class="swiper-container py-2 w-full">
-                    <p class="w-fit border-b-4 border-b-[#322757] text-xl">국어 추천코스</p>
-                    <div id="국어" class="swiper-wrapper">
-                    </div>
-                </div>
-                <div class="swiper-container py-2 w-full">
-                    <p class="w-fit border-b-4 border-b-[#322757] text-xl">영어 추천코스</p>
-                    <div id="영어" class="swiper-wrapper">
-                    </div>
-                </div>
-                <div class="swiper-container py-2 w-full">
-                    <p class="w-fit border-b-4 border-b-[#322757] text-xl">수학 추천코스</p>
-                    <div id="수학" class="swiper-wrapper">
-                    </div>
-                </div>
-                <div class="swiper-container py-2 w-full">
-                    <p class="w-fit border-b-4 border-b-[#322757] text-xl">학교별 강의</p>
-                    <div id="학교" class="swiper-wrapper">
-                    </div>
-                </div>
-            </div> -->
-        </div>
-        <!-- 검색  -->
-        <div class="search w-full flex">
-            
-        </div>
-        <div class="w-full p-2 lg:w-2/3"><p class="pt-4 self-start text-lg">전체 강의<span class="text-sm text-red-400">new</span></p></div>
-        
-        <div class="w-full p-2 lg:w-2/3 courses_landing">
-            
-        </div>
 
-        <div class="pt-6 px-4 w-full sm:w-2/3 flex items-center"><object type="image/svg+xml" data="/static/assets/Star5.svg"></object><p class="pl-2 text-[28px] sm:text-[32px]">자주하는 질문 FAQ</p></div>
-        <div class="pb-6 p-4 w-full sm:w-2/3">
-            <div class="py-4 w-full">
-                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">01. 회원가입 & 로그인</div>
-                <div class="p-2 border hidden"><img src="/static/img/landing/FAQ1.png"></div>
-            </div>
-            <div class="py-4 w-full">
-                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">02. 포인트 충전 방법</div>
-                <div class="p-2 border hidden"><img src="/static/img/landing/FAQ2.png"></div>
-            </div>
-            <div class="py-4 w-full">
-                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">03. 영상 후 문제 (나노학습)</div>
-                <!-- <div class="p-2 border hidden"><img src="/static/img/landing/FAQ1.png"></div> -->
-                <div class="p-2 pt-[56%] w-full border hidden relative"><iframe class="w-full h-full absolute top-0 left-0" src="https://www.youtube.com/embed/JuQIq43IgZM?si=6G2nwHkSaIY11J_l" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
-            </div>
-            <div class="py-4 w-full">
-                <div class="faq-btn p-2 text-[#3884FF] border shadow cursor-pointer">04. 수료증</div>
-                <div class="p-2 border hidden"><img src="/static/img/landing/FAQ4.png"></div>
+    <!-- 학교 로고 스와이퍼  -->
+    <div class="px-[20px] min-[1280px]:px-[85px] py-[20px] min-[744px]:py-[40px] min-[1280px]:py-[80px]" style="width: 100%;">
+        <div class="logo-swiper px-[12px] py-[10px] w-full flex justify-center overflow-hidden">
+            <div class="swiper-wrapper">
+                {% for school in schools %}
+                <div class="swiper-slide flex w-auto items-center md:mx-2 cursor-pointer grayscale hover:grayscale-0" onclick="window.location='/school/page/{{school.id}}'"><img class="logoImg" src="{{school.img_logo}}"></div>
+                {% endfor %}
             </div>
         </div>
+    </div>
+    
+    <!-- 콘텐츠 디스플레이 -->
+    <div class="courses_landing px-[20px] min-[1280px]:px-[85px]">
+        
+        
     </div>
 </div>
 {% endblock %}
@@ -103,14 +52,19 @@
 
     var mySwiper = new Swiper('.landing-swiper',{
         loop:true,
-        speed:19500,
+        speed:22000,
         autoplay:{
             delay:0,
             disableOnInteraction: false,
             
         },
         slidesPerView: 'auto',
-        spaceBetween: 20,
+        spaceBetween: 12,
+        breakpoints: {
+            1280: {
+                spaceBetween: 20,
+            }
+        }
     })
 
     document.querySelector('.landing-swiper').addEventListener('mouseenter', function () {
@@ -123,22 +77,26 @@
 
     var mySwiper2 = new Swiper('.logo-swiper',{
         loop:true,
-        speed:16000,
+        speed:10000,
         autoplay:{
             delay: 0,
             disableOnInteraction: true,
             reverseDirection: true,
         },
         slidesPerView: 'auto',
-        spaceBetween: 40,
+        spaceBetween: 12,
+        breakpoints: {
+            1280: {
+                spaceBetween: 12,
+            }
+        }
     })
 
     window.addEventListener("DOMContentLoaded", function () {
         // console.log("mainlibrary: ", mainlibrary);
 
-        var courses = JSON.parse("{{ courses|escapejs }}");
-        var recommend = JSON.parse("{{ recommend|escapejs }}");
-        mainlibrary.CourseLandingOnReady(context, courses, recommend)
+        var sections = JSON.parse("{{ sections|escapejs }}");
+        mainlibrary.CourseLandingOnReady(context, sections)
 
     });
 </script>

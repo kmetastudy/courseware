@@ -96,7 +96,7 @@ CourseUnit.prototype.create = function() {
     
     
         $elCourse.on("click", function(){
-          window.location.href = uri + `courses/${course.school}/${course.subject}/${course.courseId}`
+          window.location.href = uri + `courses/${course.courseId}`
         })
     
     

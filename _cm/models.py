@@ -120,3 +120,22 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
+
+
+class Post(models.Model):
+    STATUS_CHOICES = [
+        ("Active", "Active"),
+        ("Inactive", "Inactive"),
+    ]
+
+    title = models.CharField(max_length=255)
+    content = models.TextField(null=True, blank=True)
+    author = models.CharField(max_length=255, null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    view_count = models.IntegerField(default=0)
+    status = models.CharField(max_length=8, choices=STATUS_CHOICES, default="Active")
+    attachment = models.FileField(upload_to="attachments/", blank=True, null=True)
+
+    def __str__(self):
+        return self.title

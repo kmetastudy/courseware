@@ -20,6 +20,9 @@ from django.views.static import serve
 
 from django.views.generic.base import TemplateView
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("auth.urls")),
@@ -39,3 +42,6 @@ urlpatterns = [
         ),
     ),
 ]
+
+if settings.DEBUG:  # 개발 환경에서만 사용
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
