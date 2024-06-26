@@ -14,7 +14,8 @@
         <div class="category rounded-full ml-8 px-2 py-1 cursor-pointer" data-category="news">코스 NEWS</div>
     </div>
 
-    <div class="w-full max-[743px]:hidden" style="padding-bottom: 80px;">
+    <!-- 공지,faq,news PC -->
+    <div class="noticePC w-full" style="padding-bottom: 80px;">
         <div class="content-item" data-category="notice">
             <table class="w-full" style="padding: 0 85px;">
                 <thead class="w-full text-center">
@@ -97,7 +98,8 @@
             
         </div>
     </div>
-    <div class="w-full min-[744px]:hidden">
+    <!-- 공지,faq,news Mobile -->
+    <div class="noticeMobile w-full">
         <div class="content-item text-[14px] font-normal" data-category="notice">
             {% for notice in notices %}
             <div class="accordionMobile border rounded-[8px] mt-2 p-5">

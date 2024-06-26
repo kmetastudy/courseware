@@ -256,6 +256,25 @@ input::-webkit-inner-spin-button {
   .contentGrid {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
+  .footerPC {
+    display: flex;
+    flex-direction: row;
+  }
+  .footerMobile {
+    display: none;
+  }
+  .noticePC {
+    display: block;
+  }
+  .noticeMobile {
+    display: none;
+  }
+  .categoryMobile {
+    display: grid;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    column-gap: 40px;
+    font-size: 18px;
+  }
 }
 
 /* 태블릿 */
@@ -274,6 +293,25 @@ input::-webkit-inner-spin-button {
   .contentGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+  .footerPC {
+    display: flex;
+    flex-direction: column;
+  }
+  .footerMobile {
+    display: none;
+  }
+  .noticePC {
+    display: block;
+  }
+  .noticeMobile {
+    display: none;
+  }
+  .categoryMobile {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    column-gap: 20px;
+    font-size: 16px;
+  }
 }
 
 
@@ -287,5 +325,25 @@ input::-webkit-inner-spin-button {
   }
   .contentGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .footerPC {
+    display: none;
+  }
+  .footerMobile {
+    display: flex;
+    flex-direction: column;
+  }
+  .noticePC {
+    display: none;
+  }
+  .noticeMobile {
+    display: flex;
+    flex-direction: column;
+  }
+  .categoryMobile {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 20px;
+    font-size: 16px;
   }
 }
