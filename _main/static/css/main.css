@@ -275,6 +275,19 @@ input::-webkit-inner-spin-button {
   .logoImg {
     height: 50px;
   }
+  .footerPC {
+    display: flex;
+    flex-direction: row;
+  }
+  .footerMobile {
+    display: none;
+  }
+  .noticePC {
+    display:block;
+  }
+  .noticeMobile {
+    display:none;
+  }
 }
 
 /* 태블릿 */
@@ -303,6 +316,19 @@ input::-webkit-inner-spin-button {
   .logoImg {
     height: 50px;
   }
+  .footerPC {
+    display: flex;
+    flex-direction: column;
+  }
+  .footerMobile {
+    display: none;
+  }
+  .noticePC {
+    display:block;
+  }
+  .noticeMobile {
+    display:none;
+  }
 }
 
 
@@ -328,6 +354,19 @@ input::-webkit-inner-spin-button {
   }
   .logoImg {
     height: 30px;
+  }
+  .footerPC {
+    display: none;
+  }
+  .footerMobile {
+    display: flex;
+    flex-direction: column;
+  }
+  .noticePC {
+    display:none;
+  }
+  .noticeMobile {
+    display:block;
   }
 }
 
