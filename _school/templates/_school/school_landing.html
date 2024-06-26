@@ -25,7 +25,7 @@
     <div class="noticePC w-full px-[20px] min-[1280px]:px-[85px] ">
         <div class="" style="padding: 40px 0; column-gap: 20px;"> 
             <div class="grid grid-cols-3 text-[#474747]" style="padding:20px 0;">
-                <div class="border-r" style="padding: 20px;">
+                <div class="border-r" style="padding: 20px;" onclick="window.location.href='/about/'">
                     <div class="w-full flex justify-between" style="padding-bottom: 40px;">
                         <p></p>
                         <p class="text-[16px] cursor-default" style="font-weight: 500;">FAQ</p>
@@ -41,7 +41,7 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="border-r" style="padding: 20px;">
+                <div class="border-r" style="padding: 20px;" onclick="window.location.href='/about/'">
                     <div class="w-full flex justify-between" style="padding-bottom: 40px;">
                         <p></p>
                         <p class="text-[16px] cursor-default" style="font-weight: 500;">코스웨어 공지사항</p>
@@ -57,7 +57,7 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="border-r" style="padding: 20px;">
+                <div class="border-r" style="padding: 20px;" onclick="window.location.href='/about/'">
                     <div class="w-full flex justify-between" style="padding-bottom: 40px;">
                         <p></p>
                         <p class="text-[16px] cursor-default" style="font-weight: 500;">학교 공지사항</p>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="grid grid-cols-1 text-[14px] font-normal cursor-pointer" style="column-gap: 8px ;">
                         {% for notice in school_notices %}
-                        <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;">
+                        <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;" onclick="window.location.href='{{notice.url}}'">
                             <p>{{notice.title|truncatechars:24}}</p>
                             <p>{{notice.date}}</p>
                         </div>
@@ -91,11 +91,11 @@
             </div>
         </div>
         <div class="content pt-6 hidden">
-            <div class="border" style="padding: 20px 12px;">
+            <div class="border" style="padding: 20px 12px;" onclick="window.location.href='/about/'">
                 <div class="w-full flex justify-between" style="padding-bottom: 24px;">
                     <p></p>
                     <p class="text-[14px] cursor-default" style="font-weight: 500;">FAQ</p>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 17L14.58 11.9992L10 7" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
@@ -107,11 +107,11 @@
                     {% endfor %}
                 </div>
             </div>
-            <div class="border mt-5" style="padding: 20px 12px;">
+            <div class="border mt-5" style="padding: 20px 12px;" onclick="window.location.href='/about/'">
                 <div class="w-full flex justify-between" style="padding-bottom: 24px;">
                     <p></p>
                     <p class="text-[14px] cursor-default" style="font-weight: 500;">코스 공지사항</p>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 17L14.58 11.9992L10 7" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
@@ -127,13 +127,13 @@
                 <div class="w-full flex justify-between" style="padding-bottom: 24px;">
                     <p></p>
                     <p class="text-[14px] cursor-default" style="font-weight: 500;">학교 공지사항</p>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 17L14.58 11.9992L10 7" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                 </div>
                 <div class="grid grid-cols-1 text-[14px] font-normal cursor-pointer" style="column-gap: 8px ;">
                     {% for notice in school_notices|slice:":4" %}
-                    <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;">
+                    <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;" onclick="window.location.href='{{notice.url}}'">
                         <p>{{notice.title|truncatechars:24}}</p>
                     </div>
                     {% endfor %}
