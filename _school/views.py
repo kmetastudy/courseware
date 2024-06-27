@@ -140,11 +140,11 @@ def basic_landing(request, school_id):
 
     bannerBG = ""
     if school_id == "8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c":
-        bannerBG = "banner7-2"
+        bannerBG = "banner2"
     elif school_id == "cbb29b29-9f01-4024-9aac-15e382e3edb2":
-        bannerBG = "banner8-2"
+        bannerBG = "banner3"
     else:
-        bannerBG = "banner9-2"
+        bannerBG = "banner4"
 
     context = {
         "context": json.dumps(context_sample),
