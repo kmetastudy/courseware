@@ -1,6 +1,12 @@
 from django.contrib import admin
 
-from _school.models import mSchool, mSchoolCourse, mSchoolSection, mSchoolNotice
+from _school.models import (
+    SectionCategory,
+    mSchool,
+    mSchoolCourse,
+    mSchoolSection,
+    mSchoolNotice,
+)
 
 # Register your models here.
 
@@ -27,3 +33,4 @@ class mSchoolAdmin(admin.ModelAdmin):
 admin.site.register(mSchool, mSchoolAdmin)
 admin.site.register(mSchoolSection, mSchoolSectionAdmin)
 admin.site.register(mSchoolCourse)
+admin.site.register(SectionCategory)

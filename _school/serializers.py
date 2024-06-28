@@ -3,7 +3,13 @@ from rest_framework import serializers
 
 from _cm.models import courseDetail
 from _cm.serializers import CourseDetailSerializer
-from _school.models import mSchool, mSchoolCourse, mSchoolNotice, mSchoolSection
+from _school.models import (
+    SectionCategory,
+    mSchool,
+    mSchoolCourse,
+    mSchoolNotice,
+    mSchoolSection,
+)
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -41,14 +47,30 @@ class CourseSerializer(serializers.ModelSerializer):
         return data
 
 
+class SectionCategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SectionCategory
+        fields = ["name", "img_icon"]
+
+
 class SectionSerializer(serializers.ModelSerializer):
 
     courses = CourseSerializer(many=True)
-    # course_detail = courseDetail.objects.filter()
+    category = SectionCategorySerializer()
 
     class Meta:
         model = mSchoolSection
-        fields = ["title", "courses"]
+        fields = ["category", "title", "courses"]
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        # 위에 방법 보다 이게 더 좋아보인다
+        if not instance.category:
+            representation["category"] = {
+                "name": instance.title,
+                "img_icon": instance.img_icon,
+            }
+        return representation
 
 
 class SchoolNoticeSerializer(serializers.ModelSerializer):

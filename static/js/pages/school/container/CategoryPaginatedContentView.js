@@ -13,7 +13,7 @@ export default class CategoryPaginatedContentView extends View {
         return `
             <div class="">
                 ${this.isCoursePage()?CategoryWithLine(sections):Category(sections)}
-                <div data-component="paginatedContent" class="min-[744px]:px-[15px]"></div>
+                <div data-component="paginatedContent" class="px-[20px] min-[744px]:px-[15px]"></div>
             </div>
         `
     }

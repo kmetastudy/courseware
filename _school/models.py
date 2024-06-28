@@ -39,18 +39,31 @@ class mSchool(BaseModel):
         return self.title
 
 
+class SectionCategory(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    img_icon = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class mSchoolSection(BaseModel):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     id_school = models.ForeignKey(
         mSchool, on_delete=models.CASCADE, related_name="school", null=True, blank=True
     )
+    category = models.ForeignKey(
+        SectionCategory, on_delete=models.SET_NULL, null=True, blank=True
+    )
     title = models.CharField(max_length=64, blank=True)
-    img_background = models.TextField(null=True, blank=True)
+    img_icon = models.TextField(blank=True, null=True)
     sequence = models.PositiveIntegerField(null=True, blank=True)
     active = models.BooleanField(default=True, verbose_name="활성화 여부")
 
     def __str__(self):
-        return self.id_school.title + " " + self.title
+        if self.category:
+            return f"{self.id_school.title} - {self.category.name}"
+        return f"{self.id_school.title} - {self.title}"
 
 
 class mSchoolCourse(BaseModel):

@@ -8,18 +8,19 @@ import ContentPagination from "./ContentPagination.js";
 export default class PaginatedContent extends Component {
     constructor(target, props) {
         super(target, new PaginatedContentView(target), props)
-        this._props.count_per_page = 12
+        this._props.countPerPage = 12
+        this._props.pageItemsPerRow = 5
     }
 
     mounted() {
         const {filteredContents, totalPageCount, currentPage} = this
-        // console.log(totalPageCount)
+        const {countPerPage, pageItemsPerRow} = this._props
 
         const $content = this.$target.querySelector('[data-component="content"]')
         const $pagination = this.$target.querySelector('[data-component="pagination"]')
 
-        new ContentCard($content, {filteredContents, currentPage, countPerPage:this._props.count_per_page})
-        new ContentPagination($pagination, {totalPageCount, currentPage, pageClick:this.pageClickHandler})
+        new ContentCard($content, {filteredContents, currentPage, countPerPage})
+        new ContentPagination($pagination, {totalPageCount, currentPage, pageItemsPerRow, pageClick:this.pageClickHandler})
     }
 
     setEvent() {
@@ -40,7 +41,7 @@ export default class PaginatedContent extends Component {
     }
 
     get totalPageCount() {
-      return Math.ceil(this.filteredContents.length / this._props.count_per_page)
+      return Math.ceil(this.filteredContents.length / this._props.countPerPage)
     }
 
     get currentPage() {

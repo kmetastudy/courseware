@@ -4,7 +4,8 @@ export const store = {
     state: observable({
         sections: [],
         selectedCategory: 0,
-        currentPage: 1
+        currentPage: 1,
+        currentPageGroup: 0
     }),
 
     setState(newState) {
