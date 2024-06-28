@@ -294,8 +294,10 @@ input::-webkit-inner-spin-button {
     display:none;
   }
   .landingBanner {
-    margin-top: 80px;
     height: 428px
+  }
+  .headerSize {
+    margin-top: 80px;
   }
 }
 
@@ -343,8 +345,10 @@ input::-webkit-inner-spin-button {
     display:none;
   }
   .landingBanner {
-    margin-top: 64px;
     height: 295px;
+  }
+  .headerSize {
+    margin-top: 64px;
   }
 }
 
@@ -395,11 +399,13 @@ input::-webkit-inner-spin-button {
     display:block;
   }
   .landingBanner {
-    margin-top: 46px;
     height: 400px;
   }
   .thumnailMobile {
     height: 140px;
+  }
+  .headerSize {
+    margin-top: 46px;
   }
 }
 
