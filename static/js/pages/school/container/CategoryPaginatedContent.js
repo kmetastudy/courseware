@@ -23,11 +23,11 @@ export default class CategoryPaginatedContent extends Component {
       // 학교페이지 콘텐츠 카테고리
       this.addEvent('click', '.category-click', ({target}) => {
         // console.log(target.dataset.seq)
-        this.categoryClickHandler(target.dataset.seq)
+        this.categoryClickHandler(target.closest('[data-seq]').dataset.seq)
 
         let categories = document.querySelectorAll('.category-click')
-        categories.forEach((category) => category.classList.remove('text-[#3db051]', 'font-bold'))
-        target.classList.add('text-[#3db051]', 'font-bold')
+        categories.forEach((category) => category.classList.remove('text-[#3db051]', 'font-bold', 'fill-[#3db051]'))
+        target.closest('.category-click').classList.add('text-[#3db051]', 'font-bold', 'fill-[#3db051]')
       })
 
       // 코스12 콘텐츠 카테고리
