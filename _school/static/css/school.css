@@ -270,10 +270,15 @@ input::-webkit-inner-spin-button {
     display: none;
   }
   .categoryMobile {
-    display: grid;
-    grid-template-columns: repeat(8, minmax(0, 1fr));
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
     column-gap: 40px;
     font-size: 18px;
+  }
+  .landingBanner {
+    height: 428px;
   }
 }
 
@@ -281,7 +286,7 @@ input::-webkit-inner-spin-button {
 @media screen and (min-width: 744px) and (max-width: 1280px) {
   .navPC {
     display: flex;
-    height: 80px;
+    height: 64px;
     padding-left: 20px;
     padding-right: 20px;
 
@@ -307,10 +312,15 @@ input::-webkit-inner-spin-button {
     display: none;
   }
   .categoryMobile {
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
     column-gap: 20px;
     font-size: 16px;
+  }
+  .landingBanner {
+    height: 295px;
   }
 }
 
@@ -322,9 +332,13 @@ input::-webkit-inner-spin-button {
   }
   .navMobile {
     display: flex;
+    height: 46px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   .contentGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    place-items: center;
   }
   .footerPC {
     display: none;
@@ -339,11 +353,27 @@ input::-webkit-inner-spin-button {
   .noticeMobile {
     display: flex;
     flex-direction: column;
+    padding: 28px 0;
   }
   .categoryMobile {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    column-gap: 20px;
-    font-size: 16px;
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    column-gap: 28px;
+    font-size: 14px;
+
+    /* 스크롤바 안나오게 */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .categoryMobile::-webkit-scrollbar {
+    display: none;
+  }
+  .landingBanner {
+    height: 400px;
+  }
+  .thumnailMobile {
+    height: 140px;
   }
 }

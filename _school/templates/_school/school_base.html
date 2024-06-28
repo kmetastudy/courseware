@@ -39,7 +39,7 @@
   <body>
     <div id="root" class="flex flex-col items-center">
       <!-- header -->
-      <div class="navPC w-full border-b border-[#d1d1d1] justify-between items-center text-center" style="height:80px;">
+      <div class="navPC w-full border-b border-[#d1d1d1] justify-between items-center text-center">
         <img class="h-10 min-[1280px]:h-12 cursor-pointer" src="{{school_data.img_logo}}" onclick="window.location.href='/school/page/{{school_data.id}}'">
         <img class="h-12 min-[1280px]:h-14 cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}">
         <div class="flex text-[#474747] text-[18px]">
@@ -54,8 +54,8 @@
         </div>
       </div>
       <!-- 모바일 header -->
-      <div class="navMobile w-full border-b border-[#d1d1d1] justify-between items-center" style="height: 46px;padding-left: 20px;padding-right: 20px;">
-        <img class="cursor-pointer" src="{{school_data.img_logo}}" style="height: 21px;" onclick="window.location.href='/school/page/{{school_data.id}}'">
+      <div class="navMobile w-full border-b border-[#d1d1d1] justify-between items-center">
+        <img class="cursor-pointer" src="{{school_data.img_logo}}" style="height: 37px;" onclick="window.location.href='/school/page/{{school_data.id}}'">
         <!-- <img class="cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" style="width: 200px;height: 52px;"> -->
         <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="window.location='http://megatest.kr:7700/ml/'">
           <path d="M2.40039 20.5128C2.40039 16.7373 5.55468 13.6766 12.0004 13.6766C18.4461 13.6766 21.6004 16.7373 21.6004 20.5128C21.6004 21.1135 21.1622 21.6004 20.6216 21.6004H3.37921C2.83862 21.6004 2.40039 21.1135 2.40039 20.5128Z" stroke="#737373" stroke-width="2"/>
@@ -105,7 +105,7 @@
     <!-- 모바일 footer -->
     <div class="footerMobile w-full mt-20 justify-between items-center border-t border-[#3db051] text-[#999999]" style="padding:20px 0;">
       <img class="" src="{% static '/img/landing/logo_nscreen_green.png' %}" />
-      <div class="text-[12px] text-center" style="margin-top: 20px;margin-left: 20px;">
+      <div class="text-[12px] text-center">
         <p class="mt-2">상호명 (주)엔스크린  대표자 정대욱</p>
         <p class="mt-2">사업자 번호 679-81-00799</p>
         <p class="mt-2">주소 06350 서울특별시 강남구 광평로 63 3층</p>
