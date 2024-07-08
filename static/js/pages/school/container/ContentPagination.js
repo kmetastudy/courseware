@@ -58,7 +58,7 @@ export default class ContentPagination extends Component {
 
         if(this._props.endPage != this._props.totalPageCount) {
             innerHTML += `
-            <svg class="next-btn cursor-pointer" style="margin: 0 10px;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="next-btn cursor-pointer" style="margin: 0 10px;margin-bottom: -2px;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7 15L12 10L7 5" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             `

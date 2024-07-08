@@ -1,113 +1,100 @@
 {% extends '_main/base.html' %}
 {% load static %}
 {% block title %} 앞서가는 AI코스웨어 - 메가코스 {% endblock %}
-{% block extra_css %}
-<style>
-body{
-    
-    font-family: 'Noto Sans KR';
-    font-weight: normal;
-    font-style: normal;
-}
-</style>
-<link rel="icon" href="{% static 'img/logo/icon.png' %}" />
-  {% endblock %}
+
 {% block content %}
-<div class="w-full flex justify-center">
-    <div class="p-4 w-full lg:w-[1000px] flex flex-col xl:flex-row gap-4">
-        <div class="p-4 w-full xl:w-1/2 flex flex-col gap-4">
-            <h1 class="text-[30px] xl:text-[48px] break-keep">코스웨어에 대한 궁금증을 해소하세요.</h1>
-            <h3 class="text-[16px] xl:text-[24px] break-keep">메가코스를 어떻게 활용할지 함께 고민하고 도움을 드립니다.</h3>
-    
-            <div class="py-4">
-                <p class="text-[12px]">메가코스는 어떻게 구매할 수 있나요?</p>
-                <p class="text-[12px]">우리학교 예산에 맞춰 견적을 내주실 수 있나요?</p>
-                <p class="text-[12px]">맞춤형 콘텐츠 샘플을 받아볼 수 있나요?</p>
-            </div>
-    
-            <p class="text-[12px] break-keep">다음 양식을 제출해주시면 평균 1일 내에 연락드립니다.</p>
-        </div>
-    
-        <section class="email-me p-10 w-full xl:w-1/2 rounded-[30px] border shadow-lg">
-            <h2 class="title-section p-4 text-[24px] text-black bold">학교·기관 도입 문의</h2>
+<div class="contact w-full px-5 flex flex-col items-center">
+    <div class="contact__header flex flex-col items-center">
+        <img class="contact__logo" src="/static/img/landing/logo_course12.png" />
+        <div class="contact__title">코스웨어에 대한 궁금증을 해소하세요</div>
+        <div class="contact__sub_title">메가코스를 어떻게 활용할지 <br>함께 고민하고 도움을 드립니다.</div>
+        <img class="contact__img self-end" style="margin-right: -10px;" src="/static/img/landing/contact1.png"/>
+        <img class="contact__img self-start" style="margin-left: -10px;" src="/static/img/landing/contact2.png"/>
+        <img class="contact__img self-end" style="margin-right: -10px;" src="/static/img/landing/contact3.png"/>
+    </div>
+    <div class="contact__body flex flex-col">
+        <div class="self-end text-[12px] font-normal text-[#999999]" style="line-height: 18px; padding-bottom: 12px;">* 제출 시 1일 내 연락 드립니다.</div>
+        <section class="email-me rounded-[20px] border border-[#d1d1d1]" style="padding: 0 20px;">
+            <h2 class="section__title">학교·기관 도입 문의</h2>
             <form class="gform w-full" action="https://script.google.com/macros/s/AKfycbwKBId9P_5VDJUMUzvLuL1oigmiKjicjtpASF8qfX2VhImKEjI4QafMIdjxJf3Ote_7hw/exec" method="POST" data-email="kmetastudy@gmail.com">
                 <fieldset class="flex">
-                    <!-- <div>
-                        <div class="py-1 flex items-center">
-                            <input type="checkbox" id="국어" name="subject" value="국어" />
-                            <label for="국어" class="px-2 sm:px-4 text-[12px] sm:text-[16px] md:text-[20px] text-black bold">국어</label>
-                        </div>
-                        <div class="py-1 flex items-center">
-                            <input type="checkbox" id="수학" name="subject" value="수학" />
-                            <label for="수학" class="px-2 sm:px-4 text-[12px] sm:text-[16px] md:text-[20px] text-black bold">수학</label>
-                        </div>
-                        <div class="py-1 flex items-center">
-                            <input type="checkbox" id="영어" name="subject" value="영어" />
-                            <label for="영어" class="px-2 sm:px-4 text-[12px] sm:text-[16px] md:text-[20px] text-black bold">영어</label>
-                        </div>
-                        <div class="py-1 flex items-center">
-                            <input type="checkbox" id="사회" name="subject" value="사회" />
-                            <label for="사회" class="px-2 sm:px-4 text-[12px] sm:text-[16px] md:text-[20px] text-black bold">사회</label>
-                        </div>
-                        <div class="py-1 flex items-center">
-                            <input type="checkbox" id="과학" name="subject" value="과학" />
-                            <label for="과학" class="px-2 sm:px-4 text-[12px] sm:text-[16px] md:text-[20px] text-black bold">과학</label>
-                        </div>
-                        <div class="py-1 flex items-center">
-                            <input type="checkbox" id="정보" name="subject" value="정보" />
-                            <label for="정보" class="px-2 sm:px-4 text-[12px] sm:text-[16px] md:text-[20px] text-black bold">정보</label>
-                        </div>
-                        <div class="py-1 flex items-center">
-                            <input type="checkbox" id="기타" name="subject" value="기타" />
-                            <label for="기타" class="px-2 sm:px-4 text-[12px] sm:text-[16px] md:text-[20px] text-black bold">기타</label>
-                        </div>
-                    </div> -->
-                    <div class="p-4 flex flex-col w-full">
-                        <div class="box-input py-2 w-full">
-                            <label for="schoolName" class="text-[12px] sm:text-[16px] text-black bold">학교·기관명<span class="px-2 text-green-600 text-[10px]">필수</span></label>
+                    <div class="section__form flex flex-col items-center w-full">
+                        <div class="section__box">
+                            <label for="schoolName" class="box__title">학교·기관명<span class=" ml-2 text-[#ff0009]">*</span></label>
                             <div>지역명을 꼭 기재해주세요.</div>
-                            <input type="text" id="schoolName" name="school" class="text-[12px] sm:text-[16px] p-1 w-full border" placeholder="예) 서울 메가중학교" required>
+                            <input type="text" id="schoolName" name="school" class="box__input border border-[#d1d1d1]" placeholder="예) 서울 메가중학교" required>
                         </div>
-                        <div class="box-input py-2 w-full">
-                            <label for="userName" class="text-[12px] sm:text-[16px] text-black bold">성함<span class="px-2 text-green-600 text-[10px]">필수</span></label>
+                        <div class="section__box">
+                            <label for="userName" class="box__title">성함<span class=" ml-2 text-[#ff0009]">*</span></label>
                             <div></div>
-                            <input type="text" id="userName" name="name" class="text-[12px] sm:text-[16px] p-1 w-full border" placeholder="연락 받을 분의 성함을 입력해주세요." required>
+                            <input type="text" id="userName" name="name" class="box__input border border-[#d1d1d1]" placeholder="연락 받을 분의 성함을 입력해주세요." required>
                         </div>
-                        <div class="box-input py-2 w-full">
-                            <label for="userEmail" class="text-[12px] sm:text-[16px] text-black bold">이메일<span class="px-2 text-green-600 text-[10px]">필수</span></label>
+                        <div class="section__box">
+                            <label for="userEmail" class="box__title">이메일<span class=" ml-2 text-[#ff0009]">*</span></label>
                             <div></div>
-                            <input type="email" id="userEmail" name="email" class="text-[12px] sm:text-[16px] p-1 w-full border" placeholder="정확한 이메일을 입력해주세요." required>
+                            <input type="email" id="userEmail" name="email" class="box__input border border-[#d1d1d1]" placeholder="정확한 이메일을 입력해주세요." required>
                         </div>
-                        <div class="box-input py-2 w-full">
-                            <label for="userEmail" class="text-[12px] sm:text-[16px] text-black bold">전화번호<span class="px-2 text-green-600 text-[10px]">필수</span></label>
+                        <div class="section__box">
+                            <label for="userEmail" class="box__title">전화번호<span class=" ml-2 text-[#ff0009]">*</span></label>
                             <div></div>
-                            <input type="text" id="userPhone" name="phone" class="text-[12px] sm:text-[16px] p-1 w-full border" placeholder="숫자만 입력해주세요." required>
+                            <input type="text" id="userPhone" name="phone" class="box__input border border-[#d1d1d1]" placeholder="숫자만 입력해주세요." required>
                         </div>
-                        <div class="box-input py-2 w-full">
-                            <label for="userMessage" class="text-[12px] sm:text-[16px] text-black bold">Message</label>
-                            <div></div>
-                            <textarea id="userMessage" name="message" class="text-[12px] sm:text-[16px] p-1 w-full border"></textarea>
+                        <div class="section__box relative">
+                            <label for="userMessage" class="box__title">문의사항<span class=" ml-2 text-[#ff0009]">*</span></label>
+                            <textarea type="text" id="userMessage" name="message" class="box__textarea border border-[#d1d1d1]" style="margin-top: 20px; height: 373px; resize: none;" maxlength="600" placeholder="문의사항을 입력해주세요." required></textarea>
+                            <div id="counter" class="counter absolute right-0 bottom-0 text-[14px] text-[#d9d9d9] font-light text-end" style="padding: 20px;line-height: 22px;">0/600</div>
                         </div>
                         <div style="display:none" class="thankyou_message py-2  text-black text-center bold">
                             <!-- You can customize the thankyou message by editing the code below -->
                             <p>연락주셔서 감사합니다. <br>빠른 시일 내에 답변 드리겠습니다</p>
                             
                         </div>
-                        <div class="box-input pt-6">
-                            <button type="submit" class="btn-send px-4 py-1.5 rounded-[30px] drop-shadow-lg border-2 border-black bg-white text-black text-[14px] md:text-[18px] bold text-center hover:bg-[#E0DCEC] hover:text-white]">제출하기</button>
-                        </div>
+                        <button type="submit" class="section__button">제출하기</button>
                     </div>
                 </fieldset>
                 
             </form>
-          </section>
-        
+         </section>
     </div>
 </div>
 {% endblock %}
-
+ 
 {% block extra-script %}
 <script data-cfasync="false" type="text/javascript"
 src="https://cdn.rawgit.com/dwyl/html-form-send-email-via-google-script-without-server/master/form-submission-handler.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function checkScreenWidth() {
+            let imgElement = document.querySelectorAll('.contact__img');
+            imgElement.forEach((element, index) => {
+                if (window.innerWidth < 744) {
+                    element.src = `/static/img/landing/contact${index+1}_mobile.png`;
+                } else {
+                    element.src = `/static/img/landing/contact${index+1}.png`;
+                }
+            })
+        }
+
+        // 초기 체크
+        checkScreenWidth();
+
+        // 창 크기 변경 시 체크
+        window.addEventListener('resize', checkScreenWidth);
+
+        const textarea = document.getElementById('userMessage');
+        const counter = document.getElementById('counter');
+        const maxLength = 600;
+    
+        textarea.addEventListener('input', () => {
+            const textLength = textarea.value.length;
+    
+            if (textLength > maxLength) {
+                textarea.value = textarea.value.substring(0, maxLength);
+            }
+    
+            counter.textContent = `${textarea.value.length}/${maxLength}`;
+        });
+    })
+</script>
 {% endblock %}
