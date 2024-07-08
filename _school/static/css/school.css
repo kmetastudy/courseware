@@ -23,6 +23,7 @@ body {
   font-family: "Noto Sans KR", sans-serif;
   max-width: 100%;
   overflow-x: hidden;
+  word-break: keep-all;
 }
 
 .page1 {
@@ -209,6 +210,7 @@ input::-webkit-inner-spin-button {
   border-color: #d1d1d1;
   cursor:default;
   font-weight: 300;
+  outline:none;
 }
 
 /* .abtn ul li:hover{
@@ -250,6 +252,9 @@ input::-webkit-inner-spin-button {
 
     font-size: 18px;
   }
+  .navTablet {
+    display: none;
+  }
   .navMobile {
     display: none;
   }
@@ -265,6 +270,9 @@ input::-webkit-inner-spin-button {
   }
   .noticePC {
     display: block;
+  }
+  .noticeTablet {
+    display: none;
   }
   .noticeMobile {
     display: none;
@@ -285,8 +293,11 @@ input::-webkit-inner-spin-button {
 /* 태블릿 */
 @media screen and (min-width: 744px) and (max-width: 1280px) {
   .navPC {
+    display: none;
+  }
+  .navTablet {
     display: flex;
-    height: 64px;
+    height: 60px;
     padding-left: 20px;
     padding-right: 20px;
 
@@ -306,7 +317,11 @@ input::-webkit-inner-spin-button {
     display: none;
   }
   .noticePC {
+    display: none;
+  }
+  .noticeTablet {
     display: block;
+    padding: 40px 20px
   }
   .noticeMobile {
     display: none;
@@ -320,7 +335,7 @@ input::-webkit-inner-spin-button {
     font-size: 16px;
   }
   .landingBanner {
-    height: 295px;
+    height: 330px;
   }
 }
 
@@ -330,11 +345,14 @@ input::-webkit-inner-spin-button {
   .navPC {
     display: none;
   }
+  .navTablet {
+    display: none;
+  }
   .navMobile {
     display: flex;
     height: 46px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
   .contentGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -348,6 +366,9 @@ input::-webkit-inner-spin-button {
     flex-direction: column;
   }
   .noticePC {
+    display: none;
+  }
+  .noticeTablet {
     display: none;
   }
   .noticeMobile {

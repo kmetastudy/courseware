@@ -11,7 +11,6 @@ urlpatterns = [
     path("courses/<str:school>/<str:subject>/", mainView, name="mainView"),
     path("courses/<str:id>/", detailView, name="detailView"),
     path("chapter/", detail_chapter, name="detail_chapter"),
-    path("basic/<str:school_id>/", basic_landing, name="basic_landing"),
     # path("cart/", cart_detail, name="cart_detail"),
     # path("cart/<str:course_pk>/add/", add_to_cart, name="add_to_cart"),
     # path("point/history/", point_history, name="point_history"),
