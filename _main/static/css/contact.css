@@ -40,7 +40,8 @@
   
       line-height: 34px;
       font-size: 24px;
-      font-weight: 700px;
+      font-weight: 700;
+      color: #474747;
     }
     .section__form {
       padding-top: 20px;
@@ -59,11 +60,16 @@
       width: 100%;
       margin-top: 12px;
       padding: 14px 20px;
+
+      border: solid 1px #d1d1d1;
   
       line-height: 20px;
       font-size: 14px;
       font-weight: 400;
       color: #474747;
+    }
+    .box__input:focus {
+      outline: solid 1px #3db051;
     }
     .box__input::placeholder {
       font-weight: 300;
@@ -73,11 +79,16 @@
       width: 100%;
       margin-top: 20px;
       padding: 20px;
+
+      border: solid 1px #d1d1d1;
   
       line-height: 20px;
       font-size: 14px;
       font-weight: 400;
       color: #474747;
+    }
+    .box__textarea:focus {
+      outline: solid 1px #3db051;
     }
     .box__textarea::placeholder {
       font-weight: 300;
@@ -147,7 +158,8 @@
   
       line-height: 28px;
       font-size: 20px;
-      font-weight: 700px;
+      font-weight: 700;
+      color: #474747;
     }
     .section__form {
       padding-top: 20px;
@@ -166,11 +178,16 @@
       width: 100%;
       margin-top: 12px;
       padding: 14px 20px;
+
+      border: solid 1px #d1d1d1;
   
       line-height: 20px;
       font-size: 14px;
       font-weight: 400;
       color: #474747;
+    }
+    .box__input:focus {
+      outline: solid 1px #3db051;
     }
     .box__input::placeholder {
       font-weight: 300;
@@ -180,11 +197,16 @@
       width: 100%;
       margin-top: 20px;
       padding: 20px;
+
+      border: solid 1px #d1d1d1;
   
       line-height: 20px;
       font-size: 14px;
       font-weight: 400;
       color: #474747;
+    }
+    .box__textarea:focus {
+      outline: solid 1px #3db051;
     }
     .box__textarea::placeholder {
       font-weight: 300;
@@ -253,7 +275,8 @@
   
       line-height: 24px;
       font-size: 17px;
-      font-weight: 700px;
+      font-weight: 700;
+      color: #474747;
     }
     .section__form {
       padding-top: 8px;
@@ -272,11 +295,17 @@
       width: 100%;
       margin-top: 12px;
       padding: 11px 12px;
+
+      border: solid 1px #d1d1d1;
+
   
       line-height: 20px;
       font-size: 14px;
       font-weight: 400;
       color: #474747;
+    }
+    .box__input:focus {
+      outline: solid 1px #3db051;
     }
     .box__input::placeholder {
       font-weight: 300;
@@ -286,11 +315,16 @@
       width: 100%;
       margin-top: 20px;
       padding: 20px 12px;
+
+      border: solid 1px #d1d1d1;
   
       line-height: 20px;
       font-size: 14px;
       font-weight: 400;
       color: #474747;
+    }
+    .box__textarea:focus {
+      outline: solid 1px #3db051;
     }
     .box__textarea::placeholder {
       font-weight: 300;

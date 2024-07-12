@@ -23,7 +23,7 @@ export default class ContentCardView extends View {
             ${contents.map((content) => {
                 return `
                     <div class="cursor-pointer" onclick="window.location='${startURL}/courses/${content.course.courseId}'">
-                        <img class="thumnailMobile rounded-[8px]" src="/static/img/thumnail/${content.course.thumnail}.png">
+                        <img class="thumnailMobile rounded-[8px] border border-[#d1d1d1]" src="/static/img/thumnail/${content.course.thumnail}.png">
                         <div class="text-[14px] text-[#474747] break-keep" style="padding-top: 20px; height:62px;">${content.course.courseTitle}</div>
                     </div>
                 `

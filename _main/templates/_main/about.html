@@ -8,7 +8,7 @@
 {% block content %}
 <div class="w-full px-5 min-[1280px]:px-[85px] flex flex-col items-center text-[#474747]">
     <img class="cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" style="margin-top: 80px;height: 60px;"onclick="window.location.href='/'">
-    <div class="flex justify-between px-5 font-normal text-[18px] text-center" style="margin: 40px 0;">
+    <div class="flex justify-between px-5 font-normal text-[18px] text-center" style="margin-top: 40px; margin-bottom: 80px;">
         <div class="category rounded-full px-2 py-1 bg-[#3db051] font-bold text-white cursor-pointer" data-category="notice">공지사항</div>
         <div class="category rounded-full ml-8 px-2 py-1 cursor-pointer" data-category="faq">FAQ</div>
         <div class="category rounded-full ml-8 px-2 py-1 cursor-pointer" data-category="news">코스 NEWS</div>
@@ -20,7 +20,7 @@
             <table class="w-full" style="padding: 0 85px;">
                 <thead class="w-full text-center">
                     <tr class="border-b border-t border-[#d1d1d1]">
-                        <th style="width: 149px;padding:10px 20px;">번호</th>
+                        <th style="width: 140px;padding:10px 20px;">번호</th>
                         <th style="padding:10px 20px;">제목</th>
                         <th style="width: 165px;padding:10px 20px;">등록일자</th>
                     </tr>
@@ -34,13 +34,13 @@
                     </tr>
                     <tr class="panel" style="display: none;">
                         <td colspan="3" style="border: 1px solid #d1d1d1;">
-                            <p style="padding: 40px 20px; line-height: 30px;">{{notice.content}}</p>
+                            <div class="flex flex-col">
+                                <p style="padding: 40px 20px; line-height: 30px;">{{notice.content}}</p>
+                                <div class="self-end text-[20px] font-medium text-[#737373] cursor-pointer" style="width: 165px; text-align: center;padding:30px 20px;">닫기</div>
+                            </div>
                             <div class="flex items-center border-t border-[#d1d1d1]">
                                 <p class="border-r border-[#d1d1d1] text-center" style="width:140px; padding:10px 20px;">파일</p>
                                 <div class="flex-1"></div>
-                                <svg class="accordion-close cursor-pointer" width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 19L17.0008 14.42L22 19" stroke="#0A090B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
                             </div>
                         </td>
                     </tr>

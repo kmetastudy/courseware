@@ -35,18 +35,27 @@ export default class ContentPagination extends Component {
     renderPagination() {
         const pagination = document.getElementById('pagination')
 
-        let innerHTML = ``
+        this._props.startPage = this._props.currentGroup * this._props.pageItemsPerRow + 1
+        this._props.endPage = Math.min(this._props.startPage + this._props.pageItemsPerRow - 1, this._props.totalPageCount)
 
-        if(this._props.currentGroup != 0) {
+        let innerHTML = ``
+        if(this._props.totalPageCount <= this._props.pageItemsPerRow) {
+            innerHTML += ``
+        }
+        else if(this._props.currentGroup == 0) {
+            innerHTML += `
+            <svg class="prev-btn cursor-pointer" style="margin: 0 10px; margin-top:2px;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13 15L8 10L13 5" stroke="#c2c2c2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            `
+        }
+        else if(this._props.currentGroup != 0) {
             innerHTML += `
             <svg class="prev-btn cursor-pointer" style="margin: 0 10px; margin-top:2px;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M13 15L8 10L13 5" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             `
         }
-
-        this._props.startPage = this._props.currentGroup * this._props.pageItemsPerRow + 1
-        this._props.endPage = Math.min(this._props.startPage + this._props.pageItemsPerRow - 1, this._props.totalPageCount)
 
         for(let i = this._props.startPage; i <= this._props.endPage; i++) {
             if(i == this._props.currentPage) {
