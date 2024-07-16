@@ -31,15 +31,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="{% static '_bundle/school/school-bundle-20240629.css' %}" />
-    <script type="text/javascript" src="{% static '_bundle/school/school-bundle-20240629.js' %}"></script>
+    <link rel="stylesheet" href="{% static '_bundle/school/school-bundle-20240716.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/school/school-bundle-20240716.js' %}"></script>
     {% block css %} {% endblock %}
   </head>
 
   <body>
     <div class="nav">
       <div class="navigation">
-        <img class="nav__logo" src="{% static '/img/landing/logo_course12.png' %}" />
+        <img class="nav__logo" src="{% static '/img/landing/logo_basic.png' %}" />
         <div class="nav__body">
           <div class="nav__menu">
             <div class="nav__item" onclick="window.location.href='/contact/'">문의하기</div>
@@ -63,9 +63,9 @@
         </div>
       </div>
   
-      <div class="dropdown__menu shadow-md">
+      <div class="dropdown__menu shadow-md ">
         <div class="dropdown__header">
-          <img class="dropdown__logo" src="{% static '/img/landing/logo_course12.png' %}" />
+          <img class="dropdown__logo" src="{% static '/img/landing/logo_course12.png' %}" onclick="window.location.href='/'"/>
           <svg class="dropdown__close" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M25.5 8.88623L8.5 25.8862M25.5 25.8862L8.5 8.88623" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
           </svg>
@@ -123,7 +123,7 @@
 
     <!-- 모바일 header -->
     <div class="navMobile border-b border-[#d1d1d1] justify-between items-center">
-      <img class="navLogoImg cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" onclick="window.location.href='/'">
+      <img class="navLogoImg cursor-pointer" src="{% static '/img/landing/logo_basic.png' %}" onclick="window.location.href='/'">
       <div class="flex text-[13px]">
         <div class="flex font-normal text-[#474747]">
           <div id="" class="flex items-center" onclick="window.location.href='/contact/'">

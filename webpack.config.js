@@ -104,14 +104,14 @@ var configSTSchool = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/st_school"),
     library: "stSchoollibrary",
-    filename: "st-school-bundle-20240629.js",
+    filename: "st-school-bundle-20240716.js",
     libraryTarget: "var",
     clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "st-school-bundle-20240629.css",
+      filename: "st-school-bundle-20240716.css",
     }),
   ],
 });
@@ -125,14 +125,14 @@ var configSchool = Object.assign({}, config, {
   output: {
     path: path.resolve(__dirname, "static/_bundle/school"),
     library: "schoollibrary",
-    filename: "school-bundle-20240629.js",
+    filename: "school-bundle-20240716.js",
     libraryTarget: "var",
     clean: true,
     // assetModuleFilename: '[name][ext]',
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "school-bundle-20240629.css",
+      filename: "school-bundle-20240716.css",
     }),
   ],
   module: tailwindModuleConfig,
