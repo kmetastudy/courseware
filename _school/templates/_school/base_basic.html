@@ -31,15 +31,15 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="{% static '_bundle/school/school-bundle-20240716.css' %}" />
-    <script type="text/javascript" src="{% static '_bundle/school/school-bundle-20240716.js' %}"></script>
+    <link rel="stylesheet" href="{% static '_bundle/school/school-bundle-20240617.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/school/school-bundle-20240617.js' %}"></script>
     {% block css %} {% endblock %}
   </head>
 
   <body>
     <div class="nav">
       <div class="navigation">
-        <img class="nav__logo" src="{% static '/img/landing/logo_basic.png' %}" />
+        <img class="nav__logo" src="{% static '/img/landing/logo_basic.png' %}" onclick="window.location.href='/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/'"/>
         <div class="nav__body">
           <div class="nav__menu">
             <div class="nav__item" onclick="window.location.href='/contact/'">문의하기</div>
@@ -63,7 +63,7 @@
         </div>
       </div>
   
-      <div class="dropdown__menu shadow-md ">
+      <div class="dropdown__menu shadow-md z-10">
         <div class="dropdown__header">
           <img class="dropdown__logo" src="{% static '/img/landing/logo_course12.png' %}" onclick="window.location.href='/'"/>
           <svg class="dropdown__close" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -263,9 +263,35 @@
 
   <script>
     var context = JSON.parse("{{ context|escapejs }}");
-    // window.addEventListener("DOMContentLoaded", function () {
-    //   console.log("mainlibrary: ", mainlibrary);
-    // });
+    const csrftoken = "{{csrf_token}}";
+    const token = getCookie("csrftoken");
+    const defaultAxiosConfig = {
+      headers: { "X-CSRFTOKEN": token },
+    };
+
+    axios.defaults.headers = defaultAxiosConfig.headers;
+      axios.defaults.withCredentials = true;
+
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+              break;
+            }
+          }
+        }
+        console.log("token : ", cookieValue);
+        return cookieValue;
+      }
+
+    window.addEventListener("DOMContentLoaded", function () {
+      
+    });
 
     // 드롭다운 메뉴 토글 기능
     document.querySelector('.nav__hamburger').addEventListener('click', () => {

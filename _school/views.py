@@ -89,6 +89,33 @@ def school_detailView(request, school_id, id):
 
 
 @jwt_login_required
+def basic_detailView(request, school_id, id):
+    context_sample = make_context(request)
+
+    school = mSchool.objects.filter(id=school_id)[0]
+    school_data = SchoolSerializer(school).data
+
+    try:
+        course = mSchoolCourse.objects.filter(id=id)[0]
+
+    except:
+        origin_course = courseDetail.objects.filter(courseId=id)[0]
+        course = mSchoolCourse.objects.filter(course=origin_course)[0]
+
+    course_data = CourseSerializer(course).data
+    modified_course = course_data["course"]
+    print(json.dumps(modified_course))
+    # detail_context = json.dumps(list(courses), default=str)
+
+    context = {
+        "context": json.dumps(context_sample),
+        "options": json.dumps(modified_course, default=str),
+        "school_data": school_data,
+    }
+    return render(request, "_school/basic_detail.html", context)
+
+
+@jwt_login_required
 def school_st(request, school_id):
     course_id = request.GET.get("course_id")
     content_id = request.GET.get("content_id")
