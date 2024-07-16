@@ -1,6 +1,7 @@
 require("../../../static/css/css-reset.css");
 require("../css/main.css");
 require("../css/contact.css");
+require("../css/about.css");
 // require("../css/tailwind.css");
 import("../css/tailwind.css");
 
@@ -108,24 +109,6 @@ function getCookie(name) {
   return cookieValue;
 }
 
-export function BasicLandingOnReady(context, sections) {
-  console.log(context);
-  console.log(sections);
-
-  const courses = []
-  sections.forEach((section) => {
-      section.courses.forEach((course) => {
-          courses.push(course.course)
-      })
-  })
-
-  console.log(courses)
-
-  new HighlightCourse(document.querySelector(".courses_recomend"), {sections})
-
-  var clCourseView = new CourseView(courses);
-  $(".courses_landing").append(clCourseView.elThis);
-}
 
 export function MyCourseOnReady(context) {
   const sideItems = [
@@ -150,4 +133,8 @@ export function MyCourseOnReady(context) {
   const elSide = clSide.getElement();
 
   $(".sidebar").append(elSide);
+}
+
+export function CourseAboutOnReady(context) {
+
 }

@@ -1,0 +1,166 @@
+{% extends "_main/base.html" %}
+{% load static %}
+{% block css %}
+
+{% endblock %}
+{% block content %}
+<div class="about w-full flex flex-col items-center">
+    <img class="about__logo" src="{% static '/img/landing/logo_course12.png' %}" />
+    <div class="about__search">
+        <input type="text" id="searchInput" placeholder="궁금한 사항을 검색하세요" />
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25.3907 25.5604L30.6004 30.6004M28.9204 17.1604C28.9204 23.6553 23.6553 28.9204 17.1604 28.9204C10.6655 28.9204 5.40039 23.6553 5.40039 17.1604C5.40039 10.6655 10.6655 5.40039 17.1604 5.40039C23.6553 5.40039 28.9204 10.6655 28.9204 17.1604Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </div>
+    <div class="about__category">
+        <!-- <div class="category__item category__item-active" data-filter="contact">문의하기</div> -->
+        <div onclick="window.location.href='/about/'" class="category__item" data-filter="notice">공지사항</div>
+        <div onclick="window.location.href='/faq/'" class="category__item category__item-active" data-filter="faq">FAQ</div>
+        <div onclick="window.location.href='/news/'" class="category__item" data-filter="news">코스 NEWS</div>
+    </div>
+    <div class="about__content">
+
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block extra-script %}
+<script>
+    function displayBoardTableAccordion(contents) {
+        if (window.innerWidth < 744) {
+            return `
+                <div>
+                    ${contents.map((content, index, arr) => {
+                            return `
+                                <div class="accordion">
+                                    <div class="accordion__main">
+                                        <div class="flex justify-between items-center">
+                                            <p>${content.created_at}</p>
+                                            <svg class="ml-3 -mb-0.5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 10L12.0008 14.58L17 10" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </div>
+                                        <p class="main__title pt-5">${content.question}</p>
+                                    </div>
+                                    <div class="accordion__panel" style="display: none;">
+                                        <p class="pt-5">${content.answer}</p>
+                                    </div>
+                                </div>
+
+                            `
+                        }).join('')}
+                </div>
+            `
+        } else {
+            return `
+                <div class="content__table">
+                    <div class="table__head">
+                        <div class="table-col1">번호</div>
+                        <div class="table-col2" style="text-align: center;">제목</div>
+                        <div class="table-col3">등록일자</div>
+                    </div>
+                    <div class="table__body">
+                        ${contents.map((content, index, arr) => {
+                            return `
+                                <div class="accordion">
+                                    <div class="accordion__main">
+                                        <div class="table-col1" style="font-weight: 300;">${arr.length-index}</div>
+                                        <div class="table-col2 main__title">${content.title || content.question}</div>
+                                        <div class="table-col3" style="font-weight: 300;">${content.created_at}</div>
+                                    </div>
+                                    <div class="accordion__panel" style="display: none;">
+                                        <div class="panel__content">
+                                            <div>${content.content || content.answer}</div>
+                                            <div class="panel__close table-col3" style="margin-top: 40px; align-self: flex-end; font-weight: 500; cursor: pointer;">닫기</div>
+                                        </div>
+                                        <div class="panel__file ${content.attachment?'block':'hidden'}">
+                                            <div class="table-col1" style="padding: 10px 0; border-right: 1px solid #d1d1d1;">파일</div>
+                                            <div style="display: flex; align-items: center">
+                                                <div>${content.attachment}</div>
+                                                <img style="width: 30px; height: 30px;" src="/static/img/landing/icon_file.png" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            `
+                        }).join('')}
+                    </div>
+                </div>
+            `
+        }
+    }
+
+    function filterContents(contents) {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filteredContents = contents.filter(content => 
+            content.question.toLowerCase().includes(query) || 
+            content.answer.toLowerCase().includes(query)
+        );
+
+        const $content = document.querySelector('.about__content')
+        $content.innerHTML = displayBoardTableAccordion(filteredContents)
+    }
+
+    window.addEventListener("DOMContentLoaded", function () {
+        const faqs = JSON.parse("{{faqs|escapejs}}");
+
+        const $content = document.querySelector('.about__content')
+        $content.innerHTML = displayBoardTableAccordion(faqs)
+
+        var accordion = document.querySelectorAll(".accordion__main");
+        for (var i = 0; i < accordion.length; i++) {
+            accordion[i].addEventListener("click", function() {
+            this.classList.toggle("accordion__main-active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+
+            var title = this.querySelector('.main__title')
+                if (title.style.fontWeight === "400" || title.style.fontWeight === '') {
+                    title.style.fontWeight = "700"
+            } else {
+                title.style.fontWeight = "400"
+            }
+            });
+        }
+
+        var accordion_close = document.querySelectorAll(".panel__close")
+        accordion_close.forEach(close => {
+            close.addEventListener('click', function() {
+                var panel = this.closest('.accordion__panel')
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+
+                var title = this.closest('.accordion').querySelector('.main__title')
+                if (title.style.fontWeight === "400" || title.style.fontWeight === '') {
+                    title.style.fontWeight = "700"
+                } else {
+                    title.style.fontWeight = "400"
+                }
+            })
+        })
+
+        const searchInput = document.querySelector('#searchInput')
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                filterContents(faqs)
+            }
+        })
+
+        const searchBtn = document.querySelector('.about__search svg')
+        searchBtn.addEventListener('click', function(event) {
+            filterContents(faqs)
+        })
+
+    });
+</script>
+{% endblock %}

@@ -140,11 +140,11 @@ def basic_landing(request, school_id):
 
     bannerBG = ""
     if school_id == "8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c":
-        bannerBG = "banner2"
+        bannerBG = "basic_element"
     elif school_id == "cbb29b29-9f01-4024-9aac-15e382e3edb2":
-        bannerBG = "banner3"
+        bannerBG = "basic_middle"
     else:
-        bannerBG = "banner4"
+        bannerBG = "basic_high"
 
     context = {
         "context": json.dumps(context_sample),
@@ -154,7 +154,6 @@ def basic_landing(request, school_id):
         "schoolLogo": school_logo,
         "schoolBanner": school_banner,
         "bannerBG": bannerBG,
-        "notices": school_notice,
     }
 
     return render(request, "_school/landing_basic.html", context)

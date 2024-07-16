@@ -1,4 +1,5 @@
 require("../css/school.css");
+require("../css/nav.css");
 import("../css/tailwind.css");
 
 import { CourseView } from "../../../static/js/pages/main/course/mtv-course";

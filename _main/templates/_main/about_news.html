@@ -1,0 +1,181 @@
+{% extends "_main/base.html" %}
+{% load static %}
+{% block css %}
+
+{% endblock %}
+{% block content %}
+<div class="about w-full flex flex-col items-center">
+    <img class="about__logo" src="{% static '/img/landing/logo_course12.png' %}" />
+    <div class="about__search">
+        <input type="text" id="searchInput" placeholder="궁금한 사항을 검색하세요" />
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25.3907 25.5604L30.6004 30.6004M28.9204 17.1604C28.9204 23.6553 23.6553 28.9204 17.1604 28.9204C10.6655 28.9204 5.40039 23.6553 5.40039 17.1604C5.40039 10.6655 10.6655 5.40039 17.1604 5.40039C23.6553 5.40039 28.9204 10.6655 28.9204 17.1604Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </div>
+    <div class="about__category">
+        <!-- <div class="category__item category__item-active" data-filter="contact">문의하기</div> -->
+        <div onclick="window.location.href='/about/'" class="category__item" data-filter="notice">공지사항</div>
+        <div onclick="window.location.href='/faq/'" class="category__item" data-filter="faq">FAQ</div>
+        <div onclick="window.location.href='/news/'" class="category__item category__item-active" data-filter="news">코스 NEWS</div>
+    </div>
+    <div class="about__content">
+        <div id="content__news" class="content__item"></div>
+        <div id="content__news__panel" class="content__item" style="display: none;"></div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+{% block extra-script %}
+<script>
+    function displayBoardCard(contents) {
+        if (window.innerWidth < 744) {
+            return `
+                <div>
+                    ${contents.map((content, index, arr) => {
+                            return `
+                                <div class="accordion">
+                                    <div class="accordion__main">
+                                        <div class="flex justify-between items-center">
+                                            <p>${content.created_at}</p>
+                                            <svg class="ml-3 -mb-0.5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7 10L12.0008 14.58L17 10" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                            </svg>
+                                        </div>
+                                        <p class="main__title pt-5">${content.title}</p>
+                                    </div>
+                                    <div class="accordion__panel" style="display: none;">
+                                        <p class="pt-5"><img class="w-full h-full" style="object-fit: cover;" src="${content.attachment}" /></p>
+                                        <p class="pt-5 break-keep" style="line-height: 28px;white-space: pre-wrap;">${content.content}</p>
+                                    </div>
+                                </div>
+
+                            `
+                        }).join('')}
+                </div>
+            `
+        } else {
+            return `
+                <div class="content__card">
+                    ${contents.map((content, index) => {
+                        return `
+                        <div data-seq="${index}" class="card__main grid grid-cols-4">
+                            <img class="card__img" src="${content.attachment}" />
+                            <div class="card__body col-span-3">
+                                <p class="" style="font-weight: 500;">${content.created_at}</p>
+                                <p class="truncate" style="font-weight: 700;">${content.title}</p>
+                                <p class="" style="font-weight: 500;">${content.content.slice(0,80)+'...'}</p>
+                            </div>
+                        </div>
+                        `
+
+                    }).join('')}
+                </div>
+            `
+        }
+    }
+
+    function filterContents(contents) {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filteredContents = contents.filter(content => 
+            content.title.toLowerCase().includes(query) || 
+            content.content.toLowerCase().includes(query)
+        );
+
+        const $content = document.querySelector('#content__news')
+        $content.innerHTML = displayBoardCard(filteredContents)
+    }
+
+    window.addEventListener("DOMContentLoaded", function () {
+        const posts = JSON.parse("{{posts|escapejs}}");
+
+        const $content = document.querySelector('#content__news')
+        $content.innerHTML = displayBoardCard(posts)
+
+        var accordion = document.querySelectorAll(".accordion__main");
+        for (var i = 0; i < accordion.length; i++) {
+            accordion[i].addEventListener("click", function() {
+            this.classList.toggle("accordion__main-active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+
+            var title = this.querySelector('.main__title')
+                if (title.style.fontWeight === "400" || title.style.fontWeight === '') {
+                    title.style.fontWeight = "700"
+            } else {
+                title.style.fontWeight = "400"
+            }
+            });
+        }
+
+        var accordion_close = document.querySelectorAll(".panel__close")
+        accordion_close.forEach(close => {
+            close.addEventListener('click', function() {
+                var panel = this.closest('.accordion__panel')
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            })
+        })
+
+        const cardContents = document.querySelectorAll('.card__main')
+        cardContents.forEach(card => {
+            card.addEventListener('click', function(event) {
+                event.preventDefault()
+
+                let seq = this.getAttribute('data-seq')
+
+                const $contentNewsPanel = document.querySelector('#content__news__panel')
+                $contentNewsPanel.innerHTML = `
+                    <div class="card__panel">
+                        <div class="flex flex-col items-center text-center">
+                            <div class="w-fit text-[#474747] text-[16px] p-10 flex">
+                                <p class="px-10 font-normal">보도자료</p>
+                                <p class="border-r"></p>
+                                <p class="px-10 font-normal">${posts[seq].created_at}</p>
+                                </div>
+                            <p class="font-bold text-[20px]" style="padding-bottom:40px;">${posts[seq].title}</p>
+                            <img class="w-full min-h-[410px]" style="padding-bottom:40px;" src="${posts[seq].attachment}" />
+                            <p class="break-keep" style="font-weight:400; line-height: 24px; white-space: pre-wrap;">${posts[seq].content}</p>
+                            <div class="card__close px-8 py-2 rounded-full text-white font-bold cursor-pointer" style="margin-top:40px;background-color: #555;">목록보기</div>
+                        </div>
+                    </div>
+                `
+
+                const contentItems = document.querySelectorAll('.content__item')
+                contentItems.forEach(content => {
+                    content.style.display = "none"
+                })
+                document.querySelector(`#content__news__panel`).style.display = "block"
+
+                const cardClose = document.querySelector('.card__close')
+                cardClose.addEventListener('click', function() {
+                    document.querySelector(`#content__news__panel`).style.display = "none"
+                    document.querySelector(`#content__news`).style.display = "block"
+                })
+
+            })
+        })
+
+        const searchInput = document.querySelector('#searchInput')
+        searchInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                filterContents(posts)
+            }
+        })
+
+        const searchBtn = document.querySelector('.about__search svg')
+        searchBtn.addEventListener('click', function(event) {
+            filterContents(posts)
+        })
+
+    });
+</script>
+{% endblock %}
