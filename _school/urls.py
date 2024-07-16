@@ -15,8 +15,8 @@ urlpatterns = [
     path("basic/<str:school_id>/", basic_landing, name="basic_landing"),
     path(
         "basic/<str:school_id>/courses/<str:id>/",
-        school_detailView,
-        name="school_detailView",
+        basic_detailView,
+        name="basic_detailView",
     ),
     path("basic/<str:school_id>/st/", school_st, name="schoolST"),
 ]
