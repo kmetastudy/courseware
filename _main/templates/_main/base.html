@@ -54,11 +54,11 @@
           <div id="middle" class="hover:text-[#474747] cursor-pointer" onclick="window.location.href='/courses/middle/all/'">중등과정</div>
           <div id="high" class="hover:text-[#474747] cursor-pointer" onclick="window.location.href='/courses/high/all/'">고등과정</div>
         </div>
-        <div class="ml-20 grid grid-cols-2" style="column-gap: 40px;">
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div class="ml-20 grid grid-cols-2 cursor-pointer" style="column-gap: 40px;">
+          <svg width="34" height="34" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M25.3907 25.5604L30.6004 30.6004M28.9204 17.1604C28.9204 23.6553 23.6553 28.9204 17.1604 28.9204C10.6655 28.9204 5.40039 23.6553 5.40039 17.1604C5.40039 10.6655 10.6655 5.40039 17.1604 5.40039C23.6553 5.40039 28.9204 10.6655 28.9204 17.1604Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
           </svg>
-          <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg class="cursor-pointer" width="34" height="34" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="window.location.href='/user/'">
             <path d="M3.59961 30.7682C3.59961 25.1049 8.33104 20.5139 17.9996 20.5139C27.6682 20.5139 32.3996 25.1049 32.3996 30.7682C32.3996 31.6692 31.7423 32.3996 30.9314 32.3996H5.06784C4.25696 32.3996 3.59961 31.6692 3.59961 30.7682Z" stroke="#737373" stroke-width="2"/>
             <path d="M23.3996 8.99961C23.3996 11.9819 20.9819 14.3996 17.9996 14.3996C15.0173 14.3996 12.5996 11.9819 12.5996 8.99961C12.5996 6.01727 15.0173 3.59961 17.9996 3.59961C20.9819 3.59961 23.3996 6.01727 23.3996 8.99961Z" stroke="#737373" stroke-width="2"/>
           </svg>  
@@ -74,20 +74,21 @@
           <div id="" class="flex items-center" onclick="window.location.href='/contact/'">
             <p class="hover:text-[#474747] text-[16px] cursor-pointer">문의하기</p>
           </div>
+          
           <div class="pl-10">
-            <svg width="24" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M3.05859 20.5128C3.05859 16.7373 6.21288 13.6766 12.6586 13.6766C19.1043 13.6766 22.2586 16.7373 22.2586 20.5128C22.2586 21.1135 21.8204 21.6004 21.2798 21.6004H4.03742C3.49683 21.6004 3.05859 21.1135 3.05859 20.5128Z" stroke="#737373" stroke-width="2"/>
-              <path d="M16.2586 6.00039C16.2586 7.98862 14.6468 9.60039 12.6586 9.60039C10.6704 9.60039 9.05859 7.98862 9.05859 6.00039C9.05859 4.01217 10.6704 2.40039 12.6586 2.40039C14.6468 2.40039 16.2586 4.01217 16.2586 6.00039Z" stroke="#737373" stroke-width="2"/>
-            </svg>              
-          </div>
-          <div class="pl-5">
-            <svg width="24" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg id="hamburger-btn" class="hamburger-btn" width="24" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M20.6582 18H4.6582M20.6582 12H4.6582M20.6582 6H4.6582" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
             </svg>
           </div>
           <div class="pl-5">
-            <svg width="24" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M17.5847 17.0396L21.0578 20.3996M19.9378 11.4396C19.9378 15.7695 16.4277 19.2796 12.0978 19.2796C7.7679 19.2796 4.25781 15.7695 4.25781 11.4396C4.25781 7.1097 7.7679 3.59961 12.0978 3.59961C16.4277 3.59961 19.9378 7.1097 19.9378 11.4396Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+            </svg>              
+          </div>
+          <div class="pl-5">
+            <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="window.location.href='/user/'">
+              <path d="M3.05859 20.5128C3.05859 16.7373 6.21288 13.6766 12.6586 13.6766C19.1043 13.6766 22.2586 16.7373 22.2586 20.5128C22.2586 21.1135 21.8204 21.6004 21.2798 21.6004H4.03742C3.49683 21.6004 3.05859 21.1135 3.05859 20.5128Z" stroke="#737373" stroke-width="2"/>
+              <path d="M16.2586 6.00039C16.2586 7.98862 14.6468 9.60039 12.6586 9.60039C10.6704 9.60039 9.05859 7.98862 9.05859 6.00039C9.05859 4.01217 10.6704 2.40039 12.6586 2.40039C14.6468 2.40039 16.2586 4.01217 16.2586 6.00039Z" stroke="#737373" stroke-width="2"/>
             </svg>              
           </div>
         </div>

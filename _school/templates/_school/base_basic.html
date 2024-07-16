@@ -36,128 +36,225 @@
     {% block css %} {% endblock %}
   </head>
 
-  <body class="h-full">
-    <div id="root" class="flex flex-col items-center">
-      <!-- navigation -->
-      <div class="z-20 sticky top-0 w-full h-[64px] flex justify-center bg-white shadow">
-        <nav class="pl-2 pr-2 grid grid-cols-3 justify-items-center items-center w-full h-[64px] lg:w-2/3">
-          <div class="mtm-nav-logo lg:justify-self-start">
-            {% if schoolLogo %}
-            <img class="cursor-pointer" src="{{schoolLogo}}" onclick="window.location='/school/page/{{schoolId}}'">
-            {% else %}
-            <p class="cursor-pointer" onclick="window.location='/school/basic/{{schoolId}}'">{{schoolName}}</p>
-            {% endif %}
+  <body>
+    <div class="nav">
+      <div class="navigation">
+        <img class="nav__logo" src="{% static '/img/landing/logo_course12.png' %}" />
+        <div class="nav__body">
+          <div class="nav__menu">
+            <div class="nav__item" onclick="window.location.href='/contact/'">문의하기</div>
+            <div class="nav__item nav__item-hidden" onclick="window.location.href='/about/'">어바웃 12</div>
+            <div class="nav__item nav__item-hidden" onclick="window.location.href='/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/'">초등기초</div>
+            <div class="nav__item nav__item-hidden" onclick="window.location.href='/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/'">중등기초</div>
+            <div class="nav__item nav__item-hidden" onclick="window.location.href='/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/'">고등기초</div>
           </div>
-          <img class="h-[36px]" src="/static/img/LMSLogo.svg">
-          <button class="btn btn-ghost lg:justify-self-end" onclick="window.location='http://megatest.kr:7700/ml/'">로그인</button>
-        </nav>
+          <div class="nav__icons">
+            <svg class="nav__search" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M25.3907 26.06L30.6004 31.1M28.9204 17.66C28.9204 24.1549 23.6553 29.42 17.1604 29.42C10.6655 29.42 5.40039 24.1549 5.40039 17.66C5.40039 11.1652 10.6655 5.90002 17.1604 5.90002C23.6553 5.90002 28.9204 11.1652 28.9204 17.66Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <svg class="nav__hamburger" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 27.5H6M30 18.5H6M30 9.5H6" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <svg class="nav__profile" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3.59961 31.2686C3.59961 25.6053 8.33104 21.0143 17.9996 21.0143C27.6682 21.0143 32.3996 25.6053 32.3996 31.2686C32.3996 32.1696 31.7423 32.9 30.9314 32.9H5.06784C4.25696 32.9 3.59961 32.1696 3.59961 31.2686Z" stroke="#737373" stroke-width="2"/>
+              <path d="M23.3996 9.49997C23.3996 12.4823 20.9819 14.9 17.9996 14.9C15.0173 14.9 12.5996 12.4823 12.5996 9.49997C12.5996 6.51764 15.0173 4.09998 17.9996 4.09998C20.9819 4.09998 23.3996 6.51764 23.3996 9.49997Z" stroke="#737373" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
       </div>
+  
+      <div class="dropdown__menu shadow-md">
+        <div class="dropdown__header">
+          <img class="dropdown__logo" src="{% static '/img/landing/logo_course12.png' %}" />
+          <svg class="dropdown__close" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25.5 8.88623L8.5 25.8862M25.5 25.8862L8.5 8.88623" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="dropdown__content">
+          <div class="dropdown__section">
+            <div class="section__title">
+              코스12 과정
+              <span>
+                <svg viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.5 17.7725L14.5 12.7725L9.5 7.77252" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="dropdown__submenu">
+                <div class="dropdown__link" onclick="window.location.href='/courses/element/all/'">초등과정</div>
+                <div class="dropdown__link" onclick="window.location.href='/courses/middle/all/'">중등과정</div>
+                <div class="dropdown__link" onclick="window.location.href='/courses/high/all/'">고등과정</div>
+            </div>
+          </div>
+          <div class="dropdown__section">
+            <div class="section__title">
+              코스 기초학력
+              <span>
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.5 17.7725L14.5 12.7725L9.5 7.77252" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="dropdown__submenu">
+                <div class="dropdown__link" onclick="window.location.href='/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/'">초등기초</div>
+                <div class="dropdown__link" onclick="window.location.href='/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/'">중등기초</div>
+                <div class="dropdown__link" onclick="window.location.href='/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/'">고등기초</div>
+            </div>
+          </div>
+          <div class="dropdown__section">
+            <div class="section__title">
+              어바웃 12
+              <span>
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.5 17.7725L14.5 12.7725L9.5 7.77252" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="dropdown__submenu">
+                <div class="dropdown__link" onclick="window.location.href='/contact/'">문의하기</div>
+                <div class="dropdown__link" onclick="window.location.href='/about/'">공지사항</div>
+                <div class="dropdown__link" onclick="window.location.href='/faq/'">FAQ</div>
+                <div class="dropdown__link" onclick="window.location.href='/news/'">코스 NEWS</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <!-- <div class="w-full xl:w-[1200px] flex justify-end">
-          <div class="m-2 p-2 border"><a href="/cart/">장바구니</a></div>
-          <div class="m-2 p-2 border"><a href="/mycourse/">내학습</a></div>
-        </div> -->
+    <!-- 모바일 header -->
+    <div class="navMobile border-b border-[#d1d1d1] justify-between items-center">
+      <img class="navLogoImg cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" onclick="window.location.href='/'">
+      <div class="flex text-[13px]">
+        <div class="flex font-normal text-[#474747]">
+          <div id="" class="flex items-center" onclick="window.location.href='/contact/'">
+            <p class="hover:text-[#474747] text-[13px] cursor-pointer">문의하기</p>
+          </div>
+          <div class="pl-5">
+            <svg id="hamburger-btn" class="hamburger-btn" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 18H4M20 12H4M20 6H4" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="pl-5">
+            <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="window.location.href='/user/'">
+              <path d="M2.40039 20.5128C2.40039 16.7373 5.55468 13.6766 12.0004 13.6766C18.4461 13.6766 21.6004 16.7373 21.6004 20.5128C21.6004 21.1135 21.1622 21.6004 20.6216 21.6004H3.37921C2.83862 21.6004 2.40039 21.1135 2.40039 20.5128Z" stroke="#737373" stroke-width="2"/>
+              <path d="M15.6004 6.00039C15.6004 7.98862 13.9886 9.60039 12.0004 9.60039C10.0122 9.60039 8.40039 7.98862 8.40039 6.00039C8.40039 4.01217 10.0122 2.40039 12.0004 2.40039C13.9886 2.40039 15.6004 4.01217 15.6004 6.00039Z" stroke="#737373" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+        <!-- <div class="font-light cursor-pointer" style="margin-left:10px;" onclick="window.location.href='/user/'">회원가입/로그인</div> -->
+      </div>
+    </div>
+    <div id="menu-overlay" class="menu-overlay">
+      <div class="menu-content  px-5 py-10">
+        <div class="flex justify-between items-start">
+          <img class="h-[30px] cursor-pointer -ml-2" src="{% static '/img/landing/logo_course12.png' %}" onclick="window.location.href='/'">
+          <button id="close-btn" class="close-btn">
+            <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18.5195 6.17383L6.51953 18.1738M18.5195 18.1738L6.51953 6.17383" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+        <ul class="text-[18px] text-[#474747]">
+            <li class="pt-10 w-[110px] flex justify-between items-center cursor-pointer" onclick="window.location.href='/about/'">
+              <p>어바웃 12</p>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.12039 9.11844V8.11844C8.5681 8.11844 8.12039 8.56615 8.12039 9.11844H9.12039ZM9.21601 9.11844H10.216C10.216 8.56615 9.7683 8.11844 9.21601 8.11844V9.11844ZM14.8804 9.11844V8.11844C14.3281 8.11844 13.8804 8.56615 13.8804 9.11844H14.8804ZM14.9654 9.11844H15.9654C15.9654 8.56615 15.5177 8.11844 14.9654 8.11844V9.11844ZM9.21601 9.19531V10.1953C9.7683 10.1953 10.216 9.7476 10.216 9.19531H9.21601ZM9.12039 9.19531H8.12039C8.12039 9.7476 8.5681 10.1953 9.12039 10.1953V9.19531ZM14.9654 9.19531V10.1953C15.5177 10.1953 15.9654 9.7476 15.9654 9.19531H14.9654ZM14.8804 9.19531H13.8804C13.8804 9.7476 14.3281 10.1953 14.8804 10.1953V9.19531ZM9.52262 14.3913C9.23194 13.9217 8.61561 13.7766 8.14601 14.0673C7.67642 14.358 7.53138 14.9743 7.82206 15.4439L9.52262 14.3913ZM16.1787 15.4439C16.4694 14.9743 16.3244 14.358 15.8548 14.0673C15.3852 13.7766 14.7688 13.9217 14.4782 14.3913L16.1787 15.4439ZM20.6004 11.9984C20.6004 16.7481 16.75 20.5984 12.0004 20.5984V22.5984C17.8546 22.5984 22.6004 17.8527 22.6004 11.9984H20.6004ZM12.0004 20.5984C7.25074 20.5984 3.40039 16.7481 3.40039 11.9984H1.40039C1.40039 17.8527 6.14617 22.5984 12.0004 22.5984V20.5984ZM3.40039 11.9984C3.40039 7.24879 7.25074 3.39844 12.0004 3.39844V1.39844C6.14617 1.39844 1.40039 6.14422 1.40039 11.9984H3.40039ZM12.0004 3.39844C16.75 3.39844 20.6004 7.24879 20.6004 11.9984H22.6004C22.6004 6.14422 17.8546 1.39844 12.0004 1.39844V3.39844ZM9.12039 10.1184H9.21601V8.11844H9.12039V10.1184ZM14.8804 10.1184H14.9654V8.11844H14.8804V10.1184ZM8.21601 9.11844V9.19531H10.216V9.11844H8.21601ZM9.21601 8.19531H9.12039V10.1953H9.21601V8.19531ZM10.1204 9.19531V9.11844H8.12039V9.19531H10.1204ZM13.9654 9.11844V9.19531H15.9654V9.11844H13.9654ZM14.9654 8.19531H14.8804V10.1953H14.9654V8.19531ZM15.8804 9.19531V9.11844H13.8804V9.19531H15.8804ZM12.0004 15.7984C10.9706 15.7984 10.0527 15.2477 9.52262 14.3913L7.82206 15.4439C8.69181 16.849 10.2319 17.7984 12.0004 17.7984V15.7984ZM14.4782 14.3913C13.948 15.2477 13.0302 15.7984 12.0004 15.7984V17.7984C13.7689 17.7984 15.309 16.849 16.1787 15.4439L14.4782 14.3913Z" fill="#737373"/>
+              </svg>
+            </li>
+            <li class="pt-10 w-[110px] flex justify-between items-center cursor-pointer" onclick="window.location.href='/contact/'">
+              <p>문의하기</p>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.67865 21.5984L11.6873 16.5897H19.6004C20.705 16.5897 21.6004 15.6943 21.6004 14.5897V4.39844C21.6004 3.29387 20.705 2.39844 19.6004 2.39844H4.40039C3.29582 2.39844 2.40039 3.29387 2.40039 4.39844V14.5897C2.40039 15.6943 3.29582 16.5897 4.40039 16.5897H6.67865V21.5984Z" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </li>
+            <li class="pt-10 w-[110px] flex justify-between items-center cursor-pointer" onclick="window.location.href='/courses/element/all/'">
+              <p>초등코스</p>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10.8914 3.17056C11.2723 2.14106 12.7284 2.14106 13.1094 3.17056L15.0055 8.2947C15.1253 8.61837 15.3805 8.87356 15.7041 8.99333L20.8283 10.8894C21.8578 11.2704 21.8578 12.7265 20.8283 13.1074L15.7041 15.0035C15.3805 15.1233 15.1253 15.3785 15.0055 15.7022L13.1094 20.8263C12.7284 21.8558 11.2723 21.8558 10.8914 20.8263L8.99529 15.7022C8.87552 15.3785 8.62032 15.1233 8.29665 15.0035L3.17251 13.1074C2.14302 12.7265 2.14302 11.2704 3.17251 10.8894L8.29665 8.99333C8.62032 8.87356 8.87552 8.61837 8.99529 8.2947L10.8914 3.17056Z" stroke="#737373" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </li>
+            <li class="pt-10 w-[110px] flex justify-between items-center cursor-pointer" onclick="window.location.href='/courses/middle/all/'">
+              <p>중등코스</p>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.58398 21.5984L10.9484 8.71077M13.5785 8.71077L20.4169 21.5984M4.36327 14.7601C6.29125 17.6628 9.11603 19.4943 12.2637 19.4943C15.4113 19.4943 18.2361 17.6628 20.1641 14.7601M12.2634 3.71351C10.8109 3.71351 9.6333 4.89106 9.6333 6.34364C9.6333 7.79623 10.8109 8.97378 12.2634 8.97378C13.716 8.97378 14.8936 7.79623 14.8936 6.34364C14.8936 4.89106 13.716 3.71351 12.2634 3.71351ZM12.2634 3.71351V2.39844" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </li>
+            <li class="pt-10 w-[110px] flex justify-between items-center cursor-pointer" onclick="window.location.href='/courses/high/all/'">
+              <p>고등코스</p>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.0002 12.0886V11.9983M20.9629 20.961C19.0672 22.8567 13.5178 20.3808 8.56788 15.4309C3.61799 10.481 1.14208 4.93153 3.03778 3.03583C4.93349 1.14012 10.4829 3.61604 15.4328 8.56593C20.3827 13.5158 22.8586 19.0653 20.9629 20.961ZM3.03797 20.961C1.14227 19.0653 3.61818 13.5159 8.56808 8.56599C13.518 3.61609 19.0674 1.14018 20.9631 3.03589C22.8588 4.93159 20.3829 10.481 15.433 15.4309C10.4831 20.3808 4.93368 22.8567 3.03797 20.961Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </li>
+        </ul>
+      </div>
+    </div>
 
       {% block content %} {% endblock %}
-    </div>
-    <div class="footer p-6 w-full grid md:grid-cols-5 md:justify-items-center rounded-b-lg bg-[#175CBE]">
-      <div class="hidden md:block">
-        <img class="" src="{% static '/img/landing/logo_nscreen_white.png' %}" />
-      </div>
-      <div class="col-span-2 justify-self-start text-xs text-white leading-normal">
-        <div class="grid grid-cols-3">
-          <p>상호 : (주)엔스크린</p>
-          <p class="pl-2">대표 : 정대욱</p>
+
+    <!-- footer -->
+    <div class="footerPC w-full mt-20 px-[20px] min-[1280px]:px-[85px] py-[40px] justify-between items-center border-t border-[#3db051] text-[#999999]">
+      <div class="flex items-center self-start">
+        <img class="" src="{% static '/img/landing/logo_nscreen_green.png' %}" />
+        <div class="grid grid-cols-1 text-[12px]" style="margin-left: 80px; row-gap: 8px">
+          <p>상호명 (주)엔스크린  대표자 정대욱  주소 06350 서울특별시 강남구 광평로 63 3층  사업자 번호 679-81-00799</p>
+          <p>Tel 02-2226-4279  고객센터 운영시간 평일 09:00 ~ 18:00 (점심시간 12:00 ~ 13:00)</p>
+          <p>E-mail kmetastudy@gmail.com</p>
+          <p>© N SCREEN.All rights reserved.</p>
         </div>
-        <p>주소 : 서울 강남구 광평로 63 정오빌딩 3층</p>
-        <p>사업자등록번호 : 679-81-00799</p>
-        <p>TEL : 02-2226-4279</p>
-        <p>이메일 : kmetastudy@gmail.com</p>
       </div>
-      <div class="text-xs md:block text-white leading-normal">
-        <p><br /></p>
-        <p>고객센터 : 02-2226-4279</p>
-        <p>고객센터 운영시간</p>
-        <p>평일 09:00~18:00(점심시간 12:00~13:00)</p>
+      <div class="flex flex-col items-end self-end">
+        <div class="opt-sel abtn" tabindex="1">
+          <div class="flex justify-between items-center">
+            관련 사이트
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 10L12.0008 14.58L17 10" stroke="#999999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          
+          <ul class="">
+            <li onclick="window.location.href='https://courseware.co.kr'">코스 12</li>
+            <li onclick="window.location.href='https://megacourse.co.kr'">메가코스</li>
+          </ul>
+        </div>
+        <div class="grid grid-cols-3" style="column-gap: 20px; padding-top: 20px;">
+          <img style="width:24px; height:24px;" src="{% static '/img/landing/icon_blog.png' %}" onclick="window.location.href='https://blog.naver.com/megacourse'"/>
+          <img style="width:24px; height:24px;" src="{% static '/img/landing/icon_insta.png' %}" onclick="window.location.href='https://www.instagram.com/megacourse?igsh=MTF1ZmhlZXZ0c2lvZw%3D%3D&utm_source=qr'"/>
+          <img style="width:24px; height:24px;" src="{% static '/img/landing/icon_youtube.png' %}" onclick="window.location.href='https://www.youtube.com/channel/UCMwv57GH2JbsPqcRR8vXCeg'"/>
+        </div>
       </div>
-      <!-- <div class="flex items-center text-xs hidden md:block">
-        <p class="mx-2">1:1 문의</p>
-         <div
-          id="kakao-talk-channel-chat-button"
-          data-channel-public-id="_dhxkfxj"
-          data-title="consult"
-          data-size="small"
-          data-color="yellow"
-          data-shape="pc"
-          data-support-multiple-densities="true"
-        ></div>
-        <script>
-          window.kakaoAsyncInit = function() {
-            Kakao.Channel.createChatButton({
-              container: '#kakao-talk-channel-chat-button',
-            });
-          };
-        
-          (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = 'https://t1.kakaocdn.net/kakao_js_sdk/2.3.0/kakao.channel.min.js';
-            js.integrity = 'sha384-suN4Zc1CFiRm8j96GVFtk9WqRwjWWhDoYbIrYCXyrsvKZZ2XRUIoUyH/AyjszUEj';
-            js.crossOrigin = 'anonymous';
-            fjs.parentNode.insertBefore(js, fjs);
-          })(document, 'script', 'kakao-js-sdk');
-        </script>
-      </div> -->
-      <div class="text-xs">
-        <div class="flex justify-end items-center">
-          <div class="px-2 cursor-pointer" onclick="window.open('https://www.instagram.com/megacourse?igsh=MTF1ZmhlZXZ0c2lvZw%3D%3D&utm_source=qr')">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <g clip-path="url(#clip0_77_2014)">
-                <path
-                  d="M16.0946 8.9101C16.0116 8.6788 15.8785 8.46873 15.7047 8.29497C15.531 8.12122 15.3209 7.98807 15.0896 7.9051C14.7774 7.78948 14.4475 7.72858 14.1146 7.7251C13.5746 7.7251 13.3946 7.7251 11.9996 7.7251C10.6046 7.7251 10.4996 7.7251 9.88461 7.7251C9.55168 7.72858 9.22184 7.78948 8.90961 7.9051C8.67812 7.98767 8.46801 8.12092 8.29461 8.2951C8.12567 8.47264 7.99317 8.68158 7.90461 8.9101C7.78899 9.22233 7.7281 9.55217 7.72461 9.8851C7.72461 10.4251 7.72461 10.6051 7.72461 12.0001C7.72461 13.3951 7.72461 13.5751 7.72461 14.1151C7.7281 14.448 7.78899 14.7779 7.90461 15.0901C7.98718 15.3216 8.12043 15.5317 8.29461 15.7051C8.47215 15.874 8.68109 16.0065 8.90961 16.0951C9.22184 16.2107 9.55168 16.2716 9.88461 16.2751C10.4246 16.2751 10.6046 16.2751 11.9996 16.2751C13.3946 16.2751 13.5746 16.2751 14.1146 16.2751C14.4475 16.2716 14.7774 16.2107 15.0896 16.0951C15.3181 16.0065 15.5271 15.874 15.7046 15.7051C15.8788 15.5317 16.012 15.3216 16.0946 15.0901C16.2102 14.7779 16.2711 14.448 16.2746 14.1151C16.2746 13.5751 16.2746 13.3951 16.2746 12.0001C16.2746 10.6051 16.2746 10.5001 16.2746 9.8851C16.2711 9.55217 16.2102 9.22233 16.0946 8.9101ZM11.9996 14.7001C11.4656 14.7001 10.9436 14.5417 10.4996 14.2451C10.0556 13.9484 9.70949 13.5267 9.50513 13.0333C9.30078 12.54 9.24731 11.9971 9.35149 11.4734C9.45567 10.9496 9.71282 10.4685 10.0904 10.0909C10.468 9.71331 10.9491 9.45616 11.4729 9.35198C11.9966 9.2478 12.5395 9.30127 13.0329 9.50562C13.5262 9.70998 13.9479 10.056 14.2446 10.5001C14.5413 10.9441 14.6996 11.4661 14.6996 12.0001C14.6957 12.715 14.4099 13.3994 13.9044 13.9049C13.3989 14.4104 12.7145 14.6962 11.9996 14.7001ZM14.8046 9.8251C14.6375 9.8251 14.4773 9.75872 14.3591 9.64057C14.241 9.52243 14.1746 9.36218 14.1746 9.1951C14.1746 9.02801 14.241 8.86777 14.3591 8.74962C14.4773 8.63147 14.6375 8.5651 14.8046 8.5651C14.9717 8.5651 15.1319 8.63147 15.2501 8.74962C15.3682 8.86777 15.4346 9.02801 15.4346 9.1951C15.4346 9.36218 15.3682 9.52243 15.2501 9.64057C15.1319 9.75872 14.9717 9.8251 14.8046 9.8251Z"
-                  fill="white"
-                />
-                <path
-                  d="M11.9991 10.2451C11.652 10.2451 11.3127 10.348 11.0241 10.5409C10.7355 10.7337 10.5106 11.0078 10.3777 11.3285C10.2449 11.6492 10.2101 12.0021 10.2779 12.3425C10.3456 12.6829 10.5127 12.9956 10.7582 13.2411C11.0036 13.4865 11.3163 13.6537 11.6568 13.7214C11.9972 13.7891 12.3501 13.7544 12.6708 13.6215C12.9914 13.4887 13.2655 13.2638 13.4584 12.9751C13.6512 12.6865 13.7541 12.3472 13.7541 12.0001C13.7502 11.5359 13.5641 11.0918 13.2358 10.7635C12.9075 10.4352 12.4634 10.249 11.9991 10.2451Z"
-                  fill="white"
-                />
-                <path
-                  d="M12 2C10.0222 2 8.08879 2.58649 6.4443 3.6853C4.79981 4.78412 3.51809 6.3459 2.76121 8.17316C2.00433 10.0004 1.8063 12.0111 2.19215 13.9509C2.578 15.8907 3.53041 17.6725 4.92894 19.0711C6.32746 20.4696 8.10929 21.422 10.0491 21.8078C11.9889 22.1937 13.9996 21.9957 15.8268 21.2388C17.6541 20.4819 19.2159 19.2002 20.3147 17.5557C21.4135 15.9112 22 13.9778 22 12C22 9.34783 20.9464 6.8043 19.0711 4.92893C17.1957 3.05357 14.6522 2 12 2ZM17.3538 14.2154C17.3403 14.6614 17.2572 15.1026 17.1077 15.5231C16.8174 16.2185 16.2646 16.7713 15.5692 17.0615C15.1488 17.2111 14.7076 17.2941 14.2615 17.3077C13.6923 17.3077 13.5077 17.3077 12.0462 17.3077C10.5846 17.3077 10.4 17.3077 9.83077 17.3077C9.38473 17.2941 8.94353 17.2111 8.52308 17.0615C8.16105 16.9271 7.83472 16.7113 7.56923 16.4308C7.28875 16.1653 7.07295 15.839 6.93847 15.4769C6.78894 15.0565 6.70589 14.6153 6.69231 14.1692C6.69231 13.6 6.69231 13.4154 6.69231 11.9538C6.69231 10.4923 6.69231 10.3077 6.69231 9.73846C6.70589 9.29242 6.78894 8.85122 6.93847 8.43077C7.07295 8.06873 7.28875 7.7424 7.56923 7.47692C7.83472 7.19643 8.16105 6.98064 8.52308 6.84615C8.94353 6.69662 9.38473 6.61357 9.83077 6.6C10.4 6.6 10.5846 6.6 12.0462 6.6C13.5077 6.6 13.6923 6.6 14.2615 6.6C14.7076 6.61357 15.1488 6.69662 15.5692 6.84615C15.9313 6.98064 16.2576 7.19643 16.5231 7.47692C16.8036 7.7424 17.0194 8.06873 17.1538 8.43077C17.3034 8.85122 17.3864 9.29242 17.4 9.73846C17.4 10.3077 17.4 10.4923 17.4 11.9538C17.4 13.4154 17.3846 13.6462 17.3538 14.2154Z"
-                  fill="white"
-                />
-              </g>
-              <defs>
-                <clipPath id="clip0_77_2014">
-                  <rect width="24" height="24" fill="white" />
-                </clipPath>
-              </defs>
+    </div>
+    <!-- 모바일 footer -->
+    <div class="footerMobile w-full mt-20 justify-between items-center border-t border-[#3db051] text-[#999999]" style="padding:20px 0;">
+      <img class="" src="{% static '/img/landing/logo_nscreen_green.png' %}" />
+      <div class="text-[12px] text-center">
+        <p class="mt-2">상호명 (주)엔스크린  대표자 정대욱</p>
+        <p class="mt-2">사업자 번호 679-81-00799</p>
+        <p class="mt-2">주소 06350 서울특별시 강남구 광평로 63 3층</p>
+        <p class="mt-2">Tel 02-2226-4279</p>
+        <p class="mt-2">고객센터 운영시간</p>
+        <p class="mt-2">평일 09:00 ~ 18:00</p>
+        <p class="mt-2">(점심시간 12:00 ~ 13:00)</p>
+        <p class="mt-2">E-mail kmetastudy@gmail.com</p>
+        <p class="mt-2">© N SCREEN.All rights reserved.</p>
+      </div>
+      <div class="py-5 w-full flex flex-col items-center justify-end">
+        <div class="opt-sel abtn" tabindex="1">
+          <div class="flex justify-between items-center">
+            관련 사이트
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7 10L12.0008 14.58L17 10" stroke="#999999" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          <div class="px-2 cursor-pointer" onclick="window.open('https://www.youtube.com/@mega_course')">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M10 0C8.02219 0 6.08879 0.58649 4.4443 1.6853C2.79981 2.78412 1.51809 4.3459 0.761209 6.17316C0.00433284 8.00042 -0.1937 10.0111 0.192152 11.9509C0.578004 13.8907 1.53041 15.6725 2.92894 17.0711C4.32746 18.4696 6.10929 19.422 8.0491 19.8078C9.98891 20.1937 11.9996 19.9957 13.8268 19.2388C15.6541 18.4819 17.2159 17.2002 18.3147 15.5557C19.4135 13.9112 20 11.9778 20 10C20 7.34783 18.9464 4.8043 17.0711 2.92893C15.1957 1.05357 12.6522 0 10 0ZM15.3538 12.2154C15.3403 12.6614 15.2572 13.1026 15.1077 13.5231C14.8174 14.2185 14.2646 14.7713 13.5692 15.0615C13.1488 15.2111 12.7076 15.2941 12.2615 15.3077C11.6923 15.3077 11.5077 15.3077 10.0462 15.3077C8.58462 15.3077 8.4 15.3077 7.83077 15.3077C7.38473 15.2941 6.94353 15.2111 6.52308 15.0615C6.16105 14.9271 5.83472 14.7113 5.56923 14.4308C5.28875 14.1653 5.07295 13.839 4.93846 13.4769C4.78894 13.0565 4.70589 12.6153 4.69231 12.1692C4.69231 11.6 4.69231 11.4154 4.69231 9.95384C4.69231 8.49231 4.69231 8.30769 4.69231 7.73846C4.70589 7.29242 4.78894 6.85122 4.93846 6.43077C5.07295 6.06873 5.28875 5.7424 5.56923 5.47692C5.83472 5.19643 6.16105 4.98064 6.52308 4.84615C6.94353 4.69662 7.38473 4.61357 7.83077 4.6C8.4 4.6 8.58462 4.6 10.0462 4.6C11.5077 4.6 11.6923 4.6 12.2615 4.6C12.7076 4.61357 13.1488 4.69662 13.5692 4.84615C13.9313 4.98064 14.2576 5.19643 14.5231 5.47692C14.8036 5.7424 15.0194 6.06873 15.1538 6.43077C15.3034 6.85122 15.3864 7.29242 15.4 7.73846C15.4 8.30769 15.4 8.49231 15.4 9.95384C15.4 11.4154 15.3846 11.6462 15.3538 12.2154Z"
-                fill="white"
-              />
-              <path
-                d="M13.823 7.81647L13.833 7.88236C13.7363 7.53647 13.4753 7.26958 13.1437 7.17244L13.1367 7.17076C12.513 7 10.0034 7 10.0034 7C10.0034 7 7.50008 6.99664 6.87009 7.17076C6.53209 7.26958 6.27076 7.53647 6.17576 7.8753L6.1741 7.88236C5.9411 9.10958 5.93943 10.5842 6.18443 11.8982L6.1741 11.8316C6.27076 12.1775 6.53176 12.4444 6.86342 12.5415L6.87042 12.5432C7.49341 12.7143 10.0037 12.7143 10.0037 12.7143C10.0037 12.7143 12.5067 12.7143 13.137 12.5432C13.4753 12.4444 13.7367 12.1775 13.8317 11.8387L13.8333 11.8316C13.9393 11.2608 14 10.604 14 9.93311C14 9.90857 14 9.8837 13.9997 9.85883C14 9.83597 14 9.80874 14 9.78151C14 9.11025 13.9393 8.45345 13.823 7.81647ZM9.20273 11.0844V8.63294L11.2914 9.86051L9.20273 11.0844Z"
-                fill="white"
-              />
-            </svg>
-          </div>
-          <div class="px-2 cursor-pointer" onclick="window.open('https://blog.naver.com/megacourse')">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <path
-                d="M10 0C8.02219 0 6.08879 0.58649 4.4443 1.6853C2.79981 2.78412 1.51809 4.3459 0.761209 6.17316C0.00433284 8.00042 -0.1937 10.0111 0.192152 11.9509C0.578004 13.8907 1.53041 15.6725 2.92894 17.0711C4.32746 18.4696 6.10929 19.422 8.0491 19.8078C9.98891 20.1937 11.9996 19.9957 13.8268 19.2388C15.6541 18.4819 17.2159 17.2002 18.3147 15.5557C19.4135 13.9112 20 11.9778 20 10C20 7.34783 18.9464 4.8043 17.0711 2.92893C15.1957 1.05357 12.6522 0 10 0ZM15.3538 12.2154C15.3403 12.6614 15.2572 13.1026 15.1077 13.5231C14.8174 14.2185 14.2646 14.7713 13.5692 15.0615C13.1488 15.2111 12.7076 15.2941 12.2615 15.3077C11.6923 15.3077 11.5077 15.3077 10.0462 15.3077C8.58462 15.3077 8.4 15.3077 7.83077 15.3077C7.38473 15.2941 6.94353 15.2111 6.52308 15.0615C6.16105 14.9271 5.83472 14.7113 5.56923 14.4308C5.28875 14.1653 5.07295 13.839 4.93846 13.4769C4.78894 13.0565 4.70589 12.6153 4.69231 12.1692C4.69231 11.6 4.69231 11.4154 4.69231 9.95384C4.69231 8.49231 4.69231 8.30769 4.69231 7.73846C4.70589 7.29242 4.78894 6.85122 4.93846 6.43077C5.07295 6.06873 5.28875 5.7424 5.56923 5.47692C5.83472 5.19643 6.16105 4.98064 6.52308 4.84615C6.94353 4.69662 7.38473 4.61357 7.83077 4.6C8.4 4.6 8.58462 4.6 10.0462 4.6C11.5077 4.6 11.6923 4.6 12.2615 4.6C12.7076 4.61357 13.1488 4.69662 13.5692 4.84615C13.9313 4.98064 14.2576 5.19643 14.5231 5.47692C14.8036 5.7424 15.0194 6.06873 15.1538 6.43077C15.3034 6.85122 15.3864 7.29242 15.4 7.73846C15.4 8.30769 15.4 8.49231 15.4 9.95384C15.4 11.4154 15.3846 11.6462 15.3538 12.2154Z"
-                fill="white"
-              />
-              <path
-                d="M8.03271 14V6.1228H10.2739C10.9551 6.1228 11.4952 6.28943 11.8944 6.62268C12.2936 6.95593 12.4932 7.38989 12.4932 7.92456C12.4932 8.37134 12.3723 8.75952 12.1306 9.08911C11.8889 9.4187 11.5557 9.65308 11.1309 9.79224V9.81421C11.6619 9.87646 12.0867 10.0779 12.4053 10.4185C12.7239 10.7554 12.8832 11.1948 12.8832 11.7368C12.8832 12.4106 12.6415 12.9563 12.1581 13.3738C11.6747 13.7913 11.0649 14 10.3289 14H8.03271ZM8.95557 6.95776V9.5011H9.90039C10.4058 9.5011 10.8031 9.38025 11.0924 9.13855C11.3817 8.89319 11.5264 8.54895 11.5264 8.10583C11.5264 7.34045 11.0228 6.95776 10.0157 6.95776H8.95557ZM8.95557 10.3306V13.165H10.208C10.75 13.165 11.1693 13.0369 11.4659 12.7805C11.7662 12.5242 11.9164 12.1726 11.9164 11.7258C11.9164 10.7957 11.2828 10.3306 10.0157 10.3306H8.95557Z"
-                fill="white"
-              />
-            </svg>
-          </div>
+          
+          <ul class="">
+            <li onclick="window.location.href='https://courseware.co.kr'">코스 12</li>
+            <li onclick="window.location.href='https://megacourse.co.kr'">메가코스</li>
+          </ul>
+        </div>
+        <div class="grid grid-cols-3 pt-5" style="column-gap: 20px;">
+          <img style="width:24px; height:24px;" src="{% static '/img/landing/icon_blog.png' %}" onclick="window.location.href='https://blog.naver.com/megacourse'"/>
+          <img style="width:24px; height:24px;" src="{% static '/img/landing/icon_insta.png' %}" onclick="window.location.href='https://www.instagram.com/megacourse?igsh=MTF1ZmhlZXZ0c2lvZw%3D%3D&utm_source=qr'"/>
+          <img style="width:24px; height:24px;" src="{% static '/img/landing/icon_youtube.png' %}" onclick="window.location.href='https://www.youtube.com/channel/UCMwv57GH2JbsPqcRR8vXCeg'"/>
         </div>
       </div>
     </div>
@@ -165,11 +262,52 @@
   </body>
 
   <script>
-    var csrftoken = "{{csrf_token}}";
-
     var context = JSON.parse("{{ context|escapejs }}");
     // window.addEventListener("DOMContentLoaded", function () {
     //   console.log("mainlibrary: ", mainlibrary);
     // });
+
+    // 드롭다운 메뉴 토글 기능
+    document.querySelector('.nav__hamburger').addEventListener('click', () => {
+        document.querySelector('.dropdown__menu').classList.toggle('dropdown__menu-active');
+    });
+    
+    // 드롭다운 닫기 기능
+    document.querySelector('.dropdown__close').addEventListener('click', () => {
+        document.querySelector('.dropdown__menu').classList.remove('dropdown__menu-active');
+    });
+
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const menuOverlay = document.getElementById('menu-overlay');
+    const closeBtn = document.getElementById('close-btn');
+
+    hamburgerBtn.addEventListener('click', function() {
+        menuOverlay.classList.add('show');
+    });
+
+    closeBtn.addEventListener('click', function() {
+        menuOverlay.classList.remove('show');
+    });
+
+    // Overlay 밖을 클릭했을 때 메뉴 닫기
+    menuOverlay.addEventListener('click', function(event) {
+        if (event.target === menuOverlay) {
+            menuOverlay.classList.remove('show');
+        }
+    });
+
+    document.querySelectorAll('.opt-sel').forEach(element => {
+      element.addEventListener('mousedown', function(event) {
+          event.preventDefault()
+          
+      });
+      element.addEventListener('click', function() {
+          if (document.activeElement === this) {
+              this.blur();
+          } else {
+              this.focus();
+          }
+      });
+    });
   </script>
 </html>

@@ -98,6 +98,7 @@ body {
   .categoryMobile {
     width: fit-content;
     font-size: 18px;
+    column-gap: 30px;
   }
   .contentGrid {
     grid-template-columns: repeat(6, minmax(0, 1fr));

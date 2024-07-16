@@ -96,20 +96,39 @@ def about(request):
     date = notices[0]["created_at"]
     print(type(date))
 
+    context = {
+        "context": json.dumps(context_sample),
+        "notices": json.dumps(notices),
+    }
+    return render(request, "_main/about.html", context)
+
+
+@jwt_login_required
+def faq(request):
+    context_sample = make_context(request)
+
     faq_queryset = FAQ.objects.all()
     faqs = FAQSerializer(faq_queryset, many=True).data
+
+    context = {
+        "context": json.dumps(context_sample),
+        "faqs": json.dumps(faqs),
+    }
+    return render(request, "_main/about_faq.html", context)
+
+
+@jwt_login_required
+def news(request):
+    context_sample = make_context(request)
 
     post_queryset = Post.objects.all()
     posts = PostSerializer(post_queryset, many=True).data
 
     context = {
         "context": json.dumps(context_sample),
-        "notices": notices,
-        "faqs": faqs,
-        "posts": posts,
-        "posts_json": json.dumps(posts),
+        "posts": json.dumps(posts),
     }
-    return render(request, "_main/about.html", context)
+    return render(request, "_main/about_news.html", context)
 
 
 @jwt_login_required
@@ -196,45 +215,6 @@ def mainView(request, school, subject):
         return JsonResponse(
             {"message": subject, "courses": json.dumps(courses, default=str)}
         )
-
-
-@jwt_login_required
-def basic_landing(request, school_id):
-    context_sample = make_context(request)
-
-    school = mSchool.objects.filter(id=school_id)[0]
-    school_data = SchoolSerializer(school).data
-    school_name = school_data["title"]
-    school_logo = school_data["img_logo"]
-    school_banner = school_data["img_banner"]
-    school_notice = school_data["notice"]
-
-    school_sections = mSchoolSection.objects.filter(
-        id_school=school_id, active=True
-    ).order_by("sequence")
-
-    sections = SectionSerializer(school_sections, many=True).data
-
-    bannerBG = ""
-    if school_id == "8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c":
-        bannerBG = "banner7-2"
-    elif school_id == "cbb29b29-9f01-4024-9aac-15e382e3edb2":
-        bannerBG = "banner8-2"
-    else:
-        bannerBG = "banner9-2"
-
-    context = {
-        "context": json.dumps(context_sample),
-        "sectionCourses": json.dumps(sections),
-        "schoolId": school_id,
-        "schoolName": school_name,
-        "schoolLogo": school_logo,
-        "schoolBanner": school_banner,
-        "bannerBG": bannerBG,
-        "notices": school_notice,
-    }
-
-    return render(request, "_main/landing_basic.html", context)
 
 
 def getCourses(request, school, subject):
@@ -347,212 +327,6 @@ def detail_chapter(request):
     return JsonResponse({"data": course.json_data})
 
 
-# 장바구니 관련
-@jwt_login_required
-def cart_detail(request):
-    context_sample = make_context(request)
-    if context_sample["userLogin"] == False:
-        return redirect("_user:index")
-    user = get_object_or_404(mUser, id=request.userId)
-    cart_course_qs = CartCourse.objects.filter(user=request.userId).select_related(
-        "course"
-    )
-
-    CartCourseFormSet = modelformset_factory(
-        model=CartCourse,
-        form=CartCourseForm,
-        extra=0,
-        can_delete=True,
-    )
-
-    if request.method == "POST":
-        formset = CartCourseFormSet(
-            data=request.POST,
-            queryset=cart_course_qs,
-        )
-
-        if formset.is_valid():
-            formset.save()
-            return redirect("_main:cart_detail")
-    else:
-        formset = CartCourseFormSet(queryset=cart_course_qs)
-
-    total_amount = sum(cart_product.amount for cart_product in list(cart_course_qs))
-    point = Points.objects.get(user=request.userId)
-
-    context = {
-        "context": json.dumps(context_sample),
-        "formset": formset,
-        "user": user,
-        "point": point,
-        "total_amount": total_amount,
-    }
-
-    return render(request, "_main/cart_detail.html", context)
-
-
-@jwt_login_required
-def add_to_cart(request, course_pk):
-
-    course_qs = courseDetail.objects.all()
-    course = get_object_or_404(course_qs, courseId=course_pk)
-
-    cart_course, is_created = CartCourse.objects.get_or_create(
-        user=get_object_or_404(mUser, id=request.userId), course=course
-    )
-
-    return HttpResponse("Ok")
-
-
-@jwt_login_required
-def point_history(request):
-    context_sample = make_context(request)
-    charge = PointCharge.objects.filter(
-        is_paid_ok=True, buyer_name=request.userId
-    ).values("name", "desired_amount")
-    context = {
-        "context": json.dumps(context_sample),
-    }
-    return render(request, "_main/mycourse.html", context)
-
-
-@jwt_login_required
-def point_charge(request):
-    context_sample = make_context(request)
-    if context_sample["userLogin"] == False:
-        return redirect("_user:index")
-    if request.method == "POST":
-        charge = request.POST.get("charge")
-        charge_re = int(charge.replace(",", ""))
-        payment = PointCharge.create(request.userId, charge_re)
-        # return redirect('_main:point_pay', pk=payment.pk)
-        next_url = "/point/" + str(payment.pk) + "/pay/"
-        return JsonResponse({"url": next_url})
-
-    context = {
-        "context": json.dumps(context_sample),
-    }
-    return render(request, "_main/point_charge.html", context)
-
-
-@jwt_login_required
-def point_pay(request, pk):
-    context_sample = make_context(request)
-
-    payment = get_object_or_404(PointCharge, pk=pk)
-
-    payment_props = {
-        "merchant_uid": payment.merchant_uid,
-        "name": payment.name,
-        "amount": payment.desired_amount,
-        "buyer_name": "yun",  # user 연결
-        "buyer_email": "",
-    }
-
-    context = {
-        "context": json.dumps(context_sample),
-        "portone_shop_id": config("PORTONE_SHOP_ID"),
-        "payment_props": payment_props,
-        "next_url": reverse("_main:point_check", args=[payment.pk]),
-    }
-
-    return render(request, "_main/point_pay.html", context)
-
-
-@jwt_login_required
-def point_check(request, payment_pk):
-    payment = get_object_or_404(PointCharge, pk=payment_pk)
-    payment.update()
-
-    points, created = Points.objects.get_or_create(
-        user=request.userId, defaults={"points": payment.desired_amount}
-    )
-
-    if not created:
-        points.points += payment.desired_amount
-        points.save()
-    # return redirect("_main:order_detail", order_pk)
-    # return redirect("_main:order_list")
-    return redirect("_main:point_history")
-
-
-# TODO:결제 완료 처리하는 화면 만들기(지금은 결제 검증만하고 바로 넘어감)
-
-
-@jwt_login_required
-def order_list(request):
-    context_sample = make_context(request)
-    order_qs = Order.objects.all().filter(user=request.userId)
-
-    context = {"context": json.dumps(context_sample), "order_list": order_qs}
-    return render(request, "_main/order_list.html", context)
-
-
-@jwt_login_required
-def order_new(request):
-    cart_product_qs = CartCourse.objects.filter(user=request.userId)
-
-    order = Order.create_from_cart(request.userId, cart_product_qs)
-    cart_product_qs.delete()
-
-    return redirect("_main:order_pay", order.pk)
-
-
-@jwt_login_required
-def order_pay(request, pk):
-    context_sample = make_context(request)
-    order = get_object_or_404(Order, pk=pk, user=request.userId)
-
-    if not order.can_pay():
-        return redirect("order_detail", order.pk)  # TODO: order_detail 구현
-
-    # payment = OrderPayment.create_by_order(order)
-    payment = PointUse.create_by_order(order)
-
-    # payment_props = {
-    #     # "merchant_uid": payment.merchant_uid,
-    #     "name": payment.name,
-    #     "amount": payment.desired_amount,
-    #     "buyer_name": 'yun',  # user 연결
-    #     "buyer_email": payment.buyer_email
-    # }
-
-    # context = {
-    #     "context": json.dumps(context_sample),
-    #     "portone_shop_id": config("PORTONE_SHOP_ID"),
-    #     "payment_props": payment_props,
-    #     "next_url": reverse("_main:order_check", args=[order.pk, payment.pk])
-    # }
-    # return render(request, "_main/order_pay.html", context)
-    return HttpResponseRedirect(
-        reverse("_main:order_check", args=[order.pk, payment.pk])
-    )
-
-
-@jwt_login_required
-def order_check(request, order_pk, payment_pk):
-    # payment = get_object_or_404(
-    #     OrderPayment, pk=payment_pk, order__pk=order_pk)
-    payment = get_object_or_404(PointUse, pk=payment_pk, order__pk=order_pk)
-    payment.update()
-
-    points = Points.objects.get(user=request.userId)
-    points.points -= payment.desired_amount
-    points.save()
-    # return redirect("_main:order_detail", order_pk)
-    # return redirect("_main:order_list")
-    return redirect("_main:mycourse")
-
-
-@jwt_login_required
-def order_detail(request, pk):
-    context_sample = make_context(request)
-    order = get_object_or_404(Order, pk=pk, user=request.userId)
-
-    context = {"context": json.dumps(context_sample), "order": order}
-    return render(request, "_main/order_detail.html", context)
-
-
 @jwt_login_required
 def mycourse(request):
     context_sample = make_context(request)
@@ -560,63 +334,3 @@ def mycourse(request):
 
     context = {"context": json.dumps(context_sample), "orders": orders}
     return render(request, "_main/mycourse.html", context)
-
-
-# 결제 관련
-
-
-@jwt_login_required
-def payment_new(request):
-    context_sample = make_context(request)
-
-    if request.method == "POST":
-        form = PaymentForm(request.POST)
-        if form.is_valid():
-            payment = form.save()
-            return redirect("_main:payment_pay", pk=payment.pk)
-    else:
-        form = PaymentForm()
-
-    context = {"context": json.dumps(context_sample), "form": form}
-    return render(request, "_main/payment_form.html", context)
-
-
-@jwt_login_required
-def payment_pay(request, pk):
-    context_sample = make_context(request)
-
-    payment = get_object_or_404(Payment, pk=pk)
-    payment_props = {
-        "merchant_uid": payment.merchant_uid,
-        "name": payment.name,
-        "amount": payment.amount,
-    }
-
-    payment_check_url = reverse("_main:payment_check", args=[payment.pk])
-    portone_shop_id = config("PORTONE_SHOP_ID")
-
-    context = {
-        "context": json.dumps(context_sample),
-        "portone_shop_id": portone_shop_id,
-        "payment_check_url": payment_check_url,
-        "payment_props": payment_props,
-    }
-
-    return render(request, "_main/payment_pay.html", context)
-
-
-@jwt_login_required
-def payment_check(request, pk):
-    payment = get_object_or_404(Payment, pk=pk)
-    payment.portone_check()
-    return redirect("_main:payment_detail", pk=pk)
-
-
-@jwt_login_required
-def payment_detail(request, pk):
-    context_sample = make_context(request)
-    payment = get_object_or_404(Payment, pk=pk)
-
-    context = {"context": json.dumps(context_sample), "payment": payment}
-
-    return render(request, "_main/payment_detail.html", context)
