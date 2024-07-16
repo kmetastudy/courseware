@@ -65,6 +65,7 @@
         align-items: center;
 
         background-color: white;
+
     }
     .dropdown__menu-active {
         display: flex;
@@ -77,6 +78,7 @@
     }
     .dropdown__logo {
         height: 43px;
+        cursor: pointer;
     }
     .dropdown__close {
         width: 34px;
@@ -211,6 +213,7 @@
     }
     .dropdown__logo {
         height: 43px;
+        cursor: pointer;
     }
     .dropdown__close {
         width: 24px;
@@ -344,6 +347,7 @@
     }
     .dropdown__logo {
         height: 43px;
+        cursor: pointer;
     }
     .dropdown__close {
         width: 24px;
