@@ -89,7 +89,7 @@ CourseUnit.prototype.create = function() {
               console.log("장바구니에 담기 성공")
             }, //end success
           }); // end of ajax
-          toastOn()
+
         })
     
         $elCourse.find('.add-option').append($elCart)
@@ -103,16 +103,7 @@ CourseUnit.prototype.create = function() {
         $elCourseList.append($elCourse)
   }
 
-  var $toastMessage = $(`<div id="toast_message" class="flex justify-between items-center w-[400px]">장바구니에 추가되었습니다. <a href="/cart" class="text-sm text-green-600">보러가기</a></div>`)
-    
-  function toastOn(){
-    $toastMessage.addClass('active');
-    setTimeout(function(){
-        $toastMessage.removeClass('active');
-    },3000);
-  }
-
-  $elCourseList.append($toastMessage)
+  
 
   this.elThis = $elCourseList
 

@@ -49,16 +49,16 @@
             <div class="nav__item nav__item-hidden" onclick="window.location.href='/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/'">고등기초</div>
           </div>
           <div class="nav__icons">
-            <svg class="nav__search" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- <svg class="nav__search" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M25.3907 26.06L30.6004 31.1M28.9204 17.66C28.9204 24.1549 23.6553 29.42 17.1604 29.42C10.6655 29.42 5.40039 24.1549 5.40039 17.66C5.40039 11.1652 10.6655 5.90002 17.1604 5.90002C23.6553 5.90002 28.9204 11.1652 28.9204 17.66Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
-            </svg>
+            </svg> -->
             <svg class="nav__hamburger" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M30 27.5H6M30 18.5H6M30 9.5H6" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
             </svg>
-            <svg class="nav__profile" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- <svg class="nav__profile" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M3.59961 31.2686C3.59961 25.6053 8.33104 21.0143 17.9996 21.0143C27.6682 21.0143 32.3996 25.6053 32.3996 31.2686C32.3996 32.1696 31.7423 32.9 30.9314 32.9H5.06784C4.25696 32.9 3.59961 32.1696 3.59961 31.2686Z" stroke="#737373" stroke-width="2"/>
               <path d="M23.3996 9.49997C23.3996 12.4823 20.9819 14.9 17.9996 14.9C15.0173 14.9 12.5996 12.4823 12.5996 9.49997C12.5996 6.51764 15.0173 4.09998 17.9996 4.09998C20.9819 4.09998 23.3996 6.51764 23.3996 9.49997Z" stroke="#737373" stroke-width="2"/>
-            </svg>
+            </svg> -->
           </div>
         </div>
       </div>
@@ -303,6 +303,7 @@
         document.querySelector('.dropdown__menu').classList.remove('dropdown__menu-active');
     });
 
+    // 모바일 햄버거
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const menuOverlay = document.getElementById('menu-overlay');
     const closeBtn = document.getElementById('close-btn');

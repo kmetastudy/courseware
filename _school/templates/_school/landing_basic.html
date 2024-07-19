@@ -6,7 +6,7 @@
 {% endblock %}
 {% block content %}
 <div class="w-full flex flex-col items-center">
-    <video class="basic__video" src="{% static 'img/landing/' %}{{bannerBG}}.mp4" autoplay loop playsinline></video>
+    <video class="basic__video" src="{% static 'img/landing/basic_web.mp4' %}" muted autoplay loop playsinline></video>
     
     <div class="w-full flex flex-col items-center">
         
@@ -26,6 +26,22 @@
         var sections = JSON.parse("{{ sectionCourses|escapejs }}");
         // console.log("mainlibrary: ", mainlibrary);
         schoollibrary.SchoolLandingOnReady(context, sections)
+
+        function checkScreenWidth() {
+            let imgElement = document.querySelector('.basic__video');
+            if (window.innerWidth < 1024) {
+                imgElement.src = `/static/img/landing/basic_mobile.mp4`;
+            } else {
+                imgElement.src = `/static/img/landing/basic_web.mp4`;
+            }
+            
+        }
+
+        // 초기 체크
+        checkScreenWidth();
+
+        // 창 크기 변경 시 체크
+        window.addEventListener('resize', checkScreenWidth);
 
     });
 </script>

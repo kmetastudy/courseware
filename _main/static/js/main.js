@@ -2,6 +2,8 @@ require("../../../static/css/css-reset.css");
 require("../css/main.css");
 require("../css/contact.css");
 require("../css/about.css");
+require("../../../_school/static/css/nav.css")
+require("../../../_school/static/css/footer.css")
 // require("../css/tailwind.css");
 import("../css/tailwind.css");
 
