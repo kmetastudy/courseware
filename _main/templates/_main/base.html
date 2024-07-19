@@ -42,59 +42,90 @@
   </head>
  
   <body>
-    <!-- header -->
-    <div id="main" class="flex flex-col items-center"></div>
-    <div class="navPC border-b border-[#d1d1d1] justify-between items-center text-center">
-      <img class="navLogoImg cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" onclick="window.location.href='/'">
-      <div class="flex">
-        <div class="flex items-center font-normal text-[18px] text-[#474747]" style="column-gap: 40px;">
-          <div id="" class="hover:text-[#474747] cursor-pointer" onclick="window.location.href='/contact/'">문의하기</div>
-          <div id="" class="hover:text-[#474747] cursor-pointer" onclick="window.location.href='/about/'">어바웃 12</div>
-          <div id="element" class="hover:text-[#474747] cursor-pointer" onclick="window.location.href='/courses/element/all/'">초등과정</div>
-          <div id="middle" class="hover:text-[#474747] cursor-pointer" onclick="window.location.href='/courses/middle/all/'">중등과정</div>
-          <div id="high" class="hover:text-[#474747] cursor-pointer" onclick="window.location.href='/courses/high/all/'">고등과정</div>
-        </div>
-        <div class="ml-20 grid grid-cols-2 cursor-pointer" style="column-gap: 40px;">
-          <svg width="34" height="34" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M25.3907 25.5604L30.6004 30.6004M28.9204 17.1604C28.9204 23.6553 23.6553 28.9204 17.1604 28.9204C10.6655 28.9204 5.40039 23.6553 5.40039 17.1604C5.40039 10.6655 10.6655 5.40039 17.1604 5.40039C23.6553 5.40039 28.9204 10.6655 28.9204 17.1604Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <svg class="cursor-pointer" width="34" height="34" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="window.location.href='/user/'">
-            <path d="M3.59961 30.7682C3.59961 25.1049 8.33104 20.5139 17.9996 20.5139C27.6682 20.5139 32.3996 25.1049 32.3996 30.7682C32.3996 31.6692 31.7423 32.3996 30.9314 32.3996H5.06784C4.25696 32.3996 3.59961 31.6692 3.59961 30.7682Z" stroke="#737373" stroke-width="2"/>
-            <path d="M23.3996 8.99961C23.3996 11.9819 20.9819 14.3996 17.9996 14.3996C15.0173 14.3996 12.5996 11.9819 12.5996 8.99961C12.5996 6.01727 15.0173 3.59961 17.9996 3.59961C20.9819 3.59961 23.3996 6.01727 23.3996 8.99961Z" stroke="#737373" stroke-width="2"/>
-          </svg>  
-        </div>
-        <!-- <div class="font-light ml-10 min-[1280px]:ml-20 cursor-pointer" onclick="window.location.href='/user/'">회원가입/로그인</div> -->
-      </div>
-    </div>
-    <!-- 태블릿 header -->
-    <div class="navTablet border-b border-[#d1d1d1] justify-between items-center">
-      <img class="navLogoImg cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" onclick="window.location.href='/'">
-      <div class="flex text-[18px]">
-        <div class="flex font-normal text-[#474747]">
-          <div id="" class="flex items-center" onclick="window.location.href='/contact/'">
-            <p class="hover:text-[#474747] text-[16px] cursor-pointer">문의하기</p>
+    <div class="nav">
+      <div class="navigation">
+        <img class="nav__logo" src="{% static '/img/landing/logo_course12.png' %}" onclick="window.location.href='/'"/>
+        <div class="nav__body">
+          <div class="nav__menu">
+            <div class="nav__item" onclick="window.location.href='/contact/'">문의하기</div>
+            <div class="nav__item nav__item-hidden" onclick="window.location.href='/about/'">어바웃 12</div>
+            <div id="element" class="nav__item nav__item-hidden" onclick="window.location.href='/courses/element/all/'">초등과정</div>
+            <div id="middle" class="nav__item nav__item-hidden" onclick="window.location.href='/courses/middle/all/'">중등과정</div>
+            <div id="high" class="nav__item nav__item-hidden" onclick="window.location.href='/courses/high/all/'">고등과정</div>
           </div>
-          
-          <div class="pl-10">
-            <svg id="hamburger-btn" class="hamburger-btn" width="24" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M20.6582 18H4.6582M20.6582 12H4.6582M20.6582 6H4.6582" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+          <div class="nav__icons">
+            <svg class="nav__search" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M25.3907 26.06L30.6004 31.1M28.9204 17.66C28.9204 24.1549 23.6553 29.42 17.1604 29.42C10.6655 29.42 5.40039 24.1549 5.40039 17.66C5.40039 11.1652 10.6655 5.90002 17.1604 5.90002C23.6553 5.90002 28.9204 11.1652 28.9204 17.66Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
             </svg>
-          </div>
-          <div class="pl-5">
-            <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M17.5847 17.0396L21.0578 20.3996M19.9378 11.4396C19.9378 15.7695 16.4277 19.2796 12.0978 19.2796C7.7679 19.2796 4.25781 15.7695 4.25781 11.4396C4.25781 7.1097 7.7679 3.59961 12.0978 3.59961C16.4277 3.59961 19.9378 7.1097 19.9378 11.4396Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
-            </svg>              
-          </div>
-          <div class="pl-5">
-            <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="window.location.href='/user/'">
-              <path d="M3.05859 20.5128C3.05859 16.7373 6.21288 13.6766 12.6586 13.6766C19.1043 13.6766 22.2586 16.7373 22.2586 20.5128C22.2586 21.1135 21.8204 21.6004 21.2798 21.6004H4.03742C3.49683 21.6004 3.05859 21.1135 3.05859 20.5128Z" stroke="#737373" stroke-width="2"/>
-              <path d="M16.2586 6.00039C16.2586 7.98862 14.6468 9.60039 12.6586 9.60039C10.6704 9.60039 9.05859 7.98862 9.05859 6.00039C9.05859 4.01217 10.6704 2.40039 12.6586 2.40039C14.6468 2.40039 16.2586 4.01217 16.2586 6.00039Z" stroke="#737373" stroke-width="2"/>
-            </svg>              
+            <svg class="nav__hamburger" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M30 27.5H6M30 18.5H6M30 9.5H6" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <!-- <svg class="nav__profile" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3.59961 31.2686C3.59961 25.6053 8.33104 21.0143 17.9996 21.0143C27.6682 21.0143 32.3996 25.6053 32.3996 31.2686C32.3996 32.1696 31.7423 32.9 30.9314 32.9H5.06784C4.25696 32.9 3.59961 32.1696 3.59961 31.2686Z" stroke="#737373" stroke-width="2"/>
+              <path d="M23.3996 9.49997C23.3996 12.4823 20.9819 14.9 17.9996 14.9C15.0173 14.9 12.5996 12.4823 12.5996 9.49997C12.5996 6.51764 15.0173 4.09998 17.9996 4.09998C20.9819 4.09998 23.3996 6.51764 23.3996 9.49997Z" stroke="#737373" stroke-width="2"/>
+            </svg> -->
           </div>
         </div>
-        <!-- <div class="font-light cursor-pointer" style="margin-left:10px;" onclick="window.location.href='/user/'">회원가입/로그인</div> -->
+      </div>
+  
+      <div class="dropdown__menu shadow-md z-10">
+        <div class="dropdown__header">
+          <img class="dropdown__logo" src="{% static '/img/landing/logo_course12.png' %}" onclick="window.location.href='/'"/>
+          <svg class="dropdown__close" viewBox="0 0 34 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25.5 8.88623L8.5 25.8862M25.5 25.8862L8.5 8.88623" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="dropdown__content">
+          <div class="dropdown__section">
+            <div class="section__title">
+              코스12 과정
+              <span>
+                <svg viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.5 17.7725L14.5 12.7725L9.5 7.77252" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="dropdown__submenu">
+                <div class="dropdown__link" onclick="window.location.href='/courses/element/all/'">초등과정</div>
+                <div class="dropdown__link" onclick="window.location.href='/courses/middle/all/'">중등과정</div>
+                <div class="dropdown__link" onclick="window.location.href='/courses/high/all/'">고등과정</div>
+            </div>
+          </div>
+          <div class="dropdown__section">
+            <div class="section__title">
+              코스 기초학력
+              <span>
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.5 17.7725L14.5 12.7725L9.5 7.77252" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="dropdown__submenu">
+                <div class="dropdown__link" onclick="window.location.href='/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/'">초등기초</div>
+                <div class="dropdown__link" onclick="window.location.href='/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/'">중등기초</div>
+                <div class="dropdown__link" onclick="window.location.href='/school/basic/d13e3370-4057-48e1-8aff-f57aa372e68e/'">고등기초</div>
+            </div>
+          </div>
+          <div class="dropdown__section">
+            <div class="section__title">
+              어바웃 12
+              <span>
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9.5 17.7725L14.5 12.7725L9.5 7.77252" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="dropdown__submenu">
+                <div class="dropdown__link" onclick="window.location.href='/contact/'">문의하기</div>
+                <div class="dropdown__link" onclick="window.location.href='/about/'">공지사항</div>
+                <div class="dropdown__link" onclick="window.location.href='/faq/'">FAQ</div>
+                <div class="dropdown__link" onclick="window.location.href='/news/'">코스 NEWS</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
     <!-- 모바일 header -->
     <div class="navMobile border-b border-[#d1d1d1] justify-between items-center">
       <img class="navLogoImg cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" onclick="window.location.href='/'">
@@ -162,11 +193,6 @@
         </ul>
       </div>
     </div>
-    <div class="headerSize"></div>
-      <!-- <div class="w-full xl:w-[1200px] flex justify-end">
-          <div class="m-2 p-2 border"><a href="/cart/">장바구니</a></div>
-          <div class="m-2 p-2 border"><a href="/mycourse/">내학습</a></div>
-        </div> -->
 
       {% block content %} {% endblock %}
 
@@ -245,6 +271,18 @@
 
     var context = JSON.parse("{{ context|escapejs }}");
     window.addEventListener("DOMContentLoaded", function () {
+      
+      // 드롭다운 메뉴 토글 기능
+      document.querySelector('.nav__hamburger').addEventListener('click', () => {
+          document.querySelector('.dropdown__menu').classList.toggle('dropdown__menu-active');
+      });
+      
+      // 드롭다운 닫기 기능
+      document.querySelector('.dropdown__close').addEventListener('click', () => {
+          document.querySelector('.dropdown__menu').classList.remove('dropdown__menu-active');
+      });
+
+      // 모바일 햄버거
       const hamburgerBtn = document.getElementById('hamburger-btn');
       const menuOverlay = document.getElementById('menu-overlay');
       const closeBtn = document.getElementById('close-btn');
