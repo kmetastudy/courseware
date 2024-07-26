@@ -378,6 +378,9 @@
     .nav {
         display: none;
     }
+    .navigation {
+        display: none;
+    }
     .navLogoImg {
       height: 24px;
     }

@@ -31,67 +31,50 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="{% static '_bundle/school/school-bundle-20240719.css' %}" />
-    <script type="text/javascript" src="{% static '_bundle/school/school-bundle-20240719.js' %}"></script>
+    <link rel="stylesheet" href="{% static '_bundle/school/school-bundle-20240726.css' %}" />
+    <script type="text/javascript" src="{% static '_bundle/school/school-bundle-20240726.js' %}"></script>
     {% block css %} {% endblock %}
   </head>
 
   <body>
     <div id="root" class="flex flex-col items-center">
       <!-- header -->
-      <div class="navPC w-full border-b border-[#d1d1d1] justify-between items-center text-center">
-        <img class="h-12 cursor-pointer" src="{{school_data.img_logo}}" onclick="window.location.href='/school/page/{{school_data.id}}'">
-        <!-- <img class="h-12 min-[1280px]:h-14 cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}"> -->
-        <div class="flex text-[#474747] text-[18px]">
-          <div class="flex items-center font-normal">
-            <!-- <div class="font-normal cursor-pointer" onclick="window.location='http://megatest.kr:7700/ml/'">로그인</div> -->
-            <div id="" class="hover:text-[#474747] cursor-pointer" onclick="window.location.href='/contact/'">문의하기</div>
-            <svg class="cursor-pointer ml-20" width="36" height="36" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19.7482 19.8802L23.8002 23.8002M22.4935 13.3469C22.4935 18.3984 18.3984 22.4935 13.3469 22.4935C8.2953 22.4935 4.2002 18.3984 4.2002 13.3469C4.2002 8.2953 8.2953 4.2002 13.3469 4.2002C18.3984 4.2002 22.4935 8.2953 22.4935 13.3469Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+      <div class="navigation">
+        <img class="nav__logo" src="{{school_data.img_logo}}" onclick="window.location.href='/school/page/{{school_data.id}}'"/>
+        <div class="nav__body">
+          <div class="nav__menu">
+            <div class="nav__item" onclick="window.location.href='/contact/'">문의하기</div>
+          </div>
+          <div class="nav__icons">
+            <!-- <svg class="nav__search" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M25.3907 26.06L30.6004 31.1M28.9204 17.66C28.9204 24.1549 23.6553 29.42 17.1604 29.42C10.6655 29.42 5.40039 24.1549 5.40039 17.66C5.40039 11.1652 10.6655 5.90002 17.1604 5.90002C23.6553 5.90002 28.9204 11.1652 28.9204 17.66Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
+            </svg> -->
+            <svg class="nav__profile" viewBox="0 0 36 37" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="window.location.href='http://megatest.kr:7700/ml/'">
+              <path d="M3.59961 31.2686C3.59961 25.6053 8.33104 21.0143 17.9996 21.0143C27.6682 21.0143 32.3996 25.6053 32.3996 31.2686C32.3996 32.1696 31.7423 32.9 30.9314 32.9H5.06784C4.25696 32.9 3.59961 32.1696 3.59961 31.2686Z" stroke="#737373" stroke-width="2"/>
+              <path d="M23.3996 9.49997C23.3996 12.4823 20.9819 14.9 17.9996 14.9C15.0173 14.9 12.5996 12.4823 12.5996 9.49997C12.5996 6.51764 15.0173 4.09998 17.9996 4.09998C20.9819 4.09998 23.3996 6.51764 23.3996 9.49997Z" stroke="#737373" stroke-width="2"/>
             </svg>
-            <svg class="cursor-pointer ml-10" width="36" height="36" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="window.location='http://megatest.kr:7700/ml/'">
-              <path d="M2.7998 23.931C2.7998 19.5262 6.4798 15.9554 13.9998 15.9554C21.5198 15.9554 25.1998 19.5262 25.1998 23.931C25.1998 24.6317 24.6885 25.1998 24.0578 25.1998H3.94177C3.31108 25.1998 2.7998 24.6317 2.7998 23.931Z" stroke="#737373" stroke-width="2"/>
-              <path d="M18.1998 6.9998C18.1998 9.3194 16.3194 11.1998 13.9998 11.1998C11.6802 11.1998 9.7998 9.3194 9.7998 6.9998C9.7998 4.68021 11.6802 2.7998 13.9998 2.7998C16.3194 2.7998 18.1998 4.68021 18.1998 6.9998Z" stroke="#737373" stroke-width="2"/>
-            </svg>
-              
           </div>
         </div>
       </div>
-      <!-- 태블릿 header -->
-      <div class="navTablet w-full border-b border-[#d1d1d1] justify-between items-center text-center">
-        <img class="h-10 cursor-pointer" src="{{school_data.img_logo}}" onclick="window.location.href='/school/page/{{school_data.id}}'">
-        <!-- <img class="h-12 min-[1280px]:h-14 cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}"> -->
-        <div class="flex text-[#474747] text-[16px]">
-          <div class="flex items-center font-normal">
-            <!-- <div class="font-normal cursor-pointer" onclick="window.location='http://megatest.kr:7700/ml/'">로그인</div> -->
-            <div id="" class="hover:text-[#474747] cursor-pointer" onclick="window.location.href='/contact/'">문의하기</div>
-            <svg class="cursor-pointer ml-10" width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M19.7482 19.8802L23.8002 23.8002M22.4935 13.3469C22.4935 18.3984 18.3984 22.4935 13.3469 22.4935C8.2953 22.4935 4.2002 18.3984 4.2002 13.3469C4.2002 8.2953 8.2953 4.2002 13.3469 4.2002C18.3984 4.2002 22.4935 8.2953 22.4935 13.3469Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <svg class="cursor-pointer ml-5" width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="window.location='http://megatest.kr:7700/ml/'">
-              <path d="M2.7998 23.931C2.7998 19.5262 6.4798 15.9554 13.9998 15.9554C21.5198 15.9554 25.1998 19.5262 25.1998 23.931C25.1998 24.6317 24.6885 25.1998 24.0578 25.1998H3.94177C3.31108 25.1998 2.7998 24.6317 2.7998 23.931Z" stroke="#737373" stroke-width="2"/>
-              <path d="M18.1998 6.9998C18.1998 9.3194 16.3194 11.1998 13.9998 11.1998C11.6802 11.1998 9.7998 9.3194 9.7998 6.9998C9.7998 4.68021 11.6802 2.7998 13.9998 2.7998C16.3194 2.7998 18.1998 4.68021 18.1998 6.9998Z" stroke="#737373" stroke-width="2"/>
-            </svg>
-              
-          </div>
-        </div>
-      </div>
+      
       <!-- 모바일 header -->
-      <div class="navMobile w-full border-b border-[#d1d1d1] justify-between items-center">
-        <img class="h-8 cursor-pointer" src="{{school_data.img_logo}}" onclick="window.location.href='/school/page/{{school_data.id}}'">
-        <!-- <img class="cursor-pointer" src="{% static '/img/landing/logo_course12.png' %}" style="width: 200px;height: 52px;"> -->
-        <div class="flex items-center font-normal" style="column-gap: 20px;">
-          <div id="" class="hover:text-[#474747] text-[13px] cursor-pointer" onclick="window.location.href='/contact/'">문의하기</div>
-          <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16.927 17.0396L20.4001 20.3996M19.2801 11.4396C19.2801 15.7695 15.77 19.2796 11.4401 19.2796C7.11019 19.2796 3.6001 15.7695 3.6001 11.4396C3.6001 7.1097 7.11019 3.59961 11.4401 3.59961C15.77 3.59961 19.2801 7.1097 19.2801 11.4396Z" stroke="#737373" stroke-width="2" stroke-linecap="round"/>
-          </svg>
-          <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="window.location='http://megatest.kr:7700/ml/'">
-            <path d="M2.40039 20.5128C2.40039 16.7373 5.55468 13.6766 12.0004 13.6766C18.4461 13.6766 21.6004 16.7373 21.6004 20.5128C21.6004 21.1135 21.1622 21.6004 20.6216 21.6004H3.37921C2.83862 21.6004 2.40039 21.1135 2.40039 20.5128Z" stroke="#737373" stroke-width="2"/>
-            <path d="M15.6004 6.00039C15.6004 7.98862 13.9886 9.60039 12.0004 9.60039C10.0122 9.60039 8.40039 7.98862 8.40039 6.00039C8.40039 4.01217 10.0122 2.40039 12.0004 2.40039C13.9886 2.40039 15.6004 4.01217 15.6004 6.00039Z" stroke="#737373" stroke-width="2"/>
-          </svg>
+      <div class="navMobile border-b border-[#d1d1d1] justify-between items-center">
+        <img class="navLogoImg cursor-pointer" src="{{school_data.img_logo}}" onclick="window.location.href='/school/page/{{school_data.id}}'">
+        <div class="flex text-[13px]">
+          <div class="flex font-normal text-[#474747]">
+            <div id="" class="flex items-center" onclick="window.location.href='/contact/'">
+              <p class="hover:text-[#474747] text-[13px] cursor-pointer">문의하기</p>
+            </div>
+            <div class="pl-5">
+              <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" onclick="window.location.href='http://megatest.kr:7700/ml/'">
+                <path d="M2.40039 20.5128C2.40039 16.7373 5.55468 13.6766 12.0004 13.6766C18.4461 13.6766 21.6004 16.7373 21.6004 20.5128C21.6004 21.1135 21.1622 21.6004 20.6216 21.6004H3.37921C2.83862 21.6004 2.40039 21.1135 2.40039 20.5128Z" stroke="#737373" stroke-width="2"/>
+                <path d="M15.6004 6.00039C15.6004 7.98862 13.9886 9.60039 12.0004 9.60039C10.0122 9.60039 8.40039 7.98862 8.40039 6.00039C8.40039 4.01217 10.0122 2.40039 12.0004 2.40039C13.9886 2.40039 15.6004 4.01217 15.6004 6.00039Z" stroke="#737373" stroke-width="2"/>
+              </svg>
+            </div>
+          </div>
+          <!-- <div class="font-light cursor-pointer" style="margin-left:10px;" onclick="window.location.href='/user/'">회원가입/로그인</div> -->
         </div>
       </div>
-
       <!-- <div class="w-full xl:w-[1200px] flex justify-end">
           <div class="m-2 p-2 border"><a href="/cart/">장바구니</a></div>
           <div class="m-2 p-2 border"><a href="/mycourse/">내학습</a></div>
