@@ -36,7 +36,7 @@
                     ${contents.map((content, index, arr) => {
                             return `
                                 <div class="accordion">
-                                    <div class="accordion__main">
+                                    <div class="accordion__main cursor-pointer">
                                         <div class="flex justify-between items-center">
                                             <p>${content.created_at}</p>
                                             <svg class="ml-3 -mb-0.5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,7 +60,7 @@
                 <div class="content__card">
                     ${contents.map((content, index) => {
                         return `
-                        <div data-seq="${index}" class="card__main grid grid-cols-4">
+                        <div data-seq="${index}" class="card__main grid grid-cols-4 cursor-pointer">
                             <img class="card__img" src="${content.attachment}" />
                             <div class="card__body col-span-3">
                                 <p class="" style="font-weight: 500;">${content.created_at}</p>

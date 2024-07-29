@@ -35,7 +35,7 @@
                     ${contents.map((content, index, arr) => {
                             return `
                                 <div class="accordion">
-                                    <div class="accordion__main">
+                                    <div class="accordion__main cursor-pointer">
                                         <div class="flex justify-between items-center">
                                             <p>${content.created_at}</p>
                                             <svg class="ml-3 -mb-0.5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -65,14 +65,14 @@
                         ${contents.map((content, index, arr) => {
                             return `
                                 <div class="accordion">
-                                    <div class="accordion__main">
-                                        <div class="table-col1" style="font-weight: 300;">${arr.length-index}</div>
+                                    <div class="accordion__main cursor-pointer">
+                                        <div class="table-col1" style="font-weight: 300;">${index+1}</div>
                                         <div class="table-col2 main__title">${content.title || content.question}</div>
                                         <div class="table-col3" style="font-weight: 300;">${content.created_at}</div>
                                     </div>
                                     <div class="accordion__panel" style="display: none;">
                                         <div class="panel__content">
-                                            <div>${content.content || content.answer}</div>
+                                            <div style="display: flex; flex-direction: column; align-content: center; line-height:36px;">${content.content || content.answer}</div>
                                             <div class="panel__close table-col3" style="margin-top: 40px; align-self: flex-end; font-weight: 500; cursor: pointer;">닫기</div>
                                         </div>
                                         <div class="panel__file ${content.attachment?'block':'hidden'}">
