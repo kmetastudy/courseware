@@ -39,13 +39,13 @@
                     <div class="w-full flex justify-between" style="padding-bottom: 40px;">
                         <p></p>
                         <p class="text-[16px] cursor-default" style="font-weight: 500;">FAQ</p>
-                        <svg onclick="window.location.href='/about/'" class="cursor-pointer" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg onclick="window.location.href='/faq/'" class="cursor-pointer" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10.8333 5.625L15 10M15 10L10.8333 14.375M15 10L5 10" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                     </div>
                     <div class="grid grid-cols-1 text-[14px] font-normal cursor-pointer" style="column-gap: 8px ;">
                         {% for faq in faqs|slice:":3" %}
-                        <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;">
+                        <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;" onclick="window.location.href='/faq/'">
                             <p class="truncate">{{faq.question}}</p>
                         </div>
                         {% endfor %}
@@ -61,7 +61,7 @@
                     </div>
                     <div class="grid grid-cols-1 text-[14px] font-normal cursor-pointer" style="column-gap: 8px ;">
                         {% for notice in notices|slice:":3" %}
-                        <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;">
+                        <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;" onclick="window.location.href='/about/'">
                             <p class="truncate">{{notice.title}}</p>
                         </div>
                         {% endfor %}
@@ -111,13 +111,13 @@
                     <div class="w-full flex justify-between" style="padding-bottom: 40px;">
                         <p></p>
                         <p class="text-[16px] cursor-default" style="font-weight: 500;">FAQ</p>
-                        <svg onclick="window.location.href='/about/'" class="cursor-pointer" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg onclick="window.location.href='/faq/'" class="cursor-pointer" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M10.8333 5.625L15 10M15 10L10.8333 14.375M15 10L5 10" stroke="#737373" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>    
                     </div>
                     <div class="grid grid-cols-1 text-[14px] font-normal cursor-pointer" style="column-gap: 8px ;">
                         {% for faq in faqs|slice:":3" %}
-                        <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;">
+                        <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;" onclick="window.location.href='/faq/'">
                             <p class="truncate">{{faq.question}}</p>
                         </div>
                         {% endfor %}
@@ -133,7 +133,7 @@
                     </div>
                     <div class="grid grid-cols-1 text-[14px] font-normal cursor-pointer" style="column-gap: 8px ;">
                         {% for notice in notices|slice:":3" %}
-                        <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;">
+                        <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;" onclick="window.location.href='/about/'">
                             <p class="truncate">{{notice.title}}</p>
                         </div>
                         {% endfor %}
@@ -179,7 +179,7 @@
             </div>
         </div>
         <div class="notice-content pt-6 hidden text-[#474747]">
-            <div class="border" style="padding: 20px 12px;" onclick="window.location.href='/about/'">
+            <div class="border" style="padding: 20px 12px;" onclick="window.location.href='/faq/'">
                 <div class="w-full flex justify-between" style="padding-bottom: 24px;">
                     <p style="width:24px;"></p>
                     <p class="text-[14px] cursor-default" style="font-weight: 500;">FAQ</p>
@@ -189,7 +189,7 @@
                 </div>
                 <div class="grid grid-cols-1 text-[14px] font-normal cursor-pointer" style="column-gap: 8px ;">
                     {% for faq in faqs|slice:":3" %}
-                    <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;">
+                    <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;" onclick="window.location.href='/faq/'">
                         <p class="truncate">{{faq.question}}</p>
                     </div>
                     {% endfor %}
@@ -205,7 +205,7 @@
                 </div>
                 <div class="grid grid-cols-1 text-[14px] font-normal cursor-pointer" style="column-gap: 8px ;">
                     {% for notice in notices|slice:":3" %}
-                    <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;">
+                    <div class="flex justify-between border-b border-[#d1d1d1]" style="padding: 12px;" onclick="window.location.href='/about/'">
                         <p class="truncate">{{notice.title}}</p>
                     </div>
                     {% endfor %}
