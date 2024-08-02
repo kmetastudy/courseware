@@ -16,7 +16,7 @@
         <!-- <div class="category__item category__item-active" data-filter="contact">문의하기</div> -->
         <div onclick="window.location.href='/about/'" class="category__item category__item-active" data-filter="notice">공지사항</div>
         <div onclick="window.location.href='/faq/'" class="category__item" data-filter="faq">FAQ</div>
-        <div onclick="window.location.href='/news/'" class="category__item" data-filter="news">코스 NEWS</div>
+        <!-- <div onclick="window.location.href='/news/'" class="category__item" data-filter="news">코스 NEWS</div> -->
     </div>
     <div class="about__content">
         
@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="accordion__panel" style="display: none;">
                                         <div class="panel__content">
-                                            <div style="display: flex; flex-direction: column; align-content: center; line-height:36px;">${content.content}</div>
+                                            <div style="display: flex; flex-direction: column; line-height:36px;">${content.content}</div>
                                             <div class="panel__close table-col3" style="margin-top: 40px; align-self: flex-end; font-weight: 500; cursor: pointer;">닫기</div>
                                         </div>
                                         <div class="panel__file ${content.attachment?'block':'hidden'}">
