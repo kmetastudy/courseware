@@ -7,7 +7,15 @@ from django.urls import reverse
 
 from decouple import config
 
-from _cm.models import FAQ, CourseReset, Notice, Post, courseDetail, courseLanding
+from _cm.models import (
+    FAQ,
+    Banner,
+    CourseReset,
+    Notice,
+    Post,
+    courseDetail,
+    courseLanding,
+)
 from _cm.serializers import (
     CourseDetailSerializer,
     FAQSerializer,
@@ -39,6 +47,8 @@ from _user.utils import make_context
 @jwt_login_required
 def index(request):
     context_sample = make_context(request)
+
+    banners = Banner.objects.all()
 
     school = mSchool.objects.filter(active=True)
     schools = SchoolSerializer(school, many=True).data
@@ -72,6 +82,7 @@ def index(request):
 
     context = {
         "context": json.dumps(context_sample),
+        "banners": banners,
         "sections": json.dumps(sections),
         "schools": schools,
     }

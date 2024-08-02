@@ -7,9 +7,17 @@ body {
   word-break: keep-all;
 }
 
+.landing-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+
 /* 데스크탑 */
 @media screen and (min-width: 1281px) {
-
+  .banner-mobile {
+    display: none;
+  }
   .categoryMobile {
     width: fit-content;
     font-size: 18px;
@@ -31,9 +39,7 @@ body {
   .noticeMobile {
     display:none;
   }
-  .landingBanner {
-    height: 428px
-  }
+
   .headerSize {
     margin-top: 80px;
   }
@@ -41,6 +47,9 @@ body {
 
 /* 태블릿 */
 @media screen and (min-width: 744px) and (max-width: 1280px) {
+  .banner-mobile {
+    display: none;
+  }
   .contentGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
@@ -61,9 +70,7 @@ body {
   .noticeMobile {
     display:none;
   }
-  .landingBanner {
-    height: 295px;
-  }
+
   .headerSize {
     margin-top: 60px;
   }
@@ -72,6 +79,12 @@ body {
 
 /* 모바일 */
 @media screen and (max-width: 743px) {
+  .banner-web {
+    display: none;
+  }
+  .banner-mobile {
+    margin-top: 46px;
+  }
   .contentGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     place-items: center;
@@ -95,9 +108,7 @@ body {
   .noticeMobile {
     display:block;
   }
-  .landingBanner {
-    height: 400px;
-  }
+
   .thumnailMobile {
     height: 140px;
   }
