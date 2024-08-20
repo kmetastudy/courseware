@@ -1,6 +1,6 @@
 import json
 from django.shortcuts import redirect, render
-from _cm.models import FAQ, Notice, courseDetail
+from _cm.models import FAQ, Banner, Notice, courseDetail
 from _cm.serializers import CourseDetailSerializer, NoticeSerializer, FAQSerializer
 from _school.models import mSchool, mSchoolCourse, mSchoolNotice, mSchoolSection
 from _school.serializers import (
@@ -31,6 +31,8 @@ def index(request):
 def school_page(request, school_id):
     context_sample = make_context(request)
 
+    banners = Banner.objects.all()
+
     school = mSchool.objects.filter(id=school_id)[0]
     school_data = SchoolSerializer(school).data
     school_notices = school_data["notice"]
@@ -51,6 +53,7 @@ def school_page(request, school_id):
 
     context = {
         "context": json.dumps(context_sample),
+        "banners": banners,
         "school_data": school_data,  # json.dumps 안하고 보내야 .으로 참조가능 -> 시리얼라이즈 했으니까
         "school_sections": json.dumps(school_sections),
         "school_notices": school_notices[:7],

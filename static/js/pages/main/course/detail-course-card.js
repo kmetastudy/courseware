@@ -66,7 +66,7 @@ CourseCardManager.prototype.create = function () {
   const classButton =
     this.userType === TYPE_USER.TEACHER ? this.createClassLaunchButton() : this.createClassRegistrationButton();
 
-  $elCard.children("div").children("div:eq(2)").append(classButton);
+  // $elCard.children("div").children("div:eq(2)").append(classButton);
 
   this.elThis = $elCard;
 };
