@@ -13,7 +13,7 @@
     <div class="landing-swiper banner-web">
         <div class="swiper-wrapper">
             {% for banner in banners %}
-            <div class="swiper-slide cursor-pointer" onclick='window.location.href="{{banner.link}}"'><img class="landingBanner" src="media/{{banner.image}}"></div>
+            <div class="swiper-slide cursor-pointer" onclick='window.location.href="{{banner.link}}"'><img class="landingBanner" src="/media/{{banner.image}}"></div>
             {% endfor %}
             <!-- <div class="swiper-slide cursor-pointer" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="landingBanner" src="/static/img/landing/banner2.png"></div>
             <div class="swiper-slide cursor-pointer" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="landingBanner" src="/static/img/landing/banner3.png"></div>
@@ -23,7 +23,7 @@
     <div class="landing-swiper banner-mobile">
         <div class="swiper-wrapper">
             {% for banner in banners %}
-            <div class="swiper-slide cursor-pointer" onclick='window.location.href="{{banner.link}}"'><img class="landingBanner" src="media/{{banner.image_mobile}}"></div>
+            <div class="swiper-slide cursor-pointer" onclick='window.location.href="{{banner.link}}"'><img class="landingBanner" src="/media/{{banner.image_mobile}}"></div>
             {% endfor %}
             <!-- <div class="swiper-slide cursor-pointer" onclick='window.location.href="/school/basic/8f554e40-6aaf-4730-88c7-5a7bd9ed9b2c/"'><img class="landingBanner" src="/static/img/landing/banner2.png"></div>
             <div class="swiper-slide cursor-pointer" onclick='window.location.href="/school/basic/cbb29b29-9f01-4024-9aac-15e382e3edb2/"'><img class="landingBanner" src="/static/img/landing/banner3.png"></div>
