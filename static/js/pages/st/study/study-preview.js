@@ -113,6 +113,6 @@ export class StudyPreview extends StudyCourseBuilder {
   }
 
   findFirstContent(data) {
-    return data.find((item) => item?.units.length > 0) ?? [];
+    return data.find((item) => (item?.units || []).length > 0) ?? [];
   }
 }
