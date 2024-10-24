@@ -104,8 +104,8 @@ def about(request):
 
     notice_queryset = Notice.objects.all()
     notices = NoticeSerializer(notice_queryset, many=True).data
-    date = notices[0]["created_at"]
-    print(type(date))
+    # date = notices[0]["created_at"]
+    # print(type(date))
 
     context = {
         "context": json.dumps(context_sample),
